@@ -1,5 +1,7 @@
 # Django settings for qcumber project.
 
+from qcumber import qcumber_configuration
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -103,6 +105,7 @@ ROOT_URLCONF = 'qcumber.urls'
 WSGI_APPLICATION = 'qcumber.wsgi.application'
 
 TEMPLATE_DIRS = (
+    qcumber_configuration.QCUMBER_ADMIN_TEMPLATE_DIR,
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
