@@ -27,8 +27,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="admin.py" />
     <Compile Include="models.py" />
     <Compile Include="tests.py" />
+    <Compile Include="urls.py" />
     <Compile Include="views.py" />
     <Compile Include="__init__.py" />
   </ItemGroup>

@@ -33,6 +33,7 @@
     </WebPiReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="qcumber_configuration.py" />
     <Compile Include="settings.py" />
     <Compile Include="urls.py" />
     <Compile Include="wsgi.py" />

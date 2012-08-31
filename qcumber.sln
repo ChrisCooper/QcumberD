@@ -3,6 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "qcumber", "qcumber\qcumber.pyproj", "{F8F210A8-013D-4CF2-BFC9-7F60125DE129}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{499BF1C7-7D64-4D63-B439-2B1F8945FF1C}"
+	ProjectSection(SolutionItems) = preProject
+		.hgignore = .hgignore
+		manage.py = manage.py
+	EndProjectSection
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "course_catalog", "course_catalog\course_catalog.pyproj", "{26FEE5D0-1D67-4D1F-BBFC-5BC24C9BE0AF}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "templates", "templates\templates.pyproj", "{C00F6959-F151-449D-AC08-F10FBC2B34FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -11,6 +21,10 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F8F210A8-013D-4CF2-BFC9-7F60125DE129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8F210A8-013D-4CF2-BFC9-7F60125DE129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26FEE5D0-1D67-4D1F-BBFC-5BC24C9BE0AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26FEE5D0-1D67-4D1F-BBFC-5BC24C9BE0AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C00F6959-F151-449D-AC08-F10FBC2B34FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C00F6959-F151-449D-AC08-F10FBC2B34FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
