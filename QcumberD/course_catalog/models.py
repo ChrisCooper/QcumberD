@@ -88,7 +88,7 @@ class Timeslot(ModelOnProbation):
     day_of_week = models.ForeignKey("DayOfWeek")
     
     def __unicode__(self):
-        return u"%s, %s - %s" % (self.day_of_week.abbreviation, self.start_time.strftime("%H:%M%p"), self.end_time.strftime("%H:%M%p"))
+        return u"%s, %s - %s" % (self.day_of_week.abbreviation, self.start_time.strftime("%I:%M%p"), self.end_time.strftime("%I:%M%p"))
 
 class DayOfWeek(models.Model):
     index_in_week = models.IntegerField()

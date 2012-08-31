@@ -1,6 +1,6 @@
 # Django settings for qcumber project.
 
-from qcumber import qcumber_configuration
+from qcumber import qcumber_config
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -105,7 +105,7 @@ ROOT_URLCONF = 'qcumber.urls'
 WSGI_APPLICATION = 'qcumber.wsgi.application'
 
 TEMPLATE_DIRS = (
-    qcumber_configuration.QCUMBER_ADMIN_TEMPLATE_DIR,
+    qcumber_config.QCUMBER_ADMIN_TEMPLATE_DIR,
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'course_catalog',
+    'solus_scraper',
 )
 
 # A sample logging configuration. The only tangible logging

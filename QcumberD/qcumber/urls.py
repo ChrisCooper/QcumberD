@@ -7,6 +7,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^course_catalog/', include('course_catalog.urls')),
 
+    # Uncomment the next line to enable the SOLUS screen scraper
+    url(r'^solus_scraper/', include('solus_scraper.urls')),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
