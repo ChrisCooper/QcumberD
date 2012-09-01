@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
-from course_catalog.models import Course
+from solus_scraper.Scraper import Scraper
 
 def new_job(request):
-    return HttpResponse('Begining scrape pass')
+    scraper = Scraper()
+    scraper.full_scrape()
+    return HttpResponse('Finished scrape pass')
