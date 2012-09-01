@@ -13,6 +13,7 @@ class Subject(ModelOnProbation):
     #Attributes
     title = models.CharField(max_length=255)
     abbreviation = models.CharField(max_length=10)
+    should_be_ignored = models.BooleanField()
     
     def __unicode__(self):
         return u"%s - %s" % (self.abbreviation, self.title)

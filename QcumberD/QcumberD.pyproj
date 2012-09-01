@@ -3,9 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>00b16573-b0b7-41aa-9ce1-977b97e33c8c</ProjectGuid>
+    <ProjectGuid>{ae9e1a2f-39e0-41b1-b712-8f92295fee60}</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>QcumberD.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +23,40 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="QcumberD.py" />
+    <Compile Include="course_catalog\admin.py" />
+    <Compile Include="course_catalog\models.py" />
+    <Compile Include="course_catalog\tests.py" />
+    <Compile Include="course_catalog\urls.py" />
+    <Compile Include="course_catalog\views.py" />
+    <Compile Include="course_catalog\__init__.py" />
+    <Compile Include="manage.py" />
+    <Compile Include="qcumber\qcumber_config.py" />
+    <Compile Include="qcumber\settings.py" />
+    <Compile Include="qcumber\urls.py" />
+    <Compile Include="qcumber\wsgi.py" />
+    <Compile Include="qcumber\__init__.py" />
+    <Compile Include="solus_scraper\admin.py" />
+    <Compile Include="solus_scraper\models.py" />
+    <Compile Include="solus_scraper\Reference code\solus_scraper.py" />
+    <Compile Include="solus_scraper\Scraper.py" />
+    <Compile Include="solus_scraper\tests.py" />
+    <Compile Include="solus_scraper\urls.py" />
+    <Compile Include="solus_scraper\views.py" />
+    <Compile Include="solus_scraper\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="admin" />
+    <Folder Include="course_catalog" />
+    <Folder Include="course_catalog" />
+    <Folder Include="qcumber" />
+    <Folder Include="solus_scraper" />
+    <Folder Include="solus_scraper\Reference code\" />
+    <Folder Include="templates" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="admin\base_site.html" />
+    <Content Include="course_catalog\course_detail.html" />
+    <Content Include="course_catalog\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

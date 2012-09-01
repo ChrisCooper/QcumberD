@@ -1,7 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "QcumberD", "QcumberD\QcumberD.pyproj", "{AE9E1A2F-39E0-41B1-B712-8F92295FEE60}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE9E1A2F-39E0-41B1-B712-8F92295FEE60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE9E1A2F-39E0-41B1-B712-8F92295FEE60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

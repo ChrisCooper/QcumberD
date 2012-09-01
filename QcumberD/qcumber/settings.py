@@ -1,6 +1,7 @@
 # Django settings for qcumber project.
 
 from qcumber import qcumber_config
+from os import path
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -21,6 +22,8 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+SCRAPER_CONFIG_FILE = path.join(qcumber_config.UNIX_QCUMBER_ROOT, "ignored_files/selenium_config.txt")
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
