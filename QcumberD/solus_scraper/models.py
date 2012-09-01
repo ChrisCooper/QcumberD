@@ -14,6 +14,12 @@ class ScrapeJob(models.Model):
     status = models.ForeignKey('JobStatus')
     config = models.ForeignKey('JobConfig')
 
+    
+
+    def __unicode__(self):
+        return u'%s on %s: %s, started %s' % (self.config.name, self.computer.name, self.status.name, self.time_started.strftime("%I:%M:%S%p on %A, %B %d, %Y"))
+
+
 class JobStatus(models.Model):
     REQUESTED = 'requested'
     STARTED = 'started'
@@ -55,21 +61,16 @@ class JobConfig(models.Model):
     max_subjects_per_letter = models.IntegerField(default=0)
         
     #The index of the subject to start at in a given alphanum
-    starting_subject_index = models.IntegerField()
+    starting_subject_index = models.IntegerField(default=0)
         
     #Optional cap for number of courses per subject to scrape
     #Set to 0 to have no cap
-    max_courses_per_subject = models.IntegerField()
+    max_courses_per_subject = models.IntegerField(default=0)
         
     #Which index of courses to start at in a given subject
-    starting_course_index = models.IntegerField()
+    starting_course_index = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name
-
-
-
-    def __unicode__(self):
-        return u'%s: %s, started %s' % (self.computer.name, self.status.name, self.time_started.strftime("%I:%M:%S%p on %A, %B %d, %Y"))
 
     #News.objects.filter(pk=self.pk).update(last_visited=datetime.datetime.now())
