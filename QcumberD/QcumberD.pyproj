@@ -38,7 +38,8 @@
     <Compile Include="solus_scraper\admin.py" />
     <Compile Include="solus_scraper\models.py" />
     <Compile Include="solus_scraper\Reference code\solus_scraper.py" />
-    <Compile Include="solus_scraper\Scraper.py" />
+    <Compile Include="solus_scraper\scraper\login_helper.py" />
+    <Compile Include="solus_scraper\scraper\__init__.py" />
     <Compile Include="solus_scraper\tests.py" />
     <Compile Include="solus_scraper\urls.py" />
     <Compile Include="solus_scraper\views.py" />
@@ -50,13 +51,19 @@
     <Folder Include="course_catalog" />
     <Folder Include="qcumber" />
     <Folder Include="solus_scraper" />
+    <Folder Include="solus_scraper\scraper\" />
     <Folder Include="solus_scraper\Reference code\" />
     <Folder Include="templates" />
+    <Folder Include="templates\admin\" />
+    <Folder Include="templates\course_catalog\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="admin\base_site.html" />
     <Content Include="course_catalog\course_detail.html" />
     <Content Include="course_catalog\index.html" />
+    <Content Include="templates\admin\base_site.html" />
+    <Content Include="templates\course_catalog\course_detail.html" />
+    <Content Include="templates\course_catalog\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

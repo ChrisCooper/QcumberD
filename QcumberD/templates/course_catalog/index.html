@@ -1,0 +1,9 @@
+{% if course_list %}
+    <ul>
+    {% for course in course_list %}
+        <li><a href="{% url 'course_catalog.views.course_detail' course.id %}">{{ course }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No courses are available.</p>
+{% endif %}
