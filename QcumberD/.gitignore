@@ -1,6 +1,9 @@
 ignored_files
 
 
+#selenium
+chromedriver.log
+
 #################
 ## Visual Studio
 #################

@@ -1,13 +1,17 @@
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 class ModelOnProbation(models.Model):
     """
-    A model that includes a field representing the last time it was encountered during scraping.
+    An abstract model that includes a field representing the last time it was encountered during scraping.
     If this item is not encountered during a scraping pass, it should be deleted (since it no longer exists)
     """
-    last_encountered = models.DateTimeField()
+    last_encountered = models.DateTimeField(auto_now=True)
     
     last_encountered_admin_field_entry = ('Scraping information', {'fields': ['last_encountered'], 'classes': ['collapse']})
+
+    class Meta:
+        abstract = True
 
 class Subject(ModelOnProbation):
     #Attributes
@@ -17,6 +21,13 @@ class Subject(ModelOnProbation):
     
     def __unicode__(self):
         return u"%s - %s" % (self.abbreviation, self.title)
+
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(abbreviation=kwargs['abbreviation'])
+        except ObjectDoesNotExist:
+            return None
 
 
 class Course(ModelOnProbation):
@@ -123,3 +134,11 @@ class Term(ModelOnProbation):
     def __unicode__(self):
         return u"%s - %s" % (self.season.abbreviation, self.year_string())
 
+
+
+def existing_or_new(model, **kwargs):
+    #get the object with the specified attributes
+    existing = model.existing(**kwargs)
+    if existing is None:
+        existing = model(**kwargs)
+    return existing

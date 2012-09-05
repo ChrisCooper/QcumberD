@@ -11,3 +11,4 @@ scraping app:
 -starts the selenium server (webdriver makes this unnecessary?)
 -traverses solus course catalog
 -when an entity is encountered (subject, term, course, section, etc), find and existing entity, if there is one, and then update and save the model.
+

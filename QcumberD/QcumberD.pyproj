@@ -38,6 +38,8 @@
     <Compile Include="solus_scraper\admin.py" />
     <Compile Include="solus_scraper\models.py" />
     <Compile Include="solus_scraper\Reference code\solus_scraper.py" />
+    <Compile Include="solus_scraper\scraper\course_helper.py" />
+    <Compile Include="solus_scraper\scraper\subject_helper.py" />
     <Compile Include="solus_scraper\scraper\login_helper.py" />
     <Compile Include="solus_scraper\scraper\__init__.py" />
     <Compile Include="solus_scraper\tests.py" />
