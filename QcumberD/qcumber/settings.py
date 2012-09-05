@@ -1,7 +1,6 @@
 # Django settings for qcumber project.
 
-from qcumber import qcumber_config
-from os import path
+from qcumber.qcumber_config import unixy_project_path
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -23,7 +22,7 @@ DATABASES = {
     }
 }
 
-SCRAPER_CONFIG_FILE = path.join(qcumber_config.UNIX_QCUMBER_ROOT, "ignored_files/selenium_config.txt")
+SCRAPER_CONFIG_FILE = unixy_project_path("ignored_files/selenium_config.txt")
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -67,11 +66,9 @@ STATIC_ROOT = ''
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
-# Additional locations of static files
+# Additional locations of static files (with optional namespaces)
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    ('css', unixy_project_path("qcumber/static/css")),
 )
 
 # List of finder classes that know how to find static files in
@@ -108,7 +105,7 @@ ROOT_URLCONF = 'qcumber.urls'
 WSGI_APPLICATION = 'qcumber.wsgi.application'
 
 TEMPLATE_DIRS = (
-    qcumber_config.QCUMBER_ADMIN_TEMPLATE_DIR,
+    unixy_project_path("templates"),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
