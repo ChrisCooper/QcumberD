@@ -5,32 +5,32 @@ import course_catalog.models
 
 #All letters
 def drill_subjects_for_letter(letter, tools):
-    d = tools.driver
+    s, config = tools.selen, tools.config
+
+    tools.wait_for_page()
 
     #open the letter's page
-    letter_link = d.find_element_by_id('DERIVED_SSS_BCC_SSR_ALPHANUM_' + letter)
-    letter_link.click()
+    s.click("id=DERIVED_SSS_BCC_SSR_ALPHANUM_" + letter)
         
     #Generate the first subject dropdown's link name
     link_number = tools.config.starting_subject_index
-    link_name_base = "DERIVED_SSS_BCC_GROUP_BOX_1$84$$%d"
+    link_name_base = "name=DERIVED_SSS_BCC_GROUP_BOX_1$84$$%d"
     link_name = link_name_base % (link_number,)
        
     #All subject dropdowns
-    while tools.is_element_present(lambda: d.find_element_by_name(link_name)):
-        
-        subject_title_link = tools.driver.find_element_by_name(link_name)
+    while s.is_element_present(link_name):
 
         #Create a subject from the info in the dropdown
-        subject = subject_from_dropdown(subject_title_link, tools)
+        subject = subject_from_dropdown(link_name, tools)
 
         #drop down the subject
-        subject_title_link.click()
+        s.click(link_name)
+        tools.wait_for_page()
 
         drill_subject_dropdown(subject, tools)
 
         #close the subject dropdown
-        subject_title_link.click()
+        s.click(link_name)
 
         #Generate the next subject dropdown's link name
         link_number += 1
@@ -40,10 +40,11 @@ def drill_subjects_for_letter(letter, tools):
         link_name = link_name_base % (link_number,)
 
 #Store subject title and abbreviation from the subject dropdown text
-def subject_from_dropdown(subject_title_link, tools):
+def subject_from_dropdown(subject_link_name, tools):
+    s = tools.selen
 
-    m = re.search("^([^-]*) - (.*)$", subject_title_link.get_attribute("text").strip())
-            
+    m = re.search("^([^-]*) - (.*)$", s.get_text(subject_link_name).strip())
+      
     subject_key = m.group(1)
     subject_title = m.group(2)
             
@@ -57,25 +58,23 @@ def subject_from_dropdown(subject_title_link, tools):
     return subject
 
 def drill_subject_dropdown(subject, tools):
-    d, config = tools.driver, tools.config
+    s, config = tools.selen, tools.config
 
     #Generate the first course's link id
     link_number = config.starting_course_index
-    link_id_base = "CRSE_TITLE$%d"
+    link_id_base = "id=CRSE_TITLE$%d"
     link_id = link_id_base % (link_number,)
         
     #All course links
-    while tools.is_element_present(lambda: d.find_element_by_id(link_id)):
+    while s.is_element_present(link_id):
 
         #Go into the course
-        course_link = d.find_element_by_id(link_id)
-        course_link.click()
+        s.click(link_id)
 
         course_helper.scrape_single_course(subject, tools)
     
         #Back out from course page
-        return_link = tools.safe_find_element_by_id("DERIVED_SAA_CRS_RETURN_PB")
-        return_link.click()
+        s.click("id=DERIVED_SAA_CRS_RETURN_PB")
 
         #Generate the next course's link id
         link_number += 1

@@ -1,10 +1,11 @@
 from django.conf import settings
 
-def navigate_to_course_catalog(d):
+def navigate_to_course_catalog(tools):
+    s = tools.selen
 
     # go to the solus login page
     print "Opening login page..."
-    d.get("https://sso.queensu.ca/amserver/UI/Login")
+    s.open("https://sso.queensu.ca/amserver/UI/Login")
 
     #Get login information from config file
     with open(settings.SCRAPER_CONFIG_FILE, 'r') as config_file:
@@ -14,32 +15,30 @@ def navigate_to_course_catalog(d):
             login_info[line_num] = line.strip()
             line_num += 1
 
-    #find login fields
-    username_field = d.find_element_by_id("IDToken1")
-    password_field = d.find_element_by_id("IDToken2")
+    #type username
+    s.type("id=IDToken1", login_info[0])
+    #type password
+    s.type("id=IDToken2", login_info[1])
 
-    #enter credentials
-    username_field.send_keys(login_info[0])
-    password_field.send_keys(login_info[1])
+    #Click the log in button
+    s.click("name=Login.Submit")
 
-    #Log in
-    login_button = d.find_element_by_name("Login.Submit")
-    login_button.click()
+    #Wait for the portal page to load
+    tools.wait_for_page()
 
     #Get URL for SOLUS and open it
-    solus_link = d.find_element_by_link_text("SOLUS Student Centre")
-    solus_url = solus_link.get_attribute("href")
-    d.get(solus_url)
+    solus_url = s.get_attribute("link=SOLUS Student Centre@href")
+    s.open(solus_url)
 
     #Get the content frame
-    d.switch_to_frame("TargetContent")
+    s.select_frame("name=TargetContent")
 
     #"Search For Classes"
-    search_button = d.find_element_by_id("DERIVED_SSS_SCL_SSS_GO_4$230$")
-    search_button.click()
+    s.click("id=DERIVED_SSS_SCL_SSS_GO_4$230$")
+
+    tools.wait_for_page()
 
     #"browse course catalog"
-    browse_link = d.find_element_by_link_text("browse course catalog")
-    browse_link.click()
+    s.click("link=browse course catalog")
 
     print "Navigation to SOLUS course catalog complete."
