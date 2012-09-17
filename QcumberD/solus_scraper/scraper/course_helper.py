@@ -4,8 +4,6 @@ import course_catalog.models
 def scrape_single_course(subject, tools):
     s, config = tools.selen, tools.config
 
-    tools.wait_for_page()
-
     #Gather the title and description to create a new course
     title, number  = scrape_title(tools)
     description = scrape_description(tools)
@@ -39,3 +37,4 @@ def scrape_description(tools):
     description_locator = "xpath=(//span[@class='PSLONGEDITBOX'])[1]"
     if s.is_element_present(description_locator):
         return s.get_text(description_locator).strip()
+    return ""

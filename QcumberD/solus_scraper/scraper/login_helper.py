@@ -40,5 +40,6 @@ def navigate_to_course_catalog(tools):
 
     #"browse course catalog"
     s.click("link=browse course catalog")
+    tools.wait_for_page()
 
     print "Navigation to SOLUS course catalog complete."

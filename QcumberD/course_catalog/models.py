@@ -34,7 +34,7 @@ class Course(ModelOnProbation):
     #Attributes
     title = models.CharField(max_length=255)
     description = models.TextField()
-    number = models.IntegerField()
+    number = models.CharField(max_length=10)
 
     #Relationships
     subject = models.ForeignKey(Subject, related_name='courses')

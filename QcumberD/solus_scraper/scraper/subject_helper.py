@@ -1,4 +1,4 @@
-import re
+import re, time
 import course_helper
 import course_catalog.models
 
@@ -7,10 +7,9 @@ import course_catalog.models
 def drill_subjects_for_letter(letter, tools):
     s, config = tools.selen, tools.config
 
-    tools.wait_for_page()
-
     #open the letter's page
     s.click("id=DERIVED_SSS_BCC_SSR_ALPHANUM_" + letter)
+    tools.wait_for_page()
         
     #Generate the first subject dropdown's link name
     link_number = tools.config.starting_subject_index
@@ -31,6 +30,7 @@ def drill_subjects_for_letter(letter, tools):
 
         #close the subject dropdown
         s.click(link_name)
+        tools.wait_for_page()
 
         #Generate the next subject dropdown's link name
         link_number += 1
@@ -70,11 +70,13 @@ def drill_subject_dropdown(subject, tools):
 
         #Go into the course
         s.click(link_id)
+        tools.wait_for_page()
 
         course_helper.scrape_single_course(subject, tools)
     
         #Back out from course page
         s.click("id=DERIVED_SAA_CRS_RETURN_PB")
+        tools.wait_for_page()
 
         #Generate the next course's link id
         link_number += 1
