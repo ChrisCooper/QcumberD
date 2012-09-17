@@ -10,10 +10,179 @@ def wait_then_click(sel, identifier):
 
 class selenium_export(unittest.TestCase):
     
-    def go(self):        
+    def setUp(self):        
         
-      
-
+        #################
+        # Data to be kept
+        #
+        
+        # "CISC 220" -> course object
+        self.courses_dict = {}
+        
+        
+        # A mapping of all unique attributes found, mapped to the first course in which they were found
+        self.unique_attributes = {}
+        
+        
+        self.verificationErrors = []
+        
+        
+        ################
+        # Temporary data
+        #
+        
+        self.course = None
+        self.current_term = ""
+        self.subject_index = ""
+        
+        
+        ################
+        # Test parameters
+        #
+        
+        self.json_output_file_name_prefix = "courses-11-20"
+        
+        self.timeout_milliseconds = "300000"
+        
+        
+        #Mode - scrape site vs. read from file (for data crunching)
+        self.should_read_from_file = False
+        self.read_file_name = "courses 11-08.json"
+        
+        #Indenting in Json - None, or a number of spaces
+        self.json_indent = 2
+        
+        self.ignored_subjects = ["NIL", "UNSP"]
+        
+        #Which letters of courses to go through
+        #self.alphanums = String.ascii_uppercase + String.digits #"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        self.alphanums = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        
+        #Optional cap for number of subjects per letter to scrape
+        #Set to 0 to have no cap
+        self.max_subjects_per_letter = 0
+        
+        #Which index of subject dropdowns to start at in a given alphanum
+        self.starting_subject_index = 0
+        
+        #Optional cap for number of courses per subject to scrape
+        #Set to 0 to have no cap
+        self.max_courses_per_subject = 0
+        
+        #Which index of coursesto start at in a given subject
+        self.starting_course_index = 0
+        
+        #MATH 110
+        #self.alphanums = "M"
+        #self.max_subjects_per_letter = 1
+        #self.starting_subject_index = 1
+        #self.max_courses_per_subject = 2
+        #self.starting_course_index = 10
+        
+        #CHEM 112
+        #self.alphanums = "C"
+        #self.max_subjects_per_letter = 1
+        #self.starting_subject_index = 4
+        #self.max_courses_per_subject = 2
+        #self.starting_course_index = 5
+        
+        #CISC 121
+        #self.alphanums = "C"
+        #self.max_subjects_per_letter = 1
+        #self.starting_subject_index = 6
+        #self.max_courses_per_subject = 2
+        #self.starting_course_index = 10
+        
+        
+        
+        
+    
+    def read_from_file(self):
+        with open(self.read_file_name) as f:
+            all_str = f.read()
+            all_list = json.loads(all_str)
+            for course_dict in all_list:
+                course = SolusModels.SolusCourse(course_dict)
+                self.courses_dict[course.get_key()] = course
+        
+        print len(self.courses_dict)
+    
+    def optimize_data(self):
+        
+        
+        units_dict = {}
+        
+        for course_code, course in self.courses_dict.iteritems():
+            
+            units = course.units
+            if units not in units_dict:
+                units_dict[units] = course_code
+            
+        print "Units:"
+        print units_dict
+    
+    def test_selenium_export(self):
+        
+        
+        #Check if we're just crunching data
+        if self.should_read_from_file:
+            self.read_from_file()
+            self.optimize_data()
+            return
+        
+        #If not... off we go scraping!
+        print "Setting up Selenium..."
+        
+        
+        self.selenium = selenium("localhost", 4444, "*chrome", "https://sso.queensu.ca/amserver/UI/Login")
+        self.selenium.start()
+        
+        self.selenium.set_timeout(self.timeout_milliseconds)
+        
+        print "Opening login page..."
+        
+        sel = self.selenium
+        sel.open("/amserver/UI/Login")
+        
+        #Get login information from config file
+        with open('../ignored_files/selenium_config.txt', 'r') as config_file:
+            line_num = 0
+            login_info = ['','']
+            for line in config_file:
+                login_info[line_num] = line.strip()
+                line_num += 1
+          
+        #Enter Credentials
+        sel.type("id=IDToken1", login_info[0])
+        sel.type("id=IDToken2", login_info[1])
+        
+        #Log in
+        print "Logging in..."
+        sel.click("name=Login.Submit")
+        sel.wait_for_page_to_load(self.timeout_milliseconds)
+        
+        #Get URL for SOLUS and open it
+        print "Opening SOLUS..."
+        solus_url = sel.get_attribute("link=SOLUS Student Centre@href")
+        sel.open(solus_url)
+        
+        #Get to content frame
+        sel.select_frame("name=TargetContent")
+        
+        #"Search For Classes"
+        print "Navigating to \"Search For Classes\"..."
+        sel.click("id=DERIVED_SSS_SCL_SSS_GO_4$230$")
+        sel.wait_for_page_to_load(self.timeout_milliseconds)
+        
+        #"browse course catalog"
+        print "Navigating to \"browse course catalog\"..."
+        sel.click("link=browse course catalog")
+        sel.wait_for_page_to_load(self.timeout_milliseconds)
+        
+        
+        print "Navigation to SOLUS complete. Beginning scraping..."
+        
+        
         #Go through all the course catalogue pages
         
         for alphanum in self.alphanums:
