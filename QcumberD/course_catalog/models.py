@@ -135,10 +135,18 @@ class Term(ModelOnProbation):
         return u"%s - %s" % (self.season.abbreviation, self.year_string())
 
 
+def existing_or_new(model, search_attributes=None, creation_attributes=None, **kwargs):
+    """
+    Uses the attributes specified in 'search_attributes' to find an existing course.
+    If one doesn't exist, creates a course with 'creation_attributes'.
+    If either 'search_attributes' or 'creation_attributes' are 'None', substitutes them with kwargs
+    """
+    #fill specific attributes
+    search_attributes = kwargs if search_attributes is None else search_attributes
+    creation_attributes = kwargs if creation_attributes is None else creation_attributes
 
-def existing_or_new(model, **kwargs):
     #get the object with the specified attributes
-    existing = model.existing(**kwargs)
+    existing = model.existing(**search_attributes)
     if existing is None:
-        existing = model(**kwargs)
+        existing = model(**creation_attributes)
     return existing

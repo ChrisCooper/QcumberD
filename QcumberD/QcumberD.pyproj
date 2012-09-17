@@ -48,10 +48,12 @@
     <Compile Include="solus_scraper\__init__.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="admin" />
     <Folder Include="course_catalog" />
     <Folder Include="course_catalog" />
     <Folder Include="qcumber" />
+    <Folder Include="qcumber\experiments\" />
+    <Folder Include="qcumber\static\" />
+    <Folder Include="qcumber\static\css\" />
     <Folder Include="solus_scraper" />
     <Folder Include="solus_scraper\scraper\" />
     <Folder Include="solus_scraper\Reference code\" />
@@ -60,9 +62,7 @@
     <Folder Include="templates\course_catalog\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="admin\base_site.html" />
-    <Content Include="course_catalog\course_detail.html" />
-    <Content Include="course_catalog\index.html" />
+    <Content Include="qcumber\static\css\main.css" />
     <Content Include="templates\admin\base_site.html" />
     <Content Include="templates\course_catalog\course_detail.html" />
     <Content Include="templates\course_catalog\index.html" />
