@@ -63,6 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="qcumber\static\css\main.css" />
+    <Content Include="qcumber\static\css\main.scss" />
+    <Content Include="qcumber\static\css\_boilerplateStyles.scss" />
+    <Content Include="qcumber\static\css\_helpers.scss" />
+    <Content Include="qcumber\static\css\_printStyles.scss" />
     <Content Include="templates\admin\base_site.html" />
     <Content Include="templates\course_catalog\course_detail.html" />
     <Content Include="templates\course_catalog\index.html" />
