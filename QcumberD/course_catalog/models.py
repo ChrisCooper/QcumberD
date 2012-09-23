@@ -121,11 +121,17 @@ class Season(ModelOnProbation):
     """
     A time of year, such as Fall, or Fall and Winter, that is not specific to a particular year
     """
-    name = models.CharField(max_length=100)
-    abbreviation = models.CharField(max_length=10)
+    name = models.CharField(max_length=50)
 
     def __unicode__(self):
         return self.name
+
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
 
 class Term(ModelOnProbation):
     """
@@ -140,7 +146,13 @@ class Term(ModelOnProbation):
 
     def __unicode__(self):
         return u"%s - %s" % (self.season.abbreviation, self.year_string())
-
+    
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(season=kwargs['season'], year=kwargs['year'], year_second_part=kwargs['year_second_part'])
+        except ObjectDoesNotExist:
+            return None
 
 def existing_or_new(model, **kwargs):
 

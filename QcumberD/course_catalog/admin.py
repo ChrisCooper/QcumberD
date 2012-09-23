@@ -55,8 +55,6 @@ class NameAbbrAdmin(admin.ModelAdmin):
         (None, {'fields': ['name', 'abbreviation']}),
     ]
 admin.site.register(SectionType, NameAbbrAdmin)
-admin.site.register(Season, NameAbbrAdmin)
-
 
 class TimeslotAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -64,6 +62,11 @@ class TimeslotAdmin(admin.ModelAdmin):
     ]
 admin.site.register(Timeslot, TimeslotAdmin)
 
+class SeasonAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['name']}),
+    ]
+admin.site.register(Season, SeasonAdmin)
 
 class TermAdmin(admin.ModelAdmin):
     fieldsets = [

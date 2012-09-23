@@ -1,5 +1,6 @@
 import re
 import course_catalog.models
+import section_helper
 
 def scrape_single_course(subject, tools):
     s, config = tools.selen, tools.config
@@ -16,6 +17,8 @@ def scrape_single_course(subject, tools):
     course = course_catalog.models.existing_or_new(course_catalog.models.Course, **attributes)
 
     course.save()
+
+    section_helper.scrape_sections(course, tools)
 
             
 def scrape_title(tools):
