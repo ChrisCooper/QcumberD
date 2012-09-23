@@ -2,7 +2,7 @@ import re
 import course_catalog.models
 import section_helper
 
-def scrape_single_course(subject, tools):
+def drill_single_course(subject, tools):
     s, config = tools.selen, tools.config
 
     #Gather the title and description to create a new course
@@ -18,7 +18,7 @@ def scrape_single_course(subject, tools):
 
     course.save()
 
-    section_helper.scrape_sections(course, tools)
+    section_helper.drill_terms_of_sections(course, tools)
 
             
 def scrape_title(tools):

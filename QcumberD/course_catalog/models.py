@@ -55,8 +55,8 @@ class Course(ModelOnProbation):
     
 class Section(ModelOnProbation):
     #Attributes
-    solus_id = models.IntegerField()
-    index_in_course = models.IntegerField()
+    solus_id = models.CharField(max_length=16)
+    index_in_course = models.CharField(max_length=8)
 
     #Relationships
     course = models.ForeignKey(Course, related_name='sections')
@@ -64,8 +64,17 @@ class Section(ModelOnProbation):
     term = models.ForeignKey("Term")
 
     def __unicode__(self):
-        return u"%s %s (%d) for %s (%d)" % (self.term.__unicode__(), self.type.name, self.index_in_course, self.course.concise_unicode(), self.solus_id)
+        return u"%s %s (%s) for %s (%s)" % (self.term.__unicode__(), self.type.name, self.index_in_course, self.course.concise_unicode(), self.solus_id)
     
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(index_in_course=kwargs['index_in_course'],
+                                   solus_id=kwargs['solus_id'],
+                                   course=kwargs['course'],
+                                   term=kwargs['term'])
+        except ObjectDoesNotExist:
+            return None
 
 class SectionComponent(ModelOnProbation):
     """
@@ -84,6 +93,15 @@ class SectionComponent(ModelOnProbation):
     def __unicode__(self):
         return u"%s to %s in %s with %s at %s" % (self.start_date.strftime("%A, %B %d, %Y"), self.end_date.strftime("%A, %B %d, %Y"), self.room, self.instructor.name, self.timeslot.__unicode__())
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(start_date=kwargs['start_date'],
+                                   end_date=kwargs['end_date'],
+                                   section=kwargs['section'],
+                                   timeslot=kwargs['timeslot'],)
+        except ObjectDoesNotExist:
+            return None
 
 class SectionType(ModelOnProbation):
     name = models.CharField(max_length=100)
@@ -92,11 +110,25 @@ class SectionType(ModelOnProbation):
     def __unicode__(self):
         return self.name
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(abbreviation=kwargs['abbreviation'])
+        except ObjectDoesNotExist:
+            return None
+
 class Instructor(ModelOnProbation):
     name = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.name
+
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
 
 class Timeslot(ModelOnProbation):
     """
@@ -109,13 +141,28 @@ class Timeslot(ModelOnProbation):
     def __unicode__(self):
         return u"%s, %s - %s" % (self.day_of_week.abbreviation, self.start_time.strftime("%I:%M%p"), self.end_time.strftime("%I:%M%p"))
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(start_time=kwargs['start_time'],
+                                   end_time=kwargs['end_time'],
+                                   day_of_week=kwargs['day_of_week'])
+        except ObjectDoesNotExist:
+            return None
+
 class DayOfWeek(models.Model):
-    index_in_week = models.IntegerField()
     name = models.CharField(max_length=20)
     abbreviation = models.CharField(max_length=3)
     
     def __unicode__(self):
         return self.name
+
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(abbreviation=kwargs['abbreviation'])
+        except ObjectDoesNotExist:
+            return None
 
 class Season(ModelOnProbation):
     """
@@ -145,7 +192,7 @@ class Term(ModelOnProbation):
         return self.year if self.year == self.year_second_part else u"%d-%d" % (self.year, self.year_second_part)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.season.abbreviation, self.year_string())
+        return u"%s - %s" % (self.season.name, self.year_string())
     
     @classmethod
     def existing(cls, **kwargs):
@@ -160,4 +207,5 @@ def existing_or_new(model, **kwargs):
     existing = model.existing(**kwargs)
     if existing is None:
         existing = model(**kwargs)
+        existing.save()
     return existing

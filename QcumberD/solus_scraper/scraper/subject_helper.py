@@ -72,7 +72,7 @@ def drill_subject_dropdown(subject, tools):
         s.click(link_id)
         tools.wait_for_page()
 
-        course_helper.scrape_single_course(subject, tools)
+        course_helper.drill_single_course(subject, tools)
     
         #Back out from course page
         s.click("id=DERIVED_SAA_CRS_RETURN_PB")
