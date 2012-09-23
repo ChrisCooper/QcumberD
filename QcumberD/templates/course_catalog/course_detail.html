@@ -24,7 +24,7 @@
     </div>
 </section>
 
-<article>
+<article class="course">
     <hgroup>
         <h1>
             <a href="#">{{ course.subject.title }}</a>
@@ -44,37 +44,7 @@
 
     <div class="section_list">
         {% for section in course.sections.all %}
-            <div class="section">
-                <header>
-                    <span class="section_type">{{ section.type.name }}</span>
-                    <span class="section_id">({{ section.solus_id }})</span>
-                </header>
-
-                <div class="section_component_list">
-                    {% for component in section.components.all %}
-                    
-                        <div class="section_component">
-                            <span class="timeslot">
-                                {{ component.timeslot.day_of_week.name }}, 
-                                <time datetime="{{ component.timeslot.start_time|date:"H:i" }}">{{ component.timeslot.start_time|date:"g:ia" }}</time>
-                                -
-                                <time datetime="{{ component.timeslot.end_time|date:"H:i" }}">{{ component.timeslot.end_time|date:"g:ia" }}</time>
-                            </span>
-                            <span class="room">{{ component.room }}</span>
-                            <span class="instructor">{{ component.instructor }}</span>
-                            <span class="date_range">
-                                <time datetime="{{ component.start_date|date:"Y-m-d" }}">{{ component.start_date|date:"M jS, Y" }}</time>
-                                -
-                                <time datetime="{{ component.end_date|date:"Y-m-d" }}">{{ component.end_date|date:"M jS, Y" }}</time>
-                            </span>
-                        </div>
-                    
-                    {% empty %}
-                        This section has no timeslots.
-                    {% endfor %}
-                </div>
-
-            </div>
+            {% include "course_catalog/section_detail.html" with section=section only %}
         {% empty %}
           This course has no sections.
         {% endfor %}
