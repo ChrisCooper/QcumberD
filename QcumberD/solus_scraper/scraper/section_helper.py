@@ -1,4 +1,4 @@
-import re
+import re, collections
 import course_catalog.models
 import section_component_helper
 
@@ -58,7 +58,8 @@ def section_pieces_from_page(tools):
     """
     s = tools.selen
         
-    section_pieces = []
+    section_pieces = collections.deque()
+
     index = 1
     locator_format = "xpath=(//td[@class='PSLEVEL2GRIDROW'])[%d]"
     locator = locator_format % index
@@ -69,5 +70,5 @@ def section_pieces_from_page(tools):
             
         index += 1
         locator = locator_format % index
-        
+    
     return section_pieces

@@ -6,51 +6,54 @@ def scrape_single_section(section_pieces, course, term, tools):
 
     #Generate a section from the header
     section = section_from_header(section_pieces, course, term)
-    section.save()
 
     #Add all the components to the section
-    while not next_row_is_section_header(section_pieces) and len(section_pieces) > 0:
+    while  len(section_pieces) > 0 and (not next_row_is_section_header(section_pieces)):
         scrape_single_section_component(section_pieces, section)
   
     
 def next_row_is_section_header(piece_array):
-    if len(piece_array) < 2:
-        return False
-    if piece_array[-1] == "Select":
-        return True
-        
-    for i in range (-1, -6, -1):
-        if re.search('^([\S]+)-([\S]+)\s+\((\S+)\)$', piece_array[i]):
-            return True
-        
-    return False
+    return re.search('^([\S]+)-([\S]+)\s+\((\S+)\)$', piece_array[0])
     
 def scrape_single_section_component(section_pieces, section):
-    if len(section_pieces) < 6:
-        pass#import pdb; pdb.set_trace()
 
-    component_attributes = {}
+    #For creating the section component later
+    component_attributes = {'section' : section}
+
+    #Grab Timeslot info
+    #Sometimes day is e.g. "MoTuWeSaSu"
+    all_days = section_pieces.popleft()
+    start_time_str = section_pieces.popleft()
+    end_time_str = section_pieces.popleft()
+    timeslots = split_into_timeslots(all_days, start_time_str, end_time_str)
+
+    #Constant info
+    component_attributes['room'] = section_pieces.popleft()
+
+    instructor_name = section_pieces.popleft()
+    component_attributes['instructor'] = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=instructor_name)
 
     #Date range
-    m = re.search('^([\S]+)\s*-\s*([\S]+)$', section_pieces.pop())
+    m = re.search('^([\S]+)\s*-\s*([\S]+)$', section_pieces.popleft())
 
     component_attributes['start_date'] = datetime.strptime(m.group(1), "%Y/%m/%d")
     component_attributes['end_date'] = datetime.strptime(m.group(2), "%Y/%m/%d")
-
-    instructor_name = section_pieces.pop()
-    component_attributes['instructor'] = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=instructor_name)
-    component_attributes['room'] = section_pieces.pop()
         
-    #Timeslot
-    end_str = section_pieces.pop()
-    start_str = section_pieces.pop()
-    end_time = datetime.strptime(end_str, "%I:%M%p")
-    start_time = datetime.strptime(section_pieces.pop(), "%I:%M%p")
-    #Sometimes day is e.g. "MoTuWeSaSu"
-    all_days = section_pieces.pop()
+    #Create a section component for each day
+    for timeslot in timeslots:
+        component_attributes['timeslot'] = timeslot
+        component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **component_attributes)
 
-        
-    #Chop off the days 2 letters at a time to generate all components
+def split_into_timeslots(all_days, start_time_str, end_time_str):
+    """
+    Returns a list of all the timeslots present in a combo like 'MoTuWeSaSu'
+    """
+    start_time = datetime.strptime(start_time_str, "%I:%M%p")
+    end_time = datetime.strptime(end_time_str, "%I:%M%p")
+
+    timeslots = []
+
+    #loop through all days
     while len(all_days) > 0:
         day_abbr = all_days[-2:]
         all_days = all_days[:-2]
@@ -61,23 +64,16 @@ def scrape_single_section_component(section_pieces, section):
                                'start_time' : start_time,
                                'end_time' : end_time}
 
-        component_attributes['timeslot'] = course_catalog.models.existing_or_new(course_catalog.models.Timeslot, **timeslot_attributes)
+        timeslots.append(course_catalog.models.existing_or_new(course_catalog.models.Timeslot, **timeslot_attributes))
 
-        component_attributes['section'] = section
+    return timeslots
 
-        component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **component_attributes)
 
-    
 def section_from_header(piece_array, course, term):
-    section_info = piece_array.pop()
+    section_info = piece_array.popleft()
     m = re.search('^([\S]+)-([\S]+)\s+\((\S+)\)$', section_info)
-        
-    while not m:
-        section_info = piece_array.pop()
-        m = re.search('^([\S]+)-([\S]+)\s+\((\S+)\)$', section_info)
     
     section_type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=m.group(2))
-    section_type.save()
 
     attributes = {'index_in_course' : m.group(1),
                   'solus_id' : m.group(3),
@@ -85,5 +81,18 @@ def section_from_header(piece_array, course, term):
                   'course' : course,
                   'term' : term}
 
-    return course_catalog.models.existing_or_new(course_catalog.models.Section, **attributes)
+    section = course_catalog.models.existing_or_new(course_catalog.models.Section, **attributes)
+
+
+    #discard all the other section header entries, since they're useless for now
+    items_discarded = 0
+    while section_info != "Select":
+        section_info = piece_array.popleft()
+        items_discarded += 1
+        #Make sure we're not tossing everything away...
+        if (items_discarded > 4):
+            import pdb; pdb.set_trace()
+    
+    return section
+
     
