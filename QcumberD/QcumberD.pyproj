@@ -52,6 +52,7 @@
     <Folder Include="course_catalog" />
     <Folder Include="qcumber" />
     <Folder Include="qcumber\experiments\" />
+    <Folder Include="qcumber\sass\" />
     <Folder Include="qcumber\static\" />
     <Folder Include="qcumber\static\css\" />
     <Folder Include="solus_scraper" />
@@ -62,11 +63,12 @@
     <Folder Include="templates\course_catalog\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="qcumber\sass\main.scss" />
+    <Content Include="qcumber\sass\normalize.min.scss" />
+    <Content Include="qcumber\sass\_boilerplateStyles.scss" />
+    <Content Include="qcumber\sass\_helpers.scss" />
+    <Content Include="qcumber\sass\_printStyles.scss" />
     <Content Include="qcumber\static\css\main.css" />
-    <Content Include="qcumber\static\css\main.scss" />
-    <Content Include="qcumber\static\css\_boilerplateStyles.scss" />
-    <Content Include="qcumber\static\css\_helpers.scss" />
-    <Content Include="qcumber\static\css\_printStyles.scss" />
     <Content Include="templates\admin\base_site.html" />
     <Content Include="templates\course_catalog\course_detail.html" />
     <Content Include="templates\course_catalog\index.html" />

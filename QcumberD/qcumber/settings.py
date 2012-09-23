@@ -69,6 +69,7 @@ STATIC_URL = '/static/'
 # Additional locations of static files (with optional namespaces)
 STATICFILES_DIRS = (
     ('css', unixy_project_path("qcumber/static/css")),
+    ('js', unixy_project_path("qcumber/static/js")),
 )
 
 # List of finder classes that know how to find static files in

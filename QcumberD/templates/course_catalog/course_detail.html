@@ -1,6 +1,89 @@
-<h1>{{ course }}</h1>
-<ul>
-{% for section in course.sections.all %}
-    <li>{{ section }}</li>
-{% endfor %}
-</ul>
+{% extends "course_catalog/base.html" %}
+
+
+{% block page_title %}Qcumber | {{ course.title }} {% endblock %}
+
+
+{% block body_content %}
+
+<header>
+    <hgroup>
+        <h1>Qcumber</h1>
+        <h2>PRE-ALPHA</h2>
+    </hgroup>
+</header>
+
+<section>
+    <div id="search_form">
+        <form name="course_search_form">
+            <input name="q" type=search autofocus required placeholder="Search for courses" results=5 autosave="course_search_results_autosave">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <div id="search_results">
+    </div>
+</section>
+
+<article>
+    <hgroup>
+        <h1>
+            <a href="#">{{ course.subject.title }}</a>
+        </h1>
+        <h2>
+            <span>{{ course.subject.abbreviation }}</span> <span>{{ course.number }}</span> - <span>{{ course.title }}</span>
+        </h2>
+    </hgroup
+
+    <div class="description">
+        {{ course.description|default:"No course description." }}
+    </div>
+
+    <h1>
+        Sections
+    </h1>
+
+    <div class="section_list">
+        {% for section in course.sections.all %}
+            <div class="section">
+                <header>
+                    <span class="section_type">{{ section.type.name }}</span>
+                    <span class="section_id">({{ section.solus_id }})</span>
+                </header>
+
+                <div class="section_component_list">
+                    {% for component in section.components.all %}
+                    
+                        <div class="section_component">
+                            <span class="timeslot">
+                                {{ component.timeslot.day_of_week.name }}, 
+                                <time datetime="{{ component.timeslot.start_time|date:"H:i" }}">{{ component.timeslot.start_time|date:"g:ia" }}</time>
+                                -
+                                <time datetime="{{ component.timeslot.end_time|date:"H:i" }}">{{ component.timeslot.end_time|date:"g:ia" }}</time>
+                            </span>
+                            <span class="room">{{ component.room }}</span>
+                            <span class="instructor">{{ component.instructor }}</span>
+                            <span class="date_range">
+                                <time datetime="{{ component.start_date|date:"Y-m-d" }}">{{ component.start_date|date:"M jS, Y" }}</time>
+                                -
+                                <time datetime="{{ component.end_date|date:"Y-m-d" }}">{{ component.end_date|date:"M jS, Y" }}</time>
+                            </span>
+                        </div>
+                    
+                    {% empty %}
+                        This section has no timeslots.
+                    {% endfor %}
+                </div>
+
+            </div>
+        {% empty %}
+          This course has no sections.
+        {% endfor %}
+
+    </div>
+
+</article>
+
+{% endblock %}
+
+
+

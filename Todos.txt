@@ -1,14 +1,8 @@
--Download and install selenium python bindings 
--Put selenium jar somewhere intelligent
--Add jar location to qcumber_config (webdriver makes this unnecessary?)
--create django app for scraping
--figure out how to run the jar from python
 
 
 
 
-scraping app:
--starts the selenium server (webdriver makes this unnecessary?)
--traverses solus course catalog
--when an entity is encountered (subject, term, course, section, etc), find and existing entity, if there is one, and then update and save the model.
+Optional:
+-Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django
+
 
