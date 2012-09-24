@@ -30,10 +30,9 @@ def drill_terms_of_sections(course, tools):
 
         season = course_catalog.models.existing_or_new(course_catalog.models.Season, name=season_name)
         season.save()
-
+            
         term_attributes = {'season' : season,
-                           'year' : year,
-                           'year_second_part' : year}
+                           'year' : year}
         term = course_catalog.models.existing_or_new(course_catalog.models.Term, **term_attributes)
      
         term.save()

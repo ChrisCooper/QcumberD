@@ -185,18 +185,14 @@ class Term(ModelOnProbation):
     """
     season = models.ForeignKey(Season)
     year = models.IntegerField()
-    year_second_part = models.IntegerField()
-
-    def year_string(self):
-        return self.year if self.year == self.year_second_part else u"%d-%d" % (self.year, self.year_second_part)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.season.name, self.year_string())
+        return u"%s - %s" % (self.season.name, self.year)
     
     @classmethod
     def existing(cls, **kwargs):
         try:
-            return cls.objects.get(season=kwargs['season'], year=kwargs['year'], year_second_part=kwargs['year_second_part'])
+            return cls.objects.get(season=kwargs['season'], year=kwargs['year'])
         except ObjectDoesNotExist:
             return None
 

@@ -52,7 +52,7 @@ class JobConfig(models.Model):
 
     description = models.TextField(default="")
 
-    timeout_milliseconds = models.IntegerField()
+    timeout_milliseconds = models.IntegerField(default=30000)
     
     #While letters of the alphabet the job should scrape the subjects of
     subject_letters = models.CharField(max_length=40)

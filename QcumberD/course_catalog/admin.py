@@ -70,7 +70,7 @@ admin.site.register(Season, SeasonAdmin)
 
 class TermAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['season', 'year', 'year_second_part']}),
+        (None, {'fields': ['season', 'year']}),
     ]
 admin.site.register(Term, TermAdmin)
 
