@@ -1,9 +1,8 @@
--install South
--add description to job_config
 -fix entries that are EMPTY or "TBA"
+-seperate instructors by alternating commas
 -turn instructors-to-courses into a many-to-many relationship
 -give basic styling to course detail page and general site
--create a view for course/anat_316 e.g.
+-create a view for courses by name, e.g. course/anat_316
 
 
 

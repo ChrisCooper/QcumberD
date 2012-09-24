@@ -47,18 +47,19 @@ def add_component_to_section(section_pieces, section):
     start_time_str = section_pieces[1]
     end_time_str = section_pieces[2]
     
-    #Constant info
+    #Room
     component_attributes['room'] = section_pieces[3]
 
+    #Instructor
     instructor_name = section_pieces[4]
-    if instructor_name == "TBA":
+    if not instructor_name or instructor_name == "TBA":
         component_attributes['instructor'] = None
     else:
         component_attributes['instructor'] = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=instructor_name)
 
     #Date range
     date_range_str = section_pieces[5]
-    if date_range_str == "TBA":
+    if not date_range_str or date_range_str == "TBA":
         component_attributes['start_date'] = None
         component_attributes['end_date'] = None
     else:
@@ -82,15 +83,15 @@ def split_into_timeslots(all_days, start_time_str, end_time_str):
     """
     Returns a list of all the timeslots present in a combo like 'MoTuWeSaSu'
     """
-    if all_days == "TBA":
+    if not all_days or all_days == "TBA":
         return None
 
     start_time = None
     end_time = None
 
-    if start_time_str != "TBA":
+    if start_time_str and start_time_str != "TBA":
         start_time = datetime.strptime(start_time_str, "%I:%M%p")
-    if end_time_str != "TBA":
+    if end_time_str and end_time_str != "TBA":
         end_time = datetime.strptime(end_time_str, "%I:%M%p")
 
     timeslots = []
