@@ -1,4 +1,3 @@
--fix entries that are EMPTY or "TBA"
 -seperate instructors by alternating commas
 -turn instructors-to-courses into a many-to-many relationship
 -give basic styling to course detail page and general site

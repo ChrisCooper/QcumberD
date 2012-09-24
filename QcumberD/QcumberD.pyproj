@@ -37,8 +37,11 @@
     <Compile Include="qcumber\__init__.py" />
     <Compile Include="solus_scraper\admin.py" />
     <Compile Include="solus_scraper\models.py" />
+    <Compile Include="solus_scraper\Reference code\SolusModels.py" />
     <Compile Include="solus_scraper\Reference code\solus_scraper.py" />
     <Compile Include="solus_scraper\scraper\course_helper.py" />
+    <Compile Include="solus_scraper\scraper\section_component_helper.py" />
+    <Compile Include="solus_scraper\scraper\section_helper.py" />
     <Compile Include="solus_scraper\scraper\subject_helper.py" />
     <Compile Include="solus_scraper\scraper\login_helper.py" />
     <Compile Include="solus_scraper\scraper\__init__.py" />
@@ -55,12 +58,14 @@
     <Folder Include="qcumber\sass\" />
     <Folder Include="qcumber\static\" />
     <Folder Include="qcumber\static\css\" />
+    <Folder Include="qcumber\static\js\" />
     <Folder Include="solus_scraper" />
     <Folder Include="solus_scraper\scraper\" />
     <Folder Include="solus_scraper\Reference code\" />
     <Folder Include="templates" />
     <Folder Include="templates\admin\" />
     <Folder Include="templates\course_catalog\" />
+    <Folder Include="templates\solus_scraper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="qcumber\sass\main.scss" />
@@ -69,9 +74,18 @@
     <Content Include="qcumber\sass\_helpers.scss" />
     <Content Include="qcumber\sass\_printStyles.scss" />
     <Content Include="qcumber\static\css\main.css" />
+    <Content Include="qcumber\static\css\normalize.min.css" />
+    <Content Include="qcumber\static\js\jquery-1.8.1.js" />
+    <Content Include="qcumber\static\js\main.js" />
+    <Content Include="qcumber\static\js\modernizr-2.6.1.min.js" />
+    <Content Include="qcumber\static\js\plugins.js" />
     <Content Include="templates\admin\base_site.html" />
+    <Content Include="templates\course_catalog\base.html" />
     <Content Include="templates\course_catalog\course_detail.html" />
     <Content Include="templates\course_catalog\index.html" />
+    <Content Include="templates\course_catalog\section_component_detail.html" />
+    <Content Include="templates\course_catalog\section_detail.html" />
+    <Content Include="templates\solus_scraper\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
