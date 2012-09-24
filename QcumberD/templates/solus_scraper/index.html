@@ -1,5 +1,12 @@
 <ul>
     {% for config in job_configs %}
-        <li><a href="{% url 'solus_scraper.views.new_job' config.name %}">{{ config.name }}</a></li>
+        <li>
+            <a href="{% url 'solus_scraper.views.new_job' config.name %}">
+                {{ config.name }}
+            </a>
+            {% if config.description %}
+                - {{ config.description }}
+            {% endif %}
+        </li>
     {% endfor %}
 </ul>

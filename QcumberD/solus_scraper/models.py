@@ -50,8 +50,7 @@ class JobConfig(models.Model):
     """
     name = models.CharField(max_length=255)
 
-    #Add this in after installing South
-    #description = models.TextField()
+    description = models.TextField(default="")
 
     timeout_milliseconds = models.IntegerField()
     
