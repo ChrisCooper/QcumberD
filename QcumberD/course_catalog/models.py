@@ -17,7 +17,6 @@ class Subject(ModelOnProbation):
     #Attributes
     title = models.CharField(max_length=255)
     abbreviation = models.CharField(max_length=10)
-    should_be_ignored = models.BooleanField()
     
     def __unicode__(self):
         return u"%s - %s" % (self.abbreviation, self.title)
@@ -81,14 +80,14 @@ class SectionComponent(ModelOnProbation):
     A date range and instructor/room/timeslot information. A section can be composed of multiple components
     """
     #Attributes
-    start_date = models.DateField()
-    end_date = models.DateField()
-    room = models.CharField(max_length=100)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    room = models.CharField(max_length=100, blank=True, null=True)
 
     #Relationships
     section = models.ForeignKey(Section, related_name="components")
-    instructor = models.ForeignKey("Instructor", related_name="section_components")
-    timeslot = models.ForeignKey("Timeslot", related_name="section_components")
+    instructor = models.ForeignKey("Instructor", related_name="section_components", blank=True, null=True)
+    timeslot = models.ForeignKey("Timeslot", related_name="section_components", blank=True, null=True)
 
     def __unicode__(self):
         return u"%s to %s in %s with %s at %s" % (self.start_date.strftime("%A, %B %d, %Y"), self.end_date.strftime("%A, %B %d, %Y"), self.room, self.instructor.name, self.timeslot.__unicode__())

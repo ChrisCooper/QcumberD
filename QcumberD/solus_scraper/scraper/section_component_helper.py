@@ -4,6 +4,10 @@ import course_catalog.models
 
 def scrape_single_section(section_pieces, course, term, tools):
 
+    #For debugging
+    if course.number == "834":
+        import pdb; pdb.set_trace()    
+
     #Generate a section from the header
     section = section_from_header(section_pieces, course, term)
 
@@ -21,35 +25,56 @@ def scrape_single_section_component(section_pieces, section):
     component_attributes = {'section' : section}
 
     #Grab Timeslot info
-    #Sometimes day is e.g. "MoTuWeSaSu"
+    #Sometimes all_days is e.g. "MoTuWeSaSu"
     all_days = section_pieces.popleft()
     start_time_str = section_pieces.popleft()
     end_time_str = section_pieces.popleft()
-    timeslots = split_into_timeslots(all_days, start_time_str, end_time_str)
-
+    
     #Constant info
     component_attributes['room'] = section_pieces.popleft()
 
     instructor_name = section_pieces.popleft()
-    component_attributes['instructor'] = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=instructor_name)
+    if instructor_name == "TBA":
+        component_attributes['instructor'] = None
+    else:
+        component_attributes['instructor'] = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=instructor_name)
 
     #Date range
-    m = re.search('^([\S]+)\s*-\s*([\S]+)$', section_pieces.popleft())
+    date_range_str = section_pieces.popleft()
+    if date_range_str == "TBA":
+        component_attributes['start_date'] = None
+        component_attributes['end_date'] = None
+    else:
+        m = re.search('^([\S]+)\s*-\s*([\S]+)$', date_range_str)
 
-    component_attributes['start_date'] = datetime.strptime(m.group(1), "%Y/%m/%d")
-    component_attributes['end_date'] = datetime.strptime(m.group(2), "%Y/%m/%d")
+        component_attributes['start_date'] = datetime.strptime(m.group(1), "%Y/%m/%d")
+        component_attributes['end_date'] = datetime.strptime(m.group(2), "%Y/%m/%d")
         
-    #Create a section component for each day
-    for timeslot in timeslots:
-        component_attributes['timeslot'] = timeslot
+    timeslots = split_into_timeslots(all_days, start_time_str, end_time_str)
+
+    if timeslots is None:
+        component_attributes['timeslot'] = None
         component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **component_attributes)
+    else:
+        #Create a section component for each day
+        for timeslot in timeslots:
+            component_attributes['timeslot'] = timeslot
+            component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **component_attributes)
 
 def split_into_timeslots(all_days, start_time_str, end_time_str):
     """
     Returns a list of all the timeslots present in a combo like 'MoTuWeSaSu'
     """
-    start_time = datetime.strptime(start_time_str, "%I:%M%p")
-    end_time = datetime.strptime(end_time_str, "%I:%M%p")
+    if all_days == "TBA":
+        return None
+
+    start_time = None
+    end_time = None
+
+    if start_time_str != "TBA":
+        start_time = datetime.strptime(start_time_str, "%I:%M%p")
+    if end_time_str != "TBA":
+        end_time = datetime.strptime(end_time_str, "%I:%M%p")
 
     timeslots = []
 
@@ -87,6 +112,7 @@ def section_from_header(piece_array, course, term):
     #discard all the other section header entries, since they're useless for now
     items_discarded = 0
     while section_info != "Select":
+
         section_info = piece_array.popleft()
         items_discarded += 1
         #Make sure we're not tossing everything away...

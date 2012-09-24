@@ -1,15 +1,23 @@
 <div class="section_component">
     <span class="timeslot">
-        {{ component.timeslot.day_of_week.name }}, 
-        <time datetime="{{ component.timeslot.start_time|date:"H:i" }}">{{ component.timeslot.start_time|date:"g:ia" }}</time>
-        -
-        <time datetime="{{ component.timeslot.end_time|date:"H:i" }}">{{ component.timeslot.end_time|date:"g:ia" }}</time>
+        {% if component.timeslot %}
+            {{ component.timeslot.day_of_week.name }}, 
+            <time datetime="{{ component.timeslot.start_time|date:"H:i" }}">{{ component.timeslot.start_time|date:"g:ia" }}</time>
+            -
+            <time datetime="{{ component.timeslot.end_time|date:"H:i" }}">{{ component.timeslot.end_time|date:"g:ia" }}</time>
+        {% else %}
+            TBA
+        {% endif %}
     </span>
-    <span class="room">{{ component.room }}</span>
-    <span class="instructor">{{ component.instructor }}</span>
+    <span class="room">{{ component.room|default:"TBA" }}</span>
+    <span class="instructor">{{ component.instructor|default:"TBA" }}</span>
     <span class="date_range">
-        <time datetime="{{ component.start_date|date:"Y-m-d" }}">{{ component.start_date|date:"M jS, Y" }}</time>
-        -
-        <time datetime="{{ component.end_date|date:"Y-m-d" }}">{{ component.end_date|date:"M jS, Y" }}</time>
+        {% if component.start_date and component.end_date %}
+            <time datetime="{{ component.start_date|date:"Y-m-d" }}">{{ component.start_date|date:"M jS, Y" }}</time>
+            -
+            <time datetime="{{ component.end_date|date:"Y-m-d" }}">{{ component.end_date|date:"M jS, Y" }}</time>
+        {% else %}
+            TBA
+        {% endif %}
     </span>
 </div>
