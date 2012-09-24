@@ -1,0 +1,55 @@
+{% extends "course_catalog/base.html" %}
+
+
+{% block page_title %}Qcumber | {{ subject.abbreviation }} - {{ subject.title }} {% endblock %}
+
+
+{% block body_content %}
+
+<header>
+    <hgroup>
+        <h1>Qcumber</h1>
+        <h2>PRE-ALPHA</h2>
+    </hgroup>
+</header>
+
+<section>
+    <div id="search_form">
+        <form name="course_search_form">
+            <input name="q" type=search autofocus required placeholder="Search for courses" results=5 autosave="course_search_results_autosave">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <div id="search_results">
+    </div>
+</section>
+
+<article class="subject">
+    <h1>
+        <span>{{ subject.abbreviation }}</span> - <span>{{ subject.title }}</span>
+    </h1>
+
+    <h1>
+        Courses
+    </h1>
+
+    <div class="course_list">
+        <ul>
+        {% for course in courses %}
+            <li>
+            <a href="#">
+            {{ subject.abbreviation }} {{ course.number }} - {{ course.title }}
+            </a>
+            </li>
+        {% empty %}
+          This subject has no courses.
+        {% endfor %}
+        </ul>
+    </div>
+
+</article>
+
+{% endblock %}
+
+
+

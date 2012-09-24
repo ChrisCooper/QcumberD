@@ -1,9 +1,6 @@
--seperate instructors by alternating commas
--turn instructors-to-courses into a many-to-many relationship
 -give basic styling to course detail page and general site
--create a view for courses by name, e.g. course/anat_316
-
-
+-add int number to course for ordering
+-factor out search bar in templates
 
 Optional:
 -Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django
