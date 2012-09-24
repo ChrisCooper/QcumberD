@@ -1,6 +1,6 @@
+-factor out search bar in templates
 -give basic styling to course detail page and general site
 -add int number to course for ordering
--factor out search bar in templates
 
 Optional:
 -Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django

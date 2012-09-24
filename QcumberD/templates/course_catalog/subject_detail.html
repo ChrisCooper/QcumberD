@@ -37,7 +37,7 @@
         <ul>
         {% for course in courses %}
             <li>
-            <a href="#">
+            <a href="{{ course.get_absolute_url }}">
             {{ subject.abbreviation }} {{ course.number }} - {{ course.title }}
             </a>
             </li>

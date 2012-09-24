@@ -27,7 +27,7 @@
 <article class="course">
     <hgroup>
         <h1>
-            <a href="#">{{ course.subject.title }}</a>
+            <a href="{{ course.subject.get_absolute_url }}">{{ course.subject.title }}</a>
         </h1>
         <h2>
             <span>{{ course.subject.abbreviation }}</span> <span>{{ course.number }}</span> - <span>{{ course.title }}</span>

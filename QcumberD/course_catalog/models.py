@@ -28,6 +28,11 @@ class Subject(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('course_catalog.views.subject_detail', (), {
+            'subject_abbr': self.abbreviation})
+
 
 class Course(ModelOnProbation):
     #Attributes
@@ -50,6 +55,12 @@ class Course(ModelOnProbation):
             return cls.objects.get(subject=kwargs['subject'], number=kwargs['number'])
         except ObjectDoesNotExist:
             return None
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('course_catalog.views.course_detail', (), {
+            'subject_abbr': self.subject.abbreviation,
+            'course_number' : self.number})
 
     
 class Section(ModelOnProbation):
