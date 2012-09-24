@@ -24,7 +24,7 @@ admin.site.register(Course, CourseAdmin)
 class SectionComponentInline(admin.StackedInline):
     model = SectionComponent    
     fieldsets = [
-        ('General',     {'fields': ['section', 'instructor', 'room', 'timeslot']}),
+        ('General',     {'fields': ['section', 'instructors', 'room', 'timeslot']}),
         ('Date Span',   {'fields': ['start_date', 'end_date']}),
     ]
     fk_name = 'section'

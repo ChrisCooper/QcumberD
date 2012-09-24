@@ -86,11 +86,14 @@ class SectionComponent(ModelOnProbation):
 
     #Relationships
     section = models.ForeignKey(Section, related_name="components")
-    instructor = models.ForeignKey("Instructor", related_name="section_components", blank=True, null=True)
+    instructors = models.ManyToManyField("Instructor", related_name="section_components")
     timeslot = models.ForeignKey("Timeslot", related_name="section_components", blank=True, null=True)
 
     def __unicode__(self):
-        return u"%s to %s in %s with %s at %s" % (self.start_date.strftime("%A, %B %d, %Y"), self.end_date.strftime("%A, %B %d, %Y"), self.room, self.instructor.name, self.timeslot.__unicode__())
+        return u"%s to %s in %s with %s at %s" % (self.start_date.strftime("%A, %B %d, %Y"), self.end_date.strftime("%A, %B %d, %Y"), self.room, self.instructors_string(), self.timeslot)
+
+    def instructors_string(self):
+        return ", ".join(i.name for i in self.instructors.all())
 
     @classmethod
     def existing(cls, **kwargs):

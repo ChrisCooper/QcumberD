@@ -10,7 +10,7 @@
         {% endif %}
     </span>
     <span class="room">{{ component.room|default:"TBA" }}</span>
-    <span class="instructor">{{ component.instructor|default:"TBA" }}</span>
+    <span class="instructor">{{ component.instructors_string|default:"TBA" }}</span>
     <span class="date_range">
         {% if component.start_date and component.end_date %}
             <time datetime="{{ component.start_date|date:"Y-m-d" }}">{{ component.start_date|date:"M jS, Y" }}</time>
