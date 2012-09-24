@@ -46,29 +46,44 @@ def drill_terms_of_sections(course, tools):
         drill_sections(course, term, tools)
 
 def drill_sections(course, term, tools):
-    section_pieces = section_pieces_from_page(tools)
-        
-    while len(section_pieces) > 0:
-        section_component_helper.scrape_single_section(section_pieces, course, term, tools)
+    component_rows = component_rows_from_page(tools)
+    
+    section_component_helper.compile_sections_from_component_rows(component_rows, course, term, tools)
             
 
-def section_pieces_from_page(tools):
+def component_rows_from_page(tools):
     """
     Returns the header and component rows for all sections on the page
     """
     s = tools.selen
         
-    section_pieces = collections.deque()
+    component_rows = collections.deque()
 
     index = 1
     locator_format = "xpath=(//td[@class='PSLEVEL2GRIDROW'])[%d]"
     locator = locator_format % index
+
+    rough_row_top = -1000000
+    prev_element_left = 1000000
                 
     while s.is_element_present(locator):
-            
-        section_pieces.append(s.get_text(locator).strip())
+         
+        element_top = s.get_element_position_top(locator)
+        element_left = s.get_element_position_left(locator)
+
+        if abs(rough_row_top - element_top) > 5 and element_left < prev_element_left:
+            #We're at the next row!
+            row = collections.deque()
+            component_rows.append(row)
+
+            #Set the standard for this row
+            rough_row_top = element_top
+
+        prev_element_left = element_left
+
+        row.append(s.get_text(locator).strip())
             
         index += 1
         locator = locator_format % index
     
-    return section_pieces
+    return component_rows

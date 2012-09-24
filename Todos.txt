@@ -1,8 +1,9 @@
--split rows based on top position, so choosing section headers vs. components is easy
-
+-install South
+-add description to job_config
 -fix entries that are EMPTY or "TBA"
 -turn instructors-to-courses into a many-to-many relationship
 -give basic styling to course detail page and general site
+-create a view for course/anat_316 e.g.
 
 
 

@@ -50,6 +50,9 @@ class JobConfig(models.Model):
     """
     name = models.CharField(max_length=255)
 
+    #Add this in after installing South
+    #description = models.TextField()
+
     timeout_milliseconds = models.IntegerField()
     
     #While letters of the alphabet the job should scrape the subjects of
