@@ -50,12 +50,20 @@ def add_component_to_section(section_pieces, section):
     #Room
     component_attributes['room'] = section_pieces[3]
 
-    #Instructor
-    instructor_name = section_pieces[4]
-    if not instructor_name or instructor_name == "TBA":
-        component_attributes['instructor'] = None
-    else:
-        component_attributes['instructor'] = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=instructor_name)
+    #Instructors
+    #They are comma seperated, with extra whitespace
+    #They also have a comma after their last name
+    #e.g. Doe, John C 
+    instructors_names = section_pieces[4]
+    instructors = []
+    if instructors_names and instructors_names != "TBA" and instructors_names != "Staff":
+        lis = re.sub(r'\s+', ' ', instructors_names).split(",")
+        for i in range(0, len(lis), 2):
+            last_name = lis[i].strip()
+            other_names = lis[i+1].strip()
+            name = u"%s, %s" % (last_name, other_names)
+            instructor = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=name)
+            instructors.append(instructor)
 
     #Date range
     date_range_str = section_pieces[5]
@@ -73,11 +81,17 @@ def add_component_to_section(section_pieces, section):
     if timeslots is None:
         component_attributes['timeslot'] = None
         component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **component_attributes)
+        for i in instructors:
+            component.instructors.add(i)
+        component.save()
     else:
         #Create a section component for each day
         for timeslot in timeslots:
             component_attributes['timeslot'] = timeslot
             component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **component_attributes)
+            for i in instructors:
+                component.instructors.add(i)
+            component.save()
 
 def split_into_timeslots(all_days, start_time_str, end_time_str):
     """
