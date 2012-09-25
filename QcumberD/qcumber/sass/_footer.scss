@@ -1,0 +1,25 @@
+$footer_height: 52px;
+
+#footer{
+
+    height: $footer_height;
+
+    background-color: $dark_green;
+    text-align: center;
+
+    .links-container {
+        padding: 15px;
+        
+        a {
+            color: white;
+            text-decoration: none;
+            padding: 20px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .sep {
+        color: $light_grey;
+        }
+    }
+}
