@@ -1,28 +1,10 @@
-{% extends "course_catalog/base.html" %}
+{% extends "course_catalog/pages/base_qcumber.html" %}
 
 
 {% block page_title %}Qcumber | {{ subject.abbreviation }} - {{ subject.title }} {% endblock %}
 
 
-{% block body_content %}
-
-<header>
-    <hgroup>
-        <h1>Qcumber</h1>
-        <h2>PRE-ALPHA</h2>
-    </hgroup>
-</header>
-
-<section>
-    <div id="search_form">
-        <form name="course_search_form">
-            <input name="q" type=search autofocus required placeholder="Search for courses" results=5 autosave="course_search_results_autosave">
-            <input type="submit" value="Search">
-        </form>
-    </div>
-    <div id="search_results">
-    </div>
-</section>
+{% block main_container %}
 
 <article class="subject">
     <h1>

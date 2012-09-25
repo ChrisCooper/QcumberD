@@ -6,3 +6,5 @@ Optional:
 -Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django
 
 
+Example Sites:
+Khan Academy

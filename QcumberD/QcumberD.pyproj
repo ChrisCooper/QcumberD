@@ -65,6 +65,8 @@
     <Folder Include="templates" />
     <Folder Include="templates\admin\" />
     <Folder Include="templates\course_catalog\" />
+    <Folder Include="templates\course_catalog\components\" />
+    <Folder Include="templates\course_catalog\pages\" />
     <Folder Include="templates\solus_scraper\" />
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +82,15 @@
     <Content Include="qcumber\static\js\modernizr-2.6.1.min.js" />
     <Content Include="qcumber\static\js\plugins.js" />
     <Content Include="templates\admin\base_site.html" />
-    <Content Include="templates\course_catalog\base.html" />
-    <Content Include="templates\course_catalog\course_detail.html" />
-    <Content Include="templates\course_catalog\index.html" />
+    <Content Include="templates\course_catalog\components\footer.html" />
+    <Content Include="templates\course_catalog\components\header.html" />
+    <Content Include="templates\course_catalog\components\search_section.html" />
+    <Content Include="templates\course_catalog\experiments.html" />
+    <Content Include="templates\course_catalog\pages\base_generic.html" />
+    <Content Include="templates\course_catalog\pages\base_qcumber.html" />
+    <Content Include="templates\course_catalog\pages\course_detail.html" />
+    <Content Include="templates\course_catalog\pages\index.html" />
+    <Content Include="templates\course_catalog\pages\subject_detail.html" />
     <Content Include="templates\course_catalog\section_component_detail.html" />
     <Content Include="templates\course_catalog\section_detail.html" />
     <Content Include="templates\solus_scraper\index.html" />
