@@ -5,12 +5,58 @@
    Custom Styles
    ========================================================================== */
 
-   $light_pale_green: #8BC300;
-   $dark_green: #529700;
-   $light_green: #ADF200;
-   $light_yellow: #FFFF0A;
-   $beige: #DAB38B;
+/* Color Scheme */
+$strong_green: #00C618;
+$dark_pale_green: #259433;
+$dark_green: #008110;
+$light_green: #39E24D;
+$light_pale_green: #66E275;
 
+$light_grey: #CCC;
+
+
+/* Sizing */
+$footer_height: 52px;
+
+html,body{
+    height: 100%
+}
+
+#page_holder {
+    height: 100%;
+    position:relative;
+}
+
+#content_body {
+    padding-bottom: $footer_height;
+}
+
+#footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: $footer_height;
+
+    background-color: $dark_green;
+    text-align: center;
+
+    .links-container {
+        padding: 15px;
+        
+        a {
+            color: white;
+            text-decoration: none;
+            padding: 20px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .sep {
+        color: $light_grey;
+        }
+    }
+}
 
 @import "helpers";
 @import "printStyles";

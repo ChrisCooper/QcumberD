@@ -1,4 +1,3 @@
--factor out search bar in templates
 -give basic styling to course detail page and general site
 -add int number to course for ordering
 
@@ -8,3 +7,5 @@ Optional:
 
 Example Sites:
 Khan Academy
+http://www.fogcreek.com/
+http://campfirenow.com/
