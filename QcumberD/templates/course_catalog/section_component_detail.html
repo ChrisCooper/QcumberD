@@ -1,4 +1,4 @@
-<div class="section_component">
+<div class="section-component">
     <span class="timeslot">
         {% if component.timeslot %}
             {{ component.timeslot.day_of_week.name }}, 
@@ -9,8 +9,8 @@
             TBA
         {% endif %}
     </span>
-    <span class="room">{{ component.room|default:"TBA" }}</span>
     <span class="instructor">{{ component.instructors_string|default:"TBA" }}</span>
+    <span class="room">{{ component.room|default:"TBA" }}</span>
     <span class="date_range">
         {% if component.start_date and component.end_date %}
             <time datetime="{{ component.start_date|date:"Y-m-d" }}">{{ component.start_date|date:"M jS, Y" }}</time>
