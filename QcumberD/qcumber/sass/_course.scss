@@ -23,7 +23,7 @@
 
 .section {
     margin: 15px;
-    background-color: #DDD;
+    background-color: $section_background;
     padding: 5px;
 
     header {
@@ -39,9 +39,13 @@
 }
 
 .section-component {
+    &:hover {
+        background-color: $section_component_background_hover;
+    }
+
     padding: 3px;
     margin: 7px;
-    background-color: #EAEAEA;
+    background-color: $section_component_background;
 
     table {
         width: 100%;
