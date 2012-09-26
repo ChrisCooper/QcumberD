@@ -19,9 +19,11 @@
         <ul>
         {% for course in courses %}
             <li>
-            <a href="{{ course.get_absolute_url }}">
-            {{ subject.abbreviation }} {{ course.number }} - {{ course.title }}
-            </a>
+                <a href="{{ course.get_absolute_url }}">
+                {{ subject.abbreviation }} {{ course.number }} - {{ course.title }}
+                </a>
+                <div class="description hidden">
+                </div>
             </li>
         {% empty %}
           This subject has no courses.
