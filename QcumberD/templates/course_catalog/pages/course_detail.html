@@ -29,7 +29,9 @@
         {% for section in course.sections.all %}
             {% include "course_catalog/section_detail.html" with section=section only %}
         {% empty %}
-          This course has no sections.
+            <div class="center">
+                This course has no sections.
+            </div>
         {% endfor %}
 
     </div>
