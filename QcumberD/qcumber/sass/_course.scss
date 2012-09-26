@@ -3,7 +3,7 @@
     margin-left: 20%;
     margin-right: 20%;
 
-    background-color: #F5F5F5;
+    background-color: #F2F2F2;
 
     @include modern-links;
 
@@ -45,11 +45,31 @@
 
 .section-component {
     padding: 3px;
+    margin: 7px;
+    background-color: #EAEAEA;
+
+    table {
+        width: 100%;
+    }
 
     .timeslot {
+        width: 30%;
         margin: 0px 10px;
         padding: 2px 4px;
-        background-color: #BBB;
+        //background-color: #BBB;
+    }
+
+    .instructor {
+        width: 20%;
+    }
+
+    .room {
+        width: 15%;
+    }
+
+    .date-range {
+        text-align: right;
+        width: 25%;
     }
 
 

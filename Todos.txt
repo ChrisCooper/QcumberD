@@ -1,5 +1,5 @@
--give basic styling to course detail page and general site
 -add int number to course for ordering
+-add ordering property for sections (lecture, lab, ... study)
 
 Optional:
 -Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django
@@ -9,3 +9,25 @@ Example Sites:
 Khan Academy
 http://www.fogcreek.com/
 http://campfirenow.com/
+
+
+
+
+
+
+.wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+	height: 142px; /* .push must be the same height as .footer */
+}
+
+/*
+
+Sticky Footer by Ryan Fait
+http://ryanfait.com/
+
+*/
