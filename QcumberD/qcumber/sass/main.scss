@@ -24,24 +24,19 @@ $content_light_pale_green: #A8E3AF;
 
 /* Text */
 $light_grey_text: #CCC;
+$link_green: #369941;
 
-@mixin modern-links {
+@mixin modern-links($color: $link_green)  {
     a {
         text-decoration: none;
+        color: $color;
         &:hover {
             text-decoration: underline;
         }
     }
 }
 
-@mixin white-links {
-    @include modern-links;
-    a {
-        color: white;
-    }
-}
-
-.center {
+.title {
     text-align: center;
 }
 

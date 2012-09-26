@@ -1,16 +1,10 @@
 .course {
 
-    @include modern-links;
-
-
+    @include modern-links();
 
     .description {
         padding-left: 10%;
         padding-right: 10%;
-    }
-
-    .subject a {
-        color: grey;    
     }
 
     .section_list {

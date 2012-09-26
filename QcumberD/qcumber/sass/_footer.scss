@@ -8,7 +8,7 @@ $footer_height: 46px;
     .links-container {
         padding: 12px;
         
-        @include white-links;
+        @include modern-links(white);
 
         a {
             padding-left: 20px;

@@ -26,7 +26,7 @@ $header_height: 40px;
         li {
             display: inline;
 
-            @include white-links;
+            @include modern-links(white);
 
             a {
                 padding: 0px 20px;
