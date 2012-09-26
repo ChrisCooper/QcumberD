@@ -6,12 +6,15 @@
 
 {% block main_container %}
 
-<article class="subject">
-    <h1 class="subject_title">
-        <span>{{ subject.abbreviation }}</span> - <span>{{ subject.title }}</span>
+<article class="subject clearfix">
+    <h1 class="title subject_title">
+        <a href="{{ subject.get_absolute_url }}">
+            <span>{{ subject.abbreviation }}</span> - <span>{{ subject.title }}</span>
+        </a>
+        
     </h1>
 
-    <h1 class="title">
+    <h1 class="title section_title">
         Courses
     </h1>
 
