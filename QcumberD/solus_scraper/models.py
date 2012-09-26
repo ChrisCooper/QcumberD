@@ -76,3 +76,55 @@ class JobConfig(models.Model):
         return self.name
 
     #News.objects.filter(pk=self.pk).update(last_visited=datetime.datetime.now())
+
+
+
+section_types = {
+    "BLN": "Blended",
+    "CLN": "Clinical",
+    #"  ": "Composition"
+    "COR": "Correspondence",
+    "DIS": "Discussion",
+    #"  ": "Discussion / Laboratory",
+    #"  ": "Ensemble",
+    "EXM": "Exam",
+    "FLD": "Field Studies",
+    "IND": "Individual Study",
+    "LAB": "Laboratory",
+    #"  ": "Laboratory / Conversation",
+    #"  ": "Laboratory / Seminar",
+    #"  ": "Laboratory / Tutorial",
+    "LEC": "Lecture",
+    #"  ": "Laboratory / Demonstration",
+    "LDI": "Lecture / Discussion",
+    "LLB": "Lecture / Laboratory",
+    "LSM": "Lecture / Seminar",
+    "LTU": "Lecture / Tutorial",
+    #"  ": "Meeting",
+    #"  ": "Oral",
+    #"  ": "Oral / Conversation",
+    "PRA": "Practicum",
+    "PRJ": "Project",
+    "REA": "Reading",
+    "RSC": "Research",
+    "SEM": "Seminar",
+    #"  ": "Seminar / Discussion",
+    #"  ": "Seminar / Workshop",
+    #"  ": "Speaker",
+    "STD": "Studio",
+    #"  ": "Technical Workshop",
+    "THE": "Thesis Research",
+    "TUT": "Tutorial",
+    #"  ": "Unknown",
+    #"  ": "Workshop",
+}
+
+weekdays = {
+    "Su" : "Sunday",
+    "Mo" : "Monday",
+    "Tu" : "Tuesday",
+    "We" : "Wednesday",
+    "Th" : "Thursday",
+    "Fr" : "Friday",
+    "Sa" : "Saturday",
+}

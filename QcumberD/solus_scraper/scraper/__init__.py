@@ -2,7 +2,7 @@ from selenium import selenium
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time
 
-from solus_scraper.models import JobConfig
+from solus_scraper.models import JobConfig, section_types, weekdays
 import course_catalog.models
 
 import login_helper
@@ -35,6 +35,8 @@ class ScraperTools(object):
 
 
 def full_scrape(config):
+    print("Updating constant entries...")
+    update_constants()
 
     print("Beginning scrape job...")
 
@@ -60,3 +62,13 @@ def full_scrape(config):
     s.stop()
 
    
+def update_constants():
+    for type_abbr in section_types:
+        type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=type_abbr)
+        type.name = section_types[type_abbr]
+        type.save()
+
+    for day_abbr in weekdays:
+        day = course_catalog.models.existing_or_new(course_catalog.models.DayOfWeek, abbreviation=day_abbr)
+        day.name = weekdays[day_abbr]
+        day.save()
