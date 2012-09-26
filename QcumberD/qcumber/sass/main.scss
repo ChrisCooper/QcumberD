@@ -26,6 +26,18 @@ $content_light_pale_green: #A8E3AF;
 $light_grey_text: #CCC;
 $link_green: #369941;
 
+@mixin rounded-corners($radius: 7px) {
+    -moz-border-radius: $radius;
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin rounded-corner($side, $radius: 7px) {
+  border-#{$side}-radius: $radius;
+  -moz-border-radius-#{$side}: $radius;
+  -webkit-border-#{$side}-radius: $radius;
+}
+
 @mixin modern-links($color: $link_green)  {
     a {
         text-decoration: none;
@@ -65,13 +77,39 @@ html, body {
 	//height: $footer_height;
 }
 
+ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.cell-list {
+    li {
+        @include rounded-corners();
+        background-color: $section_background;
+        margin: 15px;
+        padding: 10px;
+
+        @include modern-links();
+            
+        header {
+            //padding-bottom: 3px;
+            .section_type {
+                font-weight:bold;
+            }   
+            .section_id {
+                font-style: italic;
+                color: #333;
+            }
+        }
+    }
+}
+
 @import "footer";
 @import "header";
 @import "course";
 @import "subject";
 
-
-
+@import "mixins";
 
 /* Boilerplate */
 @import "helpers";

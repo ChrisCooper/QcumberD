@@ -26,13 +26,17 @@
                 Sections
             </h1>
         </div>
+        <ul class="cell-list">
         {% for section in course.sections.all %}
-            {% include "course_catalog/section_detail.html" with section=section only %}
+            <li>
+                {% include "course_catalog/section_detail.html" with section=section only %}
+            </li>
         {% empty %}
             <div class="center">
                 This course has no sections.
             </div>
         {% endfor %}
+        </ul>
 
     </div>
 

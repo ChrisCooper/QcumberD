@@ -8,27 +8,9 @@
     }
 
     .section_list {
-
         padding: 20px;
     }
 
-}
-
-.section {
-    margin: 15px;
-    background-color: $section_background;
-    padding: 5px;
-
-    header {
-        //padding-bottom: 3px;
-        .section_type {
-            font-weight:bold;
-        }   
-        .section_id {
-            font-style: italic;
-            color: #333;
-        }
-    }
 }
 
 .section-component {

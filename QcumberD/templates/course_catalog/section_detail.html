@@ -1,15 +1,12 @@
-<div class="section">
-    <header>
-        <span class="section_type">{{ section.type.name }}</span>
-        <span class="section_id">({{ section.solus_id }})</span>
-    </header>
+<header>
+    <span class="section_type">{{ section.type.name }}</span>
+    <span class="section_id">({{ section.solus_id }})</span>
+</header>
 
-    <div class="section_component_list">
-        {% for component in section.components.all %}
-             {% include "course_catalog/section_component_detail.html" with component=component only %}              
-        {% empty %}
-            This section has no timeslots.
-        {% endfor %}
-    </div>
-
+<div class="section_component_list">
+    {% for component in section.components.all %}
+            {% include "course_catalog/section_component_detail.html" with component=component only %}              
+    {% empty %}
+        This section has no timeslots.
+    {% endfor %}
 </div>
