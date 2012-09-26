@@ -6,24 +6,26 @@
 {% block main_container %}
 
 <article class="course">
-    <hgroup>
+    <hgroup class="title clearfix">
         <h1 class="subject">
             <a href="{{ course.subject.get_absolute_url }}" class="">{{ course.subject.title }}</a>
         </h1>
         <h2>
             <span>{{ course.subject.abbreviation }}</span> <span>{{ course.number }}</span> - <span>{{ course.title }}</span>
         </h2>
-    </hgroup
+    </hgroup>
 
     <div class="description">
         {{ course.description|default:"No course description." }}
     </div>
 
-    <h1>
-        Sections
-    </h1>
-
-    <div class="section_list">
+    
+    <div class="section_list clearfix">
+        <div class="title">
+            <h1>
+                Sections
+            </h1>
+        </div>
         {% for section in course.sections.all %}
             {% include "course_catalog/section_detail.html" with section=section only %}
         {% empty %}

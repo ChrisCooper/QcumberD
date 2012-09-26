@@ -1,9 +1,44 @@
 .course {
+
+    margin-left: 20%;
+    margin-right: 20%;
+
+    background-color: #F5F5F5;
+
     @include modern-links;
-    .subject a {
-        color: grey;
-        
-        
+
+    .title {
+        text-align: center;
     }
 
+    .description {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+
+    .subject a {
+        color: grey;    
+    }
+
+    .section_list {
+        padding: 20px;
+    }
+
+}
+
+.section {
+    margin: 15px;
+    background-color: #DDD;
+    padding: 5px;
+
+    header {
+        //padding-bottom: 3px;
+        .section_type {
+            font-weight:bold;
+        }   
+        .section_id {
+            font-style: italic;
+            color: #333;
+        }
+    }
 }
