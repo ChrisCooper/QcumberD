@@ -2,18 +2,13 @@
 
 {% block body_content %}
 
-<div id="page_holder" class="clearfix">
-
-    {% include "course_catalog/components/header.html" %}
-        
-    <div id="content_body" class="clearfix">
+    <div id="content_body">
+        {% include "course_catalog/components/header.html" %}
         {% block main_container %}
         <p>No content on base_qcumber.</p>
         {% endblock %}
     </div>
 
     {% include "course_catalog/components/footer.html" %}
-
-</div>
 
 {% endblock %}

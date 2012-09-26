@@ -1,25 +1,21 @@
-$footer_height: 52px;
+$footer_height: 46px;
 
-#footer{
-
-    height: $footer_height;
+#footer {
 
     background-color: $dark_green;
     text-align: center;
 
     .links-container {
-        padding: 15px;
+        padding: 12px;
         
+        @include white-links;
+
         a {
-            color: white;
-            text-decoration: none;
-            padding: 20px;
-            &:hover {
-                text-decoration: underline;
-            }
+            padding-left: 20px;
+            padding-right: 20px;
         }
         .sep {
-        color: $light_grey;
+            color: $light_grey;
         }
     }
 }

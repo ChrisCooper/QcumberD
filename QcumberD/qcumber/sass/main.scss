@@ -14,23 +14,44 @@ $light_pale_green: #66E275;
 
 $light_grey: #CCC;
 
+@mixin modern-links {
+    a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
 
-/* Sizing */
-@import "footer";
+@mixin white-links {
+    @include modern-links;
+    a {
+        color: white;
+    }
+}
 
-/*
-html,body, #page_holder {
+html, body {
     height: 100%;
-    padding-bottom: $footer_height;
-}*/
+}
 
-/*
 #content_body {
-    padding-bottom: $footer_height;
-}*/
+    //min-height: 100%;
+    //padding-bottom: $footer_height;
+	//margin: 0 auto -$footer_height;
+}
+
+.push {
+	//height: $footer_height;
+}
+
+@import "footer";
+@import "header";
+@import "course";
 
 
 
+
+/* Boilerplate */
 @import "helpers";
 @import "printStyles";
 

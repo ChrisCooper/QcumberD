@@ -20,4 +20,4 @@ def subject_detail(request, subject_abbr):
 
 #For testing random things
 def experiments(request):
-    return render_to_response('course_catalog/experiments.html', {'insructor_list': []})
+    return render_to_response('course_catalog/experiments.html', {})
