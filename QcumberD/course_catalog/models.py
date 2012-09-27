@@ -119,6 +119,7 @@ class SectionComponent(ModelOnProbation):
 class SectionType(ModelOnProbation):
     name = models.CharField(max_length=100)
     abbreviation = models.CharField(max_length=10)
+    order = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name

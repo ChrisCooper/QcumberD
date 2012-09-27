@@ -8,7 +8,9 @@ def index(request):
 
 def course_detail(request, subject_abbr=None, course_number=None):
     c = get_object_or_404(Course, subject__abbreviation__iexact=subject_abbr, number=course_number)
-    return render_to_response('course_catalog/pages/course_detail.html', {'course': c})
+    s = c.sections.order_by('type__order') #prepend term ordering
+    return render_to_response('course_catalog/pages/course_detail.html', {'course': c,
+                                                                          'sections': s})
 
 
 def subject_detail(request, subject_abbr):

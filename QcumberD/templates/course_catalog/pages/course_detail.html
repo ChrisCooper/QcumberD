@@ -27,7 +27,7 @@
             </h1>
         </div>
         <ul class="cell-list">
-        {% for section in course.sections.all %}
+        {% for section in sections %}
             <li>
                 {% include "course_catalog/section_detail.html" with section=section only %}
             </li>

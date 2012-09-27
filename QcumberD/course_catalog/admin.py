@@ -50,11 +50,11 @@ admin.site.register(Instructor, InstructorAdmin)
 
 
 
-class NameAbbrAdmin(admin.ModelAdmin):
+class SectionTypeAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['name', 'abbreviation']}),
+        (None, {'fields': ['name', 'abbreviation', 'order']}),
     ]
-admin.site.register(SectionType, NameAbbrAdmin)
+admin.site.register(SectionType, SectionTypeAdmin)
 
 class TimeslotAdmin(admin.ModelAdmin):
     fieldsets = [
