@@ -2,6 +2,9 @@
 -add ordering property for sections (lecture, lab, ... study)
 -When you mouse over a section, display the weekday on the side in visual form, with the section scheduled in. (If the user has sections in there, display them as well.)
 -on subject page, button to show course description in dropdown
+-consider leaving full text serach for later. for now, use smart navigation a
+-ability for users to supply course webpage
+-consider using: https://docs.djangoproject.com/en/dev/ref/models/querysets/#get-or-create
 
 Optional:
 -Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django
