@@ -1,5 +1,6 @@
 -add int number to course for ordering
 -add ordering property for sections (lecture, lab, ... study)
+-add spacing factor in sass for section sparseness
 -When you mouse over a section, display the weekday on the side in visual form, with the section scheduled in. (If the user has sections in there, display them as well.)
 -on subject page, button to show course description in dropdown
 -consider leaving full text serach for later. for now, use smart navigation a
@@ -8,7 +9,7 @@
 
 Optional:
 -Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django
-
+-Email notifications for changes to selected sections
 
 Example Sites:
 Khan Academy
@@ -17,22 +18,11 @@ http://campfirenow.com/
 
 
 
+https://uwaterloo.ca/open-data/
+https://coursecatalog.harvard.edu
+https://registrar.princeton.edu/course-offerings/
+http://2learn.utoronto.ca/uoft/search/publicCourseSearch.do;jsessionid=87866EBFDBA2316CACA856E9C8222770?method=load
+http://www.studymonkey.ca/university-of-toronto/courses
 
 
 
-.wrapper {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
-}
-.footer, .push {
-	height: 142px; /* .push must be the same height as .footer */
-}
-
-/*
-
-Sticky Footer by Ryan Fait
-http://ryanfait.com/
-
-*/

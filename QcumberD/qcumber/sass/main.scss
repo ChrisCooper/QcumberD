@@ -86,13 +86,13 @@ ul {
     li {
         @include rounded-corners();
         background-color: $section_background;
-        margin: 15px;
-        padding: 10px;
+        margin: 10px;
+        padding: 4px;
 
         @include modern-links();
             
         header {
-            //padding-bottom: 3px;
+            margin-left: 5px;
             .section_type {
                 font-weight:bold;
             }   
