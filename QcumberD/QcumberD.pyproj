@@ -70,11 +70,16 @@
     <Folder Include="templates\solus_scraper\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="qcumber\sass\_mixins.scss" />
+    <Content Include="qcumber\sass\_course.scss" />
     <Content Include="qcumber\sass\main.scss" />
     <Content Include="qcumber\sass\normalize.min.scss" />
     <Content Include="qcumber\sass\_boilerplateStyles.scss" />
+    <Content Include="qcumber\sass\_footer.scss" />
+    <Content Include="qcumber\sass\_header.scss" />
     <Content Include="qcumber\sass\_helpers.scss" />
     <Content Include="qcumber\sass\_printStyles.scss" />
+    <Content Include="qcumber\sass\_subject.scss" />
     <Content Include="qcumber\static\css\main.css" />
     <Content Include="qcumber\static\css\normalize.min.css" />
     <Content Include="qcumber\static\js\jquery-1.8.1.js" />
