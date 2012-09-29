@@ -32,9 +32,11 @@
                 {% include "course_catalog/section_detail.html" with section=section only %}
             </li>
         {% empty %}
-            <div class="center">
-                This course has no sections.
-            </div>
+            <li>
+                <header>
+                    This course has no sections scheduled.
+                </header>
+            </li>
         {% endfor %}
         </ul>
 
