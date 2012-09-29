@@ -62,17 +62,7 @@ class TimeslotAdmin(admin.ModelAdmin):
     ]
 admin.site.register(Timeslot, TimeslotAdmin)
 
-class SeasonAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': ['name']}),
-    ]
-admin.site.register(Season, SeasonAdmin)
 
-class TermAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': ['season', 'year']}),
-    ]
-admin.site.register(Term, TermAdmin)
-
-
+admin.site.register(Term)
 admin.site.register(DayOfWeek)
+admin.site.register(Season)

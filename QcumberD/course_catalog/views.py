@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
-from course_catalog.models import Course, Subject
+from course_catalog.models import Course, Subject, Term
 
 def index(request):
     course_list = Course.objects.all().order_by('number')[:5]
@@ -8,9 +8,15 @@ def index(request):
 
 def course_detail(request, subject_abbr=None, course_number=None):
     c = get_object_or_404(Course, subject__abbreviation__iexact=subject_abbr, number=course_number)
-    s = c.sections.order_by('type__order') #prepend term ordering
+    terms = [s.term for s in c.sections.distinct('term')]
+    terms.sort(key=lambda t: t.order)
+
+    sections = []
+    for t in terms:
+        sections.append((t, c.sections.filter(term=t).order_by('type__order')))
+
     return render_to_response('course_catalog/pages/course_detail.html', {'course': c,
-                                                                          'sections': s})
+                                                                          'all_sections': sections})
 
 
 def subject_detail(request, subject_abbr):

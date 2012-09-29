@@ -26,10 +26,20 @@
                 Sections
             </h1>
         </div>
-        <ul class="cell-list">
-        {% for section in sections %}
+
+        <ul class="list-dropdown clearfix">
+        {% for term, sections in all_sections %}
             <li>
-                {% include "course_catalog/section_detail.html" with section=section only %}
+            <header>
+                {{ term }}
+            </header>
+            <ul class="cell-list">
+            {% for section in sections %}
+                <li>
+                    {% include "course_catalog/section_detail.html" with section=section only %}
+                </li>
+            {% endfor %}
+            </ul>
             </li>
         {% empty %}
             <li>

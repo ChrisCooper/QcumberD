@@ -14,6 +14,7 @@ $light_pale_green: #66E275;
 
 /* Backgrounds */
 $main_background: #F0F0F0;
+$term_background: #C5C5C5;
 $section_background: #DDD;
 $section_component_background_hover: #D0D0D0;
 $section_component_background: #EAEAEA;
@@ -82,16 +83,35 @@ ul {
     padding-left: 0px;
 }
 
+.list-dropdown {
+    
+    header {
+        margin-left: 10px;
+        font-size: 140%;
+    }
+
+    li {
+        margin-bottom: 20px;
+        padding-top: 3px;
+        padding-bottom: 1px;
+        @include rounded-corners();
+        background-color: $term_background;
+    }
+}
+
 .cell-list {
+    margin-top: 0px;
+    margin-bottom: 0px;
     li {
         @include rounded-corners();
         background-color: $section_background;
-        margin: 10px;
+        margin: 7px;
         padding: 4px;
 
         @include modern-links();
             
         header {
+            font-size: 100%;
             margin-left: 5px;
             .section_type {
                 font-weight:bold;

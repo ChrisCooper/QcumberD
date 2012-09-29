@@ -1,11 +1,10 @@
 Immediate:
-Add ordering to Seasons and Terms
+Add ordering to Seasons and Terms (dropdown per term)
 
+Consider design
 
 
 MVP:
--Add ordering to courses
--simply truncate 'A' or 'B' ending on courses while scraping to have them merge
 -on subject page, button to show course description in dropdown
 -consider leaving full text serach for later. for now, use smart navigation a
 
