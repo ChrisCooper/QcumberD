@@ -30,10 +30,14 @@
         <ul class="list-dropdown clearfix">
         {% for term, sections in all_sections %}
             <li>
+            
             <header>
+            <a href="#" class="dropdown-header clearfix">
                 {{ term }}
+            </a>
             </header>
-            <ul class="cell-list">
+            
+            <ul class="cell-list hidden">
             {% for section in sections %}
                 <li>
                     {% include "course_catalog/section_detail.html" with section=section only %}
