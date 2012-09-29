@@ -183,6 +183,7 @@ class Season(ModelOnProbation):
     A time of year, such as Fall, or Fall and Winter, that is not specific to a particular year
     """
     name = models.CharField(max_length=50)
+    order = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name
@@ -194,12 +195,14 @@ class Season(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
+
 class Term(ModelOnProbation):
     """
     A combination of one season and one year (or two, for Fall-Winter courses), exactly specifying a time during which a course is scheduled to be offered
     """
     season = models.ForeignKey(Season)
     year = models.IntegerField()
+    order = models.IntegerField(default=0)
 
     def __unicode__(self):
         return u"%s - %s" % (self.season.name, self.year)
