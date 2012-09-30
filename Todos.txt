@@ -1,5 +1,8 @@
 Immediate:
-Add ordering to Seasons and Terms (dropdown per term)
+Add subject index
+Make footer float to bottom
+(calendar canvas)
+
 
 Consider design
 
@@ -19,6 +22,9 @@ Optional:
 -Have sidebar with persistent search filters. Apply filters to all results as main pane is updated
 -ability for users to supply course webpage
 -consider using: https://docs.djangoproject.com/en/dev/ref/models/querysets/#get-or-create
+-automate setting of term and seaon ordering
+
+for APIs: django-tastypie or django rest framework
 
 Example Sites:
 Khan Academy

@@ -1,9 +1,33 @@
-{% if course_list %}
-    <ul>
-    {% for course in course_list %}
-        <li><a href="{% url 'course_catalog.views.course_detail' course.id %}">{{ course }}</a></li>
-    {% endfor %}
-    </ul>
+{% extends "course_catalog/pages/base_qcumber.html" %}
+
+{% block page_title %} Qcumber | Queen's Painless Course Catalog (Unofficial) {% endblock %}
+
+
+{% block main_container %}
+
+{% if subject_list %}
+    <table>
+        {% for subject in subject_list %}
+        
+            <tr>
+            
+                <td class="abbreviation">
+                    
+                    ({{ subject.abbreviation }})
+                </td>
+                <td class="subject_title">
+                    <a href="{{ subject.get_absolute_url }}">
+                    {{ subject.title }}
+                    </a>
+                </td>
+            
+            </tr>
+            
+            
+        {% endfor %}
+    </table>
 {% else %}
-    <p>No courses are available.</p>
+    <p>No subjects are available.</p>
 {% endif %}
+
+{% endblock %}
