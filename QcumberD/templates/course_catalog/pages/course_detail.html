@@ -1,9 +1,9 @@
-{% extends "course_catalog/pages/base_qcumber.html" %}
+{% extends "course_catalog/pages/filtered_page.html" %}
 
 
 {% block page_title %} Qcumber | {{ course.subject.abbreviation }} {{ course.number }} - {{ course.title }} {% endblock %}
 
-{% block main_container %}
+{% block results_panel %}
 
 <article class="course">
     <hgroup class="title clearfix">
@@ -27,33 +27,32 @@
             </h1>
         </div>
 
-        <ul class="list-dropdown clearfix">
-        {% for term, sections in all_sections %}
-            <li>
+        
+        {% if all_sections %}
+            <ul class="list-dropdown clearfix">
+                {% for term, sections in all_sections %}
+                    <li>
             
-            <header>
-            <a href="#" class="dropdown-header clearfix">
-                {{ term }}
-            </a>
-            </header>
+                    <header>
+                    <a href="#" class="dropdown-header clearfix">
+                        {{ term }}
+                    </a>
+                    </header>
             
-            <ul class="cell-list hidden">
-            {% for section in sections %}
-                <li>
-                    {% include "course_catalog/section_detail.html" with section=section only %}
-                </li>
-            {% endfor %}
-            </ul>
-            </li>
-        {% empty %}
-            <li>
-                <header>
-                    <h2>
-                        This course has no sections scheduled.
-                    </h2>
-                </header>
-            </li>
-        {% endfor %}
+                    <ul class="cell-list hidden">
+                    {% for section in sections %}
+                        <li>
+                            {% include "course_catalog/section_detail.html" with section=section only %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    </li>
+                {% endfor %}
+        {% else %}
+            <div class="alert alert-success">
+                This course has no sections scheduled.
+            </div>
+        {% endif %}
         </ul>
 
     </div>

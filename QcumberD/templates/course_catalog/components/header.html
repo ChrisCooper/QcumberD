@@ -1,17 +1,18 @@
-<header id="header" class="wrapper clearfix">
-    <div class="links-container">
-        <a href="{% url 'course_catalog.views.index' %}">
+
+<div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+    <div class="container">
+        <a href="{% url 'course_catalog.views.index' %}" class="brand">
             <hgroup>
                 <h1>Qcumber</h1>
                 <h2>PRE-ALPHA</h2>
             </hgroup>
         </a>
-        <nav>
-            <ul>
-                <li><a href="#">home</a></li>
-                <li><a href="#">about</a></li>
-                <li><a href="#">contact</a></li>
-            </ul>
-        </nav>
+        <ul class="nav pull-right">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
     </div>
-</header>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 Immediate:
-Add subject index
+Use actual Twitter bootstrap
 Make footer float to bottom
 (calendar canvas)
 

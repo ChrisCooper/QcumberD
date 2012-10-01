@@ -1,0 +1,16 @@
+{% extends "course_catalog/pages/base_qcumber.html" %}
+
+
+{% block main_container %}
+
+    <div class="row">
+        <div class="span2">
+            {% include "course_catalog/components/filter_panel.html" %}
+        </div>
+        <div class="span10">
+            {% block results_panel %}
+            {% endblock %}
+        </div>
+    </div>
+
+{% endblock %}
