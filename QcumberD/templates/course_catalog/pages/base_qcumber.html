@@ -5,14 +5,16 @@
 
     {% include "course_catalog/components/header.html" %}
 
-    <div class="container">
+    <div class="container footer-sibling">
+        <div class="main">
 
-        {% block main_container %}
-            <p>No content on base_qcumber.</p>
-        {% endblock %}
+            {% block main_container %}
+                <p>No content on base_qcumber.</p>
+            {% endblock %}
+        </div>
     
     </div>
 
-    {% include "course_catalog/components/footer.html" %}
+    {# Not working... {% include "course_catalog/components/footer.html" %} #}
 
 {% endblock %}
