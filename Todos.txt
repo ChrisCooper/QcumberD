@@ -1,6 +1,7 @@
 Immediate:
-Use actual Twitter bootstrap
-Make footer float to bottom
+Use uncompiled less or development
+write less compilation script
+Use Jetstrap?
 (calendar canvas)
 
 
@@ -10,10 +11,11 @@ Consider design
 MVP:
 -on subject page, button to show course description in dropdown
 -consider leaving full text serach for later. for now, use smart navigation a
-
+compile less
 
 
 Optional:
+-Scrape textbook info from bookstore store page
 -When you mouse over a section, display the weekday on the side in visual form, with the section scheduled in. (If the user has sections in there, display them as well.)
 -add spacing factor in sass for section sparseness
 -Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django
@@ -26,10 +28,14 @@ Optional:
 
 for APIs: django-tastypie or django rest framework
 
-Example Sites:
-Khan Academy
-http://www.fogcreek.com/
-http://campfirenow.com/
+
+
+DNS registration: http://www.namecheap.com/
+Mocking/design generation: Jetstrap, mockingbird balsamiq
+Payment: Stripe
+Emails: MailChimp, SendGrid
+LESS Editor: Crunch (for post-2.1.1)
+Bootstrap theme generator: boottheme
 
 
 
