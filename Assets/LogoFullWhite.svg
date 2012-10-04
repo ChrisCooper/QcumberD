@@ -14,10 +14,10 @@
    id="svg3559"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="LogoFull.svg"
+   sodipodi:docname="LogoFullWhite.svg"
    inkscape:export-filename="C:\django\QcumberD\Assets\LogoSmall.png"
-   inkscape:export-xdpi="161.93622"
-   inkscape:export-ydpi="161.93622">
+   inkscape:export-xdpi="109.30901"
+   inkscape:export-ydpi="109.30901">
   <defs
      id="defs3561">
     <inkscape:path-effect
@@ -106,8 +106,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.0000001"
-     inkscape:cx="314.55215"
-     inkscape:cy="544.81261"
+     inkscape:cx="269.12551"
+     inkscape:cy="509.10885"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -124,7 +124,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -132,8 +132,15 @@
      inkscape:label="QSlice"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#00750f;fill-opacity:1;stroke:#ffffff;stroke-width:5.19787359;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3031"
+       width="2312.302"
+       height="2138.802"
+       x="-869.401"
+       y="-527.03882" />
     <path
-       style="fill:#00640d;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#00640d;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.34100795;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 262.44318,501.33179 c 0,30.30178 -24.56448,54.86626 -54.86626,54.86626 -30.30181,0 -54.86628,-24.56448 -54.86628,-54.86626 0,-30.30181 24.56447,-54.86626 54.86628,-54.86626 30.30178,0 54.86626,24.56445 54.86626,54.86626 z"
        id="path3575"
        inkscape:connector-curvature="0" />
@@ -274,7 +281,7 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#00640d;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
        x="262.57144"
        y="540.07648"
        id="text4486"
@@ -283,7 +290,7 @@
          id="tspan4488"
          x="262.57144"
          y="540.07648"
-         style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#00640d;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Palatino Linotype;-inkscape-font-specification:Palatino Linotype">cumber</tspan></text>
+         style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Palatino Linotype;-inkscape-font-specification:Palatino Linotype">cumber</tspan></text>
     <path
        style="fill:#00640d;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 181.97624,543.61283 c 0.1854,0.15586 0.37027,0.31221 0.55461,0.46906 10.86211,-6.99262 24.04995,-9.51676 35.97848,-7.41668 2.17386,0.37285 4.31196,0.89785 6.42348,1.54056 5.55931,1.06069 11.10595,2.93217 16.61688,5.02398 0,0 0,0 0,0 7.72759,2.96187 15.47455,6.43579 23.68771,8.96246 1e-5,0 1e-5,0 1e-5,0 20.63986,6.32589 43.14268,5.7764 63.21773,-1.38082 -20.57981,5.64952 -42.58832,4.36388 -61.73177,-3.15165 -5.53325,-2.16517 -10.88599,-4.85081 -16.35067,-7.54876 -2.16214,-0.84232 -4.33989,-1.68617 -6.54159,-2.50048 0,0 0,0 0,0 -7.88896,-2.94739 -16.22185,-5.47126 -24.88122,-5.98959 -13.40947,-0.75972 -26.83097,3.67418 -36.97365,11.99192 z"
