@@ -36,6 +36,7 @@ Payment: Stripe
 Emails: MailChimp, SendGrid
 LESS Editor: Crunch (for post-2.1.1)
 Bootstrap theme generator: boottheme
+HTML Components/UI elements: bootsnipp
 
 
 

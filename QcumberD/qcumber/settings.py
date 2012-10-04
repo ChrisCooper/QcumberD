@@ -71,6 +71,7 @@ STATICFILES_DIRS = (
     ('css', unixy_project_path("qcumber/static/css")),
     ('js', unixy_project_path("qcumber/static/js")),
     ('less', unixy_project_path("qcumber/static/less")),
+    ('img', unixy_project_path("qcumber/static/img")),
 )
 
 # List of finder classes that know how to find static files in
