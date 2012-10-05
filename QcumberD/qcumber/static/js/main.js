@@ -1,4 +1,4 @@
 //Enable Dropdown boxes
 $('.dropdown-header').click(function () {
-    $(this).parent().next().toggleClass('hidden');
+    $(this).parent().next().toggleClass('hide');
 });
