@@ -39,9 +39,9 @@
                     </a>
                     </header>
             
-                    <ul class="cell-list">
+                    <ul class="">
                     {% for section in sections %}
-                        <li>
+                        <li class="well inner-well well-small">
                             {% include "course_catalog/section_detail.html" with section=section only %}
                         </li>
                     {% endfor %}
