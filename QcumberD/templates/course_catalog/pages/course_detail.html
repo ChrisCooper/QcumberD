@@ -5,16 +5,19 @@
 
 {% block results_panel %}
 
-<article class="course">
-    <hgroup class="title clearfix">
-        <h1 class="subject-title">
-            <a href="{{ course.subject.get_absolute_url }}">{{ course.subject.title }}</a>
-        </h1>
-        <hr />
-        <h2>
-            <span><a href="{{ course.subject.get_absolute_url }}">{{ course.subject.abbreviation }}</a></span> <span>{{ course.number }}</span> - <span>{{ course.title }}</span>
-        </h2>
-    </hgroup>
+<article class="course panel">
+
+    <ul class="breadcrumb">
+      <li><a href="{% url 'course_catalog.views.index' %}">Home</a> <span class="divider">-</span></li>
+      <li><a href="{{ course.subject.get_absolute_url }}">{{ course.subject.title }}</a> <span class="divider">-</span></li>
+      <li class="active">{{ course.subject.abbreviation }} {{ course.number }}</li>
+    </ul>
+
+    <hr />
+
+    <h1 class="title">
+        <span><a href="{{ course.subject.get_absolute_url }}">{{ course.subject.abbreviation }}</a></span> <span>{{ course.number }}</span> - <span>{{ course.title }}</span>
+    </h1>
 
     <div class="description">
         {{ course.description|default:"No course description." }}
@@ -23,11 +26,9 @@
     <hr />
     
     <div class="section_list clearfix">
-        <div class="">
-            <h2 class="small muted">
-                Sections
-            </h2>
-        </div>
+        <h2 class="muted">
+            Sections
+        </h2>
 
         
         {% if all_sections %}

@@ -1,17 +1,14 @@
 Immediate:
-Use uncompiled less or development
-write less compilation script
 Use Jetstrap?
 (calendar canvas)
 
 
-Consider design
-
-
 MVP:
+-add simple search page
 -on subject page, button to show course description in dropdown
 -consider leaving full text serach for later. for now, use smart navigation a
-compile less
+-compile less
+-reconvert font and jquery links to use google's service
 
 
 Optional:
@@ -25,6 +22,7 @@ Optional:
 -ability for users to supply course webpage
 -consider using: https://docs.djangoproject.com/en/dev/ref/models/querysets/#get-or-create
 -automate setting of term and seaon ordering
+-scrape exam schedule and email students
 
 for APIs: django-tastypie or django rest framework
 

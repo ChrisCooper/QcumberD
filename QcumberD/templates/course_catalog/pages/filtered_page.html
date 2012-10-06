@@ -4,10 +4,10 @@
 {% block main_container %}
 
     <div class="row">
-        <div class="span2 panel">
+        <div class="span2 clearfix">
             {% include "course_catalog/components/filter_panel.html" %}
         </div>
-        <div class="span10 panel">
+        <div class="span10 clearfix">
             {% block results_panel %}
             {% endblock %}
         </div>
