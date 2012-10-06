@@ -7,9 +7,10 @@
 
 <article class="course">
     <hgroup class="title clearfix">
-        <h1 class="subject_title">
+        <h1 class="subject-title">
             <a href="{{ course.subject.get_absolute_url }}">{{ course.subject.title }}</a>
         </h1>
+        <hr />
         <h2>
             <span><a href="{{ course.subject.get_absolute_url }}">{{ course.subject.abbreviation }}</a></span> <span>{{ course.number }}</span> - <span>{{ course.title }}</span>
         </h2>
@@ -19,12 +20,13 @@
         {{ course.description|default:"No course description." }}
     </div>
 
+    <hr />
     
     <div class="section_list clearfix">
-        <div class="title">
-            <h1 class="section_title">
+        <div class="">
+            <h2 class="small muted">
                 Sections
-            </h1>
+            </h2>
         </div>
 
         
