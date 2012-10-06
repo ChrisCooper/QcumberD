@@ -4,9 +4,13 @@
 </header>
 
 <div class="section_component_list">
-    {% for component in section.components.all %}
-            {% include "course_catalog/section_component_detail.html" with component=component only %}              
-    {% empty %}
-        This section has no timeslots.
-    {% endfor %}
+    <table class="table table-condensed  table-hover">
+        {% for component in section.components.all %}
+            <tr>
+                {% include "course_catalog/section_component_detail.html" with component=component only %}
+            </tr>
+        {% empty %}
+            This section has no timeslots.
+        {% endfor %}
+    </table>
 </div>  

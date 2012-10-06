@@ -43,7 +43,16 @@ ul {
     margin-left: 0px;
 }
 
-.section-component {
+.inner-well .table {
+    background-color: lighten(@section_background, 5%);
+     
+    tr:hover td,
+    tr:hover th {
+        background-color: lighten(@section_background, 15%);
+    }
+}
+
+/*.section-component {
     &:hover {
         background-color: @section_component_background_hover;
     }
@@ -75,7 +84,7 @@ ul {
         text-align: right;
         width: 27%;
     }
-}
+}*/
 
 
 
