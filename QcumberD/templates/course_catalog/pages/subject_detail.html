@@ -7,6 +7,12 @@
 {% block results_panel %}
 
 <article class="subject clearfix">
+
+    <ul class="breadcrumb">
+      <li><a href="{% url 'course_catalog.views.index' %}">Home</a> <span class="divider">-</span></li>
+      <li class="active">{{ subject.title }}</li>
+    </ul>
+    
     <h1 class="title subject_title">
         <a href="{{ subject.get_absolute_url }}">
             <span>{{ subject.abbreviation }}</span> - <span>{{ subject.title }}</span>

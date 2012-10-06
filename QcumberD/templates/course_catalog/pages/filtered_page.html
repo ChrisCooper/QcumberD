@@ -5,11 +5,15 @@
 
     <div class="row">
         <div class="span2 clearfix">
-            {% include "course_catalog/components/filter_panel.html" %}
+            <div class="panel">
+                {% include "course_catalog/components/filter_panel.html" %}
+            </div>
         </div>
         <div class="span10 clearfix">
-            {% block results_panel %}
-            {% endblock %}
+            <div class="panel">
+                {% block results_panel %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 
