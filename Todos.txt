@@ -8,6 +8,7 @@ Add search bar to header (so it's accessible from all pages)
 Add feedback integration from http://www.uservoice.com
 Turn off debug mode
 Django checklist
+Get scraper working on mac
 Use Jetstrap?
 (calendar canvas)
 
