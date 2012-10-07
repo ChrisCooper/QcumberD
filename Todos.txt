@@ -1,21 +1,32 @@
 Immediate:
+MERGE BACK INTO MASTER
+Add search field to  and serach results page:
+			if 1 word and subj matches, get subject (or no space like CISC121?)
+			if 2 words and subj/number match, get course (account for ***A ***B courses somehow?
+			else, search on  subject title and course titles and descriptions
+Add search bar to header (so it's accessible from all pages)
+Add feedback integration from http://www.uservoice.com
+Turn off debug mode
+Django checklist
 Use Jetstrap?
 (calendar canvas)
 
 
 MVP:
--add simple search page
--on subject page, button to show course description in dropdown
 -consider leaving full text serach for later. for now, use smart navigation a
 -compile less
 -reconvert font and jquery links to use google's service
+-filter?
 -prerequisite info?
+
+Post-MVP step:
+-ability to add courses via sign-in
 
 
 Optional:
+-on subject page, button to show course description in dropdown
 -Scrape textbook info from bookstore store page
 -When you mouse over a section, display the weekday on the side in visual form, with the section scheduled in. (If the user has sections in there, display them as well.)
--add spacing factor in sass for section sparseness
 -Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django
 -Email notifications for changes to selected sections
 -Have sidebar with persistent search filters. Apply filters to all results as main pane is updated

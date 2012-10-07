@@ -20,24 +20,36 @@
         
     </h1>
 
-    <h1 class="title section_title">
+    <h1 class="muted">
         Courses
     </h1>
 
     <div class="course_list">
-        <ul class="cell-list">
-        {% for course in courses %}
-            <li>
-                <a href="{{ course.get_absolute_url }}">
-                {{ subject.abbreviation }} {{ course.number }} - {{ course.title }}
-                </a>
-                <div class="description hidden">
-                </div>
-            </li>
-        {% empty %}
-          This subject has no courses.
-        {% endfor %}
-        </ul>
+
+        {% if courses %}
+            <table>
+                {% for course in courses %}
+                    <tr>
+                        <td class="abbreviation">
+                            ({{ subject.abbreviation }} {{ course.number }})
+                        </td>
+                        <td class="subject_title">
+                            <a href="{{ course.get_absolute_url }}">
+                            {{ course.title }}
+                            </a>
+                        </td>
+            
+                    </tr>
+            
+            
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="alert alert-info">
+                This subject has no courses.
+            </div>
+        {% endif %}
+
     </div>
 
 </article>
