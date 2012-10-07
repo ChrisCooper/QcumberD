@@ -1,9 +1,20 @@
-{% extends "course_catalog/pages/filtered_page.html" %}
+{% extends "course_catalog/pages/single_page.html" %}
 
-{% block page_title %} Qcumber | Queen's Painless Course Catalog (Unofficial) {% endblock %}
+{% block page_title %} Qcumber | The Simple Course Catalog For Queen's Students (Unofficial) {% endblock %}
 
 
-{% block results_panel %}
+{% block main_panel %}
+
+    {% include "course_catalog/components/hero_search.html" %}
+
+
+<div class="alert alert-info">
+    This site is not associated with Queen's University.
+    Though we try our best, we can't guarantee that the information on this site is accurate.
+    Please <a href="#">let us know</a> if you see something that's wrong.
+    Our information is usually updated nightly.
+</div>
+
 
 {% if subject_list %}
     <table>
