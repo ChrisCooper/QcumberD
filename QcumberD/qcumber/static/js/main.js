@@ -1,5 +1,5 @@
 //Enable Dropdown boxes
 $('.dropdown-header').click(function () {
-    $(this).parent().next().toggleClass('hide');
+    $(this).parent().next().slideToggle('medium');
     return false;
 });
