@@ -16,8 +16,8 @@
    inkscape:version="0.48.2 r9819"
    sodipodi:docname="LogoFull.svg"
    inkscape:export-filename="C:\django\QcumberD\Assets\LogoSmall.png"
-   inkscape:export-xdpi="161.93622"
-   inkscape:export-ydpi="161.93622">
+   inkscape:export-xdpi="163.47847"
+   inkscape:export-ydpi="163.47847">
   <defs
      id="defs3561">
     <inkscape:path-effect
@@ -105,9 +105,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.0000001"
-     inkscape:cx="314.55215"
-     inkscape:cy="544.81261"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="334.18883"
+     inkscape:cy="551.87129"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -285,11 +285,11 @@
          y="540.07648"
          style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#00640d;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Palatino Linotype;-inkscape-font-specification:Palatino Linotype">cumber</tspan></text>
     <path
-       style="fill:#00640d;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 181.97624,543.61283 c 0.1854,0.15586 0.37027,0.31221 0.55461,0.46906 10.86211,-6.99262 24.04995,-9.51676 35.97848,-7.41668 2.17386,0.37285 4.31196,0.89785 6.42348,1.54056 5.55931,1.06069 11.10595,2.93217 16.61688,5.02398 0,0 0,0 0,0 7.72759,2.96187 15.47455,6.43579 23.68771,8.96246 1e-5,0 1e-5,0 1e-5,0 20.63986,6.32589 43.14268,5.7764 63.21773,-1.38082 -20.57981,5.64952 -42.58832,4.36388 -61.73177,-3.15165 -5.53325,-2.16517 -10.88599,-4.85081 -16.35067,-7.54876 -2.16214,-0.84232 -4.33989,-1.68617 -6.54159,-2.50048 0,0 0,0 0,0 -7.88896,-2.94739 -16.22185,-5.47126 -24.88122,-5.98959 -13.40947,-0.75972 -26.83097,3.67418 -36.97365,11.99192 z"
+       style="fill:#00640d;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 178.02849,546.11496 c 0.19658,0.1421 0.39266,0.28473 0.58822,0.42791 11.6304,-8.67851 26.52666,-12.00817 39.84817,-9.59849 1.12851,0.19838 2.24787,0.43728 3.35938,0.7119 6.61009,0.91728 13.1988,3.09955 19.73978,5.58074 0,0 0,0 0,0 7.73042,2.95957 15.48129,6.41165 23.69061,8.92095 0,0 0,0 0,0 20.63391,6.28397 43.10885,5.75004 63.19777,-1.34567 -20.57489,5.63272 -42.57399,4.39079 -61.76735,-3.05234 -6.32384,-2.44475 -12.41353,-5.56126 -18.68956,-8.60587 -1.37322,-0.52877 -2.75381,-1.05398 -4.14384,-1.56793 -1e-5,0 -1e-5,0 -1e-5,0 -7.88821,-2.94598 -16.2121,-5.48753 -24.87641,-6.07176 0,0 0,0 0,0 -15.07782,-0.96609 -30.1953,4.53213 -40.94676,14.60056 z"
        id="path4675"
        inkscape:path-effect="#path-effect4677;#path-effect4679"
-       inkscape:original-d="m 182.64987,544.4875 c 0,0 43.5861,-22.87622 36.09852,-10.55946 -196.385322,323.0457 23.23101,17.29941 47.25786,15.91905 11.54025,-0.663 62.06108,-0.19409 62.06108,-0.19409"
+       inkscape:original-d="m 178.75894,546.94277 c 0,0 47.47703,-25.33149 39.98945,-13.01473 -196.385322,323.0457 23.23101,17.29941 47.25786,15.91905 11.54025,-0.663 62.06108,-0.19409 62.06108,-0.19409"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cssc" />
   </g>

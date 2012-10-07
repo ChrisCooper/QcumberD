@@ -9,6 +9,7 @@ MVP:
 -consider leaving full text serach for later. for now, use smart navigation a
 -compile less
 -reconvert font and jquery links to use google's service
+-prerequisite info?
 
 
 Optional:
@@ -17,9 +18,9 @@ Optional:
 -add spacing factor in sass for section sparseness
 -Add selenium server jar location to qcumber_config (webdriver makes this unnecessary?), and figure out how to run it from django
 -Email notifications for changes to selected sections
--For user feedback: http://www.uservoice.com
 -Have sidebar with persistent search filters. Apply filters to all results as main pane is updated
 -ability for users to supply course webpage
+-user feedback form
 -consider using: https://docs.djangoproject.com/en/dev/ref/models/querysets/#get-or-create
 -automate setting of term and seaon ordering
 -scrape exam schedule and email students
@@ -35,7 +36,7 @@ Emails: MailChimp, SendGrid
 LESS Editor: Crunch (for post-2.1.1)
 Bootstrap theme generator: boottheme
 HTML Components/UI elements: bootsnipp
-
+User feedback: http://www.uservoice.com
 
 
 https://uwaterloo.ca/open-data/
