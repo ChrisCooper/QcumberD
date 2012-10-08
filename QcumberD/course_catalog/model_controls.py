@@ -18,7 +18,7 @@ def single_word_search_result(str):
     if m:
         #find courses
         try:
-            c = Course.objects.filter(subject__abbreviation__iexact=m.group(1), number__contains=m.group(2))
+            c = Course.objects.filter(subject__abbreviation__iexact=m.group(1), number__icontains=m.group(2))
             if len(c) == 1:
                 return c[0]
             elif c:
@@ -33,11 +33,22 @@ def single_word_search_result(str):
         except Subject.DoesNotExist:
             pass
 
-    return full_search_result(str)
+    return full_search_result([str])
 
 
 def double_word_search_result(words):
-    return []
+    #find courses
+    try:
+        c = Course.objects.filter(subject__abbreviation__iexact=words[0], number__contains=words[1])
+        if len(c) == 1:
+            return c[0]
+        elif c:
+            return c
+    except Course.DoesNotExist:
+        pass
+
+    return full_search_result(words)
+
 
 def full_search_result(words):
     return []
