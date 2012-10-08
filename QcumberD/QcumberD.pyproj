@@ -25,6 +25,7 @@
   <ItemGroup>
     <Compile Include="course_catalog\admin.py" />
     <Compile Include="course_catalog\models.py" />
+    <Compile Include="course_catalog\model_controls.py" />
     <Compile Include="course_catalog\tests.py" />
     <Compile Include="course_catalog\urls.py" />
     <Compile Include="course_catalog\views.py" />
@@ -99,6 +100,7 @@
     <Content Include="templates\course_catalog\components\filter_panel.html" />
     <Content Include="templates\course_catalog\components\footer.html" />
     <Content Include="templates\course_catalog\components\header.html" />
+    <Content Include="templates\course_catalog\components\hero_search.html" />
     <Content Include="templates\course_catalog\components\search_section.html" />
     <Content Include="templates\course_catalog\experiments.html" />
     <Content Include="templates\course_catalog\pages\base_generic.html" />

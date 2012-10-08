@@ -1,9 +1,6 @@
 Immediate:
-MERGE BACK INTO MASTER
-Add search field to  and serach results page:
-			if 1 word and subj matches, get subject (or no space like CISC121?)
-			if 2 words and subj/number match, get course (account for ***A ***B courses somehow?
-			else, search on  subject title and course titles and descriptions
+Enable search on  subject title and course titles and descriptions
+Handle no search results
 Add search bar to header (so it's accessible from all pages)
 Add feedback integration from http://www.uservoice.com
 Turn off debug mode
