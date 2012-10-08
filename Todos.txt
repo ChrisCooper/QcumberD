@@ -11,6 +11,7 @@ Use Jetstrap?
 
 
 MVP:
+
 -consider leaving full text serach for later. for now, use smart navigation a
 -compile less
 -reconvert font and jquery links to use google's service
@@ -19,9 +20,11 @@ MVP:
 
 Post-MVP step:
 -ability to add courses via sign-in
+-parse links out of prerequisites e.g. "PREREQUISITES    (BIOL 102/3.0 and BIOL 103/3.0 or BIOL 101/6.0) or (BIOL 201/3.0 and BIOL 202/3.0) or PHED 153/3.0, or permission of the Department"
 
 
 Optional:
+-parse prerequisites? e.g. "PREREQUISITES    (BIOL 102/3.0 and BIOL 103/3.0 or BIOL 101/6.0) or (BIOL 201/3.0 and BIOL 202/3.0) or PHED 153/3.0, or permission of the Department"
 -on subject page, button to show course description in dropdown
 -Scrape textbook info from bookstore store page
 -When you mouse over a section, display the weekday on the side in visual form, with the section scheduled in. (If the user has sections in there, display them as well.)
@@ -46,6 +49,7 @@ LESS Editor: Crunch (for post-2.1.1)
 Bootstrap theme generator: boottheme
 HTML Components/UI elements: bootsnipp
 User feedback: http://www.uservoice.com
+Full text search: Haystack with Solr, Whoosh, elasticsearch, Xapian (http://www.ironzebra.com/news/26/how-to-add-full-text-search-to-your-django-app-with-postgresql-and-south-migrations)
 
 
 https://uwaterloo.ca/open-data/
