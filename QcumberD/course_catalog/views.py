@@ -35,9 +35,6 @@ def search(request):
 
     #Otherwise, it's a list of results
 
-    return render_to_response('course_catalog/pages/subject_detail.html', {'subject': s,
-                                                                     'courses': c})
-
 
 
 #For testing random things

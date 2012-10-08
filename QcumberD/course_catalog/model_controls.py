@@ -28,7 +28,7 @@ def single_word_search_result(str):
     else:
         #no numbers, so try a subject
         try:
-            s = Subject.objects.get(abbreviation=str)
+            s = Subject.objects.get(abbreviation__iexact=str)
             return s
         except Subject.DoesNotExist:
             pass
