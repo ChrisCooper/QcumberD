@@ -1,0 +1,45 @@
+{% extends "course_catalog/pages/filtered_page.html" %}
+
+
+{% block page_title %} Qcumber | "{{ query }}" Search results {% endblock %}
+
+{% block results_panel %}
+
+<article class="course">
+
+    <ul class="breadcrumb">
+      <li><a href="{% url 'course_catalog.views.index' %}">Home</a> <span class="divider">-</span></li>
+      <li class="active">Search results for "{{ query }}"</li>
+    </ul>
+
+    <hr />
+
+    <h2>
+        Search results for "{{ query }}"
+    </h2>
+    
+    <div class="section_list clearfix">
+        
+        {% if results %}
+            <ul class="dense-list clearfix">
+                {% for item in results %}
+                    <li>
+                        {% include item.template_name with item=item only %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="alert alert-info">
+                This search turned up no results.
+            </div>
+        {% endif %}
+        
+
+    </div>
+
+</article>
+
+{% endblock %}
+
+
+

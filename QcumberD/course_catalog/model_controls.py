@@ -18,7 +18,7 @@ def single_word_search_result(str):
     if m:
         #find courses
         try:
-            c = Course.objects.filter(subject__abbreviation__iexact=m.group(1), number__icontains=m.group(2))
+            c = Course.objects.filter(subject__abbreviation__iexact=m.group(1), number__icontains=m.group(2)).order_by('number')
             if len(c) == 1:
                 return c[0]
             elif c:

@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.db import models
-from course_catalog.models import Course, Subject, Term
+from course_catalog.models import Course, Subject, Term, Section
 import model_controls
 
 def index(request):
@@ -28,12 +28,23 @@ def subject_detail(request, subject_abbr):
                                                                      'courses': c})
 
 def search(request):
-    result = model_controls.search_result(request.GET.get('q'))
+    query = request.GET.get('q')
+    results = model_controls.search_result(query)
 
-    if isinstance(result, models.Model):
-        return HttpResponseRedirect(result.get_absolute_url())
+    if isinstance(results, models.Model):
+        return HttpResponseRedirect(results.get_absolute_url())
 
     #Otherwise, it's a list of results
+    for item in results:
+        if isinstance(item, Course):
+            item.template_name = "course_catalog/components/course_search_result.html"
+        elif isinstance(item, Subject):
+            item.template_name = "course_catalog/components/subject_search_result.html"
+        elif isinstance(item, Section):
+            item.template_name = "course_catalog/components/section_search_result.html"
+
+    return render_to_response('course_catalog/pages/search_results.html', {'results': results,
+                                                                    'query': query})
 
 
 

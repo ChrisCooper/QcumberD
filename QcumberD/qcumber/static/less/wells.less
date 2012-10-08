@@ -18,6 +18,17 @@
   }
 }
 
+// Sizes
+.well-large {
+  padding: 24px;
+  .border-radius(6px);
+}
+.well-small {
+  padding: 9px;
+  .border-radius(3px);
+}
+
+
 .inner-well {
   background-color: darken(@wellBackground, 7%);
   border: 1px solid darken(@wellBackground, 14%);
@@ -34,12 +45,14 @@
     } 
 }
 
-// Sizes
-.well-large {
-  padding: 24px;
-  .border-radius(6px);
-}
-.well-small {
-  padding: 9px;
-  .border-radius(3px);
+.dense-list {
+    li {
+        .well;
+        padding: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        &:hover {
+            background-color: lighten(@wellBackground, 7%);
+        }
+    }
 }
