@@ -8,7 +8,9 @@ Django checklist
 Get scraper working on mac
 Use Jetstrap?
 (calendar canvas)
+create 3 config files. two are in source control: 1 for dev, one for prod, bot in source control, containing deployment-specific config values. the last one is not in source control, and simply contains the value 'dev' or 'prod' depedning on which deployment it's part of. 
 
+Sphinx is looking good for full-text search
 
 MVP:
 
@@ -49,7 +51,11 @@ LESS Editor: Crunch (for post-2.1.1)
 Bootstrap theme generator: boottheme
 HTML Components/UI elements: bootsnipp
 User feedback: http://www.uservoice.com
+
+Full-text Search:
 Full text search: Haystack with Solr, Whoosh, elasticsearch, Xapian (http://www.ironzebra.com/news/26/how-to-add-full-text-search-to-your-django-app-with-postgresql-and-south-migrations)
+also, sphinx and django-sphinx
+http://stackoverflow.com/questions/737275/comparison-of-full-text-search-engine-lucene-sphinx-postgresql-mysql
 
 
 https://uwaterloo.ca/open-data/
