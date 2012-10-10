@@ -1,4 +1,14 @@
+DITCH FRIGGING SEARCH!!
+Just use like at the very most. see how it does, and use the user feedback to decide if it's worth it.
+
+
+Search:
+Read up on Sphinx itself, so you have some idea of what the heck is going on and how full-text search works.
+See if there are any alternatives to django-sphinx, and how well D-S is supported/maintained
+
+
 Immediate:
+put indication of number of sections next to course listing 
 Enable search on  subject title and course titles and descriptions
 Handle no search results
 Add search bar to header (so it's accessible from all pages)
@@ -10,17 +20,23 @@ Use Jetstrap?
 (calendar canvas)
 create 3 config files. two are in source control: 1 for dev, one for prod, bot in source control, containing deployment-specific config values. the last one is not in source control, and simply contains the value 'dev' or 'prod' depedning on which deployment it's part of. 
 
+<<<<<<< HEAD
 Sphinx is looking good for full-text search
+=======
+Sphinx is looking good for full-text search, so it's down to haystack vs sphinx
+>>>>>>> search
 
 MVP:
-
+-make a post on the class of 2013 page (and others, of course)
 -consider leaving full text serach for later. for now, use smart navigation a
 -compile less
 -reconvert font and jquery links to use google's service
 -filter?
 -prerequisite info?
+-storing searches/analytics
 
 Post-MVP step:
+-check out http://www.sourcetreeapp.com/	
 -ability to add courses via sign-in
 -parse links out of prerequisites e.g. "PREREQUISITES    (BIOL 102/3.0 and BIOL 103/3.0 or BIOL 101/6.0) or (BIOL 201/3.0 and BIOL 202/3.0) or PHED 153/3.0, or permission of the Department"
 
