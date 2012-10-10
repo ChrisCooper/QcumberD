@@ -97,6 +97,7 @@
     <Content Include="qcumber\static\less\utilities.less" />
     <Content Include="qcumber\static\less\variables.less" />
     <Content Include="templates\admin\base_site.html" />
+    <Content Include="templates\course_catalog\components\course_search_result.html" />
     <Content Include="templates\course_catalog\components\filter_panel.html" />
     <Content Include="templates\course_catalog\components\footer.html" />
     <Content Include="templates\course_catalog\components\header.html" />
@@ -108,6 +109,7 @@
     <Content Include="templates\course_catalog\pages\course_detail.html" />
     <Content Include="templates\course_catalog\pages\filtered_page.html" />
     <Content Include="templates\course_catalog\pages\index.html" />
+    <Content Include="templates\course_catalog\pages\search_results.html" />
     <Content Include="templates\course_catalog\pages\subject_detail.html" />
     <Content Include="templates\course_catalog\section_component_detail.html" />
     <Content Include="templates\course_catalog\section_detail.html" />
