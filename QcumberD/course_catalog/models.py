@@ -43,6 +43,9 @@ class Course(ModelOnProbation):
     #Relationships
     subject = models.ForeignKey(Subject, related_name='courses')
 
+    def is_empty(self):
+        return self.sections.count() == 0
+
     def concise_unicode(self):
         return u"%s %s" % (self.subject.abbreviation, self.number)
 

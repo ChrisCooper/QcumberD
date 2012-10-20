@@ -34,7 +34,11 @@
                             ({{ subject.abbreviation }} {{ course.number }})
                         </td>
                         <td class="subject_title">
-                            <a href="{{ course.get_absolute_url }}">
+                            <a 
+                                {% if course.is_empty %}
+                                    class="useless"
+                                {% endif %}
+                            href="{{ course.get_absolute_url }}">
                             {{ course.title }}
                             </a>
                         </td>
