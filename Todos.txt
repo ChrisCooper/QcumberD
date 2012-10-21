@@ -1,3 +1,10 @@
+Make:
+settings_dev
+settings_prod
+
+
+
+
 DITCH FRIGGING SEARCH!!
 Just use like at the very most. see how it does, and use the user feedback to decide if it's worth it.
 
@@ -8,6 +15,7 @@ See if there are any alternatives to django-sphinx, and how well D-S is supporte
 
 
 Immediate:
+HTTP Basic Auth: http://community.webfaction.com/questions/256/apache-basic-authentication-for-mod_wsgi-inc-django-applications
 put indication of number of sections next to course listing 
 Enable search on  subject title and course titles and descriptions
 Handle no search results
@@ -20,13 +28,10 @@ Use Jetstrap?
 (calendar canvas)
 create 3 config files. two are in source control: 1 for dev, one for prod, bot in source control, containing deployment-specific config values. the last one is not in source control, and simply contains the value 'dev' or 'prod' depedning on which deployment it's part of. 
 
-<<<<<<< HEAD
-Sphinx is looking good for full-text search
-=======
 Sphinx is looking good for full-text search, so it's down to haystack vs sphinx
->>>>>>> search
 
 MVP:
+-caching
 -make a post on the class of 2013 page (and others, of course)
 -consider leaving full text serach for later. for now, use smart navigation a
 -compile less
@@ -54,6 +59,7 @@ Optional:
 -consider using: https://docs.djangoproject.com/en/dev/ref/models/querysets/#get-or-create
 -automate setting of term and seaon ordering
 -scrape exam schedule and email students
+-facebook integration
 
 for APIs: django-tastypie or django rest framework
 
@@ -67,6 +73,7 @@ LESS Editor: Crunch (for post-2.1.1)
 Bootstrap theme generator: boottheme
 HTML Components/UI elements: bootsnipp
 User feedback: http://www.uservoice.com
+Localization: http://www.getlocalization.com/
 
 Full-text Search:
 Full text search: Haystack with Solr, Whoosh, elasticsearch, Xapian (http://www.ironzebra.com/news/26/how-to-add-full-text-search-to-your-django-app-with-postgresql-and-south-migrations)
@@ -82,3 +89,14 @@ http://www.studymonkey.ca/university-of-toronto/courses
 
 
 
+
+
+
+Credits:
+Nissi, Christine, Kristen, Matt, Jayrin (for entertaining my silliness)
+Christine for design work
+Nissi for functionality consultations
+
+
+Imaginary customer:
+Nissi clone

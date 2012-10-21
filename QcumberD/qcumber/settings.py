@@ -1,26 +1,14 @@
 # Django settings for qcumber project.
 
-from qcumber.qcumber_config import unixy_project_path
+from qcumber.config import unixy_project_path
+import qcumber.config.current  
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-
-ADMINS = (
-    ('Chris Cooper', 'chriscooper1991+qcumber@gmail.com'),
-)
+if qcumber.config.current.CONFIG == "dev":
+    from qcumber.config.dev import *
+elif qcumber.config.current.CONFIG == "prod":
+    from qcumber.config.prod import *
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'qcumber',                      # Or path to database file if using sqlite3.
-        'USER': 'qcumberserver',                      # Not used with sqlite3.
-        'PASSWORD': 'django',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 SCRAPER_CONFIG_FILE = unixy_project_path("ignored_files/selenium_config.txt")
 
@@ -82,9 +70,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '56oar4w=#=dnmbsl19w_n9y54pi+t9&amp;0d5k%=89l=$!3gzujq0'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

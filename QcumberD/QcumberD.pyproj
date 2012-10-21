@@ -31,7 +31,11 @@
     <Compile Include="course_catalog\views.py" />
     <Compile Include="course_catalog\__init__.py" />
     <Compile Include="manage.py" />
-    <Compile Include="qcumber\qcumber_config.py" />
+    <Compile Include="qcumber\config\current.py" />
+    <Compile Include="qcumber\config\dev.py" />
+    <Compile Include="qcumber\config\example_private_config.py" />
+    <Compile Include="qcumber\config\private_config.py" />
+    <Compile Include="qcumber\config\__init__.py" />
     <Compile Include="qcumber\settings.py" />
     <Compile Include="qcumber\urls.py" />
     <Compile Include="qcumber\wsgi.py" />
@@ -56,6 +60,7 @@
     <Folder Include="course_catalog" />
     <Folder Include="qcumber" />
     <Folder Include="qcumber\experiments\" />
+    <Folder Include="qcumber\config\" />
     <Folder Include="qcumber\sass\" />
     <Folder Include="qcumber\static\" />
     <Folder Include="qcumber\static\css\" />

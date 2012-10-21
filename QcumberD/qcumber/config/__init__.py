@@ -12,7 +12,7 @@ def unixy_project_path(p):
 config_helper_path = path.realpath(__file__)
 #C:\django\qcumber\qcumber\qcumber_congfiguration.py
 
-qcumber_root = path.dirname(path.dirname(config_helper_path))
+qcumber_root = path.dirname(path.dirname(path.dirname(config_helper_path)))
 #C:\django\qcumber
 
 UNIX_QCUMBER_ROOT = make_path_unixy(qcumber_root)
