@@ -2,7 +2,7 @@
 def configure_databases(dict):
     dict['default']['USER'] = 'db_username'
     dict['default']['PASSWORD'] = 'db_password'
-    dict['default']['NAME'] = 'bd_name'
+    dict['default']['NAME'] = 'db_name'
 
 ADMINS = (
     ('Admin name', 'admin@email.com'),
