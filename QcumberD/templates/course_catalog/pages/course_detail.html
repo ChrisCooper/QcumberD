@@ -8,7 +8,7 @@
 <article class="course">
 
     <ul class="breadcrumb">
-      <li><a href="{% url 'course_catalog.views.index' %}">Home</a> <span class="divider">-</span></li>
+      <li><a href="{% url course_catalog.views.index %}">Home</a> <span class="divider">-</span></li>
       <li><a href="{{ course.subject.get_absolute_url }}">{{ course.subject.title }}</a> <span class="divider">-</span></li>
       <li class="active">{{ course.subject.abbreviation }} {{ course.number }}</li>
     </ul>
