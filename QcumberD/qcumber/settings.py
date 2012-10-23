@@ -8,6 +8,11 @@ if qcumber.config.current.CONFIG == "dev":
 elif qcumber.config.current.CONFIG == "prod":
     from qcumber.config.prod import *
 
+
+#Support 1.5 url style on 1.4 server
+import django.template
+django.template.add_to_builtins('django.templatetags.future')
+
 MANAGERS = ADMINS
 
 SCRAPER_CONFIG_FILE = unixy_project_path("ignored_files/selenium_config.txt")
