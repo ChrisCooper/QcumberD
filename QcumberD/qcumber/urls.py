@@ -5,7 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^course_catalog/', include('course_catalog.urls')),
+    
 
     # Uncomment the next line to enable the SOLUS screen scraper
     url(r'^solus_scraper/', include('solus_scraper.urls')),
@@ -15,4 +15,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^', include('course_catalog.urls')),
 )
