@@ -81,6 +81,8 @@
     <Folder Include="templates\solus_scraper\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
     <Content Include="qcumber\sass\_mixins.scss" />
     <Content Include="qcumber\sass\_course.scss" />
     <Content Include="qcumber\sass\main.scss" />
@@ -123,6 +125,7 @@
     <Content Include="templates\course_catalog\section_component_detail.html" />
     <Content Include="templates\course_catalog\section_detail.html" />
     <Content Include="templates\solus_scraper\index.html" />
+    <Content Include="Todos.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
