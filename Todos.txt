@@ -1,6 +1,5 @@
-basic auth
-prerequisites
 add real 404 and 500 pages
+prerequisites
 winter and summer sections indication on subject page
 
 DITCH FRIGGING SEARCH!!
