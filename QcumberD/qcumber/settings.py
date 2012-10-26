@@ -11,6 +11,11 @@ elif qcumber.config.current.CONFIG == "scraping":
     from qcumber.config.scraping import *
 
 
+#support 1.5-style urls
+import django.template
+django.template.add_to_builtins('django.templatetags.future')
+
+
 MANAGERS = ADMINS
 
 SCRAPER_CONFIG_FILE = unixy_project_path("ignored_files/selenium_config.txt")
