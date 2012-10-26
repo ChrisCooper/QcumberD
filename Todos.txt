@@ -1,9 +1,7 @@
-build scraped db on server
 fix directory strcuture by removing top level
-fix url structure by removing course_catalog
-pluralize urls names (course -> courses)
 try 1.5 urls with future import on server (remember to restart!!)
 prerequisites
+add real 404 and 500 pages
 
 DITCH FRIGGING SEARCH!!
 Just use like at the very most. see how it does, and use the user feedback to decide if it's worth it.

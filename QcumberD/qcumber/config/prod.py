@@ -6,7 +6,7 @@ DATABASES = {
     }
 }
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 from private_config import *
