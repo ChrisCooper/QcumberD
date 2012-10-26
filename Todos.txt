@@ -1,6 +1,9 @@
 add real 404 and 500 pages
 prerequisites
 winter and summer sections indication on subject page
+sort sections by type, then offering date span, then earliest weekday/time
+feedback
+site analytics
 
 DITCH FRIGGING SEARCH!!
 Just use like at the very most. see how it does, and use the user feedback to decide if it's worth it.
@@ -23,7 +26,6 @@ Django checklist
 Get scraper working on mac
 Use Jetstrap?
 (calendar canvas)
-create 3 config files. two are in source control: 1 for dev, one for prod, bot in source control, containing deployment-specific config values. the last one is not in source control, and simply contains the value 'dev' or 'prod' depedning on which deployment it's part of. 
 
 Sphinx is looking good for full-text search, so it's down to haystack vs sphinx
 
@@ -41,7 +43,9 @@ Post-MVP step:
 -check out http://www.sourcetreeapp.com/	
 -ability to add courses via sign-in
 -parse links out of prerequisites e.g. "PREREQUISITES    (BIOL 102/3.0 and BIOL 103/3.0 or BIOL 101/6.0) or (BIOL 201/3.0 and BIOL 202/3.0) or PHED 153/3.0, or permission of the Department"
-
+-course enrollment capacity and current
+-department info
+-name of student advisor to contact about course issues
 
 Optional:
 -parse prerequisites? e.g. "PREREQUISITES    (BIOL 102/3.0 and BIOL 103/3.0 or BIOL 101/6.0) or (BIOL 201/3.0 and BIOL 202/3.0) or PHED 153/3.0, or permission of the Department"
