@@ -1,7 +1,7 @@
-fix directory strcuture by removing top level
-try 1.5 urls with future import on server (remember to restart!!)
+basic auth
 prerequisites
 add real 404 and 500 pages
+winter and summer sections indication on subject page
 
 DITCH FRIGGING SEARCH!!
 Just use like at the very most. see how it does, and use the user feedback to decide if it's worth it.
