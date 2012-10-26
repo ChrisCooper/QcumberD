@@ -57,7 +57,6 @@
     <Compile Include="solus_scraper\tests.py" />
     <Compile Include="solus_scraper\urls.py" />
     <Compile Include="solus_scraper\views.py" />
-    <Compile Include="solus_scraper\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="course_catalog" />
@@ -115,8 +114,10 @@
     <Content Include="templates\course_catalog\components\hero_search.html" />
     <Content Include="templates\course_catalog\components\search_section.html" />
     <Content Include="templates\course_catalog\experiments.html" />
+    <Content Include="templates\course_catalog\pages\about.html" />
     <Content Include="templates\course_catalog\pages\base_generic.html" />
     <Content Include="templates\course_catalog\pages\base_qcumber.html" />
+    <Content Include="templates\course_catalog\pages\contact.html" />
     <Content Include="templates\course_catalog\pages\course_detail.html" />
     <Content Include="templates\course_catalog\pages\filtered_page.html" />
     <Content Include="templates\course_catalog\pages\index.html" />
