@@ -1,8 +1,10 @@
+include staleness of info on course pages
 add real 404 and 500 pages
 prerequisites
 winter and summer sections indication on subject page
 sort sections by type, then offering date span, then earliest weekday/time
 correct subject titles
+report incorrect info button
 
 DITCH FRIGGING SEARCH!!
 Just use like at the very most. see how it does, and use the user feedback to decide if it's worth it.
