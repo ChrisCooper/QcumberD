@@ -2,8 +2,7 @@ add real 404 and 500 pages
 prerequisites
 winter and summer sections indication on subject page
 sort sections by type, then offering date span, then earliest weekday/time
-feedback
-site analytics
+correct subject titles
 
 DITCH FRIGGING SEARCH!!
 Just use like at the very most. see how it does, and use the user feedback to decide if it's worth it.
@@ -13,6 +12,7 @@ Search:
 Read up on Sphinx itself, so you have some idea of what the heck is going on and how full-text search works.
 See if there are any alternatives to django-sphinx, and how well D-S is supported/maintained
 
+indications for distance, other types
 
 Immediate:
 HTTP Basic Auth: http://community.webfaction.com/questions/256/apache-basic-authentication-for-mod_wsgi-inc-django-applications
@@ -34,7 +34,6 @@ MVP:
 -make a post on the class of 2013 page (and others, of course)
 -consider leaving full text serach for later. for now, use smart navigation a
 -compile less
--reconvert font and jquery links to use google's service
 -filter?
 -prerequisite info?
 -storing searches/analytics
@@ -56,7 +55,6 @@ Optional:
 -Email notifications for changes to selected sections
 -Have sidebar with persistent search filters. Apply filters to all results as main pane is updated
 -ability for users to supply course webpage
--user feedback form
 -consider using: https://docs.djangoproject.com/en/dev/ref/models/querysets/#get-or-create
 -automate setting of term and seaon ordering
 -scrape exam schedule and email students
@@ -97,7 +95,9 @@ Credits:
 Nissi, Christine, Kristen, Matt, Jayrin (for entertaining my silliness)
 Christine for design work
 Nissi for functionality consultations
+Dad
 
 
 Imaginary customer:
-Nissi clone
+Nissi clone (keener student)
+Academic Advisor (peer or otherwise)
