@@ -1,5 +1,5 @@
 """
-WSGI config for qcumber project.
+WSGI config for mentoring project.
 
 This module contains the WSGI application used by Django's development server
 and any production WSGI deployments. It should expose a module-level variable
@@ -15,6 +15,11 @@ framework.
 """
 import os
 
+#Activate the virtual environment
+from virtualenv_activate import VIRTUALENV_ACTIVATE
+activate_this = VIRTUALENV_ACTIVATE
+execfile(activate_this, dict(__file__=activate_this))
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qcumber.settings")
 
 # This application object is used by any WSGI server configured to use this
@@ -22,7 +27,3 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qcumber.settings")
 # setting points here.
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
-
-# Apply WSGI middleware here.
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)

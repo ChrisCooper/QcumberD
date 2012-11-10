@@ -1,0 +1,1 @@
+VIRTUALENV_ACTIVATE = '/path/to/virtualenv/bin/activate_this.py'
