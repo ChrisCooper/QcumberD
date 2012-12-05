@@ -1,6 +1,7 @@
 import re
 
-info_mappings_simple_keys = {"Units": "units",
+info_mappings_simple_keys = {"Career": "career",
+                             "Units": "units",
                              "Grading Basis": "grading_basis",
                              "Add Consent": "add_consent",
                              "Course Components": "course_componenets",

@@ -14,6 +14,17 @@ class ScraperTools(object):
     def __init__(self, selen, config):
         self.selen = selen
         self.config = config
+
+        # The attribute names created by extra info of certain names
+        self.extra_info_mappings = {"Career": "career",
+                                    "Typically Offered": "typically_offered",
+                                    "Units": "units",
+                                    "Grading Basis": "grading_basis",
+                                    "Add Consent": "add_consent",
+                                    "Course Components": "course_componenets",
+                                    "Drop Consent": "drop_consent",
+                                    "Enrollment Requirement": "enrollment_requirement",
+                                    }
     
     def wait_for_page(self):
         self.selen.wait_for_page_to_load(self.config.timeout_milliseconds)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
+from decimal import Decimal
 
 class ModelOnProbation(models.Model):
     """
@@ -32,16 +33,17 @@ class Subject(ModelOnProbation):
     def get_absolute_url(self):
         return ('course_catalog.views.subject_detail', (), {
             'subject_abbr': self.abbreviation})
-
-
+    
 class Course(ModelOnProbation):
     #Attributes
     title = models.CharField(max_length=255)
     description = models.TextField()
     number = models.CharField(max_length=10)
+    units = models.FloatField(default=-1.)
 
     #Relationships
     subject = models.ForeignKey(Subject, related_name='courses')
+    career = models.ForeignKey("Career", related_name='courses', null=True)
 
     def is_empty(self):
         return self.sections.count() == 0
@@ -65,14 +67,13 @@ class Course(ModelOnProbation):
             'subject_abbr': self.subject.abbreviation,
             'course_number' : self.number})
 
-    
 class Section(ModelOnProbation):
     #Attributes
     solus_id = models.CharField(max_length=16)
     index_in_course = models.CharField(max_length=8)
 
     #Relationships
-    course = models.ForeignKey(Course, related_name='sections')
+    course = models.ForeignKey("Course", related_name='sections')
     type = models.ForeignKey("SectionType")
     term = models.ForeignKey("Term")
 
@@ -225,3 +226,40 @@ def existing_or_new(model, **kwargs):
         existing = model(**kwargs)
         existing.save()
     return existing
+
+class Career(ModelOnProbation):
+    """
+    A course classification, such as Undergraduate
+    """
+    name = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.name
+
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,13 +1,15 @@
 import re
 import course_catalog.models
-import section_helper
+import section_helper, extra_info_helper
+
 
 def drill_single_course(subject, tools):
     s, config = tools.selen, tools.config
 
-    #Gather the title and description to create a new course
+    # Gather the title and description to create a new course
     title, number  = scrape_title(tools)
     description = scrape_description(tools)
+
 
     attributes = {'title' : title,
                   'number' : number,
@@ -15,6 +17,10 @@ def drill_single_course(subject, tools):
                   'subject' : subject}
 
     course = course_catalog.models.existing_or_new(course_catalog.models.Course, **attributes)
+
+    # Gather extra info like prerequisites
+    print("%s %s" % (subject.abbreviation, title))
+    extra_info_helper.scrape_extra_info(tools, course)
 
     course.save()
 
