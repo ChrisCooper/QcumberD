@@ -75,8 +75,6 @@ def scrape_extra_info(tools, course):
     
     info_mappings["Course Components"] = final_components
 
-    print(info_mappings)
-    
     assign_extra_values_to_course(tools, info_mappings, course)
 
             
@@ -117,7 +115,7 @@ def assign_extra_values_to_course(tools, info, course):
         elif key == "drop_consent":
             pass
         elif key == "enrollment_requirement":
-            
+            course.enrollment_reqs = value
             pass
         elif key == "typically_offered":
             pass

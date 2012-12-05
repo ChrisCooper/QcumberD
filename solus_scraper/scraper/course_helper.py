@@ -19,7 +19,6 @@ def drill_single_course(subject, tools):
     course = course_catalog.models.existing_or_new(course_catalog.models.Course, **attributes)
 
     # Gather extra info like prerequisites
-    print("%s %s" % (subject.abbreviation, title))
     extra_info_helper.scrape_extra_info(tools, course)
 
     course.save()

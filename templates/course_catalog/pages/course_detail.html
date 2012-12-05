@@ -23,6 +23,10 @@
         {{ course.description|default:"No course description." }}
     </div>
 
+    <div class="prereqs">
+        {{ course.enrollment_reqs|default:"No enrollment requirements listed." }}
+    </div>
+
     <hr />
     
     <div class="section_list clearfix">
