@@ -15,6 +15,10 @@
 
     <hr />
 
+    <div class="classification">
+        {{ course.grading_basis }}, {{ course.units }} units.
+    </div>
+
     <h1 class="title">
         <span><a href="{{ course.subject.get_absolute_url }}">{{ course.subject.abbreviation }}</a></span> <span>{{ course.number }}</span> - <span>{{ course.title }}</span>
     </h1>

@@ -45,6 +45,7 @@ class Course(ModelOnProbation):
     #Relationships
     subject = models.ForeignKey(Subject, related_name='courses')
     career = models.ForeignKey("Career", related_name='courses', null=True)
+    grading_basis = models.ForeignKey("GradingBasis", related_name='courses', null=True)
 
     def is_empty(self):
         return self.sections.count() == 0
@@ -230,7 +231,7 @@ def existing_or_new(model, **kwargs):
 
 class Career(ModelOnProbation):
     """
-    A course classification, such as Undergraduate
+    A course classification, such as "Undergraduate"
     """
     name = models.CharField(max_length=50)
 
@@ -243,6 +244,23 @@ class Career(ModelOnProbation):
             return cls.objects.get(name=kwargs['name'])
         except ObjectDoesNotExist:
             return None
+
+class GradingBasis(ModelOnProbation):
+    """
+    E.g. "Graded"
+    """
+    name = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.name
+
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
+
 
 
 

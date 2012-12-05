@@ -99,7 +99,6 @@ def assign_extra_values_to_course(tools, info, course):
         if key == "career":
             attributes = {"name": value}
             course.career = course_catalog.models.existing_or_new(course_catalog.models.Career, **attributes)
-            pass
 
         elif key == "units":
             if len(value.split(".")[1]) > 2:
@@ -107,7 +106,9 @@ def assign_extra_values_to_course(tools, info, course):
             course.units = float(value)
 
         elif key == "grading_basis":
-            pass
+            attributes = {"name": value}
+            course.grading_basis = course_catalog.models.existing_or_new(course_catalog.models.GradingBasis, **attributes)
+
         elif key == "add_consent":
             pass
         elif key == "course_componenets":
@@ -116,7 +117,7 @@ def assign_extra_values_to_course(tools, info, course):
             pass
         elif key == "enrollment_requirement":
             course.enrollment_reqs = value
-            pass
+
         elif key == "typically_offered":
             pass
         else:
