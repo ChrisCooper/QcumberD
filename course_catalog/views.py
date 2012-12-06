@@ -21,7 +21,9 @@ def course_detail(request, subject_abbr=None, course_number=None):
 
     sections = []
     for t in terms:
-        sections.append((t, c.sections.filter(term=t).order_by('type__order')))
+        secs = c.sections.filter(term=t).order_by('type__order')
+        secs = sorted(secs, key=lambda s: s.type.order)
+        sections.append((t, secs))
 
     return render_to_response('course_catalog/pages/course_detail.html', {'course': c,
                                                                           'all_sections': sections})
@@ -29,9 +31,16 @@ def course_detail(request, subject_abbr=None, course_number=None):
 
 def subject_detail(request, subject_abbr):
     s = get_object_or_404(Subject, abbreviation__iexact=subject_abbr)
-    c = s.courses.order_by('career__order', 'number')
+
+    careers = [c.career for c in s.courses.distinct('career')]
+
+    careers = sorted(careers, key=lambda c: c.order)
+    print([(c, c.order) for c in careers])
+
+    c = [(career, s.courses.filter(career=career).order_by('number')) for career in careers]
+
     return render_to_response('course_catalog/pages/subject_detail.html', {'subject': s,
-                                                                     'courses': c})
+                                                                     'courses_by_career': c})
 
 def search(request):
     query = request.GET.get('q')

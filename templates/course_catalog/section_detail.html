@@ -5,7 +5,7 @@
 
 <div class="section-component-list">
     <table class="table table-condensed  table-hover">
-        {% for component in section.components.all %}
+        {% for component in section.components.all|dictsort:"end_date" %}
             <tr>
                 {% include "course_catalog/section_component_detail.html" with component=component only %}
             </tr>

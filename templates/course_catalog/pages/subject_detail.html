@@ -26,31 +26,35 @@
 
     <div class="course_list">
 
-        {% if courses %}
-            <table>
-                {% for course in courses %}
-                    <tr>
-                        <td class="abbreviation">
-                            ({{ subject.abbreviation }} {{ course.number }})
-                        </td>
-                        <td class="units">
-                            ({{ course.units }})
-                        </td>
-                        <td class="subject_title">
-                            <a 
-                                {% if course.is_empty %}
-                                    class="useless"
-                                {% endif %}
-                            href="{{ course.get_absolute_url }}">
-                            {{ course.title }}
-                            </a>
-                        </td>
+        {% if courses_by_career %}
             
-                    </tr>
+                {% for career, courses in courses_by_career %}
+
+                    <table>
+
+                    {% for course in courses %}
+                        <tr>
+                            <td class="abbreviation">
+                                ({{ subject.abbreviation }} {{ course.number }})
+                            </td>
+                            <td class="units">
+                                ({{ course.units }})
+                            </td>
+                            <td class="subject_title">
+                                <a 
+                                    {% if course.is_empty %}
+                                        class="useless"
+                                    {% endif %}
+                                href="{{ course.get_absolute_url }}">
+                                {{ course.title }}
+                                </a>
+                            </td>
+                
+                        </tr>
             
-            
+                    {% endfor %}
+                    </table>
                 {% endfor %}
-            </table>
         {% else %}
             <div class="alert alert-info">
                 This subject has no courses.
