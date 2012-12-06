@@ -28,33 +28,47 @@
 
         {% if courses_by_career %}
             
+            <ul class="list-dropdown clearfix">
                 {% for career, courses in courses_by_career %}
-
-                    <table>
-
-                    {% for course in courses %}
-                        <tr>
-                            <td class="abbreviation">
-                                ({{ subject.abbreviation }} {{ course.number }})
-                            </td>
-                            <td class="units">
-                                ({{ course.units }})
-                            </td>
-                            <td class="subject_title">
-                                <a 
-                                    {% if course.is_empty %}
-                                        class="useless"
-                                    {% endif %}
-                                href="{{ course.get_absolute_url }}">
-                                {{ course.title }}
-                                </a>
-                            </td>
-                
-                        </tr>
+                    <li class="well well-small">
             
-                    {% endfor %}
-                    </table>
+                        <header>
+                        <a href="#" class="dropdown-header clearfix">
+                            <h3>
+                                {{ career.name }}
+                            </h3>
+                        </a>
+                        </header>
+                
+                        <table>
+
+                            {% for course in courses %}
+                                <tr>
+                                    <td class="abbreviation">
+                                        ({{ subject.abbreviation }} {{ course.number }})
+                                    </td>
+                                    <td class="units">
+                                        ({{ course.units }})
+                                    </td>
+                                    <td class="subject_title">
+                                        <a 
+                                            {% if course.is_empty %}
+                                                class="useless"
+                                            {% endif %}
+                                        href="{{ course.get_absolute_url }}">
+                                        {{ course.title }}
+                                        </a>
+                                    </td>
+                        
+                                </tr>
+                    
+                            {% endfor %}
+                        </table>
+                    </li>
                 {% endfor %}
+            </ul>
+
+                
         {% else %}
             <div class="alert alert-info">
                 This subject has no courses.
