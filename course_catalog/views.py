@@ -29,7 +29,7 @@ def course_detail(request, subject_abbr=None, course_number=None):
 
 def subject_detail(request, subject_abbr):
     s = get_object_or_404(Subject, abbreviation__iexact=subject_abbr)
-    c = s.courses.order_by('number')
+    c = s.courses.order_by('career__order', 'number')
     return render_to_response('course_catalog/pages/subject_detail.html', {'subject': s,
                                                                      'courses': c})
 

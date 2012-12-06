@@ -234,6 +234,7 @@ class Career(ModelOnProbation):
     A course classification, such as "Undergraduate"
     """
     name = models.CharField(max_length=50)
+    order = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name
