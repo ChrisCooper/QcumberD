@@ -34,8 +34,7 @@ def subject_detail(request, subject_abbr):
 
     careers = [c.career for c in s.courses.distinct('career')]
 
-    careers = sorted(careers, key=lambda c: c.order)
-    print([(c, c.order) for c in careers])
+    careers = sorted(careers, key=lambda c: c.order if c else 0)
 
     c = [(career, s.courses.filter(career=career).order_by('number')) for career in careers]
 
