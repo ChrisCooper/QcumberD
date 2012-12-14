@@ -1,3 +1,5 @@
+DEBUG = False
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -6,7 +8,13 @@ DATABASES = {
     }
 }
 
-DEBUG = False
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:' + caching_config.path,
+    }
+}
+
 TEMPLATE_DEBUG = DEBUG
 
 from private_config import *

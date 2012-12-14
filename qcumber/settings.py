@@ -98,14 +98,6 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'unix:' + caching_config.path,
-    }
-}
-
-
 ROOT_URLCONF = 'qcumber.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
