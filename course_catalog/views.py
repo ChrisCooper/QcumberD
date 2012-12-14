@@ -5,20 +5,20 @@ from course_catalog.models import Course, Subject, Term, Section
 import model_controls
 from django.views.decorators.cache import cache_page
 
-@cache_page(60 * 5)
+@cache_page(60 * 30)
 def index(request):
     subject_list = Subject.objects.all().order_by('abbreviation')
     return render_to_response('course_catalog/pages/index.html', {'subject_list': subject_list})
 
-@cache_page(60 * 5)
+@cache_page(60 * 30)
 def about(request):
     return render_to_response('course_catalog/pages/about.html')
 
-@cache_page(60 * 5)
+@cache_page(60 * 30)
 def contact(request):
     return render_to_response('course_catalog/pages/contact.html')
 
-@cache_page(60 * 5)
+@cache_page(60 * 30)
 def course_detail(request, subject_abbr=None, course_number=None):
     c = get_object_or_404(Course, subject__abbreviation__iexact=subject_abbr, number=course_number)
     terms = [s.term for s in c.sections.distinct('term')]
@@ -33,7 +33,7 @@ def course_detail(request, subject_abbr=None, course_number=None):
     return render_to_response('course_catalog/pages/course_detail.html', {'course': c,
                                                                           'all_sections': sections})
 
-@cache_page(60 * 5)
+@cache_page(60 * 30)
 def subject_detail(request, subject_abbr):
     s = get_object_or_404(Subject, abbreviation__iexact=subject_abbr)
 
@@ -46,7 +46,7 @@ def subject_detail(request, subject_abbr):
     return render_to_response('course_catalog/pages/subject_detail.html', {'subject': s,
                                                                      'courses_by_career': c})
 
-@cache_page(60 * 5)
+@cache_page(60 * 30)
 def search(request):
     query = request.GET.get('q')
     results = model_controls.search_result(query)
@@ -65,6 +65,18 @@ def search(request):
 
     return render_to_response('course_catalog/pages/search_results.html', {'results': results,
                                                                     'query': query})
+
+
+
+@cache_page(60 * 30)
+def tos(request):
+    return render_to_response('course_catalog/pages/tos.html', {})
+
+
+@cache_page(60 * 60 * 24 *100)
+def facebook_channel(request):
+    return render_to_response('course_catalog/pages/channel.html', {})
+
 
 
 
