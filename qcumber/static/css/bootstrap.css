@@ -5104,8 +5104,8 @@ ul {
   text-align: right;
 }
 .course .course-info {
-  margin: 3px;
-  padding: 5px;
+  margin: 10px;
+  padding: 25px;
   background-color: #e0e0e0;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -5114,6 +5114,7 @@ ul {
 .course .course-info .classification {
   padding-top: 7px;
   font-size: 120%;
+  color: #999999;
 }
 .course .course-info .prereqs {
   font-style: italic;
