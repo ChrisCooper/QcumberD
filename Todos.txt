@@ -1,4 +1,5 @@
 scenarios
+look into using python Requests to make direct requests to the pages desired!!!!
 
 add real 404 and 500 pages
 prerequisites
