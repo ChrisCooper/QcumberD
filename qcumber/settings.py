@@ -10,6 +10,8 @@ elif qcumber.config.current.CONFIG == "prod":
 elif qcumber.config.current.CONFIG == "scraping":
     from qcumber.config.scraping import *
 
+from qcumber.config import caching_config
+
 
 #support 1.5-style urls
 import django.template
@@ -95,6 +97,14 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:' + caching_config.path,
+    }
+}
+
 
 ROOT_URLCONF = 'qcumber.urls'
 
