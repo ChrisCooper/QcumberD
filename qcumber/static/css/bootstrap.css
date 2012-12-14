@@ -5072,13 +5072,13 @@ ul {
   padding: 3px;
   margin-top: 3px;
   margin-bottom: 3px;
-  background-color: #e0e0e0;
+  background-color: #e9e9e9;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
 .course_list .course:hover {
-  background-color: #e9e9e9;
+  background-color: #e0e0e0;
   color: #226029;
 }
 .course_list .useless a {
@@ -5118,6 +5118,7 @@ ul {
 }
 .course .course-info .prereqs {
   font-style: italic;
+  color: #666;
 }
 .expo {
   margin: 50px;

@@ -7,38 +7,43 @@
 
 {% include "course_catalog/components/hero_search.html" %}
  
-
-<div class="alert alert-info">
-    This site is not associated with Queen's University.
-    Though we try our best, we can't guarantee that the information on this site is accurate.
-    Please <a href="mailto:feedback@qcumber.ca">let us know</a> if you see something that's wrong.
-    Our information is usually updated nightly.
-</div>
-
-
-{% if subject_list %}
-    <table>
-        {% for subject in subject_list %}
-        
-            <tr>
-            
-                <td class="abbreviation">
+<div class="row">
+    <div class="span6">
+        {% if subject_list %}
+            <table>
+                {% for subject in subject_list %}
+                
+                    <tr>
                     
-                    ({{ subject.abbreviation }})
-                </td>
-                <td class="subject_title">
-                    <a href="{{ subject.get_absolute_url }}">
-                    {{ subject.title }}
-                    </a>
-                </td>
-            
-            </tr>
-            
-            
-        {% endfor %}
-    </table>
-{% else %}
-    <p>No subjects are available.</p>
-{% endif %}
+                        <td class="abbreviation">
+                            
+                            {{ subject.abbreviation }} 
+                        </td>
+                        <td class="subject_title">
+                            <a href="{{ subject.get_absolute_url }}">
+                            {{ subject.title }}
+                            </a>
+                        </td>
+                    
+                    </tr>
+                    
+                    
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No subjects are available.</p>
+        {% endif %}
+    </div>
+
+    <div class="span5">
+        <div class="alert alert-info">
+            This site is not associated with Queen's University.
+            Though we try our best, we can't guarantee that the information on this site is accurate.
+            Please <a href="mailto:feedback@qcumber.ca">let us know</a> if you see something that's wrong.
+            Our information is usually updated nightly.
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}
