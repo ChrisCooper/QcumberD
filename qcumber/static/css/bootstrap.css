@@ -5118,3 +5118,11 @@ ul {
 .course .course-info .prereqs {
   font-style: italic;
 }
+.expo {
+  margin: 50px;
+  padding: 30px;
+  background-color: #e0e0e0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
