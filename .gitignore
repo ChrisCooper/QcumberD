@@ -72,3 +72,5 @@ pip-log.txt
 # Mac crap
 .DS_Store
 
+
+qcumber/config/caching_config.py
