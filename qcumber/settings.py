@@ -10,9 +10,6 @@ elif qcumber.config.current.CONFIG == "prod":
 elif qcumber.config.current.CONFIG == "scraping":
     from qcumber.config.scraping import *
 
-from qcumber.config import caching_config
-
-
 #support 1.5-style urls
 import django.template
 django.template.add_to_builtins('django.templatetags.future')

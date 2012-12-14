@@ -1,3 +1,5 @@
+from qcumber.config import caching_config
+
 DEBUG = False
 
 DATABASES = {
