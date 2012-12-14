@@ -5068,12 +5068,53 @@ ul {
   -moz-border-radius-bottomleft: 0px;
   border-bottom-left-radius: 0px;
 }
-.useless:link {
+.course_list .course {
+  padding: 3px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  background-color: #e0e0e0;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.course_list .course:hover {
+  background-color: #e9e9e9;
+  color: #226029;
+}
+.course_list .useless a {
   color: #bbbbbb;
 }
-.useless:visited {
-  color: #bbbbbb;
+.course_list .useless a:hover {
+  color: #226029;
 }
-.useless:hover {
-  color: #999999;
+.course_list .course-table {
+  width: 100%;
+  height: 100%;
+}
+.course_list .course-table .abbreviation {
+  /*color: #000;
+            &:hover {
+                color: @linkColorHover;
+            }*/
+
+  width: 80px;
+  padding-right: 3px;
+}
+.course_list .course-table .units {
+  text-align: right;
+}
+.course .course-info {
+  margin: 3px;
+  padding: 5px;
+  background-color: #e0e0e0;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.course .course-info .classification {
+  padding-top: 7px;
+  font-size: 120%;
+}
+.course .course-info .prereqs {
+  font-style: italic;
 }

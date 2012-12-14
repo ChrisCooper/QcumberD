@@ -40,30 +40,31 @@
                         </a>
                         </header>
                 
-                        <table>
+                        <ul>
+                        
 
                             {% for course in courses %}
+                            <li class="course {% if course.is_empty %} useless {% endif %}">
+                            <a href="{{ course.get_absolute_url }}" class="course-table">
+                            <table class="course-table">
                                 <tr>
                                     <td class="abbreviation">
-                                        ({{ subject.abbreviation }} {{ course.number }})
+                                        {{ subject.abbreviation }} {{ course.number }}
                                     </td>
+                                    <td class="course_title">
+                                        | {{ course.title }}
+                                    </td>
+
                                     <td class="units">
-                                        ({{ course.units }})
-                                    </td>
-                                    <td class="subject_title">
-                                        <a 
-                                            {% if course.is_empty %}
-                                                class="useless"
-                                            {% endif %}
-                                        href="{{ course.get_absolute_url }}">
-                                        {{ course.title }}
-                                        </a>
+                                        {{ course.units }} units
                                     </td>
                         
                                 </tr>
-                    
+                            </table>
+                            </a>
+                            </li>
                             {% endfor %}
-                        </table>
+                        </ul>
                     </li>
                 {% endfor %}
             </ul>

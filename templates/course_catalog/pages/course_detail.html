@@ -15,20 +15,24 @@
 
     <hr />
 
-    <div class="classification">
-        {{ course.grading_basis }}, {{ course.career }}, {{ course.units }} units.
-    </div>
+    <div class="course-info">
 
-    <h1 class="title">
-        <span><a href="{{ course.subject.get_absolute_url }}">{{ course.subject.abbreviation }}</a></span> <span>{{ course.number }}</span> - <span>{{ course.title }}</span>
-    </h1>
+        <div class="classification">
+            {{ course.grading_basis }}, {{ course.career }}, {{ course.units }} units.
+        </div>
 
-    <div class="description">
-        {{ course.description|default:"No course description." }}
-    </div>
+        <h1 class="title">
+            <span><a href="{{ course.subject.get_absolute_url }}">{{ course.subject.abbreviation }}</a></span> <span>{{ course.number }}</span> - <span>{{ course.title }}</span>
+        </h1>
 
-    <div class="prereqs">
-        {{ course.enrollment_reqs|default:"No enrollment requirements listed." }}
+        <div class="description">
+            {{ course.description|default:"No course description." }}
+        </div>
+
+        <div class="prereqs">
+            {{ course.enrollment_reqs|default:"No enrollment requirements listed." }}
+        </div>
+
     </div>
 
     <hr />
@@ -64,7 +68,7 @@
             </ul>
         {% else %}
             <div class="alert alert-info">
-                This course has no sections scheduled.
+                This course has no sections scheduled (according to the SOLUS course catalog).
             </div>
         {% endif %}
 

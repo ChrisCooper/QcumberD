@@ -21,8 +21,11 @@ $light_grey_text: #CCC;*/
 
 @panel_background: #f7f7f7;
 
+@info_background: #e7f3e7;
+
 //Table backgrounds
 @section_background: #E0E0E0;
+@section_background_hover: #E9E9E9;
 @section_component_background_hover: #D0D0D0;
 @section_component_background: #EAEAEA;
 
@@ -36,7 +39,7 @@ $light_grey_text: #CCC;*/
 
     .brand img {
         height: 50px;
-	width: 159px;
+	    width: 159px;
         padding-right: 5px;
         padding-left: 20px; 
     }
@@ -141,10 +144,79 @@ ul {
     
 }
 
-.useless {
-	&:link {color: @grayLightAdded;}
-	&:visited {color: @grayLightAdded;}
-	&:hover {color: @grayLight;}
+.course_list {
+
+
+
+    .course {
+        padding: 3px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+
+        background-color: @section_background;
+        &:hover {
+            background-color: @section_background_hover;
+            color: @linkColorHover;
+        }
+
+        .border-radius(5px);
+
+    }
+
+    .useless {
+            a {
+                color: @grayLightAdded;
+                &:hover {
+                    color: @linkColorHover;
+                }
+            }
+        }
+
+    .course-table {
+        width: 100%;
+        height: 100%;
+
+        .abbreviation {
+            
+            /*color: #000;
+            &:hover {
+                color: @linkColorHover;
+            }*/
+            
+
+            width: 80px;
+            padding-right: 3px;
+        }
+
+        .course_title {
+        }
+
+        .units {
+            text-align: right;
+        }
+    }
+}
+
+.course {
+
+    .course-info {
+        margin: 3px;
+        padding: 5px;
+        background-color: @section_background;
+        .border-radius(5px);
+
+        .classification {
+            padding-top: 7px;
+            font-size: 120%;
+        }
+
+        .prereqs {
+            font-style:italic;
+        }
+    }
 }
 
 
+.footer {
+    
+}
