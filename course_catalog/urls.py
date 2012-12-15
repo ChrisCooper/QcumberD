@@ -9,7 +9,8 @@ urlpatterns = patterns('course_catalog.views',
     url(r'^search/$', 'search'),
 
 
-    url(r'^channel.html$', 'facebook_channel'),
+    
     url(r'^tos$', 'tos'),
-    url(r'^experiments$', 'experiments'),
+
+    url(r'^robots.txt$', 'robots'),
 )
