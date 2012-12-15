@@ -20,6 +20,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 from qcumber.config.email_config import *
 SERVER_EMAIL = 'server@qcumber.ca'
+SEND_BROKEN_LINK_EMAILS = True
 
 MANAGERS = ADMINS
 
