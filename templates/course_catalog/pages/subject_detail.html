@@ -52,7 +52,9 @@
                                         {{ subject.abbreviation }} {{ course.number }}
                                     </td>
                                     <td class="course_title">
+                                    <a href="{{ course.get_absolute_url }}">
                                         | {{ course.title }}
+                                    </a>
                                     </td>
 
                                     <td class="units">
