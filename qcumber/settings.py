@@ -15,6 +15,11 @@ import django.template
 django.template.add_to_builtins('django.templatetags.future')
 
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+from qcumber.config.email_config import *
+
 MANAGERS = ADMINS
 
 SCRAPER_CONFIG_FILE = unixy_project_path("ignored_files/selenium_config.txt")
