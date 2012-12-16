@@ -13,4 +13,5 @@ urlpatterns = patterns('course_catalog.views',
     url(r'^tos$', 'tos'),
 
     url(r'^robots.txt$', 'robots'),
+    url(r'^crossdomain.xml$', 'flash_permissions'),
 )

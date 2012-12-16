@@ -60,6 +60,7 @@ def search(request):
 
 
 
+#TODO: All these requests should be fixed up, since they just return simple responses.
 @cache_page(60 * 30)
 def about(request):
     return render_to_response('course_catalog/text/about.html')
@@ -76,9 +77,17 @@ def tos(request):
 def robots(request):
     return render_to_response('course_catalog/text/robots.txt', {})
 
+
+
+#Application support
+
 @cache_page(60 * 60 * 24 *100)
 def facebook_channel(request):
     return render_to_response('course_catalog/text/channel.html', {})
+
+@cache_page(60 * 60 * 24 *100)
+def flash_permissions(request):
+    return HttpResponse('')
 
 
 
