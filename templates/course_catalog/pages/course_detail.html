@@ -30,7 +30,7 @@
         </div>
 
         <div class="prereqs">
-            {{ course.enrollment_reqs|default:"No enrollment requirements listed." }}
+            {{ course.enrollment_reqs|default:"No enrollment requirements listed."|safe }}
         </div>
 
     </div>
