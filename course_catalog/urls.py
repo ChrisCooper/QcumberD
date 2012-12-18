@@ -10,7 +10,8 @@ urlpatterns = patterns('course_catalog.views',
 
     url(r'^about/$', 'about', name="about"),
     url(r'^contact/$', 'contact', name="contact"),
-    url(r'^tos$', 'tos'),
+    url(r'^tos$', 'tos', name="tos"),
+    url(r'^faqs$', 'faqs', name="faqs"),
 
     url(r'^robots.txt$', 'robots'),
     url(r'^crossdomain.xml$', 'flash_permissions'),

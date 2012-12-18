@@ -51,14 +51,17 @@
     <Compile Include="solus_scraper\Reference code\SolusModels.py" />
     <Compile Include="solus_scraper\Reference code\solus_scraper.py" />
     <Compile Include="solus_scraper\scraper\course_helper.py" />
+    <Compile Include="solus_scraper\scraper\extra_info_helper.py" />
     <Compile Include="solus_scraper\scraper\section_component_helper.py" />
     <Compile Include="solus_scraper\scraper\section_helper.py" />
     <Compile Include="solus_scraper\scraper\subject_helper.py" />
     <Compile Include="solus_scraper\scraper\login_helper.py" />
     <Compile Include="solus_scraper\scraper\__init__.py" />
+    <Compile Include="prereq_links.py" />
     <Compile Include="solus_scraper\tests.py" />
     <Compile Include="solus_scraper\urls.py" />
     <Compile Include="solus_scraper\views.py" />
+    <Compile Include="templates\course_catalog\text\faqs.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="course_catalog" />
@@ -72,6 +75,7 @@
     <Folder Include="qcumber\static\js\" />
     <Folder Include="qcumber\static\less\" />
     <Folder Include="solus_scraper" />
+    <Folder Include="solus_scraper\scripts\" />
     <Folder Include="solus_scraper\scraper\" />
     <Folder Include="solus_scraper\Reference code\" />
     <Folder Include="templates" />
@@ -134,6 +138,7 @@
     <Content Include="templates\course_catalog\text\robots.txt" />
     <Content Include="templates\solus_scraper\index.html" />
     <Content Include="Todos.txt" />
+    <Content Include="wipe_cache.sh" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

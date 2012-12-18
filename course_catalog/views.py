@@ -74,8 +74,8 @@ def tos(request):
     return render_to_response('course_catalog/text/tos.html', {})
 
 @cache_page(60 * 30)
-def robots(request):
-    return render_to_response('course_catalog/text/robots.txt', {})
+def faqs(request):
+    return render_to_response('course_catalog/text/faqs.html', {})
 
 
 
@@ -89,6 +89,9 @@ def facebook_channel(request):
 def flash_permissions(request):
     return HttpResponse('')
 
+@cache_page(60 * 30)
+def robots(request):
+    return render_to_response('course_catalog/text/robots.txt', {})
 
 
 
