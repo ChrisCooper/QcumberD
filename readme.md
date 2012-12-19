@@ -5,6 +5,10 @@ How to get up and running
 
 This guide has been verified for Ubuntu 12.10.
 
+Setting up on mac OSX should be quite similar. It will be verified soon.
+
+<del>Microsoft Windows offers great pains.</del>
+
 
 Prerequisites
 -------------
@@ -21,10 +25,10 @@ Prerequisites
 Style Notes
 -----------
 
-Anything in [square brackets] should be replaced with a value specific to you!
+Anything in [square brackets] should be replaced with a value specific to you.
 
-If your username is, say, `uniphil`, then the command `mkdir [username]` should
-become `mkdir uniphil`.
+For example, if your username is, say, `uniphil`, then a command like
+`mkdir [username]` would be written literally as `mkdir uniphil`.
 
 
 1. Fork the Repository
@@ -77,7 +81,8 @@ Make sure you have activated your virtual environment!
  * current: `cp qcumber/config/example_current.py qcumber/config/current.py`
  * email: `cp qcumber/config/example_email_config.py qcumber/config/email_config.py`
  * private: `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
- * Edit db_name and add a DATABASES dict to private_config.py so that it looks like this:
+ * Edit `db_name` and add a `DATABASES` dict to private_config.py so that it
+   looks like this:
 
 ```python
 def configure_databases(dict):
@@ -120,5 +125,5 @@ Make sure your virtualenv is activated!
 And hopefully it just works!
 
 The database will be empty, so no courses are present on your development
-setup. Syncing the database content should be added to this file!
+setup.
 
