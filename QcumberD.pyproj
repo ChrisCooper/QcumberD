@@ -33,7 +33,9 @@
     <Compile Include="manage.py" />
     <Compile Include="qcumber\config\current.py" />
     <Compile Include="qcumber\config\dev.py" />
+    <Compile Include="qcumber\config\email_config.py" />
     <Compile Include="qcumber\config\example_current.py" />
+    <Compile Include="qcumber\config\example_email_config.py" />
     <Compile Include="qcumber\config\example_private_config.py" />
     <Compile Include="qcumber\config\private_config.py" />
     <Compile Include="qcumber\config\private_scraping_config.py" />
@@ -49,14 +51,17 @@
     <Compile Include="solus_scraper\Reference code\SolusModels.py" />
     <Compile Include="solus_scraper\Reference code\solus_scraper.py" />
     <Compile Include="solus_scraper\scraper\course_helper.py" />
+    <Compile Include="solus_scraper\scraper\extra_info_helper.py" />
     <Compile Include="solus_scraper\scraper\section_component_helper.py" />
     <Compile Include="solus_scraper\scraper\section_helper.py" />
     <Compile Include="solus_scraper\scraper\subject_helper.py" />
     <Compile Include="solus_scraper\scraper\login_helper.py" />
     <Compile Include="solus_scraper\scraper\__init__.py" />
+    <Compile Include="prereq_links.py" />
     <Compile Include="solus_scraper\tests.py" />
     <Compile Include="solus_scraper\urls.py" />
     <Compile Include="solus_scraper\views.py" />
+    <Compile Include="templates\course_catalog\text\faqs.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="course_catalog" />
@@ -70,12 +75,14 @@
     <Folder Include="qcumber\static\js\" />
     <Folder Include="qcumber\static\less\" />
     <Folder Include="solus_scraper" />
+    <Folder Include="solus_scraper\scripts\" />
     <Folder Include="solus_scraper\scraper\" />
     <Folder Include="solus_scraper\Reference code\" />
     <Folder Include="templates" />
     <Folder Include="templates\admin\" />
     <Folder Include="templates\course_catalog\" />
     <Folder Include="templates\course_catalog\components\" />
+    <Folder Include="templates\course_catalog\text" />
     <Folder Include="templates\course_catalog\pages\" />
     <Folder Include="templates\solus_scraper\" />
   </ItemGroup>
@@ -106,6 +113,8 @@
     <Content Include="qcumber\static\less\type.less" />
     <Content Include="qcumber\static\less\utilities.less" />
     <Content Include="qcumber\static\less\variables.less" />
+    <Content Include="templates\404.html" />
+    <Content Include="templates\500.html" />
     <Content Include="templates\admin\base_site.html" />
     <Content Include="templates\course_catalog\components\course_search_result.html" />
     <Content Include="templates\course_catalog\components\filter_panel.html" />
@@ -114,10 +123,8 @@
     <Content Include="templates\course_catalog\components\hero_search.html" />
     <Content Include="templates\course_catalog\components\search_section.html" />
     <Content Include="templates\course_catalog\experiments.html" />
-    <Content Include="templates\course_catalog\pages\about.html" />
     <Content Include="templates\course_catalog\pages\base_generic.html" />
     <Content Include="templates\course_catalog\pages\base_qcumber.html" />
-    <Content Include="templates\course_catalog\pages\contact.html" />
     <Content Include="templates\course_catalog\pages\course_detail.html" />
     <Content Include="templates\course_catalog\pages\filtered_page.html" />
     <Content Include="templates\course_catalog\pages\index.html" />
@@ -125,8 +132,13 @@
     <Content Include="templates\course_catalog\pages\subject_detail.html" />
     <Content Include="templates\course_catalog\section_component_detail.html" />
     <Content Include="templates\course_catalog\section_detail.html" />
+    <Content Include="templates\course_catalog\text\about.html" />
+    <Content Include="templates\course_catalog\text\channel.html" />
+    <Content Include="templates\course_catalog\text\contact.html" />
+    <Content Include="templates\course_catalog\text\robots.txt" />
     <Content Include="templates\solus_scraper\index.html" />
     <Content Include="Todos.txt" />
+    <Content Include="wipe_cache.sh" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

@@ -1,7 +1,11 @@
+qcumber/config/caching_config.py
+qcumber/config/email_config.py
 current.py
 private_config.py
 private_scraping_config.py
 virtualenv_activate.py
+dev_db.sqlite3
+venv
 
 #################
 ## Visual Studio
@@ -71,6 +75,3 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
-
-
-qcumber/config/caching_config.py

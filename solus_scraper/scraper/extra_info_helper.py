@@ -1,3 +1,5 @@
+import re, cgi
+
 import course_catalog.models
 from decimal import Decimal
 
@@ -116,7 +118,7 @@ def assign_extra_values_to_course(tools, info, course):
         elif key == "drop_consent":
             pass
         elif key == "enrollment_requirement":
-            course.enrollment_reqs = value
+            course.enrollment_reqs = link_requisites(value)
 
         elif key == "typically_offered":
             pass
@@ -125,6 +127,16 @@ def assign_extra_values_to_course(tools, info, course):
             #setattr(course, key, value)
 
 
+def link_requisites(s):
+    s = cgi.escape(s)
+    matches = re.finditer("([A-Z]{3,4})\s*(\d{3}[AB]?)", s)
 
+    #Because we are replacing strings as we go, the match indecies will become incorrect along the way
+    index_offset = 0
 
-
+    for match in matches:
+        repr = '<a href="/search/?q=%s+%s">%s %s</a>' % (match.group(1), match.group(2), match.group(1), match.group(2))
+        s = s[:match.start() + index_offset] + repr + s[match.end() + index_offset :]
+        index_offset += len(repr) - len(match.group(0))
+ 
+    return s

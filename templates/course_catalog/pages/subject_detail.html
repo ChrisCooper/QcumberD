@@ -40,31 +40,28 @@
                         </a>
                         </header>
                 
-                        <ul>
-                        
-
+                        <table class="table  table-hover table-condensed">
                             {% for course in courses %}
-                            <li class="course {% if course.is_empty %} useless {% endif %}">
+                            <tr class="course {% if course.is_empty %} useless {% endif %}">
                             <a href="{{ course.get_absolute_url }}" class="course-table">
-                            <table class="course-table">
-                                <tr>
+                            
                                     <td class="abbreviation">
                                         {{ subject.abbreviation }} {{ course.number }}
                                     </td>
                                     <td class="course_title">
+                                    <a href="{{ course.get_absolute_url }}">
                                         | {{ course.title }}
+                                    </a>
                                     </td>
 
                                     <td class="units">
                                         {{ course.units }} units
                                     </td>
                         
-                                </tr>
-                            </table>
                             </a>
-                            </li>
+                            </tr>
                             {% endfor %}
-                        </ul>
+                        </table>
                     </li>
                 {% endfor %}
             </ul>

@@ -11,14 +11,6 @@ def index(request):
     return render_to_response('course_catalog/pages/index.html', {'subject_list': subject_list})
 
 @cache_page(60 * 30)
-def about(request):
-    return render_to_response('course_catalog/pages/about.html')
-
-@cache_page(60 * 30)
-def contact(request):
-    return render_to_response('course_catalog/pages/contact.html')
-
-@cache_page(60 * 30)
 def course_detail(request, subject_abbr=None, course_number=None):
     c = get_object_or_404(Course, subject__abbreviation__iexact=subject_abbr, number=course_number)
     terms = [s.term for s in c.sections.distinct('term')]
@@ -68,15 +60,38 @@ def search(request):
 
 
 
+#TODO: All these requests should be fixed up, since they just return simple responses.
+@cache_page(60 * 30)
+def about(request):
+    return render_to_response('course_catalog/text/about.html')
+
+@cache_page(60 * 30)
+def contact(request):
+    return render_to_response('course_catalog/text/contact.html')
+
 @cache_page(60 * 30)
 def tos(request):
-    return render_to_response('course_catalog/pages/tos.html', {})
+    return render_to_response('course_catalog/text/tos.html', {})
 
+@cache_page(60 * 30)
+def faqs(request):
+    return render_to_response('course_catalog/text/faqs.html', {})
+
+
+
+#Application support
 
 @cache_page(60 * 60 * 24 *100)
 def facebook_channel(request):
-    return render_to_response('course_catalog/pages/channel.html', {})
+    return render_to_response('course_catalog/text/channel.html', {})
 
+@cache_page(60 * 60 * 24 *100)
+def flash_permissions(request):
+    return HttpResponse('')
+
+@cache_page(60 * 30)
+def robots(request):
+    return render_to_response('course_catalog/text/robots.txt', {})
 
 
 
