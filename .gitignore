@@ -4,6 +4,8 @@ current.py
 private_config.py
 private_scraping_config.py
 virtualenv_activate.py
+dev_db.sqlite3
+venv
 
 #################
 ## Visual Studio
