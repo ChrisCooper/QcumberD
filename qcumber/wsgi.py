@@ -14,9 +14,13 @@ framework.
 
 """
 import os
+from qcumber.config import MISSING_MODULE_MESSAGE
 
 #Activate the virtual environment
-from virtualenv_activate import VIRTUALENV_ACTIVATE
+try:
+	from virtualenv_activate import VIRTUALENV_ACTIVATE
+except ImportError:
+    raise ImportError(MISSING_MODULE_MESSAGE)
 activate_this = VIRTUALENV_ACTIVATE
 execfile(activate_this, dict(__file__=activate_this))
 
