@@ -10,7 +10,7 @@ This guide has been verified for Ubuntu 12.10.
 
 Setting up on mac OSX should be quite similar. It will be verified soon.
 
-<del>Microsoft Windows offers great pains.</del>It works on Windows and Mac OSX, but installation there is left as an exercise for the reader.
+<del>Microsoft Windows offers great pains.</del>It works on Windows, but installation there is left as an exercise for the reader.
 
 
 Prerequisites
