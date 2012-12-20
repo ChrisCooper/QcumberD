@@ -4,8 +4,14 @@
 
 # Django settings for qcumber project.
 
+from qcumber.config import MISSING_MODULE_MESSAGE
+
 from qcumber.config import unixy_project_path
-import qcumber.config.current  
+
+try:
+    import qcumber.config.current
+except ImportError as e:
+    raise ImportError(MISSING_MODULE_MESSAGE)
 
 if qcumber.config.current.CONFIG == "dev":
     from qcumber.config.dev import *
@@ -22,7 +28,10 @@ django.template.add_to_builtins('django.templatetags.future')
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-from qcumber.config.email_config import *
+try:
+    from qcumber.config.email_config import *
+except ImportError as e:
+    raise ImportError(MISSING_MODULE_MESSAGE)
 SERVER_EMAIL = 'server@qcumber.ca'
 SEND_BROKEN_LINK_EMAILS = True
 

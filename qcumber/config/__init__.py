@@ -4,6 +4,9 @@
 
 from os import path
 
+MISSING_MODULE_MESSAGE = '\nYou need to copy "example_module.py" files '\
+    'to module.py, and they may require customization. See the readme.'
+
 def make_path_unixy(p):
     return p.replace('\\', "/")
 
