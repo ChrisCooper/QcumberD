@@ -14,6 +14,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the SOLUS screen scraper
     url(r'^solus_scraper/', include('solus_scraper.urls')),
 
+    # Uncomment the next line to enable checking of enrollment
+    url(r'^enrollment/', include('enrollment.urls')),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
