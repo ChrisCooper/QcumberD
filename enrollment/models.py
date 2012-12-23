@@ -1,5 +1,5 @@
-import requests
-from BeautifulSoup import BeautifulSoup
+import requests, re
+from bs4 import BeautifulSoup
 
 import untracked
 
@@ -28,6 +28,12 @@ class SolusSession(object):
         self.view_section(section)
 
         capacity, enrolled = SolusParser(self.latest_text).enrollment_stats()
+
+        print('returning to course')
+        #self.return_from_section()
+
+        print('returning to subject/alphanum')
+        #self.return_from_course()
 
         #return capacity, enrolled 
         return self.latest_text
@@ -84,7 +90,10 @@ class SolusSession(object):
     def show_all_sections(self):
         return self._catalog_post('CLASS_TBL_VW5$fviewall$0')
 
-    def return_from_course(self, index):
+    def return_from_section(self):
+        return self._catalog_post('CLASS_SRCH_WRK2_SSR_PB_CLOSE')
+
+    def return_from_course(self):
         return self._catalog_post('DERIVED_SAA_CRS_RETURN_PB')
 
     def _catalog_post(self, action):
@@ -98,15 +107,29 @@ class SolusParser(object):
         self.soup = BeautifulSoup(text)
 
     def subject_action(self, subject):
-        return 'DERIVED_SSS_BCC_GROUP_BOX_1$84$$4'
+        return self.soup.find("a", title="Show/Hide Courses for Subject", text="%s - %s" % (subject.abbreviation, subject.title))['id']
 
     def course_action(self, course):
-        return 'CRSE_TITLE$5'
+        return self.soup.find("a", { "class": "PSHYPERLINK"}, text=re.compile("%s" % course.number))['id']
 
     def section_action(self, section):
-        return 'CLASS_SECTION$0'
+        return self.soup.find("a", { "class": "PSHYPERLINK"}, title="Class Details", text=re.compile("\(%s\)" % section.solus_id))['id']
 
     def enrollment_stats(self):
+        #Class Capacity: <label class="PSEDITBOXLABEL" for="SSR_CLS_DTL_WRK_ENRL_CAP"></label>
+        capacity_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_CAP"}, text=re.compile("Class Capacity"))
+        capacity_index = capacity_label_holder.parent.index(capacity_label_holder)
+
+        #.parent.next_sibling.children[n].child.text
+
+        #<label class="PSEDITBOXLABEL" for="SSR_CLS_DTL_WRK_ENRL_TOT">Enrollment Total</label>
+        enrolled_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_CAP"}, text=re.compile("Class Capacity"))
+        enrolled_index = enrolled_label_holder.parent.index(enrolled_label_holder)
+
+
+        import pdb; pdb.set_trace()
+        
+
         return 0,0
 
 
