@@ -30,13 +30,13 @@ class SolusSession(object):
         capacity, enrolled = SolusParser(self.latest_text).enrollment_stats()
 
         print('returning to course')
-        #self.return_from_section()
+        self.return_from_section()
 
         print('returning to subject/alphanum')
-        #self.return_from_course()
+        self.return_from_course()
 
-        #return capacity, enrolled 
-        return self.latest_text
+        return capacity, enrolled 
+        #return self.latest_text
 
 
     def navigate_to_course(self, course):
@@ -120,17 +120,15 @@ class SolusParser(object):
         capacity_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_CAP"}, text=re.compile("Class Capacity"))
         capacity_index = capacity_label_holder.parent.index(capacity_label_holder)
 
-        #.parent.next_sibling.children[n].child.text
+        capacity = capacity_label_holder.parent.parent.next_sibling.next_sibling.find_all('td')[capacity_index].find('span').text
 
         #<label class="PSEDITBOXLABEL" for="SSR_CLS_DTL_WRK_ENRL_TOT">Enrollment Total</label>
-        enrolled_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_CAP"}, text=re.compile("Class Capacity"))
+        enrolled_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_TOT"}, text=re.compile("Enrollment Total"))
         enrolled_index = enrolled_label_holder.parent.index(enrolled_label_holder)
 
+        enrolled = enrolled_label_holder.parent.parent.next_sibling.next_sibling.find_all('td')[enrolled_index].find('span').text
 
-        import pdb; pdb.set_trace()
-        
-
-        return 0,0
+        return capacity, enrolled
 
 
 
