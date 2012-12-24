@@ -20,6 +20,7 @@ var course_number = $('.course-data').data('number');
 $('.check-enrollment').on('click', function (e) {
     //Get data
     var solus_id = $(this).parents('.section-data').data('solus-id');
+
     var url = "/enrollment/" + subj_abbr + "/" +  course_number + "/" + solus_id +"/";
     var container = $(this).parent();
 
@@ -29,4 +30,7 @@ $('.check-enrollment').on('click', function (e) {
 
     //Fetch the enrollment data
     container.load(url);
+
+    var label = subj_abbr + " " +  course_number + " (" + solus_id +")";
+    _gaq.push(['_trackEvent', "enrollment", "request", label]);
 });

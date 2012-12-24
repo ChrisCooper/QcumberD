@@ -3,11 +3,14 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 
 {% extends "course_catalog/pages/filtered_page.html" %}
-
+{% load cache %}
 
 {% block page_title %} Qcumber | {{ course.subject.abbreviation }} {{ course.number }} - {{ course.title }} {% endblock %}
 
 {% block results_panel %}
+
+
+{% cache 1800 user.is_authenticated %}
 
 <article class="course">
 
@@ -70,7 +73,7 @@
                     <ul class="">
                     {% for section in sections %}
                         <li class="well inner-well well-small section-data" data-solus-id="{{ section.solus_id }}">
-                            {% include "course_catalog/section_detail.html" with section=section only %}
+                            {% include "course_catalog/section_detail.html" with section=section %}
                         </li>
                     {% endfor %}
                     </ul>
@@ -86,6 +89,8 @@
     </div>
 
 </article>
+
+{% endcache %}
 
 {% endblock %}
 

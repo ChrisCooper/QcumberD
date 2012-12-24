@@ -8,13 +8,14 @@ from django.db import models
 from course_catalog.models import Course, Subject, Term, Section
 import model_controls
 from django.views.decorators.cache import cache_page
+from django.template import RequestContext
 
 @cache_page(60 * 30)
 def index(request):
     subject_list = Subject.objects.all().order_by('abbreviation')
     return render_to_response('course_catalog/pages/index.html', {'subject_list': subject_list})
 
-@cache_page(60 * 30)
+#@cache_page(60 * 30)
 def course_detail(request, subject_abbr=None, course_number=None):
     c = get_object_or_404(Course, subject__abbreviation__iexact=subject_abbr, number=course_number)
     terms = [s.term for s in c.sections.distinct('term')]
@@ -27,7 +28,7 @@ def course_detail(request, subject_abbr=None, course_number=None):
         sections.append((t, secs))
 
     return render_to_response('course_catalog/pages/course_detail.html', {'course': c,
-                                                                          'all_sections': sections})
+                                                                          'all_sections': sections}, context_instance=RequestContext(request))
 
 @cache_page(60 * 30)
 def subject_detail(request, subject_abbr):
