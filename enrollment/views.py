@@ -9,7 +9,14 @@ from course_catalog.models import Section
 
 @cache_page(60 * 1)
 def enrollment_numbers(request, subject_abbr, course_num, solus_id):
-    section = get_object_or_404(Section, course__subject__abbreviation=subject_abbr, course__number=course_num, solus_id=solus_id)
+    section = None
+    try:
+        section = Section.objects.get(course__subject__abbreviation=subject_abbr, course__number=course_num, solus_id=solus_id)
+    except:
+        return HttpResponse("There was a problem checking enrollment. This section might not exist anymore.")
+
+    if not section:
+        return HttpResponse("There was a problem checking enrollment. This section might not exist anymore.")
 
     capacity, enrolled = SolusSession().scrape_enrollment(section)
 
