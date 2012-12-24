@@ -18,8 +18,15 @@ var subj_abbr = $('.subject-data').data('abbr');
 var course_number = $('.course-data').data('number');
 
 $('.check-enrollment').on('click', function (e) {
+    //Get data
     var solus_id = $(this).parents('.section-data').data('solus-id');
-
     var url = "/enrollment/" + subj_abbr + "/" +  course_number + "/" + solus_id +"/";
-     $(this).parent().load(url);
-})
+    var container = $(this).parent();
+
+    //Add a spinner
+    $(this).remove();
+    container.append('<img src="/static/img/ajax-loader.gif" alt="Loading" height="17" width="17">');
+
+    //Fetch the enrollment data
+    container.load(url);
+});
