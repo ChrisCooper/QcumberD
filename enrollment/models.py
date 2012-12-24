@@ -108,11 +108,9 @@ class SolusParser(object):
 
     def enrollment_stats(self):
         #Class Capacity: <label class="PSEDITBOXLABEL" for="SSR_CLS_DTL_WRK_ENRL_CAP"></label>
-<<<<<<< HEAD
-        capacity_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_CAP"}, text=re.compile("Class Capacity"))
-=======
+
         capacity_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_CAP"}, text=re.compile("(Class Capacity)|(Combined Section Capacity)"))
->>>>>>> master
+
         capacity_index = capacity_label_holder.parent.index(capacity_label_holder)
 
         capacity = capacity_label_holder.parent.parent.next_sibling.next_sibling.find_all('td')[capacity_index].find('span').text
