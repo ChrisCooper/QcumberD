@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'south',
     'course_catalog',
     'solus_scraper',
+    'enrollment',
 )
 
 # A sample logging configuration. The only tangible logging
