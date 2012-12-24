@@ -26,7 +26,7 @@ $('.check-enrollment').on('click', function (e) {
 
     //Add a spinner
     $(this).remove();
-    container.append('<img src="/static/img/ajax-loader.gif" alt="Loading" height="17" width="17">');
+    container.append('<img src="/static/img/ajax-loader.gif" alt="Loading" height="17" width="17">Gathering enrollment from SOLUS... (May take up to 15s)');
 
     //Fetch the enrollment data
     container.load(url);
