@@ -18,21 +18,16 @@ class SolusSession(object):
 
         self.navigate_to_course(course)
 
-        print('showing sections')
         self.show_sections()
 
-        print('showing all sections')
         self.show_all_sections()
 
-        print('viewing specific section')
         self.view_section(section)
 
         capacity, enrolled = SolusParser(self.latest_text).enrollment_stats()
 
-        print('returning to course')
         self.return_from_section()
 
-        print('returning to subject/alphanum')
         self.return_from_course()
 
         return capacity, enrolled 
@@ -42,17 +37,13 @@ class SolusSession(object):
     def navigate_to_course(self, course):
         subject = course.subject
 
-        print('logging in')
         self.login()
 
-        print('selecting alphanum ' + subject.abbreviation[:1])
         self.select_alphanum(subject.abbreviation[:1])
         self.select_alphanum(subject.abbreviation[:1])
 
-        print('dropping down subject')
         self.dropdown_subject(subject)
 
-        print('selecting course')
         self.select_course(course)
 
     def login(self):
@@ -117,7 +108,7 @@ class SolusParser(object):
 
     def enrollment_stats(self):
         #Class Capacity: <label class="PSEDITBOXLABEL" for="SSR_CLS_DTL_WRK_ENRL_CAP"></label>
-        capacity_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_CAP"}, text=re.compile("Class Capacity"))
+        capacity_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_CAP"}, text=re.compile("(Class Capacity)|(Combined Section Capacity)"))
         capacity_index = capacity_label_holder.parent.index(capacity_label_holder)
 
         capacity = capacity_label_holder.parent.parent.next_sibling.next_sibling.find_all('td')[capacity_index].find('span').text
