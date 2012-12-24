@@ -1,13 +1,16 @@
 Qcumber
 =======
 
-How to get up and running
+Qcumber is a course catalog created for Queen's University. The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2012 Chris Cooper.
+
+
+How to get it up and running
 
 This guide has been verified for Ubuntu 12.10.
 
 Setting up on mac OSX should be quite similar. It will be verified soon.
 
-<del>Microsoft Windows offers great pains.</del>
+<del>Microsoft Windows offers great pains.</del>It works on Windows, but installation there is left as an exercise for the reader.
 
 
 Prerequisites
@@ -125,5 +128,6 @@ Make sure your virtualenv is activated!
 And hopefully it just works!
 
 The database will be empty, so no courses are present on your development
-setup.
+setup. Instructions for setting up the scraper for gather data will be included in a future commit.
+
 
