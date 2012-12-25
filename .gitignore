@@ -6,6 +6,7 @@ private_scraping_config.py
 virtualenv_activate.py
 dev_db.sqlite3
 venv
+ignored_files
 
 #################
 ## Visual Studio
