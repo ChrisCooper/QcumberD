@@ -83,6 +83,8 @@ Make sure you have activated your virtual environment!
 
  * current: `cp qcumber/config/example_current.py qcumber/config/current.py`
  * email: `cp qcumber/config/example_email_config.py qcumber/config/email_config.py`
+ * login details: `cp enrollment/example_untracked.py enrollment/untracked.py`
+ * Change `username` and `password` in untracked.py to your netid and password.
  * private: `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
  * Edit `db_name` and add a `DATABASES` dict to private_config.py so that it
    looks like this:
@@ -128,6 +130,22 @@ Make sure your virtualenv is activated!
 And hopefully it just works!
 
 The database will be empty, so no courses are present on your development
-setup. Instructions for setting up the scraper for gather data will be included in a future commit.
+setup.
 
 
+8. Scrape Course Data
+---------------------
+
+ * Download Selenium Server from `http://seleniumhq.org/download/`
+ * Run the server in another terminal by calling `java -jar [filename].jar`
+ * Configure scraper: `mkdir ignored_files ; echo -e "[netid]\\n[password]" > ignored_files/selenium_config.txt`
+ * Go to `http://localhost:8000/admin/solus_scraper/jobconfig/`
+ * Click "Add job config".
+ * Add a name ("Scrape everything") and a description.
+ * Set the subject letters to "ABCDEFGHIJKLMNOPQRSTUVWXYZ" (all of them).
+ * Click "Save".
+ * Go to `http://localhost:8000/solus_scraper/`
+ * Click the name of the job you just created.
+ * A browser will open and start navigating the site.
+ * As it scrapes, the data will become available in the web interface.
+ * Scraping usually takes anywhere from 8 to 10 hours, be patient!
