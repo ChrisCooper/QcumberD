@@ -14,7 +14,8 @@ class SolusSession(object):
     course_catalog_url = "https://saself.ps.queensu.ca/psc/saself/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_BROWSE_CATLG_P.GBL"
 
     def __init__(self):
-        self.session = requests.session()
+        self.session = requests.session(config={'keep_alive': False})
+
         self.latest_response = None
         self.latest_text = ''
 
@@ -36,6 +37,8 @@ class SolusSession(object):
         self.return_from_section()
 
         self.return_from_course()
+
+        self.session.close()
 
         return capacity, enrolled 
 
