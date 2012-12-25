@@ -14,27 +14,33 @@
 <div class="row">
     <div class="span6">
 
-        {% if subject_list %}
-            <table class="table table-striped table-hover table-condensed">
-                {% for subject in subject_list %}
+        {% if subject_buckets %}
+            {% for bucket in subject_buckets %}
+
+                <p style="font-weight:bold">{{bucket.0}}</p>
+                <table class="table table-striped table-hover table-condensed">
                 
-                    <tr>
+                    {% for subject in bucket.1 %}
                     
-                        <td class="abbreviation">
-                            
-                            {{ subject.abbreviation }} 
-                        </td>
-                        <td class="subject_title">
-                            <a href="{{ subject.get_absolute_url }}">
-                            {{ subject.title }}
-                            </a>
-                        </td>
-                    
-                    </tr>
-                    
-                    
-                {% endfor %}
-            </table>
+                        <tr>
+                        
+                            <td class="abbreviation">
+                                
+                                {{ subject.abbreviation }} 
+                            </td>
+                            <td class="subject_title">
+                                <a href="{{ subject.get_absolute_url }}">
+                                {{ subject.title }}
+                                </a>
+                            </td>
+                        
+                        </tr>
+                        
+                    {% endfor %}
+            
+                </table><br/>
+
+            {% endfor %}
         {% else %}
             <p>No subjects are available.</p>
         {% endif %}
