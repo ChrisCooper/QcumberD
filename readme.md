@@ -83,6 +83,8 @@ Make sure you have activated your virtual environment!
 
  * current: `cp qcumber/config/example_current.py qcumber/config/current.py`
  * email: `cp qcumber/config/example_email_config.py qcumber/config/email_config.py`
+ * login details: `cp enrollment/example_untracked.py enrollment/untracked.py`
+ * Change `username` and `password` in untracked.py to your netid and password
  * private: `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
  * Edit `db_name` and add a `DATABASES` dict to private_config.py so that it
    looks like this:
@@ -107,7 +109,6 @@ DATABASES = {
     }
 }
 ```
-
 
 6. Initialize the Database
 --------------------------
