@@ -1,7 +1,12 @@
 import requests, re
 from bs4 import BeautifulSoup
 
-import untracked
+from qcumber.config import MISSING_MODULE_MESSAGE
+
+try:
+    import untracked
+except ImportError as e:
+    raise ImportError(MISSING_MODULE_MESSAGE)
 
 class SolusSession(object):
 
@@ -20,6 +25,8 @@ class SolusSession(object):
 
         self.show_sections()
 
+        self.switch_terms(section.term)
+
         self.show_all_sections()
 
         self.view_section(section)
@@ -31,7 +38,6 @@ class SolusSession(object):
         self.return_from_course()
 
         return capacity, enrolled 
-        #return self.latest_text
 
 
     def navigate_to_course(self, course):
@@ -54,13 +60,15 @@ class SolusSession(object):
            'IDButton': 'Submit',
            }
 
-        return self.session.post(SolusSession.login_url, data=payload)
+        response = self.session.post(SolusSession.login_url, data=payload)
+
+        if len(response.text) < 200:
+            raise Exception("Could not log in to SOLUS. The login credentials provided in untracked.py may have been incorrect.")
+
+        return response
 
     def select_alphanum(self, alphanum):
         return self._catalog_post('DERIVED_SSS_BCC_SSR_ALPHANUM_' + alphanum.upper())
-        #ICSID:vyQvhwKZx8jy
-        #ICSID:vyQvhwKZx8jy
-
 
     def dropdown_subject(self, subject):
         action = SolusParser(self.latest_text).subject_action(subject)
@@ -78,6 +86,10 @@ class SolusSession(object):
     def show_sections(self):
         return self._catalog_post('DERIVED_SAA_CRS_SSR_PB_GO')
 
+    def switch_terms(self, term):
+        term_key = SolusParser(self.latest_text).term_key(term)
+        return self._catalog_post('DERIVED_SAA_CRS_SSR_PB_GO$92$', extras={'DERIVED_SAA_CRS_TERM_ALT': term_key})
+
     def show_all_sections(self):
         return self._catalog_post('CLASS_TBL_VW5$fviewall$0')
 
@@ -87,8 +99,9 @@ class SolusSession(object):
     def return_from_course(self):
         return self._catalog_post('DERIVED_SAA_CRS_RETURN_PB')
 
-    def _catalog_post(self, action):
-        self.latest_response = self.session.post(SolusSession.course_catalog_url, data={'ICAction': action})
+    def _catalog_post(self, action, extras={}):
+        extras['ICAction'] = action
+        self.latest_response = self.session.post(SolusSession.course_catalog_url, data=extras)
         self.latest_text = self.latest_response.text
 
 
@@ -106,16 +119,16 @@ class SolusParser(object):
     def section_action(self, section):
         return self.soup.find("a", { "class": "PSHYPERLINK"}, title="Class Details", text=re.compile("\(%s\)" % section.solus_id))['id']
 
-    def enrollment_stats(self):
-        #Class Capacity: <label class="PSEDITBOXLABEL" for="SSR_CLS_DTL_WRK_ENRL_CAP"></label>
+    def term_key(self, term):
+        return self.soup.find("option", text="%s %s" % (term.year, term.season))['value']
 
+    def enrollment_stats(self):
         capacity_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_CAP"}, text=re.compile("(Class Capacity)|(Combined Section Capacity)"))
 
         capacity_index = capacity_label_holder.parent.index(capacity_label_holder)
 
         capacity = capacity_label_holder.parent.parent.next_sibling.next_sibling.find_all('td')[capacity_index].find('span').text
 
-        #<label class="PSEDITBOXLABEL" for="SSR_CLS_DTL_WRK_ENRL_TOT">Enrollment Total</label>
         enrolled_label_holder = self.soup.find("label", { "class": "PSEDITBOXLABEL", "for":"SSR_CLS_DTL_WRK_ENRL_TOT"}, text=re.compile("Enrollment Total"))
         enrolled_index = enrolled_label_holder.parent.index(enrolled_label_holder)
 
