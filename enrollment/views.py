@@ -17,9 +17,9 @@ def enrollment_numbers(request, subject_abbr, course_num, solus_id):
 
     capacity, enrolled = (0,0)
 
-    #try:
-    capacity, enrolled = SolusSession().scrape_enrollment(section)
-    #except:
-     #   return HttpResponse("Sorry! There was a problem checking enrollment.")
+    try:
+        capacity, enrolled = SolusSession().scrape_enrollment(section)
+    except:
+        return HttpResponse("Sorry! There was a problem checking enrollment.")
 
     return render_to_response('enrollment/numbers.html', {'enrolled': enrolled, 'capacity': capacity})
