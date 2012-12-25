@@ -137,7 +137,8 @@ setup.
 ---------------------
 
  * Download Selenium Server from `http://seleniumhq.org/download/`
- * Run the sever in another terminal by calling `java -jar [filename].jar`
+ * Run the server in another terminal by calling `java -jar [filename].jar`
+ * Configure scraper: `mkdir ignored_files ; echo -e "[netid]\\n[password]" > ignored_files/selenium_config.txt`
  * Go to `http://localhost:8000/admin/solus_scraper/jobconfig/`
  * Click "Add job config".
  * Add a name ("Scrape everything") and a description.
@@ -146,5 +147,5 @@ setup.
  * Go to `http://localhost:8000/solus_scraper/`
  * Click the name of the job you just created.
  * A browser will open and start navigating the site.
- * As it scrapes, the data will become availible in the web interface.
+ * As it scrapes, the data will become available in the web interface.
  * Scraping usually takes anywhere from 8 to 10 hours, be patient!
