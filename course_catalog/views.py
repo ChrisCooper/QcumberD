@@ -13,7 +13,7 @@ from django.template import RequestContext
 @cache_page(60 * 30)
 def index(request):
     subject_list = Subject.objects.all().order_by('abbreviation')
-    numBuckets = 5
+    numBuckets = 8
     assert numBuckets <= 26
 
     buckets = []
@@ -28,8 +28,8 @@ def index(request):
 
     #add courses to buckets
     for subject in subject_list:
-        buckets[int((ord(subject.abbreviation[0].upper()) - 65)/numBuckets)][1].append(subject)
-    
+        buckets[int((ord(subject.abbreviation[0].upper()) - 65)/perBucket)][1].append(subject)
+
     return render_to_response('course_catalog/pages/index.html', {'subject_buckets': buckets})
 
 @cache_page(60 * 30)

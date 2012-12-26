@@ -15,32 +15,36 @@
     <div class="span6">
 
         {% if subject_buckets %}
-            {% for bucket in subject_buckets %}
 
-                <p style="font-weight:bold">{{bucket.0}}</p>
-                <table class="table table-striped table-hover table-condensed">
-                
-                    {% for subject in bucket.1 %}
-                    
-                        <tr>
+            <ul class="nav nav-tabs">
+                {% for bucket in subject_buckets %}
+                    <li {%ifequal bucket.0.0 "A"%}class="active"{%endifequal%}><a href="#{{bucket.0}}" data-toggle="tab">{{bucket.0}}</a></li>
+                {% endfor %}
+            </ul>
+
+            <div class="tab-content">
+                {% for bucket in subject_buckets %}
+
+                    <div class="tab-pane {%ifequal bucket.0.0 "A"%}active{%endifequal%}" id="{{bucket.0}}">
+                        <table class="table table-striped table-hover table-condensed">
                         
-                            <td class="abbreviation">
+                            {% for subject in bucket.1 %}
+                            
+                                <tr>
+                                    <td width="100px", class="abbreviation">{{ subject.abbreviation }} </td>
+                                    <td class="subject_title">
+                                        <a href="{{ subject.get_absolute_url }}">{{ subject.title }}</a>
+                                    </td>
+                                </tr>
                                 
-                                {{ subject.abbreviation }} 
-                            </td>
-                            <td class="subject_title">
-                                <a href="{{ subject.get_absolute_url }}">
-                                {{ subject.title }}
-                                </a>
-                            </td>
-                        
-                        </tr>
-                        
-                    {% endfor %}
-            
-                </table><br/>
+                            {% endfor %}
+                    
+                        </table>
+                    </div>
 
-            {% endfor %}
+                {% endfor %}
+            </div>
+
         {% else %}
             <p>No subjects are available.</p>
         {% endif %}
