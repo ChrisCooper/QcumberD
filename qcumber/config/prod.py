@@ -2,27 +2,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from qcumber.config import caching_config
-
 DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'HOST': '',                      # Set to empty string for localhost.
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
+from private_config import CACHE_PATH
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'unix:' + caching_config.path,
+        'LOCATION': "unix:" + CACHE_PATH,
     }
 }
-
-TEMPLATE_DEBUG = DEBUG
-
-from private_config import *
-
-configure_databases(DATABASES)

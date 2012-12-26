@@ -5,37 +5,26 @@
 # Django settings for qcumber project.
 
 from qcumber.config import MISSING_MODULE_MESSAGE
-
 from qcumber.config import unixy_project_path
 
 try:
-    import qcumber.config.current
+    from qcumber.config.private_config import *
 except ImportError as e:
     raise ImportError(MISSING_MODULE_MESSAGE)
 
-if qcumber.config.current.CONFIG == "dev":
+if CURRENT == "dev":
     from qcumber.config.dev import *
-elif qcumber.config.current.CONFIG == "prod":
+elif CURRENT == "prod":
     from qcumber.config.prod import *
-elif qcumber.config.current.CONFIG == "scraping":
-    from qcumber.config.scraping import *
+else:
+    raise ImportError("Incorrect data in private_config.py. See readme for setup instructions.")
+
+configure_databases(DATABASES)
+
 
 #support 1.5-style urls
 import django.template
 django.template.add_to_builtins('django.templatetags.future')
-
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-try:
-    from qcumber.config.email_config import *
-except ImportError as e:
-    raise ImportError(MISSING_MODULE_MESSAGE)
-SERVER_EMAIL = 'server@qcumber.ca'
-SEND_BROKEN_LINK_EMAILS = True
-
-MANAGERS = ADMINS
 
 SCRAPER_CONFIG_FILE = unixy_project_path("ignored_files/selenium_config.txt")
 
