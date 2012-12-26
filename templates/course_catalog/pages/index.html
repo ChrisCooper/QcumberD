@@ -25,13 +25,13 @@
             <div class="tab-content">
                 {% for bucket in subject_buckets %}
 
-                    <div class="tab-pane {%ifequal bucket.0.0 "A"%}active{%endifequal%}" id="{{bucket.0}}">
+                    <div style= "min-height:{{min_height}}px" class="tab-pane {%ifequal bucket.0.0 "A"%}active{%endifequal%}" id="{{bucket.0}}">
                         <table class="table table-striped table-hover table-condensed">
                         
                             {% for subject in bucket.1 %}
                             
                                 <tr>
-                                    <td width="100px", class="abbreviation">{{ subject.abbreviation }} </td>
+                                    <td width="100px" class="abbreviation">{{ subject.abbreviation }} </td>
                                     <td class="subject_title">
                                         <a href="{{ subject.get_absolute_url }}">{{ subject.title }}</a>
                                     </td>

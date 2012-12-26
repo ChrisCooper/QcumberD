@@ -14,9 +14,12 @@ from django.template import RequestContext
 def index(request):
     subject_list = Subject.objects.all().order_by('abbreviation')
     max_buckets = 9
+
+    buckets = model_controls.subject_buckets(subject_list, max_buckets)
     
     return render_to_response('course_catalog/pages/index.html',
-        {'subject_buckets':model_controls.subject_buckets(subject_list, max_buckets)})
+        {'subject_buckets':buckets,
+         'min_height': 29 * max([len(x[1]) for x in buckets])})
 
 @cache_page(60 * 30)
 def course_detail(request, subject_abbr=None, course_number=None):
