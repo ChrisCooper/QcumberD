@@ -10,6 +10,7 @@
 
 #Environment config
 CURRENT = "dev" #'dev' (development) or 'prod' (production)
+VIRTUALENV_ACTIVATE = 'venv/bin/activate_this.py'
 
 #Caching config (only used in production servers)
 CACHE_PATH = "/path/to/memcached/socket"
