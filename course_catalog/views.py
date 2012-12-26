@@ -15,10 +15,20 @@ def index(request):
     subject_list = Subject.objects.all().order_by('abbreviation')
     numBuckets = 8
     assert numBuckets <= 26
-
-    buckets = []
     
-    #TODO: Buckets with semi-equal number of courses
+    buckets = []
+
+    #""" (Remove '#' to toggle)
+    #New style, find semi-equal buckets
+    temp = model_controls.subject_buckets(subject_list, numBuckets)
+    for x in range(0, len(temp)-1):
+        buckets.append([temp[x][0].abbreviation[0].upper() + "-" + chr(ord(temp[x+1][0].abbreviation[0].upper())-1), temp[x]])
+    buckets.append([temp[-1][0].abbreviation[0].upper() + "-Z", temp[-1]])
+
+    return render_to_response('course_catalog/pages/index.html', {'subject_buckets': buckets})
+    #"""
+
+    #Old style each letter range is a bucket, no matter how many elements
     perBucket = 26//numBuckets
 
     #create letter buckets (last one takes remaining letters)
