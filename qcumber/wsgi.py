@@ -14,7 +14,6 @@ framework.
 
 """
 import os
-from qcumber.config import MISSING_MODULE_MESSAGE
 from qcumber.config.private_config import VIRTUALENV_ACTIVATE
 
 #Activate the virtual environment

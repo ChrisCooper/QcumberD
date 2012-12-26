@@ -1,12 +1,7 @@
 import requests, re
 from bs4 import BeautifulSoup
 
-from qcumber.config import MISSING_MODULE_MESSAGE
-
-try:
-    import untracked
-except ImportError as e:
-    raise ImportError(MISSING_MODULE_MESSAGE)
+from qcumber.config.private_config import SCRAPE_USERNAME, SCRAPE_PASSWORD
 
 class SolusSession(object):
 
@@ -58,15 +53,15 @@ class SolusSession(object):
     def login(self):
 
         payload = {
-           'IDToken1': untracked.username,
-           'IDToken2': untracked.password,
+           'IDToken1': SCRAPE_USERNAME,
+           'IDToken2': SCRAPE_PASSWORD,
            'IDButton': 'Submit',
            }
 
         response = self.session.post(SolusSession.login_url, data=payload)
 
         if len(response.text) < 200:
-            raise Exception("Could not log in to SOLUS. The login credentials provided in untracked.py may have been incorrect.")
+            raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
 
         return response
 

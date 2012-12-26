@@ -42,4 +42,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'username@domain.com'
 EMAIL_HOST_PASSWORD = 'password'
 SERVER_EMAIL = 'server@qcumber.ca'
-SEND_BROKEN_LINK_EMAILS = True
+SEND_BROKEN_LINK_EMAILS = Trueqcumber.config.private_config.
+
+#Site scraping config
+SCRAPE_USERNAME = 'netid'
+SCRAPE_PASSWORD = 'password'
