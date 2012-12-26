@@ -20,9 +20,9 @@ def navigate_to_course_catalog(tools):
             line_num += 1
 
     #type username
-    s.type("id=IDToken1", login_info[0])
+    s.type("id=IDToken1", settings.SCRAPE_USERNAME)
     #type password
-    s.type("id=IDToken2", login_info[1])
+    s.type("id=IDToken2", settings.SCRAPE_PASSWORD)
 
     #Click the log in button
     s.click("name=Login.Submit")
