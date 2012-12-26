@@ -3,45 +3,82 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import re
-import itertools
 from course_catalog.models import Subject, Course
-
-#assigns each split attempt a score
-def split_score (split_points, num_items):
-    best = num_items/len(split_points)
-    score = 0
-    for x in range(0, len(split_points)-1):
-        score += abs(best - (split_points[x+1] - split_points[x]))
-    return score
 
 #returns a list containing lists of subjects
 #the length of each list of subjects should be as close to equal as possible
-#TODO: There has to be a faster way of doing this...
-def subject_buckets(subjects, num_buckets):
-    split_points = []
-    best_split = []
+#format [(name, [list of subjects]), ...]
+def subject_buckets(subjects, max_buckets):
     num_subjects = len(subjects)
-    best_score = num_subjects
+    opt_bucket = num_subjects//max_buckets
 
-    #get availible split points
+    #get availible split points (between letters)
+    split_points = []
     for x in range(0, num_subjects-1):
         if subjects[x].abbreviation[0].upper() != subjects[x+1].abbreviation[0].upper():
             split_points.append(x+1)
 
-    #iterate over split options
-    for comb in itertools.combinations(split_points, num_buckets-1):
-        temp = split_score(comb, num_subjects)
-        if temp < best_score:
-            best_split = comb
-            best_score = temp
-        if temp < 5: #good enough
-            break;
+    #Find the number of items between each split point
+    num_in_splits = [split_points[0]] + \
+                    [split_points[x+1] - split_points[x] for x in range(0, len(split_points) - 1)] + \
+                    [num_subjects - split_points[-1]]
+
+    #Optimally combine split points
+    curr = num_in_splits[0]
+    best_split = []
+    for x in range(1, len(num_in_splits)):
+        if len(best_split) == max_buckets - 2:
+            #last split, try to equalize the 2 buckets
+            #index is x-1 because we're not counting the previous curr value
+            closer = False
+            
+            #rolling counts
+            temp1 = num_in_splits[x-1]
+            temp2 = sum(num_in_splits[x:])
+
+            #store best
+            best_diff = sum(num_in_splits[x-1:])
+            best1 = temp1
+            best2 = temp2
+            
+            for y in range(x, len(num_in_splits)):
+                #rolling counts
+                temp1 += num_in_splits[y]
+                temp2 -= num_in_splits[y]
+
+                diff = abs(temp2 - temp1)
+                if diff < best_diff:
+                    best_diff = diff
+                    best1 = temp1
+                    best2 = temp2
+                    closer = True #should always be getting closer now
+                elif closer:
+                    #gone too far, stop looking
+                    break
+            best_split.append(best1)
+            best_split.append(best2)
+            break
+        #The +2 makes the algorithm err on the side of less, resulting in a more even distribution
+        elif abs(opt_bucket - curr) < abs(opt_bucket - (curr + num_in_splits[x])) + 2:
+            best_split.append(curr)
+            curr = num_in_splits[x]
+        else:
+            curr += num_in_splits[x]
+    else:
+        #NOTE: Not going to return the max number of buckets
+        best_split.append(curr)
 
     #return new list based on optimal split
-    ret = [subjects[:best_split[0]]]
-    for x in range(1, num_buckets-1):
-        ret.append(subjects[best_split[x-1]:best_split[x]])
-    ret.append(subjects[best_split[-1]:])
+    start = 0
+    ret = []
+    for x in best_split[:-1]:
+        #add tuple of name and subject list
+        ret.append((subjects[start].abbreviation[0].upper() + "-" + \
+                    subjects[start + x - 1].abbreviation[0].upper(),
+                    subjects[start:start + x]))
+        start += x
+    #add the last one (*-Z)
+    ret.append((subjects[start].abbreviation[0].upper() + "-Z", subjects[start:]))
 
     return ret
 
