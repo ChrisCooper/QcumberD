@@ -106,8 +106,7 @@ Make sure your virtualenv is activated!
 
 And hopefully it just works!
 
-The database will be empty, so no courses are present on your development
-setup.
+The database will be empty, so no courses will be present on your setup.
 
 
 8. Scrape Course Data
@@ -115,7 +114,6 @@ setup.
 
  * Download Selenium Server from `http://seleniumhq.org/download/`
  * Run the server in another terminal by calling `java -jar [filename].jar`
- * Configure scraper: `mkdir ignored_files ; echo -e "[netid]\\n[password]" > ignored_files/selenium_config.txt`
  * Go to `http://localhost:8000/admin/solus_scraper/jobconfig/`
  * Click "Add job config".
  * Add a name ("Scrape everything") and a description.

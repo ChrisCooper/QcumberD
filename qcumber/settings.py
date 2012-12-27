@@ -17,7 +17,7 @@ if DEP_TYPE == "dev":
 elif DEP_TYPE == "prod":
     from qcumber.config.prod import *
 else:
-    raise ImportError("Incorrect data in private_config.py. See readme for setup instructions.")
+    raise ImportError("Incorrect data in private_config.py. See the setup guide in the readme for instructions.")
 
 configure_databases(DATABASES)
 
