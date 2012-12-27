@@ -12,9 +12,9 @@ try:
 except ImportError as e:
     raise ImportError(MISSING_MODULE_MESSAGE)
 
-if CURRENT == "dev":
+if DEP_TYPE == "dev":
     from qcumber.config.dev import *
-elif CURRENT == "prod":
+elif DEP_TYPE == "prod":
     from qcumber.config.prod import *
 else:
     raise ImportError("Incorrect data in private_config.py. See readme for setup instructions.")

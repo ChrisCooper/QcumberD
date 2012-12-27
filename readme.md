@@ -46,13 +46,11 @@ For example, if your username is, say, `uniphil`, then a command like
 ----------------------------
 
  * Copy the `git@github.com:[yourusername]/QcumberD.git` link on the page.
- * Open up terminal (try `ctrl + alt + 'T'`)
+ * Open up a terminal window.
  * Navigate to the folder in which you want to store your local copy of
    Qcumber. For me that would mean `cd ~/Code`
  * Clone the repository. `git clone [repository]`, where `[repository]` is the
-   `git@github...` url you copied earlier. Note that you can paste into a
-   terminal with `ctrl + shift + 'V'` on linux, while the usual `cmd + 'V'`
-   works on the mac terminal.
+   `git@github...` url you copied earlier. 
 
    You should now have a `QcumberD` folder.
 
@@ -67,8 +65,7 @@ For example, if your username is, say, `uniphil`, then a command like
    Note: you will need to activate the virtual environment every time you want
    to run the local project. You an use the same preceeding `source` command.
 
- * Set up the activation module: `echo "VIRTUALENV_ACTIVATE = 'venv/bin/activate_this.py'" > virtualenv_activate.py`
-
+ * To deactivate the virtual environment: `deactivate`
 
 4. Install Required Packages
 ----------------------------
@@ -81,34 +78,14 @@ Make sure you have activated your virtual environment!
 5. Configure Your Setup
 -----------------------
 
- * current: `cp qcumber/config/example_current.py qcumber/config/current.py`
- * email: `cp qcumber/config/example_email_config.py qcumber/config/email_config.py`
- * login details: `cp enrollment/example_untracked.py enrollment/untracked.py`
- * Change `username` and `password` in untracked.py to your netid and password.
- * private: `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
- * Edit `db_name` and add a `DATABASES` dict to private_config.py so that it
-   looks like this:
-
-```python
-def configure_databases(dict):
-    dict['default']['USER'] = 'db_username'
-    dict['default']['PASSWORD'] = 'db_password'
-    dict['default']['NAME'] = 'dev_db.sqlite3'
-
-ADMINS = (
-    ('Admin name', 'admin@email.com'),
-)
-
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'laksjdlaksdjalksdjalksjdlkasjdlkajsd'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-    }
-}
-```
+ * Clone the sample config file `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
+ * Change the configuration options in qcumber/config/private_config.py to suit your environment.
+   * DEP_TYPE: The deployment type ('dev' for development, 'prod' for production).
+   * VENV_ACTIVATE: The path to the virtual environment activate script. Default is usually correct.
+   * CACHE_PATH: The path to the mamcached socket. Production environment only.
+   * Database configuration: The configuration of the database the application will use.
+   * Email config: The settings for sending emails. 
+   * Site scraping config: Your netid and password to access SOLUS.
 
 
 6. Initialize the Database

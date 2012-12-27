@@ -9,8 +9,8 @@
 # DO NOT DISTRIBUTE YOUR PERSONAL private_config.py
 
 #Environment config
-CURRENT = "dev" #'dev' (development) or 'prod' (production)
-VIRTUALENV_ACTIVATE = 'venv/bin/activate_this.py'
+DEP_TYPE = "dev" #'dev' (development) or 'prod' (production)
+VENV_ACTIVATE = 'venv/bin/activate_this.py'
 
 #Caching config (only used in production servers)
 CACHE_PATH = "/path/to/memcached/socket"
@@ -19,7 +19,7 @@ CACHE_PATH = "/path/to/memcached/socket"
 def configure_databases(dict):
     dict['default']['USER'] = 'db_username'
     dict['default']['PASSWORD'] = 'db_password'
-    dict['default']['NAME'] = 'db_name'
+    dict['default']['NAME'] = 'db_name.sqlite3'
 
 ADMINS = (
     ('Admin name', 'admin@email.com'),

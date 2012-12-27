@@ -11,14 +11,6 @@ def navigate_to_course_catalog(tools):
     print "Opening login page..."
     s.open("https://sso.queensu.ca/amserver/UI/Login")
 
-    #Get login information from config file
-    with open(settings.SCRAPER_CONFIG_FILE, 'r') as config_file:
-        line_num = 0
-        login_info = ['','']
-        for line in config_file:
-            login_info[line_num] = line.strip()
-            line_num += 1
-
     #type username
     s.type("id=IDToken1", settings.SCRAPE_USERNAME)
     #type password
