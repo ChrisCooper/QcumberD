@@ -10,7 +10,6 @@
 
 #Environment config
 DEP_TYPE = "dev" #'dev' (development) or 'prod' (production)
-VENV_ACTIVATE = 'venv/bin/activate_this.py'
 
 #Caching config (only used in production servers)
 CACHE_PATH = "/path/to/memcached/socket"

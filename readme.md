@@ -81,7 +81,6 @@ Make sure you have activated your virtual environment!
  * Clone the sample config file `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
  * Change the configuration options in qcumber/config/private_config.py to suit your environment.
    * DEP_TYPE: The deployment type ('dev' for development, 'prod' for production).
-   * VENV_ACTIVATE: The path to the virtual environment activate script. Default is usually correct.
    * CACHE_PATH: The path to the mamcached socket. Production environment only.
    * Database configuration: The configuration of the database the application will use.
    * Email config: The settings for sending emails. 

@@ -14,11 +14,13 @@ framework.
 
 """
 import os
-from qcumber.config.private_config import VENV_ACTIVATE
 
 #Activate the virtual environment
-activate_this = VENV_ACTIVATE
-execfile(activate_this, dict(__file__=activate_this))
+activate_this = "venv/bin/activate_this.py"
+try:
+    execfile(activate_this, dict(__file__=activate_this))
+except StandardError as e:
+    raise EnvironmentError ("Problem with virtual environment: " + str(e))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qcumber.settings")
 
