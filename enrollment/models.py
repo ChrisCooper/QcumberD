@@ -14,7 +14,7 @@ class SolusSession(object):
     course_catalog_url = "https://saself.ps.queensu.ca/psc/saself/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_BROWSE_CATLG_P.GBL"
 
     def __init__(self):
-        self.session = requests.session(config={'keep_alive': False})
+        self.session = requests.session()
 
         self.latest_response = None
         self.latest_text = ''
