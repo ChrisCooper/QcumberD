@@ -5120,6 +5120,11 @@ ul {
   font-style: italic;
   color: #666;
 }
+.course .section-list .enrollment {
+  padding-left: 10px;
+  border-bottom: 3px;
+  font-style: normal;
+}
 .expo {
   margin: 50px;
   padding: 30px;
