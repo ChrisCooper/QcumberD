@@ -12,37 +12,37 @@ def subject_buckets(subjects, max_buckets):
     num_subjects = len(subjects)
     opt_bucket = num_subjects//max_buckets
 
-    #get availible split points (between letters)
+    # get availible split points (between letters)
     split_points = []
     for x in range(0, num_subjects-1):
         if subjects[x].abbreviation[0].upper() != subjects[x+1].abbreviation[0].upper():
             split_points.append(x+1)
 
-    #Find the number of items between each split point
+    # Find the number of items between each split point
     num_in_splits = [split_points[0]] + \
                     [split_points[x+1] - split_points[x] for x in range(0, len(split_points) - 1)] + \
                     [num_subjects - split_points[-1]]
 
-    #Optimally combine split points
+    # Optimally combine split points
     curr = num_in_splits[0]
     best_split = []
     for x in range(1, len(num_in_splits)):
         if len(best_split) == max_buckets - 2:
-            #last split, try to equalize the 2 buckets
-            #index is x-1 because we're not counting the previous curr value
+            # last split, try to equalize the 2 buckets
+            # index is x-1 because we're not counting the previous curr value
             closer = False
             
-            #rolling counts
+            # rolling counts
             temp1 = num_in_splits[x-1]
             temp2 = sum(num_in_splits[x:])
 
-            #store best
+            # store best
             best_diff = sum(num_in_splits[x-1:])
             best1 = temp1
             best2 = temp2
             
             for y in range(x, len(num_in_splits)):
-                #rolling counts
+                # rolling counts
                 temp1 += num_in_splits[y]
                 temp2 -= num_in_splits[y]
 
@@ -51,33 +51,33 @@ def subject_buckets(subjects, max_buckets):
                     best_diff = diff
                     best1 = temp1
                     best2 = temp2
-                    closer = True #should always be getting closer now
+                    closer = True # should always be getting closer now
                 elif closer:
-                    #gone too far, stop looking
+                    # gone too far, stop looking
                     break
             best_split.append(best1)
             best_split.append(best2)
             break
-        #The +2 makes the algorithm err on the side of less, resulting in a more even distribution
+        # The +2 makes the algorithm err on the side of less, resulting in a more even distribution
         elif abs(opt_bucket - curr) < abs(opt_bucket - (curr + num_in_splits[x])) + 2:
             best_split.append(curr)
             curr = num_in_splits[x]
         else:
             curr += num_in_splits[x]
     else:
-        #NOTE: Not going to return the max number of buckets
+        # NOTE: Not going to return the max number of buckets
         best_split.append(curr)
 
-    #return new list based on optimal split
+    # return new list based on optimal split
     start = 0
     ret = []
     for x in best_split[:-1]:
-        #add tuple of name and subject list
+        # add tuple of name and subject list
         ret.append((subjects[start].abbreviation[0].upper() + "-" + \
                     subjects[start + x - 1].abbreviation[0].upper(),
                     subjects[start:start + x]))
         start += x
-    #add the last one (*-Z)
+    # add the last one (*-Z)
     ret.append((subjects[start].abbreviation[0].upper() + "-Z", subjects[start:]))
 
     return ret
@@ -93,11 +93,11 @@ def search_result(str):
     return []
 
 def single_word_search_result(str):
-    #try to match e.g. 'cisc101'
+    # try to match e.g. 'cisc101'
     m = re.match(r'(\D+)(\d+.*)', str)
 
     if m:
-        #find courses
+        # find courses
         try:
             c = Course.objects.filter(subject__abbreviation__iexact=m.group(1), number__icontains=m.group(2)).order_by('number')
             if len(c) == 1:
@@ -107,7 +107,7 @@ def single_word_search_result(str):
         except Course.DoesNotExist:
             pass
     else:
-        #no numbers, so try a subject
+        # no numbers, so try a subject
         try:
             s = Subject.objects.get(abbreviation__iexact=str)
             return s
@@ -118,7 +118,7 @@ def single_word_search_result(str):
 
 
 def double_word_search_result(words):
-    #find courses
+    # find courses
     try:
         c = Course.objects.filter(subject__abbreviation__iexact=words[0], number__contains=words[1])
         if len(c) == 1:
