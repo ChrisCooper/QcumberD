@@ -12,21 +12,9 @@ try:
 except ImportError as e:
     raise ImportError(MISSING_MODULE_MESSAGE)
 
-if DEP_TYPE == "dev":
-    from qcumber.config.dev import *
-elif DEP_TYPE == "prod":
-    from qcumber.config.prod import *
-else:
-    raise ImportError("Incorrect data in private_config.py. See the setup guide in the readme for instructions.")
-
-configure_databases(DATABASES)
-
-
 #support 1.5-style urls
 import django.template
 django.template.add_to_builtins('django.templatetags.future')
-
-SCRAPER_CONFIG_FILE = unixy_project_path("ignored_files/selenium_config.txt")
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
