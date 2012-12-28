@@ -1,7 +1,7 @@
 import requests, re
 from bs4 import BeautifulSoup
 
-from qcumber.config.private_config import SCRAPE_USERNAME, SCRAPE_PASSWORD
+from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 
 class SolusSession(object):
 
@@ -53,8 +53,8 @@ class SolusSession(object):
     def login(self):
 
         payload = {
-           'IDToken1': SCRAPE_USERNAME,
-           'IDToken2': SCRAPE_PASSWORD,
+           'IDToken1': SCRAPER_USERNAME,
+           'IDToken2': SCRAPER_PASSWORD,
            'IDButton': 'Submit',
            }
 

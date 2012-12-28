@@ -13,6 +13,9 @@ DEP_TYPE = "dev" #'dev' (development) or 'prod' (production)
 
 #Caching config (only used in production servers)
 CACHE_PATH = "/path/to/memcached/socket"
+# Site scraping config
+SCRAPER_USERNAME = 'netid'
+SCRAPER_PASSWORD = 'password'
 
 #Database config
 def configure_databases(dict):
@@ -43,6 +46,3 @@ EMAIL_HOST_PASSWORD = 'password'
 SERVER_EMAIL = 'server@qcumber.ca'
 SEND_BROKEN_LINK_EMAILS = True
 
-#Site scraping config
-SCRAPE_USERNAME = 'netid'
-SCRAPE_PASSWORD = 'password'

@@ -12,9 +12,9 @@ def navigate_to_course_catalog(tools):
     s.open("https://sso.queensu.ca/amserver/UI/Login")
 
     #type username
-    s.type("id=IDToken1", settings.SCRAPE_USERNAME)
+    s.type("id=IDToken1", settings.SCRAPER_USERNAME)
     #type password
-    s.type("id=IDToken2", settings.SCRAPE_PASSWORD)
+    s.type("id=IDToken2", settings.SCRAPER_PASSWORD)
 
     #Click the log in button
     s.click("name=Login.Submit")
