@@ -16,11 +16,13 @@ framework.
 import os
 
 #Activate the virtual environment
-activate_this = "venv/bin/activate_this.py"
+path_to_venv_activate = "venv/bin/activate_this.py"
 try:
-    execfile(activate_this, dict(__file__=activate_this))
+    execfile(path_to_venv_activate, dict(__file__=path_to_venv_activate))
 except StandardError as e:
-    raise EnvironmentError ("Problem with virtual environment: " + str(e))
+    raise EnvironmentError ('You might have forgotten to create a virtualenv '\
+    	'in "venv", or you might have forgotten to install the dependencies '\
+    	'into it: ' + str(e))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qcumber.settings")
 
