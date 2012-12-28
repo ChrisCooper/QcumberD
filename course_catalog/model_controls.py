@@ -12,11 +12,19 @@ def subject_buckets(subjects, max_buckets):
     num_subjects = len(subjects)
     opt_bucket = num_subjects//max_buckets
 
+    #No subjects, no buckets
+    if len(subjects) == 0:
+        return None
+
     #get availible split points (between letters)
     split_points = []
     for x in range(0, num_subjects-1):
         if subjects[x].abbreviation[0].upper() != subjects[x+1].abbreviation[0].upper():
             split_points.append(x+1)
+
+    #No split points? No problem!
+    if len(split_points) == 0:
+        return [["", subjects]]
 
     #Find the number of items between each split point
     num_in_splits = [split_points[0]] + \

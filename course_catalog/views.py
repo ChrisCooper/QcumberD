@@ -16,6 +16,9 @@ def index(request):
     max_buckets = 9
 
     buckets = model_controls.subject_buckets(subject_list, max_buckets)
+
+    if buckets == None:
+        return render_to_response('course_catalog/pages/index.html')
     
     return render_to_response('course_catalog/pages/index.html',
         {'subject_buckets':buckets,
