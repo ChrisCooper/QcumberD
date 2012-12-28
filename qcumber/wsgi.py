@@ -14,11 +14,11 @@ framework.
 
 """
 import os
+from virtualenv_activate import ACTIVATE_PATH
 
 #Activate the virtual environment
-path_to_venv_activate = "venv/bin/activate_this.py"
 try:
-    execfile(path_to_venv_activate, dict(__file__=path_to_venv_activate))
+    execfile(ACTIVATE_PATH, dict(__file__=ACTIVATE_PATH))
 except StandardError as e:
     raise EnvironmentError ('You might have forgotten to create a virtualenv '\
     	'in "venv", or you might have forgotten to install the dependencies '\
