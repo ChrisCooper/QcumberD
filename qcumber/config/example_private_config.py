@@ -61,7 +61,7 @@ CACHES = {
 
     	# Replace the DummyCache Backend with these lines to enable real caching in prod or cache-testing senarios
         #'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        #'LOCATION': 'unix:'' + '/path/to/your/memcached.sock',
+        #'LOCATION': 'unix:' + '/path/to/your/memcached.sock',
     }
 }
 
