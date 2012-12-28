@@ -1,0 +1,28 @@
+Config:
+	Timeout
+	subject letters
+	subjects per letter
+	subject start index
+	courses per subject
+	course start index
+
+Full scrape:
+	For all subject letters
+		open letter page (click the letter)
+		For all subject dropdowns
+			Store subject information
+			Open dropdown (click the subject name)
+			For all courses in dropdown
+				Click course
+				Store course information
+				Click "view class sections"
+				For each term in the class (in the combobox)
+					Click "show sections" button
+					Store term information
+					Click "view all" if needed
+					For each section in the term
+						Click the section name
+						Store section information (class details)
+						Click back
+				Click back	
+			Close dropdown
