@@ -4,8 +4,8 @@
 
 from os import path
 
-MISSING_MODULE_MESSAGE = '\nYou need to copy "example_private_config.py" file '\
-    'to private_config.py and customize it for your environment. '\
+MISSING_MODULE_MESSAGE = '\nYou need to copy "qcumber/config/example_private_config.py" '\
+    'to "qcumber/config/private_config.py" and customize it for your environment. '\
     'See the setup guide in the readme.'
 
 def make_path_unixy(p):
