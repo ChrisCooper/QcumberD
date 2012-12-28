@@ -1,8 +1,3 @@
-qcumber/config/private_config.py
-dev_db.sqlite3
-venv
-ignored_files
-
 #################
 ## Visual Studio
 #################
@@ -71,4 +66,8 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
-enrollment/untracked.py
+
+
+qcumber/config/private_config.py
+dev_db.sqlite3
+venv
