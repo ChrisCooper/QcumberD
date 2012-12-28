@@ -14,15 +14,15 @@ framework.
 
 """
 import os
-from qcumber.config import MISSING_MODULE_MESSAGE
 
 #Activate the virtual environment
+path_to_venv_activate = "venv/bin/activate_this.py"
 try:
-	from virtualenv_activate import VIRTUALENV_ACTIVATE
-except ImportError:
-    raise ImportError(MISSING_MODULE_MESSAGE)
-activate_this = VIRTUALENV_ACTIVATE
-execfile(activate_this, dict(__file__=activate_this))
+    execfile(path_to_venv_activate, dict(__file__=path_to_venv_activate))
+except StandardError as e:
+    raise EnvironmentError ('You might have forgotten to create a virtualenv '\
+    	'in "venv", or you might have forgotten to install the dependencies '\
+    	'into it: ' + str(e))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qcumber.settings")
 
