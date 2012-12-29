@@ -13,7 +13,7 @@ class SolusParser(object):
     #######
 
     def subject_dropdown(self, subject):
-        "Returns the id of the subject dropdown link"""
+        """Returns the id of the subject dropdown link"""
         return self.soup.find("a", title="Show/Hide Courses for Subject", text="%s - %s" % (subject.abbreviation, subject.title))['id']
 
     def course_link(self, course):
@@ -33,8 +33,10 @@ class SolusParser(object):
     #######
 
     def all_subjects(self):
-        """Returns a dict of subject data in the current letter"""
-        """Format = {abbreviation: (name, dropdown id)}"""
+        """
+        Returns a dict of subject data in the current letter
+        Format = {abbreviation: (name, dropdown id)}
+        """
         ret = {}
         for tags in self.soup.find_all("a", title="Show/Hide Courses for Subject"):
             abbr, sbj = tags.string.split(" - ")
@@ -42,8 +44,10 @@ class SolusParser(object):
         return ret
 
     def all_courses(self):
-        """Returns a dict of course data in the expanded subject(s)"""
-        """Format = {number: (name, link id)}"""
+        """
+        Returns a dict of course data in the expanded subject(s)
+        Format = {number: (name, link id)}
+        """
         ret = {}
         for x in self.soup.find_all("a", { "class": "PSHYPERLINK"}):
             # Get a number, then the title
@@ -54,8 +58,10 @@ class SolusParser(object):
         return ret
 
     def all_terms(self):
-        """Returns a dict containing term data in the current course"""
-        """Format = {name: value}"""
+        """
+        Returns a dict containing term data in the current course
+        Format = {name: value}
+        """
         ret = {}
         term_sel = self.soup.find("select", id="DERIVED_SAA_CRS_TERM_ALT")
         for x in term_sel.find_all("option"):
@@ -63,8 +69,10 @@ class SolusParser(object):
         return ret
         
     def all_sections(self):
-        """Returns a dict containing data for sections in the current term"""
-        """Format = {name: id}"""
+        """
+        Returns a dict containing data for sections in the current term
+        Format = {name: id}
+        """
         ret = {}
         for x in self.soup.find_all("a", {"class": "PSHYPERLINK", "title": "Class Details"}):
             ret[x.string] = x['id']
