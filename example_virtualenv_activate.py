@@ -1,1 +1,2 @@
-VIRTUALENV_ACTIVATE = '/path/to/virtualenv/bin/activate_this.py'
+ACTIVATE_PATH='/path/to/qcumber/venv/bin/activate_this.py'
+

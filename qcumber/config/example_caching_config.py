@@ -1,1 +1,0 @@
-path="/path/to/memcached/socket"

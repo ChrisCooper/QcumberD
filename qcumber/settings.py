@@ -1,30 +1,20 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # Django settings for qcumber project.
 
+from qcumber.config import MISSING_MODULE_MESSAGE
 from qcumber.config import unixy_project_path
-import qcumber.config.current  
 
-if qcumber.config.current.CONFIG == "dev":
-    from qcumber.config.dev import *
-elif qcumber.config.current.CONFIG == "prod":
-    from qcumber.config.prod import *
-elif qcumber.config.current.CONFIG == "scraping":
-    from qcumber.config.scraping import *
+try:
+    from qcumber.config.private_config import *
+except ImportError as e:
+    raise ImportError(MISSING_MODULE_MESSAGE)
 
 #support 1.5-style urls
 import django.template
 django.template.add_to_builtins('django.templatetags.future')
-
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-from qcumber.config.email_config import *
-SERVER_EMAIL = 'server@qcumber.ca'
-SEND_BROKEN_LINK_EMAILS = True
-
-MANAGERS = ADMINS
-
-SCRAPER_CONFIG_FILE = unixy_project_path("ignored_files/selenium_config.txt")
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -92,6 +82,16 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages", 
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -100,7 +100,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'qcumber.urls'
 
@@ -126,8 +130,11 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'south',
+    #'debug_toolbar',
+
     'course_catalog',
     'solus_scraper',
+    'enrollment',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from django.conf import settings
 
 def navigate_to_course_catalog(tools):
@@ -7,18 +11,10 @@ def navigate_to_course_catalog(tools):
     print "Opening login page..."
     s.open("https://sso.queensu.ca/amserver/UI/Login")
 
-    #Get login information from config file
-    with open(settings.SCRAPER_CONFIG_FILE, 'r') as config_file:
-        line_num = 0
-        login_info = ['','']
-        for line in config_file:
-            login_info[line_num] = line.strip()
-            line_num += 1
-
     #type username
-    s.type("id=IDToken1", login_info[0])
+    s.type("id=IDToken1", settings.SCRAPER_USERNAME)
     #type password
-    s.type("id=IDToken2", login_info[1])
+    s.type("id=IDToken2", settings.SCRAPER_PASSWORD)
 
     #Click the log in button
     s.click("name=Login.Submit")

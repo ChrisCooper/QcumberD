@@ -1,13 +1,16 @@
 Qcumber
 =======
 
-How to get up and running
+Qcumber is a course catalog created for Queen's University. The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2012 Chris Cooper.
+
+
+How to get it up and running
 
 This guide has been verified for Ubuntu 12.10.
 
 Setting up on mac OSX should be quite similar. It will be verified soon.
 
-<del>Microsoft Windows offers great pains.</del>
+<del>Microsoft Windows offers great pains.</del>It works on Windows, but installation there is left as an exercise for the reader.
 
 
 Prerequisites
@@ -43,13 +46,11 @@ For example, if your username is, say, `uniphil`, then a command like
 ----------------------------
 
  * Copy the `git@github.com:[yourusername]/QcumberD.git` link on the page.
- * Open up terminal (try `ctrl + alt + 'T'`)
+ * Open up a terminal window.
  * Navigate to the folder in which you want to store your local copy of
    Qcumber. For me that would mean `cd ~/Code`
  * Clone the repository. `git clone [repository]`, where `[repository]` is the
-   `git@github...` url you copied earlier. Note that you can paste into a
-   terminal with `ctrl + shift + 'V'` on linux, while the usual `cmd + 'V'`
-   works on the mac terminal.
+   `git@github...` url you copied earlier. 
 
    You should now have a `QcumberD` folder.
 
@@ -62,15 +63,14 @@ For example, if your username is, say, `uniphil`, then a command like
  * Activate the new environment: `source venv/bin/activate`
 
    Note: you will need to activate the virtual environment every time you want
-   to run the local project. You an use the same preceeding `source` command.
+   to run the local project. You can use the same preceeding `source` command.
 
- * Set up the activation module: `echo "VIRTUALENV_ACTIVATE = 'venv/bin/activate_this.py'" > virtualenv_activate.py`
-
+ * To deactivate the virtual environment: `deactivate`
 
 4. Install Required Packages
 ----------------------------
 
-Make sure you have activated your virtual environment!
+Make sure you have activated your virtual environment (see above) before running this command!
 
  * `pip install -r requirements.txt`
 
@@ -78,32 +78,8 @@ Make sure you have activated your virtual environment!
 5. Configure Your Setup
 -----------------------
 
- * current: `cp qcumber/config/example_current.py qcumber/config/current.py`
- * email: `cp qcumber/config/example_email_config.py qcumber/config/email_config.py`
- * private: `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
- * Edit `db_name` and add a `DATABASES` dict to private_config.py so that it
-   looks like this:
-
-```python
-def configure_databases(dict):
-    dict['default']['USER'] = 'db_username'
-    dict['default']['PASSWORD'] = 'db_password'
-    dict['default']['NAME'] = 'dev_db.sqlite3'
-
-ADMINS = (
-    ('Admin name', 'admin@email.com'),
-)
-
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'laksjdlaksdjalksdjalksjdlkasjdlkajsd'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-    }
-}
-```
+ * Clone the sample config file `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
+ * Change the configuration options in qcumber/config/private_config.py to suit your environment. If you are not performing caching, scraping, or sending emails, nothing needs to change in this file for development.
 
 
 6. Initialize the Database
@@ -120,10 +96,23 @@ Make sure your virtualenv is activated!
 ------------
 
  * `python manage.py runserver`
- * Open a browser and go to `http://localhost:8000`
+ * Open a browser and go to [http://localhost:8000](http://localhost:8000)
 
 And hopefully it just works!
 
-The database will be empty, so no courses are present on your development
-setup.
+The database will be empty, so no courses will be present on your setup.
 
+
+8. Scrape Course Data
+---------------------
+
+ * Download Selenium Server from [http://seleniumhq.org/download/](http://seleniumhq.org/download/)
+ * Run the server in another terminal by calling `java -jar [filename].jar`
+ * Go to [http://localhost:8000/admin/solus_scraper/jobconfig/](http://localhost:8000/admin/solus_scraper/jobconfig/)
+ * Click "Add job config".
+ * Add a name ("Scrape everything") and a description.
+ * Set the subject letters to "ABCDEFGHIJKLMNOPQRSTUVWXYZ" (all of them).
+ * Click "Save".
+ * Go to [http://localhost:8000/solus_scraper/](http://localhost:8000/solus_scraper/)
+ * Click the name of the job you just created. A browser will open and start navigating the site. As it scrapes, the data will become available to the application. You can watch the subjects being added at [http://localhost:8000](http://localhost:8000)!
+ * Scraping usually takes anywhere from 8 to 10 hours, so be patient! (We can also probably send you a copy of our sqlite database if you want to get started faster.)

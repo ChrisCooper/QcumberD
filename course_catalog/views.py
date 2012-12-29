@@ -1,14 +1,28 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.db import models
 from course_catalog.models import Course, Subject, Term, Section
 import model_controls
 from django.views.decorators.cache import cache_page
+from django.template import RequestContext
 
 @cache_page(60 * 30)
 def index(request):
     subject_list = Subject.objects.all().order_by('abbreviation')
-    return render_to_response('course_catalog/pages/index.html', {'subject_list': subject_list})
+    max_buckets = 9
+
+    buckets = model_controls.subject_buckets(subject_list, max_buckets)
+
+    if buckets == None:
+        return render_to_response('course_catalog/pages/index.html')
+    
+    return render_to_response('course_catalog/pages/index.html',
+        {'subject_buckets':buckets,
+         'min_height': 29 * max([len(x[1]) for x in buckets])})
 
 @cache_page(60 * 30)
 def course_detail(request, subject_abbr=None, course_number=None):
@@ -23,7 +37,7 @@ def course_detail(request, subject_abbr=None, course_number=None):
         sections.append((t, secs))
 
     return render_to_response('course_catalog/pages/course_detail.html', {'course': c,
-                                                                          'all_sections': sections})
+                                                                          'all_sections': sections}, context_instance=RequestContext(request))
 
 @cache_page(60 * 30)
 def subject_detail(request, subject_abbr):
