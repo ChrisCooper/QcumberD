@@ -10,6 +10,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     
+    # Uncomment the next line to enable the SOLUS request scraper
+    url(r'^request_scraper/', include('request_scraper.urls')),
 
     # Uncomment the next line to enable the SOLUS screen scraper
     url(r'^solus_scraper/', include('solus_scraper.urls')),

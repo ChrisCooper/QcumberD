@@ -96,3 +96,13 @@ class SolusParser(object):
         enrolled = enrolled_label_holder.parent.parent.next_sibling.next_sibling.find_all('td')[enrolled_index].find('span').text
 
         return capacity, enrolled
+
+# Testing
+"""
+with open("tests/subjects.html") as f:
+    data = f.read()
+p = SolusParser(data)
+
+for x in p.all_subjects().iteritems():
+    print x
+#"""

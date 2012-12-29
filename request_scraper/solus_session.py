@@ -32,6 +32,10 @@ class SolusSession(object):
         if len(response.text) < 200:
             raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
 
+        # Go to the course catalog after logging in
+        #self.session.post(self.course_catalog_url)
+        self._catalog_post("")
+
         return response
 
     def navigate_to_course(self, course):
@@ -39,7 +43,6 @@ class SolusSession(object):
 
         subject = course.subject
 
-        self.select_alphanum(subject.abbreviation[:1])
         self.select_alphanum(subject.abbreviation[:1])
 
         self.dropdown_subject(subject)

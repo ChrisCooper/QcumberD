@@ -25,4 +25,18 @@ def scrape_enrollment(config, section):
 
     s.close_session()
     
-    return capacity, enrolled 
+    return capacity, enrolled
+
+
+
+def test_request():
+    """Return what should be displayed (html or otherwise)"""
+    print ("Logging in")
+    s = SolusSession(SCRAPER_USERNAME, SCRAPER_PASSWORD)
+    print ("Logged in")
+
+    s.select_alphanum("C")
+
+    for x in s.parser().all_subjects().iteritems():
+        print x
+    return s.latest_text
