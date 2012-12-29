@@ -6,7 +6,8 @@ class SolusParser(object):
 
     def __init__(self, text):
         """Initilizes an instance of BeautifulSoup"""
-        self.soup = BeautifulSoup(text)
+        # Using lxml, the internal parser fails using Python 2.7.2
+        self.soup = BeautifulSoup(text, "lxml")
 
     #######
     # Get data for POST requests (for a known object)

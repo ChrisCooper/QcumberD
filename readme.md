@@ -16,12 +16,13 @@ Setting up on mac OSX should be quite similar. It will be verified soon.
 Prerequisites
 -------------
 
- * Python (`sudo apt-get install python`)
- * Git (`sudo apt-get install git`)
+ * Python (`apt-get install python`)
+ * Git (`apt-get install git`)
    There may be some extra setup steps I'm forgetting.
    GitHub has great documentation.
- * Pip (`sudo apt-get install python-pip`)
- * virtualenv (`sudo pip install virtualenv`)
+ * lxml (`apt-get install python-lxml`)
+ * Pip (`apt-get install python-pip`)
+ * virtualenv (`pip install virtualenv`)
  * A GitHub account (https://github.com/)
 
 
