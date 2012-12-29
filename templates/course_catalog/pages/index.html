@@ -20,7 +20,11 @@
 
 					<ul class="nav nav-tabs">
 						{% for bucket in subject_buckets %}
-							<li {%ifequal bucket.0.0 "A"%}class="active"{%endifequal%}><a href="#{{bucket.0}}" data-toggle="tab">{{bucket.0}}</a></li>
+							<li {%ifequal bucket.0.0 "A"%}class="active"{%endifequal%}>
+								<a href="#{{bucket.0}}" data-toggle="tab">
+									<b>{{bucket.0}}</b>
+								</a>
+							</li>
 						{% endfor %}
 					</ul>
 
