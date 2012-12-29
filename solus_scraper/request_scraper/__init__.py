@@ -26,6 +26,3 @@ def scrape_enrollment(config, section):
     s.close_session()
     
     return capacity, enrolled 
-
-scrape_enrollment(None, None)
-

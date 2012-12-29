@@ -52,18 +52,18 @@ class SolusSession(object):
 
     def dropdown_subject(self, subject):
         """Opens the dropdown menu for a subject"""
-        action = self.parser().subject_action(subject)
+        action = self.parser().subject_dropdown(subject)
 
         return self._catalog_post(action)
 
     def select_course(self, course):
         """Clicks on a course"""
-        action = self.parser().course_action(course)
+        action = self.parser().course_link(course)
         return self._catalog_post(action)
 
     def view_section(self, section):
         """Clicks on a course section"""
-        action = self.parser().section_action(section)
+        action = self.parser().section_link(section)
         return self._catalog_post(action)
 
     def show_sections(self):
