@@ -38,44 +38,33 @@ class SolusSession(object):
 
         return response
 
-    def navigate_to_course(self, course):
-        """Navigates to a course"""
-
-        subject = course.subject
-
-        self.select_alphanum(subject.abbreviation[:1])
-
-        self.dropdown_subject(subject)
-
-        self.select_course(course)
-
     def select_alphanum(self, alphanum):
         """Navigates to a letter/number"""
         return self._catalog_post('DERIVED_SSS_BCC_SSR_ALPHANUM_' + alphanum.upper())
 
-    def dropdown_subject(self, subject):
+    def dropdown_subject(self, abbr, title):
         """Opens the dropdown menu for a subject"""
-        action = self.parser().subject_dropdown(subject)
+        action = self.parser().subject_dropdown(abbr, title)
 
         return self._catalog_post(action)
 
-    def select_course(self, course):
+    def select_course(self, number):
         """Clicks on a course"""
-        action = self.parser().course_link(course)
+        action = self.parser().course_link(number)
         return self._catalog_post(action)
 
-    def view_section(self, section):
+    def view_section(self, solus_id):
         """Clicks on a course section"""
-        action = self.parser().section_link(section)
+        action = self.parser().section_link(solus_id)
         return self._catalog_post(action)
 
     def show_sections(self):
         """Clicks on the 'View class sections' button on the course page"""
         return self._catalog_post('DERIVED_SAA_CRS_SSR_PB_GO')
 
-    def switch_terms(self, term):
+    def switch_terms(self, year, season):
         """Shows the sections for a term of the class"""
-        term_key = self.parser().term_key(term)
+        term_key = self.parser().term_key(year, season)
         return self._catalog_post('DERIVED_SAA_CRS_SSR_PB_GO$92$', extras={'DERIVED_SAA_CRS_TERM_ALT': term_key})
 
     def show_all_sections(self):
