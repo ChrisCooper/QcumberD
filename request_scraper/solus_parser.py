@@ -22,12 +22,11 @@ class SolusParser(object):
         """Returns the id of the course link in the subject dropdown"""
         return self.soup.find("a", { "class": "PSHYPERLINK"}, text=re.compile("%s" % number))['id']
 
-    def section_link(self, solus_id):
+    def section_link(self, class_num):
         """Returns the id of the link to the section on the course page"""
-        return self.soup.find("a", { "class": "PSHYPERLINK"}, title="Class Details", text=re.compile("\(%s\)" % solus_id))['id']
+        return self.soup.find("a", { "class": "PSHYPERLINK"}, title="Class Details", text=re.compile("\(%s\)" % class_num))['id']
 
     def term_key(self, year, season):
-        #TODO: deprectate for all_terms
         """Returns the key of the term from the term select combobox"""
         return self.soup.find("option", text="%s %s" % (year, season))['value']
 
@@ -91,6 +90,92 @@ class SolusParser(object):
     #######
     # Get information
     #######
+
+    def course_section_attrs(self):
+        """
+        Parses out the section data from the course page.
+        Used for shallow scrapes.
+        """
+        attrs = {
+            #class_num :
+                #{
+                #   'index': 001/002, etc.
+                #   'type': LAB/LEC, etc.
+                #   'classes': [{
+                #       'day_abbr': Mo/Tu/We, etc,
+                #       'start_time':datetime object,
+                #       'end_time': datetime object,
+                #       'room': room,
+                #       'instructors': [instructor names],
+                #       'start_date': datetime object,
+                #       'end_date': datetime object
+                #   }]
+                #}
+            #}
+        }
+
+        # Go through all availible sections
+        for class_num, section_data in self.all_sections().items():
+
+            # Get the data table for the current course number
+            data_table = self.soup.find("table", id="CLASS_MTGPAT$scroll$" + self.section_link(class_num).split("$")[-1])
+
+            # Get the needed cells
+            cells = data_table.find_all("span", {"class": "PSEDITBOX_DISPONLY"})
+            inst_cells = data_table.find_all("span", {"class": "PSLONGEDITBOX"})
+            
+            # Iterate over all the classes
+            classes = []
+            for x in range(0, len(cells), 5):
+
+                # Instructors
+                temp_inst = inst_cells[x//5].string
+                instructors = []
+                if temp_inst and temp_inst != "TBA" and temp_inst  != "Staff":
+                    lis = re.sub(r'\s+', ' ', temp_inst).split(",")
+                    for i in range(0, len(lis), 2):
+                        last_name = lis[i].strip()
+                        other_names = lis[i+1].strip()
+                        instructors.append(u"%s, %s" % (last_name, other_names))
+               
+                # Room 
+                room = cells[x+3].string
+     
+                # Class start/end times
+                ms = re.search("(\d+:\d+[AP]M)", cells[x+1].string)
+                me = re.search("(\d+:\d+[AP]M)", cells[x+2].string)
+                start_time = datetime.strptime(ms.group(1), "%I:%M%p") if ms else None
+                end_time = datetime.strptime(me.group(1), "%I:%M%p") if me else None
+
+                # Class start/end dates
+                m = re.search('^([\S]+)\s*-\s*([\S]+)$', cells[x+4].string)
+                start_date = datetime.strptime(m.group(1), "%Y/%m/%d") if m else None
+                end_date = datetime.strptime(m.group(2), "%Y/%m/%d") if m else None
+
+                # Loop through all days
+                all_days = cells[x+0].string
+                while len(all_days) > 0:
+                    day_abbr = all_days[-2:]
+                    all_days = all_days[:-2]
+
+                    classes.append({
+                                'day_abbr': day_abbr,
+                                'start_time': start_time,
+                                'end_time': end_time,
+                                'room': room,
+                                'instructors': instructors,
+                                'start_date': start_date,
+                                'end_date': end_date
+                            })
+                
+            # Add data to dict
+            attrs[class_num] = {
+                'index': section_data[0],
+                'type': section_data[1],
+                'classes' : classes,
+            }
+
+        return attrs
 
     def course_attrs(self):
         """Parses the course attributes out of the page"""
@@ -184,6 +269,7 @@ class SolusParser(object):
         Parses the section attributes out of a page.
         Note that information availible on the course page header is not recorded.
         Individual class start/end dates aren't used, just the main one.
+        Used for deep scrapes.
         """
         attrs = {
             'details':{
@@ -278,11 +364,11 @@ class SolusParser(object):
 
 # Testing
 """
-with open("tests/class.html") as f:
+with open("tests/course.html") as f:
     data = f.read()
 p = SolusParser(data)
 
-print p.section_attrs()
+print p.course_section_attrs()
 
 #for x in p.all_sections().iteritems():
 #    print x

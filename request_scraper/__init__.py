@@ -39,10 +39,119 @@ def scrape_enrollment(config, section):
     
     return capacity, enrolled
 
+def section_shallow_scrape(s, subject, course, term):
+    """Gets section information off the course page"""
+
+    print ("----------Parsing all sections (shallow)")
+        
+    for class_num, section_data in s.parser().course_section_attrs().items():
+
+        # Save the section information
+        section_type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=section_data['type'])
+        section_attrs = {
+                    'index_in_course' : section_data['index'],
+                    'solus_id' : class_num,
+                    'type' : section_type,
+                    'course' : course,
+                    'term' : term}
+        
+        section = course_catalog.models.existing_or_new(course_catalog.models.Section, **section_attrs)
+        section.save()
+
+        for clss in section_data['classes']:
+
+            # Only bother if the timeslot is scheduled
+            if clss['day_abbr'] and clss['start_time'] and clss['end_time']:
+
+                # Make timeslot
+                weekday = course_catalog.models.existing_or_new(course_catalog.models.DayOfWeek, abbreviation=clss['day_abbr'])
+                timeslot_attrs = {
+                    'day_of_week' : weekday,
+                    'start_time' : clss['start_time'],
+                    'end_time' : clss['end_time']
+                }
+                timeslot = course_catalog.models.existing_or_new(course_catalog.models.Timeslot, **timeslot_attrs)
+
+                # Make component
+                section_comp_attrs = {
+                    'section' : section,
+                    'start_date': clss['start_date'],
+                    'end_date': clss['end_date'],
+                    'room': clss['room'],
+                    'timeslot': timeslot
+                }
+                component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **section_comp_attrs)
+
+                # Add instructors
+                for i in clss['instructors']:
+                    instructor = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=i)
+                    component.instructors.add(instructor)
+
+                component.save()
+            
+
+def section_deep_scrape(s, subject, course, term):
+    """Loads the section page to gather extra info"""
+
+    for class_num, section_data in s.parser().all_sections().items():
+
+        print ("----------Parsing section (deep): " + section_data[0] + "-" + section_data[1] + " (" + class_num + ")")
+        
+        # Save the section information
+        section_type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=section_data[1])
+        section_attrs = {
+                    'index_in_course' : section_data[0],
+                    'solus_id' : class_num,
+                    'type' : section_type,
+                    'course' : course,
+                    'term' : term}
+        
+        section = course_catalog.models.existing_or_new(course_catalog.models.Section, **section_attrs)
+        section.save()
+
+        # Click the section
+        s.view_section(class_num)
+
+        # Store the section component data (multiple per section)
+        section_all_info = s.parser().section_attrs()
+        for clss in section_all_info['classes']:
+
+            # Only bother if the timeslot is scheduled
+            if clss['day_abbr'] and clss['start_time'] and clss['end_time']:
+
+                # Make timeslot
+                weekday = course_catalog.models.existing_or_new(course_catalog.models.DayOfWeek, abbreviation=clss['day_abbr'])
+                timeslot_attrs = {
+                    'day_of_week' : weekday,
+                    'start_time' : clss['start_time'],
+                    'end_time' : clss['end_time']
+                }
+                timeslot = course_catalog.models.existing_or_new(course_catalog.models.Timeslot, **timeslot_attrs)
+
+                # Make component
+                section_comp_attrs = {
+                    'section' : section,
+                    'start_date': section_all_info['details']['start_date'],
+                    'end_date': section_all_info['details']['end_date'],
+                    'room': clss['room'],
+                    'timeslot': timeslot
+                }
+                component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **section_comp_attrs)
+
+                # Add instructors
+                for i in clss['instructors']:
+                    instructor = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=i)
+                    component.instructors.add(instructor)
+
+                component.save()
+
+        s.return_from_section()
+
 
 
 def test_request():
     """Return what should be displayed (html or otherwise)"""
+
     print ("Logging in")
     s = SolusSession(SCRAPER_USERNAME, SCRAPER_PASSWORD)
     print ("Logged in")
@@ -127,62 +236,13 @@ def test_request():
                     term = course_catalog.models.existing_or_new(course_catalog.models.Term, **term_attrs)
                     term.save()
                    
-                    #Click the 'View All' button 
+                    # Click the 'View All' button 
                     s.show_all_sections()
 
-                    for class_num, section_data in s.parser().all_sections().items():
+                    # Scrape section data
+                    #section_deep_scrape(s, subject, course, term)
+                    section_shallow_scrape(s, subject, course, term)
 
-                        print ("----------Parsing section: " + section_data[0] + "-" + section_data[1] + " (" + class_num + ")")
-                        
-                        # Save the section information
-                        section_type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=section_data[1])
-                        section_attrs = {
-                                    'index_in_course' : section_data[0],
-                                    'solus_id' : class_num,
-                                    'type' : section_type,
-                                    'course' : course,
-                                    'term' : term}
-                        
-                        section = course_catalog.models.existing_or_new(course_catalog.models.Section, **section_attrs)
-                        section.save()
-
-                        # Click the section
-                        s.view_section(class_num)
-
-                        # Store the section component data (multiple per section)
-                        section_all_info = s.parser().section_attrs()
-                        for clss in section_all_info['classes']:
-
-                            # Only bother if the timeslot is scheduled
-                            if clss['day_abbr']:
-
-                                # Make timeslot
-                                weekday = course_catalog.models.existing_or_new(course_catalog.models.DayOfWeek, abbreviation=clss['day_abbr'])
-                                timeslot_attrs = {
-                                    'day_of_week' : weekday,
-                                    'start_time' : clss['start_time'],
-                                    'end_time' : clss['end_time']
-                                }
-                                timeslot = course_catalog.models.existing_or_new(course_catalog.models.Timeslot, **timeslot_attrs)
-
-                                # Make component
-                                section_comp_attrs = {
-                                    'section' : section,
-                                    'start_date': section_all_info['details']['start_date'],
-                                    'end_date': section_all_info['details']['end_date'],
-                                    'room': clss['room'],
-                                    'timeslot': timeslot
-                                }
-                                component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **section_comp_attrs)
-
-                                # Add instructors
-                                for i in clss['instructors']:
-                                    instructor = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=i)
-                                    component.instructors.add(instructor)
-
-                                component.save()
-    
-                        s.return_from_section()
 
                 s.return_from_course()
 

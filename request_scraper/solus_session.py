@@ -53,9 +53,9 @@ class SolusSession(object):
         action = self.parser().course_link(number)
         return self._catalog_post(action)
 
-    def view_section(self, solus_id):
+    def view_section(self, class_num):
         """Clicks on a course section"""
-        action = self.parser().section_link(solus_id)
+        action = self.parser().section_link(class_num)
         return self._catalog_post(action)
 
     def show_sections(self):
