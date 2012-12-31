@@ -268,15 +268,12 @@ class SolusParser(object):
         """
         Parses the section attributes out of a page.
         Note that information availible on the course page header is not recorded.
-        Individual class start/end dates aren't used, just the main one.
         Used for deep scrapes.
         """
         attrs = {
             'details':{
                 #'status': open/closed,
                 #'session': session,
-                #'start_date': datetime object,
-                #'end_date': datetime object,
                 #'location': course location,
                 #'campus': course campus
             },
@@ -287,6 +284,8 @@ class SolusParser(object):
                 #    'end_time': datetime object
                 #    'room': room,
                 #    'instructors': [instructor names],
+                #    'start_date': datetime object,
+                #    'end_date': datetime object
                 #}, ...
             ],
             'availability':{
@@ -314,11 +313,6 @@ class SolusParser(object):
                 attrs['details']['location'] = data[8 + num_comps].string
                 attrs['details']['campus'] = data[9 + num_comps].string
 
-                # Dates
-                m = re.search('^([\S]+)\s*-\s*([\S]+)$', data[6 + num_comps].string)
-                attrs['details']['start_date'] = datetime.strptime(m.group(1), "%Y/%m/%d") if m else None
-                attrs['details']['end_date'] = datetime.strptime(m.group(2), "%Y/%m/%d") if m else None
-        
             elif temp.string == "Class Availability":
                 data = table.find_all("span", {"class" : "PSEDITBOX_DISPONLY"})
                 
@@ -334,14 +328,20 @@ class SolusParser(object):
 
         # Iterate over cells in groups of 4 (by line - times, room, instructors, dates)
         for x in range(0, len(cells), 4):
-            m = re.search("^(\w\w)\s(\d+:\d+[AP]M)\s*-\s*(\d+:\d+[AP]M)$", cells[x].string)
+            time = re.search("^(\w\w)\s(\d+:\d+[AP]M)\s*-\s*(\d+:\d+[AP]M)$", cells[x].string)
+            date = re.search('^([\S]+)\s*-\s*([\S]+)$', cells[x+3].string)
             attrs['classes'].append({
-                'day_abbr': m.group(1) if m else None,
-                'start_time': datetime.strptime(m.group(2), "%I:%M%p") if m else None,
-                'end_time': datetime.strptime(m.group(3), "%I:%M%p") if m else None,
+                'day_abbr': time.group(1) if time else None,
+                'start_time': datetime.strptime(time.group(2), "%I:%M%p") if time else None,
+                'end_time': datetime.strptime(time.group(3), "%I:%M%p") if time else None,
                 'room': cells[x+1].string.strip(),
+
                 # If not i.string, it means it's a Tag, not an instructor
-                'instructors': [", ".join(i.strip(", \n").split(",")) for i in cells[x+2].contents if i.string]
+                'instructors': [", ".join(i.strip(", \n").split(",")) for i in cells[x+2].contents if i.string],
+                
+                # Dates
+                'start_date': datetime.strptime(date.group(1), "%Y/%m/%d") if date else None,
+                'end_date': datetime.strptime(date.group(2), "%Y/%m/%d") if date else None
             })
         
         return attrs
@@ -364,11 +364,11 @@ class SolusParser(object):
 
 # Testing
 """
-with open("tests/course.html") as f:
+with open("tests/class.html") as f:
     data = f.read()
 p = SolusParser(data)
 
-print p.course_section_attrs()
+print p.section_attrs()
 
 #for x in p.all_sections().iteritems():
 #    print x
