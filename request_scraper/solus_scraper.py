@@ -1,5 +1,5 @@
 from solus_session import SolusSession
-import course_catalog.models
+from solus_data import *
 
 class SolusScraper(object):
     """Scrapes data off Solus"""
@@ -35,10 +35,9 @@ class SolusScraper(object):
         for subject_abbr, subject_title in s.parser().all_subjects().items():
             
             # Store the subject information
-            subject_attrs = {'title' : subject_title,
-                          'abbreviation' : subject_abbr}
-            subject = course_catalog.models.existing_or_new(course_catalog.models.Subject, **subject_attrs)
-            subject.save()
+            subject = store_subject({
+                            'title' : subject_title,
+                            'abbreviation' : subject_abbr})
             
             print ("----Parsing subject: " + str(subject))
             
@@ -49,7 +48,7 @@ class SolusScraper(object):
             self._course_scrape(s, subject)
             
             # Close the course dropdown
-            s.dropdown_subject(subject_attrs['abbreviation'], subject_attrs['title'])
+            s.dropdown_subject(subject_abbr, subject_title)
 
 
     def _course_scrape(self, s, subject):
@@ -66,37 +65,7 @@ class SolusScraper(object):
             s.select_course(course_code)
 
             # Store the course information
-            course_all_info = s.parser().course_attrs()
-            course_x_info = course_all_info['extra']
-
-            course_attrs = course_all_info['basic']
-            course_attrs['subject'] = subject
-
-            course = course_catalog.models.existing_or_new(course_catalog.models.Course, **course_attrs)
-            
-            # Extra info
-            if 'career' in course_x_info:
-                #course.career = course_catalog.models.existing_or_new(course_catalog.models.Career, name=course_x_info['career'])
-                pass
-            if 'units' in course_x_info:
-                if len(course_x_info['units'].split(".")[1]) > 2:
-                    raise Exception('Error: assumption about precision or magnitude of credit hours (units) is false: "%s"' % value)
-                course.units = float(course_x_info['units'])
-            if 'grading_basis' in course_x_info:
-                #course.grading_basis = course_catalog.models.existing_or_new(course_catalog.models.GradingBasis, name=course_x_info['grading_basis'])
-                pass
-            if 'enrollment_requirement' in course_x_info:
-                pass #TODO
-            if 'typically_offered' in course_x_info:
-                pass #TODO
-            if 'course_components' in course_x_info:
-                pass #TODO
-            if 'add_consent' in course_x_info:
-                pass #TODO
-            if 'drop_consent' in course_x_info:
-                pass #TODO
-            
-            course.save()
+            course = store_course(subject, s.parser().course_attrs())
 
             # Scrape all term data
             self._terms_scrape(s, subject, course)
@@ -122,16 +91,12 @@ class SolusScraper(object):
             s.switch_terms(term_data[0], term_data[1])
 
             # Save the season information
-            season = course_catalog.models.existing_or_new(course_catalog.models.Season, name=term_data[1])
-            season.save()
-
+            season = store_season({"name": term_data[1]})
+            
             # Save the term information
-            term_attrs = {
+            term = store_term({
                     'year' : term_data[0],
-                    'season' : season
-            }
-            term = course_catalog.models.existing_or_new(course_catalog.models.Term, **term_attrs)
-            term.save()
+                    'season' : season})
            
             # Scrape section data
             #self._sections_deep_scrape(s, subject, course, term)
@@ -153,23 +118,20 @@ class SolusScraper(object):
             print ("----------Parsing section (deep): " + section_data[0] + "-" + section_data[1] + " (" + class_num + ")")
             
             # Save the section information
-            section_type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=section_data[1])
-            section_attrs = {
+            section_type = store_section_type({"abbreviation": section_data[1]})
+            section = store_section({
                         'index_in_course' : section_data[0],
                         'solus_id' : class_num,
                         'type' : section_type,
                         'course' : course,
-                        'term' : term}
-            
-            section = course_catalog.models.existing_or_new(course_catalog.models.Section, **section_attrs)
-            section.save()
+                        'term' : term})
 
             # Click the section
             s.view_section(class_num)
 
             # Store the section component data (multiple per section)
             section_all_info = s.parser().section_attrs()
-            self.store_section_components(section, section_all_info['classes'])
+            store_section_components(section, section_all_info['classes'])
 
             # Back to the course page
             s.return_from_section()
@@ -190,51 +152,16 @@ class SolusScraper(object):
         for class_num, section_data in s.parser().course_section_attrs().items():
 
             # Save the section information
-            section_type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=section_data['type'])
-            section_attrs = {
+            section_type = store_section_type({"abbreviation": section_data['type']})
+
+            section = store_section({
                         'index_in_course' : section_data['index'],
                         'solus_id' : class_num,
                         'type' : section_type,
                         'course' : course,
-                        'term' : term}
-            
-            section = course_catalog.models.existing_or_new(course_catalog.models.Section, **section_attrs)
-            section.save()
+                        'term' : term})
 
             # Store the section data
-            self.store_section_components(section, section_data['classes'])
+            store_section_components(section, section_data['classes'])
 
     
-    def store_section_components(self, section, class_data):
-        """Stores the section components"""
-
-        for clss in class_data:
-
-            # Only bother if the timeslot is scheduled
-            if clss['day_abbr'] and clss['start_time'] and clss['end_time']:
-
-                # Make timeslot
-                weekday = course_catalog.models.existing_or_new(course_catalog.models.DayOfWeek, abbreviation=clss['day_abbr'])
-                timeslot_attrs = {
-                    'day_of_week' : weekday,
-                    'start_time' : clss['start_time'],
-                    'end_time' : clss['end_time']
-                }
-                timeslot = course_catalog.models.existing_or_new(course_catalog.models.Timeslot, **timeslot_attrs)
-
-                # Make component
-                section_comp_attrs = {
-                    'section' : section,
-                    'start_date': clss['start_date'],
-                    'end_date': clss['end_date'],
-                    'room': clss['room'],
-                    'timeslot': timeslot
-                }
-                component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **section_comp_attrs)
-
-                # Add instructors
-                for i in clss['instructors']:
-                    instructor = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=i)
-                    component.instructors.add(instructor)
-
-                component.save() 

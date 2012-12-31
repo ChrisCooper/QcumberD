@@ -33,9 +33,9 @@ def scrape_enrollment(config, section):
 def test_request():
     """Return what should be displayed (html or otherwise)"""
 
-    try:
-        SolusScraper(None, SCRAPER_USERNAME, SCRAPER_PASSWORD).full_scrape()
-        return "<html>Finished scraping!</html>"
-    except Exception as e:
-        #return "<html>Error encoutered!<br/><br/>" + str(e) + "</html>"
-        raise e
+#try:
+    SolusScraper(None, SCRAPER_USERNAME, SCRAPER_PASSWORD).full_scrape()
+    return "<html>Finished scraping!</html>"
+#except Exception as e:
+    #return "<html>Error encoutered!<br/><br/>" + str(e) + "</html>"
+#    raise e
