@@ -38,25 +38,25 @@ class SolusParser(object):
     def all_subjects(self):
         """
         Returns a dict of subject data in the current letter
-        Format = {abbreviation: (title, dropdown id)}
+        Format = {abbreviation: title}
         """
         ret = {}
         for tags in self.soup.find_all("a", title="Show/Hide Courses for Subject"):
             abbr, sbj = tags.string.split(" - ")
-            ret[abbr] = (sbj, tags['id'])
+            ret[abbr] = sbj
         return ret
 
     def all_courses(self):
         """
         Returns a dict of course data in the expanded subject(s)
-        Format = {number: (name, link id)}
+        Format = {number: name}
         """
         ret = {}
         for x in self.soup.find_all("a", { "class": "PSHYPERLINK"}):
             # Get a number, then the title
             if "CRSE_TITLE" in x['id']:
                 # There are somtimes tags inside the titles
-                ret[temp] = ("".join([i for i in x.stripped_strings]).strip(), x['id'])
+                ret[temp] = "".join([i for i in x.stripped_strings]).strip()
             elif "CRSE_NBR" in x['id']:
                 temp = x.string.strip()
         return ret
@@ -80,12 +80,12 @@ class SolusParser(object):
     def all_sections(self):
         """
         Returns a dict containing data for sections in the current term
-        Format = {class number: (index, type, id)}
+        Format = {class number: (index, type)}
         """
         ret = {}
         for x in self.soup.find_all("a", {"class": "PSHYPERLINK", "title": "Class Details"}):
             m = re.search('(\S+)-(\S+)\s+\((\S+)\)', x.string)
-            ret[m.group(3)] = (m.group(1), m.group(2), x['id'])
+            ret[m.group(3)] = (m.group(1), m.group(2))
         return ret
 
     #######
@@ -102,7 +102,7 @@ class SolusParser(object):
                 "Grading Basis": "grading_basis",
                 "Add Consent": "add_consent",
                 "Drop Consent": "drop_consent",
-                "Course Components": "course_componenets",
+                "Course Components": "course_components",
                 "Enrollment Requirement": "enrollment_requirement",
         }
         
@@ -255,7 +255,7 @@ class SolusParser(object):
                 'end_time': datetime.strptime(m.group(3), "%I:%M%p") if m else None,
                 'room': cells[x+1].string.strip(),
                 # If not i.string, it means it's a Tag, not an instructor
-                'instructors': [i.strip(", \n") for i in cells[x+2].contents if i.string]
+                'instructors': [", ".join(i.strip(", \n").split(",")) for i in cells[x+2].contents if i.string]
             })
         
         return attrs

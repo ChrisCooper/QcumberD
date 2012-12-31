@@ -52,66 +52,135 @@ def test_request():
         print ("--Parsing letter: " + letter)
         s.select_alphanum(letter)
 
-        for subject_code, subject_data in s.parser().all_subjects().items():
+        for subject_abbr, subject_title in s.parser().all_subjects().items():
             
-            # Store the subject
-            subject_attrs = {'title' : subject_data[0],
-                          'abbreviation' : subject_code}
+            # Store the subject information
+            subject_attrs = {'title' : subject_title,
+                          'abbreviation' : subject_abbr}
             subject = course_catalog.models.existing_or_new(course_catalog.models.Subject, **subject_attrs)
-            #subject.save()
+            subject.save()
             
             print ("----Parsing subject: " + str(subject))
             
-            s.dropdown_subject(subject_attrs['abbreviation'], subject_attrs['title'])
+            # Show courses by clicking the dropdown
+            s.dropdown_subject(subject_abbr, subject_title)
 
-            for course_code, course_data in s.parser().all_courses().items():
+            for course_code, course_name in s.parser().all_courses().items():
 
-                print ("------Parsing course: " + course_code + " - " + course_data[0])
+                print ("------Parsing course: " + course_code + " - " + course_name)
 
+                # Click the course
                 s.select_course(course_code)
 
-                course_attrs = s.parser().course_attrs()['basic']
+                # Store the course information
+                course_all_info = s.parser().course_attrs()
+                course_x_info = course_all_info['extra']
+
+                course_attrs = course_all_info['basic']
                 course_attrs['subject'] = subject
     
                 course = course_catalog.models.existing_or_new(course_catalog.models.Course, **course_attrs)
-                #course.save()
+                
+                # Extra info
+                if 'career' in course_x_info:
+                    career_attrs = {"name": course_x_info['career']}
+                    #course.career = course_catalog.models.existing_or_new(course_catalog.models.Career, **career_attrs)
+                if 'units' in course_x_info:
+                    if len(course_x_info['units'].split(".")[1]) > 2:
+                        raise Exception('Error: assumption about precision or magnitude of credit hours (units) is false: "%s"' % value)
+                    course.units = float(course_x_info['units'])
+                if 'grading_basis' in course_x_info:
+                    grading_attrs = {"name": course_x_info['grading_basis']}
+                    #course.grading_basis = course_catalog.models.existing_or_new(course_catalog.models.GradingBasis, **grading_attrs)
+                if 'enrollment_requirement' in course_x_info:
+                    pass #TODO
+                if 'typically_offered' in course_x_info:
+                    pass #TODO
+                if 'course_components' in course_x_info:
+                    pass #TODO
+                if 'add_consent' in course_x_info:
+                    pass #TODO
+                if 'drop_consent' in course_x_info:
+                    pass #TODO
+                
+                course.save()
 
+                # Show the course sections
                 s.show_sections()
 
                 for term_key, term_data in s.parser().all_terms().items():
                 
                     print ("--------Parsing term: " + term_data[0] + " " + term_data[1])
 
+                    # Switch to the term
                     s.switch_terms(term_data[0], term_data[1])
 
+                    # Save the season information
                     season = course_catalog.models.existing_or_new(course_catalog.models.Season, name=term_data[1])
-                    #season.save()
+                    season.save()
 
-                    term_attributes = {'year' : term_data[0],
-                                       'season' : season}
-                    term = course_catalog.models.existing_or_new(course_catalog.models.Term, **term_attributes)
-                    #term.save()
-                    
+                    # Save the term information
+                    term_attrs = {
+                            'year' : term_data[0],
+                            'season' : season
+                    }
+                    term = course_catalog.models.existing_or_new(course_catalog.models.Term, **term_attrs)
+                    term.save()
+                   
+                    #Click the 'View All' button 
                     s.show_all_sections()
 
                     for class_num, section_data in s.parser().all_sections().items():
 
                         print ("----------Parsing section: " + section_data[0] + "-" + section_data[1] + " (" + class_num + ")")
                         
+                        # Save the section information
                         section_type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=section_data[1])
-                        section_attributes = {'index_in_course' : section_data[0],
+                        section_attrs = {
+                                    'index_in_course' : section_data[0],
                                     'solus_id' : class_num,
                                     'type' : section_type,
                                     'course' : course,
                                     'term' : term}
                         
-                        section = course_catalog.models.existing_or_new(course_catalog.models.Section, **section_attributes)
-                        #section.save()
+                        section = course_catalog.models.existing_or_new(course_catalog.models.Section, **section_attrs)
+                        section.save()
 
+                        # Click the section
                         s.view_section(class_num)
 
-                        # Section data
+                        # Store the section component data (multiple per section)
                         section_all_info = s.parser().section_attrs()
+                        for clss in section_all_info['classes']:
+
+                            # Only bother if the timeslot is scheduled
+                            if clss['day_abbr']:
+
+                                # Make timeslot
+                                weekday = course_catalog.models.existing_or_new(course_catalog.models.DayOfWeek, abbreviation=clss['day_abbr'])
+                                timeslot_attrs = {
+                                    'day_of_week' : weekday,
+                                    'start_time' : clss['start_time'],
+                                    'end_time' : clss['end_time']
+                                }
+                                timeslot = course_catalog.models.existing_or_new(course_catalog.models.Timeslot, **timeslot_attrs)
+
+                                # Make component
+                                section_comp_attrs = {
+                                    'section' : section,
+                                    'start_date': section_all_info['details']['start_date'],
+                                    'end_date': section_all_info['details']['end_date'],
+                                    'room': clss['room'],
+                                    'timeslot': timeslot
+                                }
+                                component = course_catalog.models.existing_or_new(course_catalog.models.SectionComponent, **section_comp_attrs)
+
+                                # Add instructors
+                                for i in clss['instructors']:
+                                    instructor = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=i)
+                                    component.instructors.add(instructor)
+
+                                component.save()
     
                         s.return_from_section()
 
