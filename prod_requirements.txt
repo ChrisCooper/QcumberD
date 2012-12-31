@@ -8,3 +8,4 @@ requests==1.0.3
 selenium==2.26.0
 virtualenv==1.8.2
 wsgiref==0.1.2
+django-social-auth==0.7.14
