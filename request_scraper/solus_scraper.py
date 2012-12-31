@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from solus_session import SolusSession
 from solus_data import *
 
@@ -10,20 +14,53 @@ class SolusScraper(object):
         self.password = password
 
 
-    def full_scrape(self):
-        """Starts a full scrape of the SOLUS database"""
-        
-        print ("Logging in")
-        s = SolusSession(self.user, self.password)
-        print ("Logged in")
+    def scrape_all(self):
+        """
+        Starts a full scrape of the SOLUS database.
+        """
 
-        for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789":
+        update_constants()
+
+        print("Beginning scrape job...")
+        print ("Scrape job config:")
+        for x in self.config._meta.fields:
+            print ("--" + str(x.name) + ": " + str(x.value_from_object(self.config)))
+        
+        s = SolusSession(self.user, self.password)
+
+        for letter in self.config.letters:
 
             print ("--Parsing letter: " + letter)
             s.select_alphanum(letter)
 
             # Scrapes all the subjects
             self._subject_scrape(s)
+
+    def scrape_section(section):
+        """
+        Scrapes an individual section.
+        Uses deep scraping so enrollment information is updated.
+        """
+        s = SolusSession(self.user, self.password)
+
+        #Get information
+        term = section.term
+        course = section.course
+        subject = course.subject
+        
+        s.select_alphanum(subject.abbreviation[:1])
+        s.dropdown_subject(subject.abbreviation, subject.title)
+        s.select_course(course.number)
+        s.show_sections()
+        s.switch_terms(term.year, term.season)
+        s.show_all_sections()
+        s.view_section(section.solus_id)
+
+        self._section_scrape(s, subject, course, term, section)
+
+        s.return_from_course()
+
+        s.close_session()
    
      
     def _subject_scrape(self, s):
@@ -32,7 +69,8 @@ class SolusScraper(object):
         Session must be on the subject page.
         """
         
-        for subject_abbr, subject_title in s.parser().all_subjects().items():
+        for subject_abbr, subject_title in s.parser().all_subjects().items() \
+                            [self.config.subject_start_idx:self.config.subject_end_idx]:
             
             # Store the subject information
             subject = store_subject({
@@ -57,7 +95,8 @@ class SolusScraper(object):
         Session must be on the subject page with dropdown extended.
         """
 
-        for course_code, course_name in s.parser().all_courses().items():
+        for course_code, course_name in s.parser().all_courses().items() \
+                            [self.config.course_start_idx:self.config.course_end_idx]:
 
             print ("------Parsing course: " + course_code + " - " + course_name)
 
@@ -99,9 +138,31 @@ class SolusScraper(object):
                     'season' : season})
            
             # Scrape section data
-            #self._sections_deep_scrape(s, subject, course, term)
-            self._sections_shallow_scrape(s, subject, course, term)
+            if self.config.deep:
+                self._sections_deep_scrape(s, subject, course, term)
+            else:
+                self._sections_shallow_scrape(s, subject, course, term)
 
+
+    def _section_scrape(self, s, subject, course, term, section):
+        """
+        Deep scrapes a section.
+        Loads the section page to gather extra info.
+        Session must be on the course page.
+        """
+        
+        print ("----------Parsing section: " + section.index_in_course + \
+                "-" + section.type.abbreviation + " (" + section.solus_id + ")")
+ 
+        # Click the section
+        s.view_section(section.solus_id)
+
+        # Store the section component data (multiple per section)
+        section_all_info = s.parser().section_attrs()
+        store_section_components(section, section_all_info['classes'])
+
+        # Back to the course page
+        s.return_from_section()
 
     def _sections_deep_scrape(self, s, subject, course, term):
         """
@@ -115,8 +176,6 @@ class SolusScraper(object):
 
         for class_num, section_data in s.parser().all_sections().items():
 
-            print ("----------Parsing section (deep): " + section_data[0] + "-" + section_data[1] + " (" + class_num + ")")
-            
             # Save the section information
             section_type = store_section_type({"abbreviation": section_data[1]})
             section = store_section({
@@ -126,15 +185,8 @@ class SolusScraper(object):
                         'course' : course,
                         'term' : term})
 
-            # Click the section
-            s.view_section(class_num)
+            self._section_scrape(s, subject, course, term, section)
 
-            # Store the section component data (multiple per section)
-            section_all_info = s.parser().section_attrs()
-            store_section_components(section, section_all_info['classes'])
-
-            # Back to the course page
-            s.return_from_section()
 
     
     def _sections_shallow_scrape(self, s, subject, course, term):

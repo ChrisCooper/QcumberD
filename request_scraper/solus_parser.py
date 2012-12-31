@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import re
 from datetime import datetime
 from bs4 import BeautifulSoup
@@ -41,8 +45,13 @@ class SolusParser(object):
         """
         ret = {}
         for tags in self.soup.find_all("a", title="Show/Hide Courses for Subject"):
-            abbr, sbj = tags.string.split(" - ")
-            ret[abbr] = sbj
+            m = re.search("^(\S+)\s+-\s+(.*)$", tags.string)
+            if m:
+                abbr = m.group(1)
+                sbj = m.group(2)
+                ret[abbr] = sbj
+            else:
+                raise Exception ("Problem parsing subject title: '" + tags.string + "'")
         return ret
 
     def all_courses(self):

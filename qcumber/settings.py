@@ -134,6 +134,7 @@ INSTALLED_APPS = (
 
     'course_catalog',
     'solus_scraper',
+    'request_scraper',
     'enrollment',
 )
 

@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import requests
 
 from solus_parser import SolusParser
@@ -13,7 +17,10 @@ class SolusSession(object):
 
         self.latest_response = None
         self.latest_text = ''
+
+        print "Logging in..."
         self.login(user, password)
+        print "Logged in"
 
     def close_session(self):
         self.session.close()

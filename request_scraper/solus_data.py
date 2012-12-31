@@ -1,4 +1,27 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import course_catalog.models
+from request_scraper.models import section_types, weekdays
+
+
+def update_constants():
+    """Updates the constant entries"""
+
+    print("Updating constant entries...")
+
+    for type_abbr in section_types:
+        type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=type_abbr)
+        type.name = section_types[type_abbr]
+        type.save()
+
+    for day_abbr in weekdays:
+        day = course_catalog.models.existing_or_new(course_catalog.models.DayOfWeek, abbreviation=day_abbr)
+        day.name = weekdays[day_abbr]
+        day.save()
+
+    print ("Done!")
 
 def store_subject(subject_attrs):
     """Stores a subject object"""
