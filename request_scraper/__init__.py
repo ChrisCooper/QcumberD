@@ -47,12 +47,12 @@ def test_request():
     s = SolusSession(SCRAPER_USERNAME, SCRAPER_PASSWORD)
     print ("Logged in")
 
-    for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[:3]: #TESTING, only 3
+    for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789":
 
-        print ("-Parsing letter: " + letter)
+        print ("--Parsing letter: " + letter)
         s.select_alphanum(letter)
 
-        for subject_code, subject_data in s.parser().all_subjects().items()[:2]: #TESTING, only 2
+        for subject_code, subject_data in s.parser().all_subjects().items():
             
             # Store the subject
             subject_attrs = {'title' : subject_data[0],
@@ -60,13 +60,13 @@ def test_request():
             subject = course_catalog.models.existing_or_new(course_catalog.models.Subject, **subject_attrs)
             #subject.save()
             
-            print ("--Parsing subject: " + str(subject))
+            print ("----Parsing subject: " + str(subject))
             
             s.dropdown_subject(subject_attrs['abbreviation'], subject_attrs['title'])
 
-            for course_code, course_data in s.parser().all_courses().items()[:2]: # TESTING, only 2
+            for course_code, course_data in s.parser().all_courses().items():
 
-                print ("---Parsing course: " + course_code + " - " + course_data[0])
+                print ("------Parsing course: " + course_code + " - " + course_data[0])
 
                 s.select_course(course_code)
 
@@ -80,7 +80,7 @@ def test_request():
 
                 for term_key, term_data in s.parser().all_terms().items():
                 
-                    print ("----Parsing term: " + term_data[0] + " " + term_data[1])
+                    print ("--------Parsing term: " + term_data[0] + " " + term_data[1])
 
                     s.switch_terms(term_data[0], term_data[1])
 
@@ -96,7 +96,7 @@ def test_request():
 
                     for class_num, section_data in s.parser().all_sections().items():
 
-                        print ("-----Parsing section: " + section_data[0] + "-" + section_data[1] + " (" + class_num + ")")
+                        print ("----------Parsing section: " + section_data[0] + "-" + section_data[1] + " (" + class_num + ")")
                         
                         section_type = course_catalog.models.existing_or_new(course_catalog.models.SectionType, abbreviation=section_data[1])
                         section_attributes = {'index_in_course' : section_data[0],

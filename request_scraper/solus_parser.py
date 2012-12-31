@@ -95,45 +95,81 @@ class SolusParser(object):
     def course_attrs(self):
         """Parses the course attributes out of the page"""
 
-        attrs = {}
+        mapping = {
+                "Career": "career",
+                "Typically Offered": "typically_offered",
+                "Units": "units",
+                "Grading Basis": "grading_basis",
+                "Add Consent": "add_consent",
+                "Drop Consent": "drop_consent",
+                "Course Components": "course_componenets",
+                "Enrollment Requirement": "enrollment_requirement",
+        }
+        
+        attrs = {'extra': {}}
 
         # Get the title and number
         name = self.soup.find("span", {"class": "PALEVEL0SECONDARY"}).string
         m = re.search("^(\S+)\s+(\S+)\s+-\s+(.*)$", name)
 
-        #Get the description
         description = ""
 
-        # Blue table with info, enrollment, and description (maybe)
+        # Blue table with info, enrollment, and description
         info_table = self.soup.find("table", {"class": "SSSGROUPBOXLTBLUEWBO"})
 
         # Look through inner tables
         inner_tables = self.soup.find_all("table", {"class": "PSGROUPBOXNBO"})
         for table in inner_tables:
             temp = table.find("td", {"class": "SSSGROUPBOXLTBLUE"})
-            if not temp:
+            if not temp or not temp.string:
                 continue
             elif temp.string == "Description":
-                desc_list = self.soup.find("span", {"class": "PSLONGEDITBOX"}).contents
+                desc_list = table.find("span", {"class": "PSLONGEDITBOX"}).contents
                 if desc_list:
                     # If not x.string, it means it's a <br/> Tag
                     description = "\n".join([x for x in desc_list if x.string])
         
-            # TODO: Implement extra info:
             elif temp.string == "Course Detail":
-                pass
-                # PSDROPDOWNLABEL (career, grading basis)
-                # PSDROPDOWNLIST_DISPONLY (career, grading basis)
-                
-                # PSEDITBOXLABEL (units, course components)
-                # PSEDITBOX_DISPONLY (units, course_reqs(type, required/not))
-            elif temp.string == "Enrollment Information":
-                pass
-                # PSDROPDOWNLABEL (add/drop consent)
-                # PSDROPDOWNLIST_DISPONLY (add/drop consent)
+                # 2 types of labels and datafields
 
-                # PSEDITBOXLABEL (typically offered, enrollment requirement)
-                # PSEDITBOX_DISPONLY (typically offered, enrollment requirement)
+                # Career and grading basis
+                labels = table.find_all("label", {"class":"PSDROPDOWNLABEL"})
+                data = table.find_all("span", {"class":"PSDROPDOWNLIST_DISPONLY"})
+                for x in range(0, len(labels)):
+                    if labels[x].string in mapping:
+                        attrs['extra'][mapping[labels[x].string]] = data[x].string
+                
+                # Units and course components
+                labels = table.find_all("label", {"class":"PSEDITBOXLABEL"})
+                data = table.find_all("span", {"class":"PSEDITBOX_DISPONLY"})
+                for x in range(0, len(labels)):
+                    if labels[x].string == "Course Components":
+                        # Last datafield, has multiple type -> value mappings
+                        comp_map = {}
+                        for i in range(x, len(data), 2):
+                            comp_map[data[i].string] = data[i+1].string
+
+                        attrs['extra'][mapping[labels[x].string]] = comp_map
+                        break
+                    elif labels[x].string in mapping:
+                        attrs['extra'][mapping[labels[x].string]] = data[x].string
+                
+            elif temp.string == "Enrollment Information":
+                # 2 types of labels and datafields
+                
+                # Add/drop consent
+                labels = table.find_all("label", {"class":"PSDROPDOWNLABEL"})
+                data = table.find_all("span", {"class":"PSDROPDOWNLIST_DISPONLY"})
+                for x in range(0, len(labels)):
+                    if labels[x].string in mapping:
+                        attrs['extra'][mapping[labels[x].string]] = data[x].string
+
+                # Typically offered, enrollment requirement
+                labels = table.find_all("label", {"class":"PSEDITBOXLABEL"})
+                data = table.find_all("span", {"class":"PSEDITBOX_DISPONLY"})
+                for x in range(0, len(labels)):
+                    if labels[x].string in mapping:
+                        attrs['extra'][mapping[labels[x].string]] = data[x].string
 
         attrs['basic'] = {
             'title' : m.group(3),
@@ -174,34 +210,37 @@ class SolusParser(object):
                 #'wait_curr': number waiting
             }
         }
-        # PSEDITBOX_DISPONLY = class detail fields and class availiblity fields
-        # PSEDITBOX_LABEL = labels for PSEDITBOX_DISPONLY fields + 1 for enrollment (if it exists)
-        # Class component has 1 label, but multiple (n*2) fields - (type + required) * n
-        data = self.soup.find_all("span", {"class" : "PSEDITBOX_DISPONLY"})
-        labels = self.soup.find_all("label", {"class": "PSEDITBOXLABEL"})
-        num_comps = len(data) - len(labels)
 
-        # If enrollment label exists, alter the offset
-        for x in labels:
-            if x.string == "Enrollment Requirements":
-                num_comps += 1
+        # Tables for Details, enrollment, availibility, description
+        tables = self.soup.find_all("table", {"class": "PSGROUPBOXWBO"})
+        for table in tables:
+            temp = table.find("td", {"class": "PAGROUPBOXLABELLEVEL1"})
+            if not temp or not temp.string:
+                continue
+            elif temp.string == "Class Details":
+                labels = table.find_all("label", {"class": "PSEDITBOXLABEL"})
+                data = table.find_all("span", {"class" : "PSEDITBOX_DISPONLY"})
+                num_comps = len(data) - len(labels)
+
+                # Store class attributes
+                attrs['details']['status'] = data[0].string
+                attrs['details']['session'] = data[2].string
+                attrs['details']['location'] = data[8 + num_comps].string
+                attrs['details']['campus'] = data[9 + num_comps].string
+
+                # Dates
+                m = re.search('^([\S]+)\s*-\s*([\S]+)$', data[6 + num_comps].string)
+                attrs['details']['start_date'] = datetime.strptime(m.group(1), "%Y/%m/%d") if m else None
+                attrs['details']['end_date'] = datetime.strptime(m.group(2), "%Y/%m/%d") if m else None
         
-        # Store class attributes
-        attrs['details']['status'] = data[0].string
-        attrs['details']['session'] = data[2].string
-        attrs['details']['location'] = data[8 + num_comps].string
-        attrs['details']['campus'] = data[9 + num_comps].string
-
-        # Dates
-        m = re.search('^([\S]+)\s*-\s*([\S]+)$', data[6 + num_comps].string)
-        attrs['details']['start_date'] = datetime.strptime(m.group(1), "%Y/%m/%d")
-        attrs['details']['end_date'] = datetime.strptime(m.group(2), "%Y/%m/%d")
-
-        # Store enrollment information
-        attrs['availability']['class_max'] = int(data[10 + num_comps].string)
-        attrs['availability']['wait_max'] = int(data[11 + num_comps].string)
-        attrs['availability']['class_curr'] = int(data[12 + num_comps].string)
-        attrs['availability']['wait_curr'] = int(data[13 + num_comps].string)
+            elif temp.string == "Class Availability":
+                data = table.find_all("span", {"class" : "PSEDITBOX_DISPONLY"})
+                
+                # Store enrollment information
+                attrs['availability']['class_max'] = int(data[0].string)
+                attrs['availability']['wait_max'] = int(data[1].string)
+                attrs['availability']['class_curr'] = int(data[2].string)
+                attrs['availability']['wait_curr'] = int(data[3].string)
 
         # Class time tables
         class_table = self.soup.find("table", id="SSR_CLSRCH_MTG$scroll$0")
@@ -239,11 +278,11 @@ class SolusParser(object):
 
 # Testing
 """
-with open("tests/course.html") as f:
+with open("tests/class.html") as f:
     data = f.read()
 p = SolusParser(data)
 
-print p.course_attrs()
+print p.section_attrs()
 
 #for x in p.all_sections().iteritems():
 #    print x
