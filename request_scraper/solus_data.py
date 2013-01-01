@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import re
 import course_catalog.models
 from request_scraper.models import section_types, weekdays
 
@@ -53,7 +54,7 @@ def store_course(subject, course_all_info):
         if 'grading_basis' in course_x_info:
             course.grading_basis = course_catalog.models.existing_or_new(course_catalog.models.GradingBasis, name=str(course_x_info['grading_basis']))
         if 'enrollment_requirement' in course_x_info:
-            pass #TODO
+            course.enrollment_reqs = link_requisites(course_x_info['enrollment_requirement'])
         if 'typically_offered' in course_x_info:
             pass #TODO
         if 'course_components' in course_x_info:
@@ -136,4 +137,22 @@ def store_section_components(section, class_data):
                 instructor = course_catalog.models.existing_or_new(course_catalog.models.Instructor, name=i)
                 component.instructors.add(instructor)
 
-            component.save() 
+            component.save()
+
+
+def link_requisites(s):
+    """Makes prereqs link to their respective courses"""
+
+    # BeautifulSoup should've escaped this already
+    #s = cgi.escape(s)
+    matches = re.finditer("([A-Z]{3,4})\s*(\d{3}[AB]?)", s)
+
+    #Because we are replacing strings as we go, the match indecies will become incorrect along the way
+    index_offset = 0
+
+    for match in matches:
+        repr = '<a href="/search/?q=%s+%s">%s %s</a>' % (match.group(1), match.group(2), match.group(1), match.group(2))
+        s = s[:match.start() + index_offset] + repr + s[match.end() + index_offset :]
+        index_offset += len(repr) - len(match.group(0))
+ 
+    return s
