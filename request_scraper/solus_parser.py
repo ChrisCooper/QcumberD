@@ -346,7 +346,7 @@ class SolusParser(object):
                 'room': cells[x+1].string.strip(),
 
                 # If not i.string, it means it's a Tag, not an instructor
-                'instructors': [", ".join(i.strip(", \n").split(",")) for i in cells[x+2].contents if i.string],
+                'instructors': [", ".join(i.strip(", \n").split(",")) for i in cells[x+2].contents if i.string and i.string != "TBA" and i.string != "Staff"],
                 
                 # Dates
                 'start_date': datetime.strptime(date.group(1), "%Y/%m/%d") if date else None,

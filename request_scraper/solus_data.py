@@ -45,15 +45,13 @@ def store_course(subject, course_all_info):
     # Extra info
     if course_x_info:
         if 'career' in course_x_info:
-            #course.career = course_catalog.models.existing_or_new(course_catalog.models.Career, name=course_x_info['career'])
-            pass
+            course.career = course_catalog.models.existing_or_new(course_catalog.models.Career, name=str(course_x_info['career']))
         if 'units' in course_x_info:
             if len(course_x_info['units'].split(".")[1]) > 2:
                 raise Exception('Error: assumption about precision or magnitude of credit hours (units) is false: "%s"' % value)
             course.units = float(course_x_info['units'])
         if 'grading_basis' in course_x_info:
-            #course.grading_basis = course_catalog.models.existing_or_new(course_catalog.models.GradingBasis, name=course_x_info['grading_basis'])
-            pass
+            course.grading_basis = course_catalog.models.existing_or_new(course_catalog.models.GradingBasis, name=str(course_x_info['grading_basis']))
         if 'enrollment_requirement' in course_x_info:
             pass #TODO
         if 'typically_offered' in course_x_info:
