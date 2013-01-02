@@ -3,12 +3,14 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.db import models
-from course_catalog.models import Course, Subject, Term, Section
-import model_controls
 from django.views.decorators.cache import cache_page
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+
+from course_catalog.models import Course, Subject, Term, Section
+import model_controls
 
 @cache_page(60 * 30)
 def index(request):
@@ -18,11 +20,17 @@ def index(request):
     buckets = model_controls.subject_buckets(subject_list, max_buckets)
 
     if buckets == None:
-        return render_to_response('course_catalog/pages/index.html')
+        return render(request, 'course_catalog/pages/index.html')
     
-    return render_to_response('course_catalog/pages/index.html',
+    return render(request, 'course_catalog/pages/index.html',
         {'subject_buckets':buckets,
          'min_height': 29 * max([len(x[1]) for x in buckets])})
+
+
+@login_required
+def dashboard(request):
+    return render(request, 'dashboard/dashboard.html')
+
 
 @cache_page(60 * 30)
 def course_detail(request, subject_abbr=None, course_number=None):
@@ -36,7 +44,7 @@ def course_detail(request, subject_abbr=None, course_number=None):
         secs = sorted(secs, key=lambda s: s.type.order)
         sections.append((t, secs))
 
-    return render_to_response('course_catalog/pages/course_detail.html', {'course': c,
+    return render(request, 'course_catalog/pages/course_detail.html', {'course': c,
                                                                           'all_sections': sections}, context_instance=RequestContext(request))
 
 @cache_page(60 * 30)
@@ -49,7 +57,7 @@ def subject_detail(request, subject_abbr):
 
     c = [(career, s.courses.filter(career=career).order_by('number')) for career in careers]
 
-    return render_to_response('course_catalog/pages/subject_detail.html', {'subject': s,
+    return render(request, 'course_catalog/pages/subject_detail.html', {'subject': s,
                                                                      'courses_by_career': c})
 
 @cache_page(60 * 30)
@@ -69,7 +77,7 @@ def search(request):
         elif isinstance(item, Section):
             item.template_name = "course_catalog/components/section_search_result.html"
 
-    return render_to_response('course_catalog/pages/search_results.html', {'results': results,
+    return render(request, 'course_catalog/pages/search_results.html', {'results': results,
                                                                     'query': query})
 
 
@@ -77,19 +85,19 @@ def search(request):
 #TODO: All these requests should be fixed up, since they just return simple responses.
 @cache_page(60 * 30)
 def about(request):
-    return render_to_response('course_catalog/text/about.html')
+    return render(request, 'course_catalog/text/about.html')
 
 @cache_page(60 * 30)
 def contact(request):
-    return render_to_response('course_catalog/text/contact.html')
+    return render(request, 'course_catalog/text/contact.html')
 
 @cache_page(60 * 30)
 def tos(request):
-    return render_to_response('course_catalog/text/tos.html', {})
+    return render(request, 'course_catalog/text/tos.html', {})
 
 @cache_page(60 * 30)
 def faqs(request):
-    return render_to_response('course_catalog/text/faqs.html', {})
+    return render(request, 'course_catalog/text/faqs.html', {})
 
 
 
@@ -97,7 +105,7 @@ def faqs(request):
 
 @cache_page(60 * 60 * 24 *100)
 def facebook_channel(request):
-    return render_to_response('course_catalog/text/channel.html', {})
+    return render(request, 'course_catalog/text/channel.html', {})
 
 @cache_page(60 * 60 * 24 *100)
 def flash_permissions(request):
@@ -105,10 +113,10 @@ def flash_permissions(request):
 
 @cache_page(60 * 30)
 def robots(request):
-    return render_to_response('course_catalog/text/robots.txt', {})
+    return render(request, 'course_catalog/text/robots.txt', {})
 
 
 
 #For testing random things
 def experiments(request):
-    return render_to_response('course_catalog/experiments.html', {})
+    return render(request, 'course_catalog/experiments.html', {})

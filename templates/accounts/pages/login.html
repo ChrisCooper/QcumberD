@@ -1,0 +1,48 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+{% extends "course_catalog/pages/single_page.html" %}
+
+{% block page_title %} Qcumber | Login {% endblock %}
+
+{% block main_panel %}
+
+
+<div class="expo">
+    <h1>Log in to Qcumber</h1> 
+
+    <p>To get access to the full set of Qcumber features!</p>
+
+    <h3>
+        Do you have an account on one of these sites? Just click the logo to log in with it here:
+    </h3>
+
+    <div class="login-pane">
+        <a href="{% url 'socialauth_begin' 'facebook' %}?next={{ next_url }}">Login with Facebook</a>
+        <a href="{% url 'socialauth_begin' 'google-oauth2' %}?next={{ next_url }}">Login with Google</a>
+        <a href="{% url 'socialauth_begin' 'twitter' %}?next={{ next_url }}">Login with Twitter</a>
+
+        <p>
+            (We'll never post without asking you.)
+        </p>
+
+    </div>
+
+    {% comment %}
+    <p>
+        You can also create an account from scratch here:
+    </p>
+    {% endcomment %}
+
+    <p>
+        If you'd like help or information, please drop us a line at <a href="mailto:team@qcumber.ca">team@qcumber.ca</a>! :)
+    </p>
+
+    <div class="fb-big">
+        <div class="fb-like-box" data-href="https://www.facebook.com/QcumberQueens" data-width="292" data-height="300" data-show-faces="true" data-stream="false" data-header="true"></div>
+    </div>
+
+</div>
+
+{% endblock %}

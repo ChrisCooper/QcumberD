@@ -10,10 +10,13 @@
             <img class="pull-left" src="/static/img/LogoSmallWhite.png">
         </a>
         <ul class="nav pull-right">
+
+            <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+            <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
-            <li><a href="{% url 'socialauth_begin' 'facebook' %}">Login with Facebook</a></li>
             <li>
             <form action="/search/" method="get">
                 <input id="id_nav_q" type="search" name="q" maxlength="100" />
