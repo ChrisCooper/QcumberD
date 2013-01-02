@@ -5,7 +5,6 @@
 from solus_session import SolusSession
 from solus_data import *
 
-import datetime
 
 class SolusScraper(object):
     """Scrapes data off Solus"""
@@ -21,14 +20,13 @@ class SolusScraper(object):
         Starts a full scrape of the SOLUS database.
         """
 
-        t = datetime.datetime.now()
-
         update_constants()
 
-        print("Beginning scrape job...")
         print ("Scrape job config:")
         for x in self.config._meta.fields:
             print ("--" + str(x.name) + ": " + str(x.value_from_object(self.config)))
+        
+        print("Beginning scrape job...")
         
         s = SolusSession(self.user, self.password)
 
@@ -40,7 +38,6 @@ class SolusScraper(object):
             # Scrapes all the subjects
             self._subject_scrape(s)
 
-        print ("Finished scraping (time taken: " + str(datetime.datetime.now() - t) + ")")
 
     def scrape_section(section):
         """

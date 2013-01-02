@@ -2,6 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import datetime
+
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 
@@ -22,12 +24,15 @@ def new_job(request, config_name):
     """Starts a new scraping job"""
     config = get_object_or_404(JobConfig, name=config_name)
 
-#try:
-    SolusScraper(config, SCRAPER_USERNAME, SCRAPER_PASSWORD).scrape_all()
-    return HttpResponse('Finished scrape pass')
-#except Exception as e:
-    #return HttpResponse("Something went wrong:<br/>" + str(e))
-#    raise e
+    t = datetime.datetime.now()
+
+    try:
+        SolusScraper(config, SCRAPER_USERNAME, SCRAPER_PASSWORD).scrape_all()
+        return HttpResponse("Finished scrape pass (time taken: " + str(datetime.datetime.now() - t) + ")")
+    except Exception:
+        print ("Error during scraping (time taken: " + str(datetime.datetime.now() - t) + ")")
+        #return HttpResponse("Something went wrong while scraping")
+        raise
 
 def constants(request):
 
