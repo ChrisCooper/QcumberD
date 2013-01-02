@@ -90,6 +90,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages", 
+
+    'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
+
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -131,6 +136,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'south',
     #'debug_toolbar',
+    'social_auth',
 
     'course_catalog',
     'solus_scraper',
@@ -165,3 +171,28 @@ LOGGING = {
         },
     }
 }
+
+
+
+# Social-auth Settings
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# URLs
+LOGIN_URL          = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_ERROR_URL    = '/login-error/'
+
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/dashboard/welcome/'
+SOCIAL_AUTH_BACKEND_ERROR_URL = '/social-login-error/'
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+
+SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+
+SOCIAL_AUTH_EXPIRATION = 'expires'

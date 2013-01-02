@@ -224,15 +224,6 @@ class Term(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-def existing_or_new(model, **kwargs):
-
-    #get the object with the specified attributes
-    existing = model.existing(**kwargs)
-    if existing is None:
-        existing = model(**kwargs)
-        existing.save()
-    return existing
-
 class Career(ModelOnProbation):
     """
     A course classification, such as "Undergraduate"
@@ -270,8 +261,14 @@ class GradingBasis(ModelOnProbation):
 
 
 
+def existing_or_new(model, **kwargs):
 
-
+    #get the object with the specified attributes
+    existing = model.existing(**kwargs)
+    if existing is None:
+        existing = model(**kwargs)
+        existing.save()
+    return existing
 
 
 

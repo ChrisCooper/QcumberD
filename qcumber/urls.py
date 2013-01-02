@@ -10,6 +10,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     
+    # Social-auth support
+    url(r'', include('social_auth.urls')),
 
     # Uncomment the next line to enable the SOLUS screen scraper
     url(r'^solus_scraper/', include('solus_scraper.urls')),

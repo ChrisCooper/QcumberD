@@ -2,8 +2,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
-
 # -----------------------------------------------------------------------------
 # This file holds settings that are specific to your environment
 #
@@ -74,4 +72,12 @@ EMAIL_HOST_USER = 'username@domain.com'
 EMAIL_HOST_PASSWORD = 'password'
 SERVER_EMAIL = 'server@qcumber.ca'
 SEND_BROKEN_LINK_EMAILS = True
+
+#Social-Auth keys 
+TWITTER_CONSUMER_KEY         = ''
+TWITTER_CONSUMER_SECRET      = ''
+FACEBOOK_APP_ID              = ''
+FACEBOOK_API_SECRET          = ''
+GOOGLE_OAUTH2_CLIENT_ID      = ''
+GOOGLE_OAUTH2_CLIENT_SECRET  = ''
 
