@@ -188,6 +188,7 @@ AUTHENTICATION_BACKENDS = (
 
 # URLs
 LOGIN_URL          = '/accounts/login/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/dashboard/'
 LOGIN_ERROR_URL    = '/accounts/login-error/'
 LOGOUT_URL          = '/accounts/logout/'
 
