@@ -11,8 +11,13 @@
         </a>
         <ul class="nav pull-right">
 
-            <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
-            <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+            {% if user.is_authenticated %}
+               <li>Logged in as <span class="username" >{{ user.get_full_name }}</span></li>
+               <li><a href="{% url 'dashboard' %}"> View Dashboard</a></li>
+               <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+            {% endif %}
 
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
