@@ -32,16 +32,13 @@ $light_grey_text: #CCC;*/
 
 //Header
 .navbar {
-	ul {
-		height: @navbarHeight;
-	}
 
+    .username {
+        color: darken(@navbarLinkColor, 20%);
+    }
 
     .brand img {
-        height: 50px;
-	    width: 159px;
-        padding-right: 5px;
-        padding-left: 20px; 
+        max-height: @navbarHeight - 5px;
     }
 
 	@nav_search_height: 20px;
