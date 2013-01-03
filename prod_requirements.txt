@@ -9,3 +9,4 @@ selenium==2.26.0
 virtualenv==1.8.2
 wsgiref==0.1.2
 django-social-auth==0.7.14
+django-compressor==1.2

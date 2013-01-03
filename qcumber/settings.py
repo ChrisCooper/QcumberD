@@ -52,7 +52,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = 'unixy_project_path("static_collected/")'
+STATIC_ROOT = unixy_project_path("static_collected/")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -73,6 +73,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -139,7 +140,9 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'south',
     #'debug_toolbar',
+    'compressor',
     'social_auth',
+
 
     'course_catalog',
     'solus_scraper',
@@ -176,6 +179,15 @@ LOGGING = {
     }
 }
 
+# Django-compressor
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+     'compressor.filters.cssmin.CSSMinFilter',
+]
 
 
 # Social-auth Settings
@@ -186,7 +198,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-# URLs
 LOGIN_URL          = '/accounts/login/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/dashboard/'
 LOGIN_ERROR_URL    = '/accounts/login-error/'
@@ -200,3 +211,4 @@ SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
 
 SOCIAL_AUTH_EXPIRATION = 'expires'
+
