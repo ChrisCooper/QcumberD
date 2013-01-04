@@ -107,13 +107,17 @@ The database will be empty, so no courses will be present on your setup.
 8. Scrape Course Data
 ---------------------
 
- * Download Selenium Server from [http://seleniumhq.org/download/](http://seleniumhq.org/download/)
- * Run the server in another terminal by calling `java -jar [filename].jar`
- * Go to [http://localhost:8000/admin/solus_scraper/jobconfig/](http://localhost:8000/admin/solus_scraper/jobconfig/)
+ * Go to [http://localhost:8000/admin/scraper/jobconfig/](http://localhost:8000/admin/scraper/jobconfig/)
  * Click "Add job config".
- * Add a name ("Scrape everything") and a description.
- * Set the subject letters to "ABCDEFGHIJKLMNOPQRSTUVWXYZ" (all of them).
+ * Add a name and a description of your scrape job.
+ * There are a few options on this page (the default shallow-scrapes everything):
+   * Deep: If this is set, the scraper will do a deep scrape (takes longer, pulls additional information)
+   * Letters: The subject letters to scrape
+   * Start/end indecies: Controls which subjects/courses to scrape. Implemented with Python list slices.
+ * For a very minimal scrape (only 1 course per letter), set both the start indecies to 0 and both the end indecies to 0.
  * Click "Save".
- * Go to [http://localhost:8000/solus_scraper/](http://localhost:8000/solus_scraper/)
- * Click the name of the job you just created. A browser will open and start navigating the site. As it scrapes, the data will become available to the application. You can watch the subjects being added at [http://localhost:8000](http://localhost:8000)!
- * Scraping usually takes anywhere from 8 to 10 hours, so be patient! (We can also probably send you a copy of our sqlite database if you want to get started faster.)
+ * Go to [http://localhost:8000/scraper/](http://localhost:8000/scraper/)
+ * Click the name of the job you just created. The page status will show as "Waiting for localhost..." while the scraper works.
+ * As it scrapes, the progress of the scraper will be visible in your terminal and the retrieved data will become available to the application.
+ * You can watch the subjects being added at [http://localhost:8000](http://localhost:8000)!
+ * Scraping time will vary based on the configuration, but a full shallow scrape takes anywhere from 5 to 7 hours, so be patient!
