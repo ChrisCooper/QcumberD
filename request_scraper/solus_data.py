@@ -28,7 +28,7 @@ def store_subject(subject_attrs):
     """Stores a subject object"""
     
     subject = course_catalog.models.existing_or_new(course_catalog.models.Subject, **subject_attrs)
-    subject.save()
+    #subject.save()
 
     return subject
 
@@ -56,14 +56,19 @@ def store_course(subject, course_all_info):
         if 'enrollment_requirement' in course_x_info:
             course.enrollment_reqs = link_requisites(course_x_info['enrollment_requirement'])
         if 'typically_offered' in course_x_info:
-            pass #TODO
+            # Where does this info come from?
+            # Do we need it?
+            #for x in course_x_info['typically_offered'].split(","):
+            #    season = store_season({"name": x.strip()})
+            #    course.typically_offered.add(season)
+            pass
         if 'course_components' in course_x_info:
-            pass #TODO
+            pass
         if 'add_consent' in course_x_info:
-            pass #TODO
+            course.add_consent = store_consent({"name" : str(course_x_info['add_consent'])})
         if 'drop_consent' in course_x_info:
-            pass #TODO
-    
+            course.drop_consent = store_consent({"name" : str(course_x_info['drop_consent'])})
+
     course.save()
 
     return course
@@ -73,7 +78,7 @@ def store_season(season_attrs):
     """Stores a season object"""
     
     season = course_catalog.models.existing_or_new(course_catalog.models.Season, **season_attrs)
-    season.save()
+    #season.save()
 
     return season
 
@@ -82,7 +87,7 @@ def store_term(term_attrs):
     """Stores a term object"""
 
     term = course_catalog.models.existing_or_new(course_catalog.models.Term, **term_attrs)
-    term.save()
+    #term.save()
 
     return term
 
@@ -100,10 +105,39 @@ def store_section(section_attrs):
     """Stores a section object"""
 
     section = course_catalog.models.existing_or_new(course_catalog.models.Section, **section_attrs)
-    section.save()
+    #section.save()
 
     return section
 
+def store_session(session_attrs):
+    """Stores a session object"""
+    
+    session = course_catalog.models.existing_or_new(course_catalog.models.Session, **session_attrs)
+    #session.save()
+
+    return session
+
+def store_consent(consent_attrs):
+    """Stores an add/drop consent property"""
+
+    consent = course_catalog.models.existing_or_new(course_catalog.models.Consent, **consent_attrs)
+
+    return consent
+
+def store_section_extra_info(section, section_details, section_availability):
+    """stores extra information about a section retrieved from a deep scrape"""
+
+    # Details
+    if 'session' in section_details:
+        section.session = store_session({"name": str(section_details['session'])})
+
+    # Enrollment information
+    section.class_curr = section_availability.get('class_curr', -1)
+    section.class_max = section_availability.get('class_max', -1)
+    section.wait_curr = section_availability.get('wait_curr', -1)
+    section.wait_max = section_availability.get('wait_max', -1)
+
+    section.save()
 
 def store_section_components(section, class_data):
     """Stores the section components"""

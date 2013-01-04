@@ -50,6 +50,8 @@ class Course(ModelOnProbation):
     subject = models.ForeignKey(Subject, related_name='courses')
     career = models.ForeignKey("Career", related_name='courses', null=True)
     grading_basis = models.ForeignKey("GradingBasis", related_name='courses', null=True)
+    add_consent = models.ForeignKey("Consent", related_name='courses_add', null=True)
+    drop_consent = models.ForeignKey("Consent", related_name='courses_drop', null=True)
 
     def is_empty(self):
         return self.sections.count() == 0
@@ -78,10 +80,19 @@ class Section(ModelOnProbation):
     solus_id = models.CharField(max_length=16)
     index_in_course = models.CharField(max_length=8)
 
+    # From a deep scrape
+    class_curr = models.IntegerField(default=-1)
+    class_max = models.IntegerField(default=-1)
+    wait_curr = models.IntegerField(default=-1)
+    wait_max = models.IntegerField(default=-1)
+    
     #Relationships
     course = models.ForeignKey("Course", related_name='sections')
     type = models.ForeignKey("SectionType")
     term = models.ForeignKey("Term")
+    
+    # From a deep scrape
+    session = models.ForeignKey("Session", related_name='sections', null=True)
 
     def __unicode__(self):
         return u"%s %s (%s) for %s (%s)" % (self.term.__unicode__(), self.type.name, self.index_in_course, self.course.concise_unicode(), self.solus_id)
@@ -224,15 +235,6 @@ class Term(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-def existing_or_new(model, **kwargs):
-
-    #get the object with the specified attributes
-    existing = model.existing(**kwargs)
-    if existing is None:
-        existing = model(**kwargs)
-        existing.save()
-    return existing
-
 class Career(ModelOnProbation):
     """
     A course classification, such as "Undergraduate"
@@ -266,9 +268,47 @@ class GradingBasis(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
+class Session(ModelOnProbation):
+    """
+    E.g. "Regular Academic Section"
+    """
+    name = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.name
+
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
+
+class Consent(ModelOnProbation):
+    """
+    E.g. "Department Consent Required"
+    """
+    name = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.name
+
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
 
 
+def existing_or_new(model, **kwargs):
 
+    #get the object with the specified attributes
+    existing = model.existing(**kwargs)
+    if existing is None:
+        existing = model(**kwargs)
+        existing.save()
+    return existing
 
 
 

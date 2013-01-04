@@ -163,6 +163,7 @@ class SolusScraper(object):
         # Store the section component data (multiple per section)
         section_all_info = s.parser().section_attrs()
         store_section_components(section, section_all_info['classes'])
+        store_section_extra_info(section, section_all_info['details'], section_all_info['availability'])
 
         # Back to the course page
         s.return_from_section()
