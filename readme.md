@@ -96,7 +96,7 @@ Make sure your virtualenv is activated!
 
 7. Install LESS compiler
 ------------
-* Install Node.js (including the Node Package Manager, `npm`) from [http://nodejs.org/](http://nodejs.org/)
+* Install Node.js (including the Node Package Manager, `npm`) [Using a package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) or from [http://nodejs.org/](http://nodejs.org/)
 * Install the LESS compiler via the Node Package Manger: `sudo npm install -g less`
 * You can now compile LESS files like this: `lessc styles.less > styles.css`, but django-compressor automatically compiles the LESS files in this project.
 
