@@ -34,6 +34,8 @@ Anything in [square brackets] should be replaced with a value specific to you.
 For example, if your username is, say, `uniphil`, then a command like
 `mkdir [username]` would be written literally as `mkdir uniphil`.
 
+Steps to Get Set Up
+-------------------
 
 1. Fork the Repository
 ----------------------
@@ -92,8 +94,13 @@ Make sure your virtualenv is activated!
    Create the administrative account and follow the prompts.
  * Migrate the `south` databases: `python manage.py migrate`.
 
+7. Install LESS compiler
+------------
+* Install Node.js (including the Node Package Manager, `npm`) from [http://nodejs.org/](http://nodejs.org/)
+* Install the LESS compiler via the Node Package Manger: `sudo npm install -g less`
+* You can now compile LESS files like this: `lessc styles.less > styles.css`, but django-compressor automatically compiles the LESS files in this project.
 
-7. Run Time!
+8. Run Time!
 ------------
 
  * `python manage.py runserver`
@@ -103,9 +110,11 @@ And hopefully it just works!
 
 The database will be empty, so no courses will be present on your setup.
 
+Extra Notes
+-----------
 
-8. Scrape Course Data
----------------------
+How to Scrape Course Data
+-------------------------
 
  * Go to [http://localhost:8000/admin/scraper/jobconfig/](http://localhost:8000/admin/scraper/jobconfig/)
  * Click "Add job config".

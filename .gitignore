@@ -72,3 +72,4 @@ qcumber/config/private_config.py
 dev_db.sqlite3
 venv
 virtualenv_activate.py
+static_collected

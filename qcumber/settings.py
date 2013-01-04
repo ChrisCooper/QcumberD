@@ -52,7 +52,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = 'unixy_project_path("static_collected/")'
+STATIC_ROOT = unixy_project_path("static_collected/")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -73,6 +73,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -131,6 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'south',
     #'debug_toolbar',
+    'compressor',
 
     'course_catalog',
     'scraper',
@@ -165,3 +167,13 @@ LOGGING = {
         },
     }
 }
+
+# Django-compressor
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+     'compressor.filters.cssmin.CSSMinFilter',
+]
