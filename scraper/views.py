@@ -5,7 +5,7 @@
 import datetime
 
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 
@@ -18,7 +18,7 @@ def index(request):
     """Lists all the job configurations"""
     job_configs = JobConfig.objects.all()
 
-    return render_to_response('scraper/index.html', {'job_configs' : job_configs})
+    return render(request, 'scraper/index.html', {'job_configs' : job_configs})
 
 def new_job(request, config_name):
     """Starts a new scraping job"""
