@@ -22,7 +22,7 @@ def index(request):
     
     return render(request, 'course_catalog/pages/index.html',
         {'subject_buckets':buckets,
-         'min_height': 29 * max([len(x[1]) for x in buckets])})
+         'min_height': 50 + 29 * max([len(x[1]) for x in buckets])})
 
 @cache_page(60 * 30)
 def course_detail(request, subject_abbr=None, course_number=None):
