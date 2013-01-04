@@ -9,16 +9,16 @@ from django.shortcuts import render_to_response, get_object_or_404
 
 from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 
-from request_scraper.models import JobConfig
-from request_scraper.solus_data import update_constants
-from request_scraper.solus_scraper import SolusScraper
+from scraper.models import JobConfig
+from scraper.solus_data import update_constants
+from scraper.solus_scraper import SolusScraper
 
 
 def index(request):
     """Lists all the job configurations"""
     job_configs = JobConfig.objects.all()
 
-    return render_to_response('request_scraper/index.html', {'job_configs' : job_configs})
+    return render_to_response('scraper/index.html', {'job_configs' : job_configs})
 
 def new_job(request, config_name):
     """Starts a new scraping job"""

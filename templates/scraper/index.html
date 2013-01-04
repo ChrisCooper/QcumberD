@@ -9,7 +9,7 @@
 		{% if job_configs %}
 				{% for config in job_configs %}
 						<li>
-								<a href="{% url 'request_scraper.views.new_job' config.name %}">{{ config.name }}</a>
+								<a href="{% url 'scraper.views.new_job' config.name %}">{{ config.name }}</a>
 								{% if config.description %}
 									- {{ config.description }}
 								{% endif %}

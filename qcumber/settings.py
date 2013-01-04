@@ -133,7 +133,7 @@ INSTALLED_APPS = (
     #'debug_toolbar',
 
     'course_catalog',
-    'request_scraper',
+    'scraper',
     'enrollment',
 )
 

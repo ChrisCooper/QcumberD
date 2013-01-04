@@ -4,7 +4,7 @@
 
 import re
 import course_catalog.models
-from request_scraper.models import section_types, weekdays
+from scraper.models import section_types, weekdays
 
 
 def update_constants():
