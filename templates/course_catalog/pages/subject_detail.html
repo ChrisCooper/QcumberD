@@ -33,35 +33,34 @@
                     <li class="well well-small">
             
                         <header>
-                        <a href="#" class="dropdown-header clearfix">
-                            <h3>
-                                {{ career.name }}
-                            </h3>
-                        </a>
+                            <a href="#" class="dropdown-header clearfix">
+                                <h3>
+                                    {{ career.name }}
+                                </h3>
+                            </a>
                         </header>
                 
-                        <table class="table  table-hover table-condensed">
-                            {% for course in courses %}
-                            <tr class="course {% if course.is_empty %} useless {% endif %}">
-                            <a href="{{ course.get_absolute_url }}" class="course-table">
-                            
+                        <div class="slidesmoother">
+                            <table class="table  table-hover table-condensed">
+                                {% for course in courses %}
+                                <tr class="course {% if course.is_empty %} useless {% endif %}">
+                                
                                     <td class="abbreviation">
                                         {{ subject.abbreviation }} {{ course.number }}
                                     </td>
                                     <td class="course_title">
-                                    <a href="{{ course.get_absolute_url }}">
-                                        | {{ course.title }}
-                                    </a>
+                                        <a href="{{ course.get_absolute_url }}">
+                                            | {{ course.title }}
+                                        </a>
                                     </td>
 
                                     <td class="units">
                                         {{ course.units }} units
                                     </td>
-                        
-                            </a>
-                            </tr>
-                            {% endfor %}
-                        </table>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </li>
                 {% endfor %}
             </ul>
