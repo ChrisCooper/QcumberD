@@ -45,7 +45,7 @@
                         </header>
                 
                         <table class="table  table-hover table-condensed">
-                            {% for course in courses %}
+                            {% for course, seasons in courses %}
                             <tr class="course {% if course.is_empty %} useless {% endif %}">
                             <a href="{{ course.get_absolute_url }}" class="course-table">
                             
@@ -54,7 +54,10 @@
                                     </td>
                                     <td class="course_title">
                                     <a href="{{ course.get_absolute_url }}">
-                                        | {{ course.title }}
+                                        {{ course.title }}
+                                        {% for season in seasons %}
+                                            <span class="season-tag icon-{{ season}}">{{ season }}</span>
+                                        {% endfor %}
                                     </a>
                                     </td>
 

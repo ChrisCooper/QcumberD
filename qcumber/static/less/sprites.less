@@ -15,7 +15,7 @@
 // <i class="icon-inbox icon-white"></i>
 
 [class^="icon-"],
-[class*=" icon-"] {
+[class*=" icon-"], {
   display: inline-block;
   width: 14px;
   height: 14px;
@@ -191,3 +191,30 @@
 .icon-filter                  { background-position: -408px -144px; }
 .icon-briefcase               { background-position: -432px -144px; }
 .icon-fullscreen              { background-position: -456px -144px; }
+
+.season-tag {
+  display: inline-block;
+  height: 14px;
+  width: auto;
+  padding: 2px 6px 0 20px;
+  line-height: 14px;
+  font-size: 9px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: @tableBackgroundAccent;
+  background-color: @linkColor;
+  background-image: url("@{iconSeasonSpritePath}");
+  .border-radius(4px);
+  opacity: 0.5;
+}
+.season-tag:first-child {
+  margin-left: 1em;
+}
+a:hover > .season-tag {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.icon-Fall { background-position: 0 1px; }
+.icon-Winter { background-position: 1px -24px; }
+.icon-Summer { background-position: 0 -49px; }
