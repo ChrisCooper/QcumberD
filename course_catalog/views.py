@@ -2,13 +2,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from collections import defaultdict
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.db import models
-from course_catalog.models import Course, Subject, Term, Section
-import model_controls
 from django.views.decorators.cache import cache_page
 from django.template import RequestContext
+from course_catalog.models import Course, Subject, Term, Section
+import model_controls
 
 
 @cache_page(60 * 30)
@@ -28,34 +29,36 @@ def index(request):
 
 @cache_page(60 * 30)
 def course_detail(request, subject_abbr=None, course_number=None):
-    c = get_object_or_404(Course,
+    course = get_object_or_404(Course,
         subject__abbreviation__iexact=subject_abbr, number=course_number)
-    terms = [s.term for s in c.sections.distinct('term')]
-    terms.sort(key=lambda t: t.order)
 
-    sections = []
-    for t in terms:
-        secs = c.sections.filter(term=t).order_by('type__order')
-        secs = sorted(secs, key=lambda s: s.type.order)
-        sections.append((t, secs))
+    sections = defaultdict(list)
+    for section in course.sections.all().order_by('type__order'):
+        sections[section.term].append(section)
+
+    # Convert to a list of tuples for the template
+    sections = sections.items()
+    sections.sort(key=lambda t: t[0].order)
 
     return render(request, 'course_catalog/pages/course_detail.html',
-        {'course': c, 'all_sections': sections},
+        {'course': course, 'all_sections': sections},
         context_instance=RequestContext(request))
 
 
 @cache_page(60 * 30)
 def subject_detail(request, subject_abbr):
-    s = get_object_or_404(Subject, abbreviation__iexact=subject_abbr)
+    subject = get_object_or_404(Subject, abbreviation__iexact=subject_abbr)
 
-    careers = [c.career for c in s.courses.distinct('career')]
+    careers = defaultdict(list)
+    for course in subject.courses.all().order_by('number'):
+        careers[course.career].append(course)
 
-    careers = sorted(careers, key=lambda c: c.order if c else 0)
-
-    c = [(career, s.courses.filter(career=career).order_by('number')) for career in careers]
+    # Convert to a list of tuples for the template
+    careers = careers.items()
+    careers.sort(key=lambda c: c[0].order)
 
     return render(request, 'course_catalog/pages/subject_detail.html',
-        {'subject': s, 'courses_by_career': c})
+        {'subject': subject, 'courses_by_career': careers})
 
 
 @cache_page(60 * 30)
