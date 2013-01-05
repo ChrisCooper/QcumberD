@@ -1,3 +1,5 @@
+{% load compress %}
+
 <!DOCTYPE html>
 <!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,8 +15,12 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
-
+    {% compress css %}
+      <link type="text/less" rel="stylesheet" href="{{ STATIC_URL }}less/bootstrap.less"  charset="utf-8">
+    {% endcompress %}
+    {% if debug %}
+        <script src="{{ STATIC_URL }}js/less.min.js"></script>
+    {% endif %}
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -22,10 +28,7 @@
     <![endif]-->
 
     <!-- Le favicon -->
-    <link rel="shortcut icon" href="/static/img/favicon.png">
-
-    <!-- For LESS support -->
-    <script src="/static/js/less.min.js" type="text/javascript"></script>
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png">
 
     <script type="text/javascript">
 
@@ -79,10 +82,11 @@
     <!-- Javascript -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.js"></script>
 
-    <script src="/static/js/bootstrap.js"></script>
-
-    <script src="/static/js/plugins.js"></script>
-    <script src="/static/js/main.js"></script>
+    {% compress js %}
+      <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js" charset="utf-8"></script>
+      <script type="text/javascript" src="{{ STATIC_URL }}js/plugins.js" charset="utf-8"></script>
+      <script type="text/javascript" src="{{ STATIC_URL }}js/main.js" charset="utf-8"></script>
+    {% endcompress %}
 
     <script type="text/javascript">
         var uvOptions = {};

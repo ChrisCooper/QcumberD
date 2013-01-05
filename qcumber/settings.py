@@ -12,6 +12,10 @@ try:
 except ImportError as e:
     raise ImportError(MISSING_MODULE_MESSAGE)
 
+# Fix BeautifulSoup 3 vs. 4 naming incompatibilities
+import sys, bs4
+sys.modules['BeautifulSoup'] = bs4
+
 #support 1.5-style urls
 import django.template
 django.template.add_to_builtins('django.templatetags.future')
@@ -52,7 +56,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = 'unixy_project_path("static_collected/")'
+STATIC_ROOT = unixy_project_path("static_collected/")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -73,6 +77,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -131,6 +136,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'south',
     #'debug_toolbar',
+    'compressor',
 
     'course_catalog',
     'solus_scraper',
@@ -165,3 +171,13 @@ LOGGING = {
         },
     }
 }
+
+# Django-compressor
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+     'compressor.filters.cssmin.CSSMinFilter',
+]

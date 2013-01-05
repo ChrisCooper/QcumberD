@@ -16,13 +16,21 @@ Setting up on mac OSX should be quite similar. It will be verified soon.
 Prerequisites
 -------------
 
- * Python (`sudo apt-get install python`)
- * Git (`sudo apt-get install git`)
+ * Python 2.7
+ * Git
    There may be some extra setup steps I'm forgetting.
    GitHub has great documentation.
- * Pip (`sudo apt-get install python-pip`)
- * virtualenv (`sudo pip install virtualenv`)
+ * Pip
+ * virtualenv
  * A GitHub account (https://github.com/)
+
+The following command should install all the required packages on Ubuntu 12.10:
+```bash
+sudo apt-get install git python python-pip virtualenv
+```
+I (Phil) could not get Qcumber to run under Python 3 after spending a whole couple seconds of trying. I have not tested on any version of Python other than 2.7.
+
+The [django project installation documentation](https://docs.djangoproject.com/en/1.4/intro/install/) would be a good starting point for other operating systems.
 
 
 Style Notes
@@ -31,8 +39,10 @@ Style Notes
 Anything in [square brackets] should be replaced with a value specific to you.
 
 For example, if your username is, say, `uniphil`, then a command like
-`mkdir [username]` would be written literally as `mkdir uniphil`.
+`mkdir [username]` should be written literally as `mkdir uniphil`.
 
+Steps to Get Set Up
+-------------------
 
 1. Fork the Repository
 ----------------------
@@ -91,8 +101,13 @@ Make sure your virtualenv is activated!
    Create the administrative account and follow the prompts.
  * Migrate the `south` databases: `python manage.py migrate`.
 
+7. Install LESS compiler
+------------
+* Install Node.js (including the Node Package Manager, `npm`) [Using a package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) or from [nodejs.org](http://nodejs.org/)
+* Install the LESS compiler via the Node Package Manger: `sudo npm install -g less`
+* You can now compile LESS files like this: `lessc styles.less > styles.css`, but django-compressor automatically compiles the LESS files in this project.
 
-7. Run Time!
+8. Run Time!
 ------------
 
  * `python manage.py runserver`
@@ -102,9 +117,11 @@ And hopefully it just works!
 
 The database will be empty, so no courses will be present on your setup.
 
+Extra Notes
+-----------
 
-8. Scrape Course Data
----------------------
+How to Scrape Course Data
+-------------------------
 
  * Download Selenium Server from [http://seleniumhq.org/download/](http://seleniumhq.org/download/)
  * Run the server in another terminal by calling `java -jar [filename].jar`
@@ -116,3 +133,4 @@ The database will be empty, so no courses will be present on your setup.
  * Go to [http://localhost:8000/solus_scraper/](http://localhost:8000/solus_scraper/)
  * Click the name of the job you just created. A browser will open and start navigating the site. As it scrapes, the data will become available to the application. You can watch the subjects being added at [http://localhost:8000](http://localhost:8000)!
  * Scraping usually takes anywhere from 8 to 10 hours, so be patient! (We can also probably send you a copy of our sqlite database if you want to get started faster.)
+
