@@ -10,6 +10,7 @@ import model_controls
 from django.views.decorators.cache import cache_page
 from django.template import RequestContext
 
+
 @cache_page(60 * 30)
 def index(request):
     subject_list = Subject.objects.all().order_by('abbreviation')
@@ -24,9 +25,11 @@ def index(request):
         {'subject_buckets':buckets,
          'min_height': 50 + 29 * max([len(x[1]) for x in buckets])})
 
+
 @cache_page(60 * 30)
 def course_detail(request, subject_abbr=None, course_number=None):
-    c = get_object_or_404(Course, subject__abbreviation__iexact=subject_abbr, number=course_number)
+    c = get_object_or_404(Course,
+        subject__abbreviation__iexact=subject_abbr, number=course_number)
     terms = [s.term for s in c.sections.distinct('term')]
     terms.sort(key=lambda t: t.order)
 
@@ -36,8 +39,10 @@ def course_detail(request, subject_abbr=None, course_number=None):
         secs = sorted(secs, key=lambda s: s.type.order)
         sections.append((t, secs))
 
-    return render(request, 'course_catalog/pages/course_detail.html', {'course': c,
-                                                                          'all_sections': sections}, context_instance=RequestContext(request))
+    return render(request, 'course_catalog/pages/course_detail.html',
+        {'course': c, 'all_sections': sections},
+        context_instance=RequestContext(request))
+
 
 @cache_page(60 * 30)
 def subject_detail(request, subject_abbr):
@@ -49,8 +54,9 @@ def subject_detail(request, subject_abbr):
 
     c = [(career, s.courses.filter(career=career).order_by('number')) for career in careers]
 
-    return render(request, 'course_catalog/pages/subject_detail.html', {'subject': s,
-                                                                     'courses_by_career': c})
+    return render(request, 'course_catalog/pages/subject_detail.html',
+        {'subject': s, 'courses_by_career': c})
+
 
 @cache_page(60 * 30)
 def search(request):
@@ -60,7 +66,7 @@ def search(request):
     if isinstance(results, models.Model):
         return HttpResponseRedirect(results.get_absolute_url())
 
-    #Otherwise, it's a list of results
+    # Otherwise, it's a list of results
     for item in results:
         if isinstance(item, Course):
             item.template_name = "course_catalog/components/course_search_result.html"
@@ -69,12 +75,13 @@ def search(request):
         elif isinstance(item, Section):
             item.template_name = "course_catalog/components/section_search_result.html"
 
-    return render(request, 'course_catalog/pages/search_results.html', {'results': results,
-                                                                    'query': query})
+    return render(request, 'course_catalog/pages/search_results.html',
+        {'results': results, 'query': query})
 
 
+# TODO: All these requests should be fixed up, since they just return simple
+# responses.
 
-#TODO: All these requests should be fixed up, since they just return simple responses.
 @cache_page(60 * 30)
 def about(request):
     return render(request, 'course_catalog/text/about.html')
@@ -92,8 +99,7 @@ def faqs(request):
     return render(request, 'course_catalog/text/faqs.html', {})
 
 
-
-#Application support
+# Application support
 
 @cache_page(60 * 60 * 24 *100)
 def facebook_channel(request):
@@ -108,7 +114,7 @@ def robots(request):
     return render(request, 'course_catalog/text/robots.txt', {})
 
 
-
 #For testing random things
+
 def experiments(request):
     return render(request, 'course_catalog/experiments.html', {})
