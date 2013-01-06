@@ -51,8 +51,13 @@ class Course(ModelOnProbation):
     career = models.ForeignKey("Career", related_name='courses', null=True)
     grading_basis = models.ForeignKey("GradingBasis", related_name='courses', null=True)
 
+    @property
     def is_empty(self):
         return self.sections.count() == 0
+
+    @property
+    def seasons_offered(self):
+        return set([s.term.season for s in self.sections.all()])
 
     def concise_unicode(self):
         return u"%s %s" % (self.subject.abbreviation, self.number)
