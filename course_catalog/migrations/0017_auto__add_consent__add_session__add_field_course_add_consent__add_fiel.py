@@ -8,6 +8,14 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding model 'Consent'
+        db.create_table('course_catalog_consent', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('last_encountered', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+        ))
+        db.send_create_signal('course_catalog', ['Consent'])
+
         # Adding model 'Session'
         db.create_table('course_catalog_session', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -16,8 +24,15 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('course_catalog', ['Session'])
 
-        # Removing M2M table for field typically_offered on 'Course'
-        db.delete_table('course_catalog_course_typically_offered')
+        # Adding field 'Course.add_consent'
+        db.add_column('course_catalog_course', 'add_consent',
+                      self.gf('django.db.models.fields.related.ForeignKey')(related_name='courses_add', null=True, to=orm['course_catalog.Consent']),
+                      keep_default=False)
+
+        # Adding field 'Course.drop_consent'
+        db.add_column('course_catalog_course', 'drop_consent',
+                      self.gf('django.db.models.fields.related.ForeignKey')(related_name='courses_drop', null=True, to=orm['course_catalog.Consent']),
+                      keep_default=False)
 
         # Adding field 'Section.class_curr'
         db.add_column('course_catalog_section', 'class_curr',
@@ -46,16 +61,17 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
+        # Deleting model 'Consent'
+        db.delete_table('course_catalog_consent')
+
         # Deleting model 'Session'
         db.delete_table('course_catalog_session')
 
-        # Adding M2M table for field typically_offered on 'Course'
-        db.create_table('course_catalog_course_typically_offered', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('course', models.ForeignKey(orm['course_catalog.course'], null=False)),
-            ('season', models.ForeignKey(orm['course_catalog.season'], null=False))
-        ))
-        db.create_unique('course_catalog_course_typically_offered', ['course_id', 'season_id'])
+        # Deleting field 'Course.add_consent'
+        db.delete_column('course_catalog_course', 'add_consent_id')
+
+        # Deleting field 'Course.drop_consent'
+        db.delete_column('course_catalog_course', 'drop_consent_id')
 
         # Deleting field 'Section.class_curr'
         db.delete_column('course_catalog_section', 'class_curr')
@@ -81,10 +97,18 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'order': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         },
+        'course_catalog.consent': {
+            'Meta': {'object_name': 'Consent'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+        },
         'course_catalog.course': {
             'Meta': {'object_name': 'Course'},
+            'add_consent': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'courses_add'", 'null': 'True', 'to': "orm['course_catalog.Consent']"}),
             'career': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'courses'", 'null': 'True', 'to': "orm['course_catalog.Career']"}),
             'description': ('django.db.models.fields.TextField', [], {}),
+            'drop_consent': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'courses_drop'", 'null': 'True', 'to': "orm['course_catalog.Consent']"}),
             'enrollment_reqs': ('django.db.models.fields.TextField', [], {'default': "''"}),
             'grading_basis': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'courses'", 'null': 'True', 'to': "orm['course_catalog.GradingBasis']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

@@ -152,19 +152,6 @@ class SectionType(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class Instructor(ModelOnProbation):
-    name = models.CharField(max_length=100)
-
-    def __unicode__(self):
-        return self.name
-
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(name=kwargs['name'])
-        except ObjectDoesNotExist:
-            return None
-
 class Timeslot(ModelOnProbation):
     """
     A slice of time during a particular weekday
@@ -252,11 +239,11 @@ class Career(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class GradingBasis(ModelOnProbation):
-    """
-    E.g. "Graded"
-    """
-    name = models.CharField(max_length=50)
+class StringModel(ModelOnProbation):
+    '''Serves as a base class for models which only contain one string called "name"'''
+
+    class Meta:
+        abstract = True
 
     def __unicode__(self):
         return self.name
@@ -268,37 +255,19 @@ class GradingBasis(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class Session(ModelOnProbation):
-    """
-    E.g. "Regular Academic Section"
-    """
+class Instructor(StringModel):
+    name = models.CharField(max_length=100)
+
+class GradingBasis(StringModel):
+    'E.g. "Graded"'
     name = models.CharField(max_length=50)
 
-    def __unicode__(self):
-        return self.name
-
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(name=kwargs['name'])
-        except ObjectDoesNotExist:
-            return None
-
-class Consent(ModelOnProbation):
-    """
-    E.g. "Department Consent Required"
-    """
+class Session(StringModel):
     name = models.CharField(max_length=50)
 
-    def __unicode__(self):
-        return self.name
-
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(name=kwargs['name'])
-        except ObjectDoesNotExist:
-            return None
+class Consent(StringModel):
+    'E.g. "Department Consent Required"'
+    name = models.CharField(max_length=50)
 
 
 def existing_or_new(model, **kwargs):
@@ -309,6 +278,13 @@ def existing_or_new(model, **kwargs):
         existing = model(**kwargs)
         existing.save()
     return existing
+
+
+
+
+
+
+
 
 
 

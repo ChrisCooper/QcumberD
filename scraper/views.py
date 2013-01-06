@@ -31,7 +31,6 @@ def new_job(request, config_name):
         return HttpResponse("Finished scrape pass (time taken: " + str(datetime.datetime.now() - t) + ")")
     except Exception:
         print ("Error during scraping (time taken: " + str(datetime.datetime.now() - t) + ")")
-        #return HttpResponse("Something went wrong while scraping")
         raise
 
 def constants(request):

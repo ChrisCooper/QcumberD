@@ -2,8 +2,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import course_catalog.models as cc
+from course_catalog.models import existing_or_new as e_or_n
+
 from solus_session import SolusSession
 from solus_data import *
+
 
 
 class SolusScraper(object):
@@ -36,35 +40,7 @@ class SolusScraper(object):
             s.select_alphanum(letter)
 
             # Scrapes all the subjects
-            self._subject_scrape(s)
-
-
-    def scrape_section(section):
-        """
-        Scrapes an individual section.
-        Uses deep scraping so enrollment information is updated.
-        """
-        s = SolusSession(self.user, self.password)
-
-        #Get information
-        term = section.term
-        course = section.course
-        subject = course.subject
-        
-        s.select_alphanum(subject.abbreviation[:1])
-        s.dropdown_subject(subject.abbreviation, subject.title)
-        s.select_course(course.number)
-        s.show_sections()
-        s.switch_terms(term.year, term.season)
-        s.show_all_sections()
-        s.view_section(section.solus_id)
-
-        self._section_scrape(s, subject, course, term, section)
-
-        s.return_from_course()
-
-        s.close_session()
-   
+            self._subject_scrape(s)   
      
     def _subject_scrape(self, s):
         """
@@ -76,9 +52,7 @@ class SolusScraper(object):
                             [self.config.subject_start_idx:self.config.subject_end_idx]:
             
             # Store the subject information
-            subject = store_subject({
-                            'title' : subject_title,
-                            'abbreviation' : subject_abbr})
+            subject = e_or_n(cc.Subject, title=subject_title, abbreviation=subject_abbr)
             
             print ("----Parsing subject: " + str(subject))
             
@@ -113,8 +87,7 @@ class SolusScraper(object):
             self._terms_scrape(s, subject, course)
 
             # Back to the subject/course list
-            s.return_from_course()
-                    
+            s.return_from_course()      
 
     def _terms_scrape(self, s, subject, course):
         """
@@ -133,18 +106,42 @@ class SolusScraper(object):
             s.switch_terms(term_data[0], term_data[1])
 
             # Save the season information
-            season = store_season({"name": term_data[1]})
+            season = e_or_n(cc.Season, name=term_data[1])
             
             # Save the term information
-            term = store_term({
-                    'year' : term_data[0],
-                    'season' : season})
+            term = e_or_n(cc.Term, year=term_data[0], season=season)
            
             # Scrape section data
             if self.config.deep:
                 self._sections_deep_scrape(s, subject, course, term)
             else:
                 self._sections_shallow_scrape(s, subject, course, term)
+
+    def scrape_section(section):
+        """
+        Scrapes an individual section.
+        Uses deep scraping so enrollment information is updated.
+        """
+        s = SolusSession(self.user, self.password)
+
+        #Get information
+        term = section.term
+        course = section.course
+        subject = course.subject
+        
+        s.select_alphanum(subject.abbreviation[:1])
+        s.dropdown_subject(subject.abbreviation, subject.title)
+        s.select_course(course.number)
+        s.show_sections()
+        s.switch_terms(term.year, term.season)
+        s.show_all_sections()
+        s.view_section(section.solus_id)
+
+        self._section_scrape(s, subject, course, term, section)
+
+        s.return_from_course()
+
+        s.close_session()
 
 
     def _section_scrape(self, s, subject, course, term, section):
@@ -181,13 +178,13 @@ class SolusScraper(object):
         for class_num, section_data in s.parser().all_sections().items():
 
             # Save the section information
-            section_type = store_section_type({"abbreviation": section_data[1]})
-            section = store_section({
-                        'index_in_course' : section_data[0],
-                        'solus_id' : class_num,
-                        'type' : section_type,
-                        'course' : course,
-                        'term' : term})
+            section_type = e_or_n(cc.SectionType, abbreviation=section_data[1])
+            section = e_or_n(cc.Section,
+                        index_in_course=section_data[0],
+                        solus_id=class_num,
+                        type=section_type,
+                        course=course,
+                        term=term)
 
             self._section_scrape(s, subject, course, term, section)
 
@@ -208,14 +205,14 @@ class SolusScraper(object):
         for class_num, section_data in s.parser().course_section_attrs().items():
 
             # Save the section information
-            section_type = store_section_type({"abbreviation": section_data['type']})
+            section_type = e_or_n(cc.SectionType, abbreviation=section_data['type'])
 
-            section = store_section({
-                        'index_in_course' : section_data['index'],
-                        'solus_id' : class_num,
-                        'type' : section_type,
-                        'course' : course,
-                        'term' : term})
+            section = e_or_n(cc.Section,
+                        index_in_course=section_data['index'],
+                        solus_id=class_num,
+                        type=section_type,
+                        course=course,
+                        term=term)
 
             # Store the section data
             store_section_components(section, section_data['classes'])
