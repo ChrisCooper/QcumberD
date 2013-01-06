@@ -195,6 +195,33 @@ ul {
             text-align: right;
         }
     }
+    
+    .season-tag {
+      display: inline-block;
+      height: 14px;
+      width: auto;
+      padding: 2px 6px 0 20px;
+      line-height: 14px;
+      font-size: 9px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: @tableBackgroundAccent;
+      background-color: @linkColor;
+      background-image: url("@{iconSeasonSpritePath}");
+      .border-radius(4px);
+      opacity: 0.5;
+    }
+    .season-tag:first-child {
+      margin-left: 1em;
+    }
+    a:hover > .season-tag {
+      opacity: 1;
+      text-decoration: none;
+    }
+
+    .icon-Fall { background-position: 2px 1px; }
+    .icon-Winter { background-position: 2px -23px; }
+    .icon-Summer { background-position: 1px -47px; }
 }
 
 .course {
