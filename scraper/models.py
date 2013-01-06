@@ -5,47 +5,6 @@
 from django.db import models
 
 
-class ScrapeJob(models.Model):
-    """
-    A model that describes a running scrape job on a particular computer.
-    """
-    time_started = models.DateTimeField()
-    time_stopped = models.DateTimeField()
-    should_abort = models.BooleanField()
-    courses_scraped = models.IntegerField()
-
-    computer = models.ForeignKey('Computer')
-    status = models.ForeignKey('JobStatus')
-    config = models.ForeignKey('JobConfig')
-
-    def __unicode__(self):
-        return u'%s on %s: %s, started %s' % (self.config.name, self.computer.name, self.status.name, self.time_started.strftime("%I:%M:%S%p on %A, %B %d, %Y"))
-
-
-class JobStatus(models.Model):
-    REQUESTED = 'requested'
-    STARTED = 'started'
-    COMPLETED = 'completed'
-    CANCELLED = 'cancelled'
-    ERROR = 'error'
-    JOB_STATUS_CHOICES = (
-        (REQUESTED, 'requested'),
-        (STARTED, 'started'),
-        (COMPLETED, 'completed'),
-        (CANCELLED, 'cancelled'),
-        (ERROR, 'error'),
-    )
-    name = models.CharField(max_length=20, choices=JOB_STATUS_CHOICES, default=REQUESTED)
-
-    def __unicode__(self):
-        return self.name
-
-class Computer(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __unicode__(self):
-        return self.name
-
 class JobConfig(models.Model):
     """
     This class stores a scraping run's configuration, e.g. which subject letters to go through, how long the timeout should be, etc.
