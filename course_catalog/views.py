@@ -51,7 +51,9 @@ def subject_detail(request, subject_abbr):
 
     careers = defaultdict(list)
     for course in subject.courses.all().order_by('number'):
-        careers[course.career].append(course)
+        sections = course.sections.all().order_by('type__order')
+        seasons = set([s.term.season.name for s in sections]) # distinct
+        careers[course.career].append((course, seasons))
 
     # Convert to a list of tuples for the template
     careers = careers.items()
