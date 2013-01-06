@@ -195,7 +195,22 @@ ul {
             text-align: right;
         }
     }
+
     
+    a:hover > .season-tag {
+      opacity: 1;
+      text-decoration: none;
+    }
+    a.ununderlineable:hover {
+        text-decoration: none;
+        .underlineable {
+            text-decoration: underline;
+        }
+    }
+    .underlineable {
+        margin-right: 9px;
+    }
+
     .season-tag {
       display: inline-block;
       height: 14px;
@@ -211,14 +226,6 @@ ul {
       .border-radius(4px);
       opacity: 0.5;
     }
-    .season-tag:first-child {
-      margin-left: 1em;
-    }
-    a:hover > .season-tag {
-      opacity: 1;
-      text-decoration: none;
-    }
-
     .icon-Fall { background-position: 2px 1px; }
     .icon-Winter { background-position: 2px -23px; }
     .icon-Summer { background-position: 1px -47px; }

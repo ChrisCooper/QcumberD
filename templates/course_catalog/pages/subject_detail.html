@@ -53,8 +53,8 @@
                                         {{ subject.abbreviation }} {{ course.number }}
                                     </td>
                                     <td class="course_title">
-                                    <a href="{{ course.get_absolute_url }}">
-                                        {{ course.title }}
+                                    <a href="{{ course.get_absolute_url }}" class="ununderlineable">
+                                        <span class="underlineable">{{ course.title }}</span>
                                         {% for season in seasons %}
                                             <span class="season-tag icon-{{ season}}">{{ season }}</span>
                                         {% endfor %}
