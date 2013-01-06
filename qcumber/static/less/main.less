@@ -212,23 +212,40 @@ ul {
     }
 
     .season-tag {
-      display: inline-block;
-      height: 14px;
-      width: auto;
-      padding: 2px 6px 0 20px;
-      line-height: 14px;
-      font-size: 9px;
-      font-weight: bold;
-      text-transform: uppercase;
-      color: @tableBackgroundAccent;
-      background-color: @linkColor;
-      background-image: url("@{iconSeasonSpritePath}");
-      .border-radius(4px);
-      opacity: 0.5;
+        display: inline-block;
+        height: 14px;
+        width: auto;
+        padding: 2px 6px 0 20px;
+        line-height: 14px;
+        font-size: 9px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.6);
+        background-color: rgba(127, 127, 127, 0.333);
+        background-image: url("@{iconSeasonSpritePath}");
+        .border-radius(4px);
+        opacity: 0.8;
     }
-    .icon-Fall { background-position: 2px 1px; }
-    .icon-Winter { background-position: 2px -23px; }
-    .icon-Summer { background-position: 1px -47px; }
+    @tagTextDarken: 10%;
+    @tagBackgroundLighten: 33%;
+    .icon-Fall {
+        @tagColor: spin(@linkColor, -88);
+        color: darken(@tagColor, @tagTextDarken);
+        background-color: lighten(@tagColor, @tagBackgroundLighten);
+        background-position: 2px 1px;
+    }
+    .icon-Winter {
+        @tagColor: spin(@linkColor, 36);
+        color: darken(@tagColor, @tagTextDarken);
+        background-color: lighten(@tagColor, @tagBackgroundLighten);
+        background-position: 2px -23px; 
+    }
+    .icon-Summer {
+        @tagColor: spin(@linkColor, -58);
+        color: darken(@tagColor, @tagTextDarken);
+        background-color: lighten(@tagColor, @tagBackgroundLighten);
+        background-position: 1px -47px; 
+    }
 }
 
 .course {
