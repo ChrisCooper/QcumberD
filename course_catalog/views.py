@@ -55,7 +55,8 @@ def subject_detail(request, subject_abbr):
 
     for career in careers:
         c = subject.courses.filter(career=career).order_by('number')
-        courses_by_career.append((career, c))
+        if c.count() != 0:
+            courses_by_career.append((career, c))
 
     return render(request, 'course_catalog/pages/subject_detail.html',
         {'subject': subject, 'courses_by_career': courses_by_career})
