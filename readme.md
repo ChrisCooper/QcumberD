@@ -29,11 +29,17 @@ This project has been tested with Python version 2.7. You can try other 2.x vers
 * Install GCC by running `apt-get install gcc`
 * Install extra libraries needed for compiling modules: `apt-get install libxml2-dev libslt1-dev`
 
+I (Phil) could not get Qcumber to run under Python 3 after spending a whole couple seconds of trying. I have not tested on any version of Python other than 2.7.
+
+The [django project installation documentation](https://docs.djangoproject.com/en/1.4/intro/install/) would be a good starting point for other operating systems.
+
+
 ### Git and a Github account ###
 
 * Go to [https://github.com/](https://github.com/) and follow the instructions to register an account.
 * Run `apt-get install git` to install Git.
 * Follow the guide at [https://help.github.com/articles/set-up-git](https://help.github.com/articles/set-up-git) to set up Git.
+
 
 ### Pip and a Virtual Environment ###
 
@@ -106,7 +112,6 @@ Make sure your virtualenv is activated!
 * `python manage.py syncdb`
 * Create the administrative account and follow the prompts.
 * Migrate the `south` databases: `python manage.py migrate`.
-
 
 8. Run Time!
 ------------
