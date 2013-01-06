@@ -36,11 +36,10 @@ class SolusSession(object):
 
         response = self.session.post(self.login_url, data=payload)
 
-        if len(response.text) < 200:
+        if len(response.text) < 200 or "Invalid Password!" in response.text:
             raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
 
         # Go to the course catalog after logging in
-        #self.session.post(self.course_catalog_url)
         self._catalog_post("")
 
         return response
