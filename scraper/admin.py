@@ -3,9 +3,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.contrib import admin
-from solus_scraper.models import *
+from scraper.models import *
 
-admin.site.register(ScrapeJob)
-admin.site.register(JobStatus)
-admin.site.register(Computer)
 admin.site.register(JobConfig)

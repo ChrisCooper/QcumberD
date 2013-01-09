@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.db import models
 from django.views.decorators.cache import cache_page
 from django.template import RequestContext
-from course_catalog.models import Course, Subject, Term, Section
+from course_catalog.models import Course, Subject, Term, Section, Career
 import model_controls
 
 
@@ -49,18 +49,17 @@ def course_detail(request, subject_abbr=None, course_number=None):
 def subject_detail(request, subject_abbr):
     subject = get_object_or_404(Subject, abbreviation__iexact=subject_abbr)
 
-    careers = defaultdict(list)
-    for course in subject.courses.all().order_by('number'):
-        sections = course.sections.all().order_by('type__order')
-        seasons = set([s.term.season.name for s in sections]) # distinct
-        careers[course.career].append((course, seasons))
+    # Since there are very few careers, we can just get them all and filter later
+    courses_by_career = []
+    careers = Career.objects.all().order_by('order')
 
-    # Convert to a list of tuples for the template
-    careers = careers.items()
-    careers.sort(key=lambda c: c[0].order)
+    for career in careers:
+        c = subject.courses.filter(career=career).order_by('number')
+        if c.count() != 0:
+            courses_by_career.append((career, c))
 
     return render(request, 'course_catalog/pages/subject_detail.html',
-        {'subject': subject, 'courses_by_career': careers})
+        {'subject': subject, 'courses_by_career': courses_by_career})
 
 
 @cache_page(60 * 30)
