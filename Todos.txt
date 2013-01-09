@@ -11,6 +11,7 @@ plain feedback form on contact page
 feature tour: http://tommoor.github.com/crumble/
 course link - report an inaccuracy
 big "Apply filters while navigating" checkbox at top of filter panel.
+queen's class finder
 
 DITCH FRIGGING SEARCH!!
 Just use like at the very most. see how it does, and use the user feedback to decide if it's worth it.

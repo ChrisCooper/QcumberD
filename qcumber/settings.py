@@ -12,6 +12,10 @@ try:
 except ImportError as e:
     raise ImportError(MISSING_MODULE_MESSAGE)
 
+# Fix BeautifulSoup 3 vs. 4 naming incompatibilities
+import sys, bs4
+sys.modules['BeautifulSoup'] = bs4
+
 #support 1.5-style urls
 import django.template
 django.template.add_to_builtins('django.templatetags.future')
@@ -145,7 +149,7 @@ INSTALLED_APPS = (
 
 
     'course_catalog',
-    'solus_scraper',
+    'scraper',
     'enrollment',
     'accounts',
 )

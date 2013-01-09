@@ -15,8 +15,8 @@ urlpatterns = patterns('',
 
     url(r'^accounts/', include('accounts.urls')),
 
-    # Uncomment the next line to enable the SOLUS screen scraper
-    url(r'^solus_scraper/', include('solus_scraper.urls')),
+    # Uncomment the next line to enable the SOLUS scraper
+    url(r'^scraper/', include('scraper.urls')),
 
     # Uncomment the next line to enable checking of enrollment
     url(r'^enrollment/', include('enrollment.urls')),

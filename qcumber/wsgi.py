@@ -14,15 +14,23 @@ framework.
 
 """
 import os
-from virtualenv_activate import ACTIVATE_PATH
+
+has_virtualenv = False
+
+try:
+	from virtualenv_activate import ACTIVATE_PATH
+	has_virtualenv = True
+except ImportError as e:
+	pass
 
 #Activate the virtual environment
-try:
-    execfile(ACTIVATE_PATH, dict(__file__=ACTIVATE_PATH))
-except StandardError as e:
-    raise EnvironmentError ('You might have forgotten to create a virtualenv '\
-    	'in "venv", or you might have forgotten to install the dependencies '\
-    	'into it: ' + str(e))
+if has_virtualenv:
+	try:
+	    execfile(ACTIVATE_PATH, dict(__file__=ACTIVATE_PATH))
+	except StandardError as e:
+	    raise EnvironmentError ('You might have forgotten to create a virtualenv '\
+	    	'in "venv", or you might have forgotten to install the dependencies '\
+	    	'into it: ' + str(e))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qcumber.settings")
 

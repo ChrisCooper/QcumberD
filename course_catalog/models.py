@@ -50,9 +50,16 @@ class Course(ModelOnProbation):
     subject = models.ForeignKey(Subject, related_name='courses')
     career = models.ForeignKey("Career", related_name='courses', null=True)
     grading_basis = models.ForeignKey("GradingBasis", related_name='courses', null=True)
+    add_consent = models.ForeignKey("Consent", related_name='courses_add', null=True)
+    drop_consent = models.ForeignKey("Consent", related_name='courses_drop', null=True)
 
+    @property
     def is_empty(self):
         return self.sections.count() == 0
+
+    @property
+    def seasons_offered(self):
+        return set([s.term.season for s in self.sections.all()])
 
     def concise_unicode(self):
         return u"%s %s" % (self.subject.abbreviation, self.number)
@@ -78,10 +85,19 @@ class Section(ModelOnProbation):
     solus_id = models.CharField(max_length=16)
     index_in_course = models.CharField(max_length=8)
 
+    # From a deep scrape
+    class_curr = models.IntegerField(default=-1)
+    class_max = models.IntegerField(default=-1)
+    wait_curr = models.IntegerField(default=-1)
+    wait_max = models.IntegerField(default=-1)
+    
     #Relationships
     course = models.ForeignKey("Course", related_name='sections')
     type = models.ForeignKey("SectionType")
     term = models.ForeignKey("Term")
+    
+    # From a deep scrape
+    session = models.ForeignKey("Session", related_name='sections', null=True)
 
     def __unicode__(self):
         return u"%s %s (%s) for %s (%s)" % (self.term.__unicode__(), self.type.name, self.index_in_course, self.course.concise_unicode(), self.solus_id)
@@ -138,19 +154,6 @@ class SectionType(ModelOnProbation):
     def existing(cls, **kwargs):
         try:
             return cls.objects.get(abbreviation=kwargs['abbreviation'])
-        except ObjectDoesNotExist:
-            return None
-
-class Instructor(ModelOnProbation):
-    name = models.CharField(max_length=100)
-
-    def __unicode__(self):
-        return self.name
-
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(name=kwargs['name'])
         except ObjectDoesNotExist:
             return None
 
@@ -241,11 +244,11 @@ class Career(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class GradingBasis(ModelOnProbation):
-    """
-    E.g. "Graded"
-    """
-    name = models.CharField(max_length=50)
+class StringModel(ModelOnProbation):
+    '''Serves as a base class for models which only contain one string called "name"'''
+
+    class Meta:
+        abstract = True
 
     def __unicode__(self):
         return self.name
@@ -256,6 +259,33 @@ class GradingBasis(ModelOnProbation):
             return cls.objects.get(name=kwargs['name'])
         except ObjectDoesNotExist:
             return None
+
+class Instructor(StringModel):
+    name = models.CharField(max_length=100)
+
+class GradingBasis(StringModel):
+    'E.g. "Graded"'
+    name = models.CharField(max_length=50)
+
+class Session(StringModel):
+    name = models.CharField(max_length=50)
+
+class Consent(StringModel):
+    'E.g. "Department Consent Required"'
+    name = models.CharField(max_length=50)
+
+
+def existing_or_new(model, **kwargs):
+
+    #get the object with the specified attributes
+    existing = model.existing(**kwargs)
+    if existing is None:
+        existing = model(**kwargs)
+        existing.save()
+    return existing
+
+
+
 
 
 
