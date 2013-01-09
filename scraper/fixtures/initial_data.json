@@ -1,0 +1,44 @@
+[
+  {
+    "pk": 1, 
+    "model": "scraper.jobconfig", 
+    "fields": {
+      "subject_start_idx": 0, 
+      "subject_end_idx": -1, 
+      "course_start_idx": 0, 
+      "description": "Scrapes all subjects, courses, and sections, as well as enrollment data. (This is a fixture, so it cannot be modified)", 
+      "deep": true, 
+      "course_end_idx": -1, 
+      "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 
+      "name": "Full deep scrape"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "scraper.jobconfig", 
+    "fields": {
+      "subject_start_idx": 0, 
+      "subject_end_idx": -1, 
+      "course_start_idx": 0, 
+      "description": "Scrapes all subjects, courses, and sections, but does not collect enrollment data. This scrape is much faster than the deep scrape. (This is a fixture, so it cannot be modified)", 
+      "deep": false, 
+      "course_end_idx": -1, 
+      "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 
+      "name": "Full shallow scrape"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "scraper.jobconfig", 
+    "fields": {
+      "subject_start_idx": 0, 
+      "subject_end_idx": -1, 
+      "course_start_idx": 0, 
+      "description": "Scrapes as little as possible in order to collect all subjects. (This is a fixture, so it cannot be modified)", 
+      "deep": false, 
+      "course_end_idx": 1, 
+      "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 
+      "name": "Subject scrape"
+    }
+  }
+]
