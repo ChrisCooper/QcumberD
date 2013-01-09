@@ -89,23 +89,22 @@ def store_section_components(section, class_data):
             }
             timeslot = e_or_n(cc.Timeslot, **timeslot_attrs)
 
-            # Make component
-            section_comp_attrs = {
-                'section' : section,
-                'start_date': clss['start_date'],
-                'end_date': clss['end_date'],
-                'room': clss['room'],
-                'timeslot': timeslot
-            }
-            component = e_or_n(cc.SectionComponent, **section_comp_attrs)
+        # Make component
+        section_comp_attrs = {
+            'section' : section,
+            'start_date': clss['start_date'],
+            'end_date': clss['end_date'],
+            'room': clss['room'],
+            'timeslot': timeslot,
+        }
+        component = e_or_n(cc.SectionComponent, **section_comp_attrs)
 
-            # Add instructors
-            for i in clss['instructors']:
-                instructor = e_or_n(cc.Instructor, name=i)
-                component.instructors.add(instructor)
+        # Add instructors
+        for i in clss['instructors']:
+            instructor = e_or_n(cc.Instructor, name=i)
+            component.instructors.add(instructor)
 
-            component.save()
-
+        component.save()
 
 def link_requisites(s):
     """Makes prereqs link to their respective courses"""
