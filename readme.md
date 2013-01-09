@@ -4,133 +4,140 @@ Qcumber
 Qcumber is a course catalog created for Queen's University. The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2012 Chris Cooper.
 
 
-How to get it up and running
+Setup Guide
+===========
 
-This guide has been verified for Ubuntu 12.10.
-
-Setting up on mac OSX should be quite similar. It will be verified soon.
-
-<del>Microsoft Windows offers great pains.</del>It works on Windows, but installation there is left as an exercise for the reader.
+* This guide has been verified for Ubuntu 11.10 and 12.10.
+* Setting up on mac OSX should be quite similar. It will be verified soon.
+* <del>Microsoft Windows offers great pains.</del>It works on Windows, but installation there is left as an exercise for the reader.
 
 
-Prerequisites
--------------
+1. Installing the Prerequisites
+-------------------------------
 
- * Python 2.7
- * Git
-   There may be some extra setup steps I'm forgetting.
-   GitHub has great documentation.
- * Pip
- * virtualenv
- * A GitHub account (https://github.com/)
+* Make sure you have all the needed permissions to install.
+* For most users, this means prepending each install command with `sudo`
+* Ex: `sudo apt-get install ...`
 
-The following command should install all the required packages on Ubuntu 12.10:
-```bash
-sudo apt-get install git python python-pip virtualenv
-```
+### Python and Libraries ###
+
+This project has been tested with Python version 2.7. You can try other 2.x versions, but no promises.
+
+* Run `apt-get install python2.7 python2.7-dev`
+* This installs Python 2.7 as well as the headers needed for compiling python modules.
+* Some modules that will be installed need to be compiled with GCC.
+* Install GCC by running `apt-get install gcc`
+* Install extra libraries needed for compiling modules: `apt-get install libxml2-dev libslt1-dev`
+
 I (Phil) could not get Qcumber to run under Python 3 after spending a whole couple seconds of trying. I have not tested on any version of Python other than 2.7.
 
 The [django project installation documentation](https://docs.djangoproject.com/en/1.4/intro/install/) would be a good starting point for other operating systems.
 
 
-Style Notes
------------
+### Git and a Github account ###
 
-Anything in [square brackets] should be replaced with a value specific to you.
+* Go to [https://github.com/](https://github.com/) and follow the instructions to register an account.
+* Run `apt-get install git` to install Git.
+* Follow the guide at [https://help.github.com/articles/set-up-git](https://help.github.com/articles/set-up-git) to set up Git.
 
-For example, if your username is, say, `uniphil`, then a command like
-`mkdir [username]` should be written literally as `mkdir uniphil`.
 
-Steps to Get Set Up
--------------------
+### Pip and a Virtual Environment ###
 
-1. Fork the Repository
+Pip is used to install extra Python modules that aren't included by default.
+A virtual environment is an isolated Python environment. It allows for per-program environment configuration.
+
+* Install Pip by running `apt-get install python-pip`
+* Once Pip is installed, run `apt-get install python-pip`
+* The virtual environment will be configured later.
+
+### LESS Compiler ###
+
+LESS is an extension of CSS that adds support for dynamic behaviours like variables and functions.
+
+* Install Node.js (including the Node Package Manager, `npm`) [using a package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) or from [http://nodejs.org/](http://nodejs.org/)
+* Install the LESS compiler via the Node Package Manger: `npm install -g less`
+* You can now compile LESS files like this: `lessc styles.less > styles.css` (this is automatically done in this project).
+
+
+2. Fork the Repository
 ----------------------
 
- * Click the "Fork" button at the top-right on this page:
-   https://github.com/ChrisCooper/QcumberD
- * You now have your own copy of QcumberD that you can safely mess around with!
+* Click the "Fork" button at the top-right of [https://github.com/ChrisCooper/QcumberD](https://github.com/ChrisCooper/QcumberD)
+* You now have your own copy of QcumberD that you can safely mess around with!
 
 
-2. Clone it to your computer
+3. Clone it to your computer
 ----------------------------
 
- * Copy the `git@github.com:[yourusername]/QcumberD.git` link on the page.
- * Open up a terminal window.
- * Navigate to the folder in which you want to store your local copy of
-   Qcumber. For me that would mean `cd ~/Code`
- * Clone the repository. `git clone [repository]`, where `[repository]` is the
-   `git@github...` url you copied earlier. 
-
-   You should now have a `QcumberD` folder.
+* Copy the `git@github.com:[yourusername]/QcumberD.git` link on the page.
+* Open up a terminal window.
+* Navigate to the folder in which you want to store your local copy of Qcumber. For me that would mean `cd ~/Code`
+* Clone the repository. `git clone [repository]`, where `[repository]` is the `git@github...` url you copied earlier. 
+* You should now have a `QcumberD` folder.
 
 
-3. Create and Activate a Virtual Environment
+4. Create and Activate a Virtual Environment
 --------------------------------------------
 
- * Navigate into the `QcumberD` folder: `cd QcumberD`.
- * Create a new virtual environment: `virtualenv --distribute venv`
- * Activate the new environment: `source venv/bin/activate`
+* Navigate into the `QcumberD` folder: `cd QcumberD`.
+* Create a new virtual environment: `virtualenv --distribute venv`
+* Activate the new environment: `source venv/bin/activate`
 
-   Note: you will need to activate the virtual environment every time you want
-   to run the local project. You can use the same preceeding `source` command.
+* NOTE: you will need to activate the virtual environment every time you want to run the local project. You can use the same preceeding `source` command.
 
- * To deactivate the virtual environment: `deactivate`
+* To deactivate the virtual environment: `deactivate`
 
-4. Install Required Packages
+
+5. Install Required Packages
 ----------------------------
 
 Make sure you have activated your virtual environment (see above) before running this command!
 
- * `pip install -r requirements.txt`
+* `pip install -r requirements.txt`
+* If this command reports an error, check the log to see if you have all the dependencies required.
 
 
-5. Configure Your Setup
+6. Configure Your Setup
 -----------------------
 
- * Clone the sample config file `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
- * Change the configuration options in qcumber/config/private_config.py to suit your environment. If you are not performing caching, scraping, or sending emails, nothing needs to change in this file for development.
+* Clone the sample config file `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
+* Change the configuration options in qcumber/config/private_config.py to suit your environment. If you are not performing caching, scraping, or sending emails, nothing needs to change in this file for development.
 
 
-6. Initialize the Database
+7. Initialize the Database
 --------------------------
 
 Make sure your virtualenv is activated!
 
- * `python manage.py syncdb`
-   Create the administrative account and follow the prompts.
- * Migrate the `south` databases: `python manage.py migrate`.
-
-7. Install LESS compiler
-------------
-* Install Node.js (including the Node Package Manager, `npm`) [Using a package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) or from [nodejs.org](http://nodejs.org/)
-* Install the LESS compiler via the Node Package Manger: `sudo npm install -g less`
-* You can now compile LESS files like this: `lessc styles.less > styles.css`, but django-compressor automatically compiles the LESS files in this project.
+* `python manage.py syncdb`
+* Create the administrative account and follow the prompts.
+* Migrate the `south` databases: `python manage.py migrate`.
 
 8. Run Time!
 ------------
 
- * `python manage.py runserver`
- * Open a browser and go to [http://localhost:8000](http://localhost:8000)
-
-And hopefully it just works!
-
-The database will be empty, so no courses will be present on your setup.
+* `python manage.py runserver`
+* Open a browser and go to [http://localhost:8000](http://localhost:8000)
+* If everything works, you'll see the Qcumber home page!
+* The database will be empty, so no courses will be present on your setup.
 
 Extra Notes
------------
+===========
 
 How to Scrape Course Data
 -------------------------
 
- * Download Selenium Server from [http://seleniumhq.org/download/](http://seleniumhq.org/download/)
- * Run the server in another terminal by calling `java -jar [filename].jar`
- * Go to [http://localhost:8000/admin/solus_scraper/jobconfig/](http://localhost:8000/admin/solus_scraper/jobconfig/)
- * Click "Add job config".
- * Add a name ("Scrape everything") and a description.
- * Set the subject letters to "ABCDEFGHIJKLMNOPQRSTUVWXYZ" (all of them).
- * Click "Save".
- * Go to [http://localhost:8000/solus_scraper/](http://localhost:8000/solus_scraper/)
- * Click the name of the job you just created. A browser will open and start navigating the site. As it scrapes, the data will become available to the application. You can watch the subjects being added at [http://localhost:8000](http://localhost:8000)!
- * Scraping usually takes anywhere from 8 to 10 hours, so be patient! (We can also probably send you a copy of our sqlite database if you want to get started faster.)
-
+* Go to [http://localhost:8000/admin/scraper/jobconfig/](http://localhost:8000/admin/scraper/jobconfig/)
+* Click "Add job config".
+* Add a name and a description of your scrape job.
+* There are a few options on this page (the default shallow-scrapes everything):
+  * Deep: If this is set, the scraper will do a deep scrape (takes longer, pulls additional information)
+  * Letters: The subject letters to scrape
+  * Start/end indecies: Controls which subjects/courses to scrape. Implemented with Python list slices.
+* For a very minimal scrape (only 1 course per letter), set both the start indecies to 0 and both the end indecies to 0.
+* Click "Save".
+* Go to [http://localhost:8000/scraper/](http://localhost:8000/scraper/)
+* Click the name of the job you just created. The page status will show as "Waiting for localhost..." while the scraper works.
+* As it scrapes, the progress of the scraper will be visible in your terminal and the retrieved data will become available to the application.
+* You can watch the subjects being added at [http://localhost:8000](http://localhost:8000)!
+ Scraping time will vary based on the configuration, but a full shallow scrape takes anywhere from 5 to 7 hours, so be patient!
