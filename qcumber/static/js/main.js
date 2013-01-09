@@ -10,6 +10,27 @@ $('.dropdown-header').click(function () {
 });
 
 
+// Seasonal Course Filters
+$('[href="#toggle-tag"]').click(function() {
+    $(this).toggleClass('show');
+    var season = $(this).attr('data-tag');
+    if ($(this).hasClass('show')) {
+        $('.course_list .season-' + season).parents('tr').show();
+    } else {
+        $('.course_list .course').hide();
+        $('#season-filter .season-tag').filter(function() {
+            return $(this).hasClass('show');
+        }).map(function() {
+            var season = $(this).attr('data-tag');
+            $('.course_list .season-' + season).parents('tr').show();
+        });
+    }
+    return false;
+});
+// Hide unseasoned rows by default
+$('[data-tag="None"]').click();
+
+
 // Enrollment checking button
 var subj_abbr = $('.subject-data').data('abbr');
 var course_number = $('.course-data').data('number');
