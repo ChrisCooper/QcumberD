@@ -45,7 +45,7 @@
                         </header>
                 
                         <div class="table-slide-smoother">
-                            <table class="table  table-hover table-condensed">
+                            <table class="table table-hover table-condensed">
                                 {% for course in courses %}
                                 <tr class="course {% if course.is_empty %} useless {% endif %}">
                                         <td class="abbreviation">
@@ -55,7 +55,13 @@
                                         <a href="{{ course.get_absolute_url }}" class="ununderlineable">
                                             <span class="underlineable">{{ course.title }}</span>
                                             {% for season in course.seasons_offered %}
-                                                <span class="season-tag icon-{{ season.name }}">{{ season.name }}</span>
+                                                <span class="season-tag season-{{ season }}">
+                                                    <span class="icon">
+                                                        {{ season }}
+                                                    </span>
+                                                </span>
+                                            {% empty %}
+                                                <span class="season-None"></span>
                                             {% endfor %}
                                         </a>
                                         </td>
