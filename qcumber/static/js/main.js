@@ -27,8 +27,8 @@ $('[href="#toggle-tag"]').click(function() {
     }
     return false;
 });
-// Hide unseasoned rows by default
-$('[data-tag="None"]').click();
+// Uncomment to hide unseasoned rows by default
+// $('[data-tag="None"]').click();
 
 
 // Enrollment checking button
