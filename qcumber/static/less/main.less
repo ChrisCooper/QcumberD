@@ -30,9 +30,9 @@ $light_grey_text: #CCC;*/
 @section_component_background: #EAEAEA;
 
 // Hues must be 0-360
-@fall_hue: 0;
-@winter_hue: 120;
-@summer_hue: 240;
+@fall_hue: 23;
+@winter_hue: 250;
+@summer_hue: hue(@linkColor) - 5;
 
 // tag style
 .tag(@hue, @saturation_scale:0.5, @value_scale:0.9) {
@@ -242,15 +242,15 @@ ul {
             background-repeat: no-repeat;
     }
     .season-Fall {
-        .tag(23, 0.5, 0.89);
+        .tag(@fall_hue, 0.5, 0.89);
         .icon { background-position: 1px 0px; }
     }
     .season-Winter {
-        .tag(250, 0.4, 0.93);
+        .tag(@winter_hue, 0.4, 0.93);
         .icon { background-position: 1px -24px; }
     }
     .season-Summer {
-        .tag(hue(@linkColor) - 5, 0.3, 0.86);
+        .tag(@summer_hue, 0.3, 0.86);
         .icon { background-position: 1px -48px; }
     }
 }
