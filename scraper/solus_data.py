@@ -78,6 +78,7 @@ def store_section_components(section, class_data):
     for clss in class_data:
 
         # Only bother if the timeslot is scheduled
+        timeslot = None
         if clss['day_abbr'] and clss['start_time'] and clss['end_time']:
 
             # Make timeslot
