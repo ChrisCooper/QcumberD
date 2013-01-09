@@ -23,12 +23,34 @@ $light_grey_text: #CCC;*/
 
 @info_background: #e7f3e7;
 
-//Table backgrounds
+// Table backgrounds
 @section_background: #E0E0E0;
 @section_background_hover: #E9E9E9;
 @section_component_background_hover: #D0D0D0;
 @section_component_background: #EAEAEA;
 
+// Hues must be 0-360
+@fall_hue: 23;
+@winter_hue: 250;
+@summer_hue: hue(@linkColor) - 5;
+
+// tag style
+.tag(@hue, @saturation_scale:0.5, @value_scale:0.9) {
+    display: inline-block;
+    line-height: 15px;
+    font-size: 9px;
+    vertical-align: middle;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: hsl(@hue, @saturation_scale * 100%, @value_scale * 110%);
+    border: 1px solid hsl(@hue, @saturation_scale * 100%, @value_scale * 62%);
+    .border-radius(4px);
+    .opacity(60);
+    #gradient.vertical(
+        hsl(@hue, @saturation_scale * 100%, @value_scale * 60%),
+        hsl(@hue, @saturation_scale * 95%, @value_scale * 67%)
+    );
+}
 
 //Header
 .navbar {
@@ -198,7 +220,7 @@ ul {
 
     
     a:hover > .season-tag {
-      opacity: 1;
+      .opacity(100);
       text-decoration: none;
     }
     a.ununderlineable:hover {
@@ -211,40 +233,25 @@ ul {
         margin-right: 9px;
     }
 
-    .season-tag {
-        display: inline-block;
-        height: 14px;
-        width: auto;
-        padding: 2px 6px 0 20px;
-        line-height: 14px;
-        font-size: 9px;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: rgba(0, 0, 0, 0.6);
-        background-color: rgba(127, 127, 127, 0.333);
-        background-image: url("@{iconSeasonSpritePath}");
-        .border-radius(4px);
-        opacity: 0.8;
+    .season-tag .icon {
+            display: block;
+            height: 14px;
+            padding: 0 6px 0 20px;
+            width: auto;
+            background-image: url("@{iconSeasonSpritePath}");
+            background-repeat: no-repeat;
     }
-    @tagTextDarken: 10%;
-    @tagBackgroundLighten: 33%;
-    .icon-Fall {
-        @tagColor: spin(@linkColor, -88);
-        color: darken(@tagColor, @tagTextDarken);
-        background-color: lighten(@tagColor, @tagBackgroundLighten);
-        background-position: 2px 1px;
+    .season-Fall {
+        .tag(@fall_hue, 0.5, 0.89);
+        .icon { background-position: 1px 0px; }
     }
-    .icon-Winter {
-        @tagColor: spin(@linkColor, 36);
-        color: darken(@tagColor, @tagTextDarken);
-        background-color: lighten(@tagColor, @tagBackgroundLighten);
-        background-position: 2px -23px; 
+    .season-Winter {
+        .tag(@winter_hue, 0.4, 0.93);
+        .icon { background-position: 1px -24px; }
     }
-    .icon-Summer {
-        @tagColor: spin(@linkColor, -58);
-        color: darken(@tagColor, @tagTextDarken);
-        background-color: lighten(@tagColor, @tagBackgroundLighten);
-        background-position: 1px -47px; 
+    .season-Summer {
+        .tag(@summer_hue, 0.3, 0.86);
+        .icon { background-position: 1px -48px; }
     }
 }
 
