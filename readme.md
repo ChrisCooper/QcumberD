@@ -127,17 +127,13 @@ Extra Notes
 How to Scrape Course Data
 -------------------------
 
-* Go to [http://localhost:8000/admin/scraper/jobconfig/](http://localhost:8000/admin/scraper/jobconfig/)
-* Click "Add job config".
-* Add a name and a description of your scrape job.
-* There are a few options on this page (the default shallow-scrapes everything):
-  * Deep: If this is set, the scraper will do a deep scrape (takes longer, pulls additional information)
-  * Letters: The subject letters to scrape
-  * Start/end indecies: Controls which subjects/courses to scrape. Implemented with Python list slices.
-* For a very minimal scrape (only 1 course per letter), set both the start indecies to 0 and both the end indecies to 0.
-* Click "Save".
 * Go to [http://localhost:8000/scraper/](http://localhost:8000/scraper/)
-* Click the name of the job you just created. The page status will show as "Waiting for localhost..." while the scraper works.
+* Click the name of one of the jobs. The page status will show as "Waiting for localhost..." while the scraper works.
 * As it scrapes, the progress of the scraper will be visible in your terminal and the retrieved data will become available to the application.
 * You can watch the subjects being added at [http://localhost:8000](http://localhost:8000)!
  Scraping time will vary based on the configuration, but a full shallow scrape takes anywhere from 5 to 7 hours, so be patient!
+
+You can also create your own configurations for debugging, by visiting the admin page and creating a `Job Config`, under `scraper`. Job configs have the following options:
+  * Deep: If this is set, the scraper will do a deep scrape (takes longer, but collects enrollment information)
+  * Letters: The subject letters to scrape
+  * Start/end indecies: Controls which subjects/courses to scrape. Implemented with Python list slices.
