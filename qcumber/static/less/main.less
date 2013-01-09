@@ -29,28 +29,6 @@ $light_grey_text: #CCC;*/
 @section_component_background_hover: #D0D0D0;
 @section_component_background: #EAEAEA;
 
-// Hues must be 0-360
-@fall_hue: 23;
-@winter_hue: 250;
-@summer_hue: hue(@linkColor) - 5;
-
-// tag style
-.tag(@hue, @saturation_scale:0.5, @value_scale:0.9) {
-    display: inline-block;
-    line-height: 15px;
-    font-size: 9px;
-    vertical-align: middle;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: hsl(@hue, @saturation_scale * 100%, @value_scale * 110%);
-    border: 1px solid hsl(@hue, @saturation_scale * 100%, @value_scale * 62%);
-    .border-radius(4px);
-    .opacity(60);
-    #gradient.vertical(
-        hsl(@hue, @saturation_scale * 100%, @value_scale * 60%),
-        hsl(@hue, @saturation_scale * 95%, @value_scale * 67%)
-    );
-}
 
 //Header
 .navbar {
@@ -219,6 +197,9 @@ ul {
     }
 
     
+    .season-tag {
+        .opacity(60);
+    }
     a:hover > .season-tag {
       .opacity(100);
       text-decoration: none;
@@ -232,26 +213,17 @@ ul {
     .underlineable {
         margin-right: 9px;
     }
+}
 
-    .season-tag .icon {
-            display: block;
-            height: 14px;
-            padding: 0 6px 0 20px;
-            width: auto;
-            background-image: url("@{iconSeasonSpritePath}");
-            background-repeat: no-repeat;
-    }
-    .season-Fall {
-        .tag(@fall_hue, 0.5, 0.89);
-        .icon { background-position: 1px 0px; }
-    }
-    .season-Winter {
-        .tag(@winter_hue, 0.4, 0.93);
-        .icon { background-position: 1px -24px; }
-    }
-    .season-Summer {
-        .tag(@summer_hue, 0.3, 0.86);
-        .icon { background-position: 1px -48px; }
+.course-filter {
+    .season-tag {
+        .opacity(33);
+        &.show {
+            .opacity(100);
+        }
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 

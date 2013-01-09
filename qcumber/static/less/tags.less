@@ -1,0 +1,52 @@
+
+// Hues must be 0-360
+@fall_hue: 23;
+@winter_hue: 250;
+@summer_hue: hue(@linkColor);
+
+.tag(@hue, @saturation_scale:0.5, @value_scale:0.9) {
+    display: inline-block;
+    line-height: 15px;
+    font-size: 9px;
+    vertical-align: middle;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: hsl(@hue, @saturation_scale * 100%, @value_scale * 110%);
+    border: 1px solid hsl(@hue, @saturation_scale * 100%, @value_scale * 62%);
+    .border-radius(4px);
+    #gradient.vertical(
+        hsl(@hue, @saturation_scale * 100%, @value_scale * 60%),
+        hsl(@hue, @saturation_scale * 95%, @value_scale * 67%)
+    );
+}
+
+.season-tag {
+    &.season-Fall {
+        .tag(@fall_hue, 0.5, 0.89);
+        .icon { background-position: 1px 0px; }
+    }
+    &.season-Winter {
+        .tag(@winter_hue, 0.4, 0.93);
+        .icon { background-position: 1px -24px; }
+    }
+    &.season-Summer {
+        .tag(@summer_hue, 0.3, 0.86);
+        .icon { background-position: 1px -48px; }
+    }
+    &.season-None {
+        .tag(0, 0, 0.89);
+        .icon { background: none; }
+    }
+    &.hide {
+        .opacity(33%);
+    }
+    .icon {
+        display: block;
+        height: 14px;
+        padding: 0 6px 0 20px;
+        width: auto;
+        background-image: url("@{iconSeasonSpritePath}");
+        background-repeat: no-repeat;
+    }
+}
+}

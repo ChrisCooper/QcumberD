@@ -45,7 +45,7 @@
                         </header>
                 
                         <div class="table-slide-smoother">
-                            <table class="table  table-hover table-condensed">
+                            <table class="table table-hover table-condensed">
                                 {% for course in courses %}
                                 <tr class="course {% if course.is_empty %} useless {% endif %}">
                                         <td class="abbreviation">
@@ -60,6 +60,8 @@
                                                         {{ season }}
                                                     </span>
                                                 </span>
+                                            {% empty %}
+                                                <span class="season-None"></span>
                                             {% endfor %}
                                         </a>
                                         </td>
