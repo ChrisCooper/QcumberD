@@ -139,7 +139,7 @@ INSTALLED_APPS = (
     'compressor',
 
     'course_catalog',
-    'solus_scraper',
+    'scraper',
     'enrollment',
 )
 
