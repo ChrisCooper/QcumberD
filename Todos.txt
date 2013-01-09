@@ -117,5 +117,5 @@ Academic Advisor (peer or otherwise)
 
 
 Ways SOLUS sucks:
--Shows different information on catalog versus search page (BIOL 111 shows in search, but NOT IN THE CATALOG...WTF)
+-Shows different information on catalog versus search page (BIOL 111 shows in search, but NOT IN THE CATALOG... And some show in catalog, but not in serach... WTF.)
 -7 clicks minimum to see any sections for a course, or 8 to see all of them
