@@ -13,6 +13,8 @@ from scraper.models import JobConfig
 from scraper.solus_data import update_constants
 from scraper.solus_scraper import SolusScraper
 
+from scraper.textbook_scraper import TextbookScraper
+
 
 def index(request):
     """Lists all the job configurations"""
@@ -38,3 +40,9 @@ def constants(request):
     update_constants()
 
     return HttpResponse('Constants updated')
+
+def textbooks(request):
+
+    t = TextbookScraper()
+
+    return HttpResponse(t.testing())
