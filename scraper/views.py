@@ -43,6 +43,7 @@ def constants(request):
 
 def textbooks(request):
 
-    t = TextbookScraper()
-
-    return HttpResponse(t.testing())
+    t = datetime.datetime.now()
+    ts = TextbookScraper()
+    ts.testing()
+    return HttpResponse("Finished textbook scrapiing (time taken: " + str(datetime.datetime.now() - t) + ")")
