@@ -16,6 +16,13 @@ class TextbookScraper(object):
         else:
             return 0
 
+    def price(self, s):
+        if s:
+            m = re.search(".*(\$\d+\.\d{2}).*", s)
+            return m.group(1) if m else None
+        else:
+            return None
+
 
     def testing(self):
 
@@ -53,42 +60,39 @@ class TextbookScraper(object):
                 title = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_BookTitle".format(i)}).string
                 
                 authors = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_BookAuthor".format(i)}).string
-                if not authors:
-                    authors = None
-                elif authors[:4] == " by ":
+                if authors and authors[:4] == " by ":
                     authors = authors[4:]
 
                 required = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_StatusLabel".format(i)}).string
-                if "REQUIRED" in required.upper():
+                if required and "REQUIRED" in required.upper():
                     required = True
                 else:
                     required = False
 
                 isbn13 = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_ISBN13Label".format(i)}).string
-                if "[N/A]" in isbn13:
+                if isbn13 and "[N/A]" in isbn13:
                     isbn13 = None
 
                 isbn10 = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_ISBN10Label".format(i)}).string
-                if "[N/A]" in isbn10:
+                if isbn10 and "[N/A]" in isbn10:
                     isbn10 = None
                 
-                #size can be 'Small', 'Medium', or 'Large'
-                imageURL = "http://www.campusbookstore.com/image.aspx?size=Medium&isbn=" + (isbn13 if isbn13 else isbn10)
-
-                newPrice = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_NewPriceLabel".format(i)}).string
-                if not re.search("^\$\d+\.\d{2}$", newPrice):
-                    newPrice = None
-
+                newPrice = self.price(temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_NewPriceLabel".format(i)}).string)
                 newNumAvailable = self.num_available(temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_NewAvailabilityLabel".format(i)}).string)
                 
-                usedPrice = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_UsedPriceLabel".format(i)}).string
-                if not re.search("^\$\d+\.\d{2}$", usedPrice):
-                    usedPrice = None
-                
+                usedPrice = self.price(temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_UsedPriceLabel".format(i)}).string)
                 usedNumAvailable = self.num_available(temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_UsedAvailabilityLabel".format(i)}).string)
 
                 classifieds = temp.find("a", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_ClassifiedsLabel".format(i)}).string
-                classifiedsURL = "http://www.campusbookstore.com/Textbooks/Usedbooks/Buy/?isbn=" + (isbn13 if isbn13 else isbn10)
+                
+                #size can be 'Small', 'Medium', or 'Large'
+                if isbn13 or isbn10:
+                    imageURL = "http://www.campusbookstore.com/image.aspx?size=Medium&isbn=" + (isbn13 if isbn13 else isbn10)
+                    classifiedsURL = "http://www.campusbookstore.com/Textbooks/Usedbooks/Buy/?isbn=" + (isbn13 if isbn13 else isbn10)
+                else:
+                    imageURL = None
+                    classifiedsURL = None
+
    
                 #print "--------------------------"
                 #print "------Title: " + str(title)
