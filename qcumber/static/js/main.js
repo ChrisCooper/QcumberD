@@ -2,6 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+$('html').removeClass('no-js').addClass('js');
  
 // Enable Dropdown boxes
 $('.dropdown-header').click(function () {
@@ -11,24 +12,21 @@ $('.dropdown-header').click(function () {
 
 
 // Seasonal Course Filters
-$('[href="#toggle-tag"]').click(function() {
-    $(this).toggleClass('show');
-    var season = $(this).attr('data-tag');
-    if ($(this).hasClass('show')) {
+
+$('.season-filter').click(function() {
+    var season = $(this).attr('name');
+    if ($(this).is(':checked')) {
         $('.course_list .season-' + season).parents('tr').show();
     } else {
         $('.course_list .course').hide();
-        $('#season-filter .season-tag').filter(function() {
-            return $(this).hasClass('show');
+        $('#season-filter .season-filter').filter(function() {
+            return $(this).is(':checked');
         }).map(function() {
-            var season = $(this).attr('data-tag');
+            var season = $(this).attr('name');
             $('.course_list .season-' + season).parents('tr').show();
         });
     }
-    return false;
 });
-// Uncomment to hide unseasoned rows by default
-// $('[data-tag="None"]').click();
 
 
 // Enrollment checking button
