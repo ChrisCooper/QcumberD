@@ -1,6 +1,6 @@
 <div class="course-filter">
-	<h2>Filter</h2>
 	{% if seasons %}
+		<h2>Filter</h2>
 		<form id="course-filter" name="course-filter" method="get" action=".">
 			<ul id="season-filter">
 				{% for season in seasons %}
@@ -31,7 +31,5 @@
 			</ul>
 			<input class="js-hidden" type="submit" value="Filter" />
 		</form>
-	{% else %}
-		<p>Nothing to filter :(</p>
 	{% endif %}
 </div>
