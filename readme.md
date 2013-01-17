@@ -47,7 +47,7 @@ Pip is used to install extra Python modules that aren't included by default.
 A virtual environment is an isolated Python environment. It allows for per-program environment configuration.
 
 * Install Pip by running `apt-get install python-pip`
-* Once Pip is installed, run `apt-get install python-pip`
+* Once Pip is installed, run `pip install virtualenv`
 * The virtual environment will be configured later.
 
 ### LESS Compiler ###
