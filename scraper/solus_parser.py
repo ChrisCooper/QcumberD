@@ -210,8 +210,6 @@ class SolusParser(object):
             #}
         }
 
-        import pdb; pdb.set_trace()
-
         # Go through all availible sections
         for class_num, section_data in self.all_sections().items():
 
