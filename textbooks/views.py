@@ -7,18 +7,15 @@ import datetime
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
-from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
-
-from scraper.models import JobConfig
-from scraper.solus_data import update_constants
-from scraper.solus_scraper import SolusScraper
+from textbooks.models import JobConfig
+from textbooks.textbook_scraper import TextbookScraper
 
 
 def index(request):
     """Lists all the job configurations"""
     job_configs = JobConfig.objects.all()
 
-    return render(request, 'scraper/index.html', {'job_configs' : job_configs})
+    return render(request, 'textbooks/index.html', {'job_configs' : job_configs})
 
 def new_job(request, config_name):
     """Starts a new scraping job"""
@@ -27,14 +24,8 @@ def new_job(request, config_name):
     t = datetime.datetime.now()
 
     try:
-        SolusScraper(config, SCRAPER_USERNAME, SCRAPER_PASSWORD).scrape_all()
+        TextbookScraper(config).scrape()
         return HttpResponse("Finished scrape pass (time taken: " + str(datetime.datetime.now() - t) + ")")
     except Exception:
         print ("Error during scraping (time taken: " + str(datetime.datetime.now() - t) + ")")
         raise
-
-def constants(request):
-
-    update_constants()
-
-    return HttpResponse('Constants updated')
