@@ -19,7 +19,7 @@ $('.season-filter').click(function() {
         $('.course_list .season-' + season).parents('tr').show();
     } else {
         $('.course_list .course').hide();
-        $('#season-filter .season-filter').filter(function() {
+        $('.season-filter').filter(function() {
             return $(this).is(':checked');
         }).map(function() {
             var season = $(this).attr('name');
