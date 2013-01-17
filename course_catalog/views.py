@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.db import models
 from django.views.decorators.cache import cache_page
 from django.template import RequestContext
-from course_catalog.models import Course, Subject, Term, Section, Career
+from course_catalog.models import Course, Subject, Term, Section, Career, Season
 import model_controls
 
 
@@ -49,7 +49,7 @@ def course_detail(request, subject_abbr=None, course_number=None):
 def subject_detail(request, subject_abbr):
     subject = get_object_or_404(Subject, abbreviation__iexact=subject_abbr)
 
-    # Since there are very few careers, we can just get them all and filter later
+    # Since there are very few careers, we just get them all and filter later
     courses_by_career = []
     careers = Career.objects.all().order_by('order')
 
@@ -58,8 +58,13 @@ def subject_detail(request, subject_abbr):
         if c.count() != 0:
             courses_by_career.append((career, c))
 
+    # Get seasons for the filter panel
+    seasons = Season.objects.all().order_by('order')
+    [setattr(s, 'checked', True) for s in seasons]
+
     return render(request, 'course_catalog/pages/subject_detail.html',
-        {'subject': subject, 'courses_by_career': courses_by_career})
+        {'subject': subject, 'courses_by_career': courses_by_career,
+        'seasons': seasons})
 
 
 @cache_page(60 * 30)
