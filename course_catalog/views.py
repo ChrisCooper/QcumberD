@@ -36,12 +36,14 @@ def course_detail(request, subject_abbr=None, course_number=None):
     for section in course.sections.all().order_by('type__order'):
         sections[section.term].append(section)
 
+    textbooks = course.textbooks.all()
+
     # Convert to a list of tuples for the template
     sections = sections.items()
     sections.sort(key=lambda t: t[0].order)
 
     return render(request, 'course_catalog/pages/course_detail.html',
-        {'course': course, 'all_sections': sections},
+        {'course': course, 'all_sections': sections, 'textbooks': textbooks},
         context_instance=RequestContext(request))
 
 

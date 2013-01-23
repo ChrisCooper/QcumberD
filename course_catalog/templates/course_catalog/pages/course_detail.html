@@ -37,11 +37,44 @@
         </h1>
 
         <div class="description">
-            {{ course.description|default:"No course description." }}
+            {{ course.description|default:"No course description on SOLUS." }}
         </div>
 
         <div class="prereqs">
-            {{ course.enrollment_reqs|default:"No enrollment requirements listed."|safe }}
+            {{ course.enrollment_reqs|default:"No enrollment requirements listed on SOLUS."|safe }}
+        </div>
+
+        <div class="textbooks">
+        {% if textbooks %}
+            <div>
+                <a href="#" class="dropdown-header clearfix">
+                    <h5>
+                        {{ textbooks|length }} textbook{% if textbooks|length > 1 %}s{% endif %} listed on the campus bookstore
+                    </h5>
+                </a>
+            </div>
+
+            <div class="section-component-list hide">
+                <table class="table table-condensed table-hover">
+                    <tr>
+                        <th>Title</th>
+                        <th>Authors</th>
+                        <th>Required</th>
+                        <th>Price</th>
+                    </tr>
+                    {% for textbook in textbooks %}
+                        <tr>
+                            <td> {{ textbook.title }}</td>
+                            <td> {{ textbook.authors }}</td>
+                            <td> {%if textbook.required %}Yes{% else %}No{% endif %}</td>
+                            <td> {{ textbook.new_price }}</td>
+                        </tr>
+                    {% endfor %}                                
+                </table>
+            </div>
+        {% else %}
+                No textbooks listed on the campus bookstore.
+        {% endif %}
         </div>
 
     </div>
@@ -59,13 +92,13 @@
                 {% for term, sections in all_sections %}
                     <li class="well well-small">
             
-                    <header>
+                    <div>
                     <a href="#" class="dropdown-header clearfix">
                         <h3>
                             {{ term }}
                         </h3>
                     </a>
-                    </header>
+                    </div>
             
                     <ul class="">
                     {% for section in sections %}
