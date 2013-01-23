@@ -7,6 +7,7 @@ import re
 from bs4 import BeautifulSoup
 from course_catalog.models import existing_or_new, Subject, Course
 from models import Textbook
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class TextbookScraper(object):
@@ -54,14 +55,15 @@ class TextbookScraper(object):
         for s, c, l in temp:
 
             # Check if there is a course to attach the book toexisting_or_new
-            subject = Subject.existing(abbreviation=s)
-            if not subject:
-                continue
-            course = Course.existing(subject=subject, number=c)
-            if not course:
+            subject = None
+            course = None
+            try:
+                subject = Subject.objects.get(abbreviation=s)
+                course = Course.objects.get(subject=subject, number=c)
+            except ObjectDoesNotExist:
                 continue
 
-            print ("--Parsing " + s + " " + c)
+            print ("--Parsing books from " + str(course))
             r = requests.get(l)
             b = BeautifulSoup(r.text)
 
@@ -72,63 +74,63 @@ class TextbookScraper(object):
                 if not book:
                     break
 
-                print ("----Parsing book")
-
                 temp = book.find("table").find("table").find_all("td")[1]
+
+                textbook_attrs = {"course": course}
 
                 # Title
                 title = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_BookTitle".format(i)}).string
-                
+                textbook_attrs["title"] = unicode(title)
+
                 # Authors
                 authors = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_BookAuthor".format(i)}).string
                 if authors and authors[:4] == " by ":
-                    authors = authors[4:]
+                    textbook_attrs["authors"] = authors[4:]
 
                 # Required
                 required = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_StatusLabel".format(i)}).string
                 if required and "REQUIRED" in required.upper():
-                    required = True
-                else:
-                    required = False
+                    textbook_attrs["required"] = True
 
                 # ISBN 13
                 isbn_13 = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_ISBN13Label".format(i)}).string
                 if isbn_13 and "[N/A]" in isbn_13:
-                    isbn_13 = None
+                    textbook_attrs["isbn_13"] = None
+                else:
+                    textbook_attrs["isbn_13"] = unicode(isbn_13)
 
                 # ISBN 10
                 isbn_10 = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_ISBN10Label".format(i)}).string
                 if isbn_10 and "[N/A]" in isbn_10:
-                    isbn_10 = None
+                    textbook_attrs["isbn_10"] = None
+                else:
+                    textbook_attrs["isbn_10"] = unicode(isbn_10)
                 
                 # New data
                 new_price = self.price(temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_NewPriceLabel".format(i)}).string)
                 new_available = self.num_available(temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_NewAvailabilityLabel".format(i)}).string)
+                if new_price:
+                    textbook_attrs["new_price"] = new_price
+                if new_available:
+                    textbook_attrs["new_available"] = new_available
                 
                 # Used data
                 used_price = self.price(temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_UsedPriceLabel".format(i)}).string)
                 used_available = self.num_available(temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_UsedAvailabilityLabel".format(i)}).string)
+                if used_price:
+                    textbook_attrs["used_price"] = used_price
+                if used_available:
+                    textbook_attrs["used_available"] = used_available
 
                 # Classifieds info
                 classified_info = temp.find("a", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_ClassifiedsLabel".format(i)}).string
+                if classified_info:
+                    textbook_attrs["classified_info"] = classified_info
 
                 # Add the textbook
-                if isbn_10 and isbn_13:
+                if textbook_attrs["isbn_10"] or textbook_attrs["isbn_13"]:
 
-                    textbook_attrs = {
-                        "title": title,
-                        "authors": authors,
-                        "required": required,
-                        "isbn_10": isbn_10,
-                        "isbn_13": isbn_13,
-                        "new_price": new_price,
-                        "new_available": new_available,
-                        "used_price": used_price,
-                        "used_available": used_available,
-                        "classified_info": classified_info,
-                        "course" : course,
-                    }
-
-                    # TODO: STACK OVERFLOW ERROR ON NEXT LINE
-                    #textbook = existing_or_new(Textbook, **textbook_attrs)
-                    #textbook.save()
+                    textbook = existing_or_new(Textbook, **textbook_attrs)
+                    textbook.save()
+                    print "----Parsed book:"
+                    print ("------" + str(textbook))

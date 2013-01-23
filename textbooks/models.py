@@ -25,10 +25,10 @@ class JobConfig(models.Model):
 class Textbook(ModelOnProbation):
     # Attributes
     title = models.CharField(max_length=256, default="")
-    authors = models.CharField(max_length=256, default="")
+    authors = models.CharField(max_length=256, default="", null=True)
     required = models.BooleanField(default=False)
-    isbn_10 = models.CharField(max_length=24, default="")
-    isbn_13 = models.CharField(max_length=24, default="")
+    isbn_10 = models.CharField(max_length=24, default=None, null=True)
+    isbn_13 = models.CharField(max_length=24, default=None, null=True)
 
     # Other info
     new_price = models.CharField(max_length=8, default="")
@@ -38,10 +38,10 @@ class Textbook(ModelOnProbation):
     classified_info = models.CharField(max_length=128, default="")
 
     # Relationships
-    course = models.ForeignKey("course_catalog.Course", related_name='course')
+    course = models.ForeignKey("course_catalog.Course", related_name='textbooks')
 
     def isbn(self):
-        return isbn_13 if isbn_13 else isbn_10
+        return self.isbn_13 if self.isbn_13 else self.isbn_10
     
     def __unicode__(self):
         return u"%s - %s (%s)" % (self.title, self.authors, self.isbn())
