@@ -1,7 +1,7 @@
 Qcumber
 =======
 
-Qcumber is a course catalog created for Queen's University. The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2012 Chris Cooper.
+Qcumber is a course catalog created for Queen's University. It lives at [Qcumber.ca](Qcumber.ca). The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2013 Chris Cooper.
 
 
 Setup Guide
@@ -47,7 +47,7 @@ Pip is used to install extra Python modules that aren't included by default.
 A virtual environment is an isolated Python environment. It allows for per-program environment configuration.
 
 * Install Pip by running `apt-get install python-pip`
-* Once Pip is installed, run `apt-get install python-pip`
+* Once Pip is installed, run `pip install virtualenv`
 * The virtual environment will be configured later.
 
 ### LESS Compiler ###

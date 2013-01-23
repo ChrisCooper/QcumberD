@@ -1,0 +1,35 @@
+<div class="course-filter">
+	{% if seasons %}
+		<h2>Filter</h2>
+		<form id="course-filter" name="course-filter" method="get" action=".">
+			<ul id="season-filter">
+				{% for season in seasons %}
+					<li>
+						<input name="{{ season }}"
+							class="season-filter js-hidden"
+							id="{{ season }}" type="checkbox"
+							{% if season.checked %}
+								checked="checked"
+							{% endif %} />
+						<label class="season-tag season-{{ season }} show"
+							for="{{ season }}">
+							<span class="icon">
+								{{ season }}
+							</span>
+						</a>
+					</li>
+				{% endfor %}
+				<li>
+					<input name="Unscheduled" id="Unscheduled"
+						class="season-filter" type="checkbox"
+						checked="checked" />
+					<label class="season-Unscheduled show"
+						for="Unscheduled">
+						Show Unscheduled
+					</a>
+				</li>
+			</ul>
+			<input class="js-hidden" type="submit" value="Filter" />
+		</form>
+	{% endif %}
+</div>

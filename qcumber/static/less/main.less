@@ -30,6 +30,11 @@ $light_grey_text: #CCC;*/
 @section_component_background: #EAEAEA;
 
 
+.js .js-hidden {
+    position: absolute;
+    left: -999999em;
+}
+
 //Header
 .navbar {
 	ul {
@@ -216,14 +221,33 @@ ul {
 }
 
 .course-filter {
-    .season-tag {
-        .opacity(33);
-        &.show {
+    .hidden-checkbox {
+        position: absolute;
+        left: -999em;
+    }
+
+    input[type="checkbox"] {
+        & + label {
+            .opacity(33);
+            &:hover {
+                cursor: pointer;
+                .opacity(52);
+            }
+        }
+        &:checked + label {
             .opacity(100);
+            &:hover {
+                .opacity(81);
+            }
         }
-        &:hover {
-            text-decoration: none;
-        }
+    }
+    .season-Unscheduled {
+        display: inline;
+        font-size: 9px;
+        text-transform: uppercase;
+    }
+    input#Unscheduled {
+        vertical-align: text-bottom;
     }
 }
 
