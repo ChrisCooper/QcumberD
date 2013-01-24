@@ -9,6 +9,14 @@
         <a href="{% url 'home' %}" class="brand">
             <img class="pull-left" src="/static/img/LogoSmallWhite.png">
         </a>
+
+        {% if debug %}
+            <ul class="nav">
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                <li><a href="{% url 'scraper.views.index' %}">Scraper</a></li>
+            </ul>
+        {% endif %}
+
         <ul class="nav pull-right">
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
