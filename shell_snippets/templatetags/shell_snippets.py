@@ -10,4 +10,7 @@ def admin_edit_url(object, action='change'):
 
 #@register.filter
 def shell_snippet_dropdown(object):
-    pass
+	'''Returns HTML for a dropdown.
+	The dropdown features shell commands for accessing the object passed in.
+	'''
+	return
