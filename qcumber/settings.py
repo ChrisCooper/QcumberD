@@ -138,9 +138,12 @@ INSTALLED_APPS = (
     #'debug_toolbar',
     'compressor',
 
+    'shell_snippets',
+
     'course_catalog',
     'scraper',
     'enrollment',
+
 )
 
 # A sample logging configuration. The only tangible logging
