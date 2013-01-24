@@ -1,0 +1,2 @@
+python manage.py synchdb
+python manage.py collectstatic

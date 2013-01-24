@@ -1,6 +1,8 @@
 <!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+{% load shell_snippets %}
+
 <header>
     <span>{{ section.type.name }}</span>
     <span class="secondary">({{ section.solus_id }})</span>
@@ -8,6 +10,10 @@
         {% comment %}  <span class="enrollment">
             <button class="btn btn-mini check-enrollment" type="button">Check Enrollment Numbers</button>
         </span>  {% endcomment %}
+
+        {% if debug %}
+                <span>(<a href="{{ section|admin_edit_url }}">View in Admin</a>)</span>
+        {% endif %}
 
 </header>
 
