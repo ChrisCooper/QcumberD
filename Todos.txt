@@ -67,6 +67,9 @@ Optional:
 -scrape exam schedule and email students
 -facebook integration
 
+-Consider adding a course wiki. This is quite outside of the normal purpose of Qcumber, but it does go along a bit with the idea i like of having Qcumber be the go-to source for information about courses. Even if that go-to attraction is just having a reliable link to the course website, I think it could be cool to have a place where people could add notes and useful tips or links. that sort of thing.
+
+
 for APIs: django-tastypie or django rest framework
 
 
