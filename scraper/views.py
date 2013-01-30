@@ -12,7 +12,6 @@ from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 from course_catalog.model_controls import clear_old_models
 
 from scraper.models import JobConfig
-from scraper.solus_data import update_constants
 from scraper.solus_scraper import SolusScraper
 
 
@@ -24,7 +23,7 @@ def index(request):
 
 def new_job(request, config_name):
     """Starts a new scraping job"""
-
+    
     config = get_object_or_404(JobConfig, name=config_name)
 
     start_time = datetime.datetime.now()
@@ -35,7 +34,8 @@ def new_job(request, config_name):
         print ("Error during scraping (time taken: " + str(datetime.datetime.now() - start_time) + ")")
         raise
 
+
     if config.delete_other_models:
-        clear_old_models(start_time):
+        clear_old_models(start_time)
 
     return HttpResponse("Finished scrape pass (time taken: " + str(datetime.datetime.now() - start_time) + ")")
