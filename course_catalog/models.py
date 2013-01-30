@@ -11,7 +11,7 @@ class ModelOnProbation(models.Model):
     An abstract model that includes a field representing the last time it was encountered during scraping.
     If this item is not encountered during a scraping pass, it should be deleted (since it no longer exists)
     """
-    last_encountered = models.DateTimeField(auto_now=True)
+    last_encountered = models.DateTimeField(auto_now_add=True)
     
     last_encountered_admin_field_entry = ('Scraping information', {'fields': ['last_encountered'], 'classes': ['collapse']})
 
