@@ -5,7 +5,6 @@
 import re, cgi
 import course_catalog.models as cc
 from course_catalog.models import existing_or_new as e_or_n
-from scraper.models import section_types, weekdays
 
 
 def store_course(subject, course_all_info):
