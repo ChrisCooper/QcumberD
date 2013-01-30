@@ -11,7 +11,7 @@ class ModelOnProbation(models.Model):
     An abstract model that includes a field representing the last time it was encountered during scraping.
     If this item is not encountered during a scraping pass, it should be deleted (since it no longer exists)
     """
-    last_encountered = models.DateTimeField(auto_now=True)
+    last_encountered = models.DateTimeField(auto_now_add=True)
     
     last_encountered_admin_field_entry = ('Scraping information', {'fields': ['last_encountered'], 'classes': ['collapse']})
 
@@ -142,7 +142,7 @@ class SectionComponent(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class SectionType(ModelOnProbation):
+class SectionType(models.Model):
     name = models.CharField(max_length=100)
     abbreviation = models.CharField(max_length=10)
     order = models.IntegerField(default=0)
@@ -180,6 +180,8 @@ class Timeslot(ModelOnProbation):
 class DayOfWeek(models.Model):
     name = models.CharField(max_length=20)
     abbreviation = models.CharField(max_length=3)
+    
+    order = models.IntegerField(default=0)
     
     def __unicode__(self):
         return self.name

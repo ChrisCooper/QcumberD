@@ -4,6 +4,7 @@
 
 {% extends "course_catalog/pages/filtered_page.html" %}
 
+{% load shell_snippets %}
 
 {% block page_title %}Qcumber | {{ subject.abbreviation }} - {{ subject.title }} {% endblock %}
 
@@ -21,11 +22,14 @@
         <a href="{{ subject.get_absolute_url }}">
             <span>{{ subject.abbreviation }}</span> - <span>{{ subject.title }}</span>
         </a>
+        {% if debug %}
+            <span>(<a href="{{ subject|admin_edit_url }}">View in Admin</a>)</span>
+        {% endif %}
         
     </h1>
 
     <h1 class="muted">
-        Courses
+        courses
     </h1>
 
     <div class="course_list">

@@ -1,7 +1,9 @@
 Qcumber
 =======
 
-Qcumber is a course catalog created for Queen's University. The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2012 Chris Cooper.
+Qcumber is a course catalog created for Queen's University. It lives at [Qcumber.ca](Qcumber.ca). Check out the [wiki](https://github.com/ChrisCooper/QcumberD/wiki) for extra information not in this readme.
+
+The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2013 Chris Cooper.
 
 
 Setup Guide
