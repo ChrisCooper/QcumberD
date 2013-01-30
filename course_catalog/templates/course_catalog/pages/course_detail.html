@@ -1,8 +1,9 @@
 <!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-
 {% extends "course_catalog/pages/filtered_page.html" %}
+
+{% load shell_snippets %}
 
 {% block page_title %} Qcumber | {{ course.subject.abbreviation }} {{ course.number }} - {{ course.title }} {% endblock %}
 
@@ -34,6 +35,12 @@
             <span>{{ course.number }}</span>
             -
             <span>{{ course.title }}</span>
+
+            {% if debug %}
+                <span>(<a href="{{ course|admin_edit_url }}">View in Admin</a>)</span>
+            {% endif %}
+
+
         </h1>
 
         <div class="description">

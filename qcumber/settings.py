@@ -138,6 +138,8 @@ INSTALLED_APPS = (
     #'debug_toolbar',
     'compressor',
 
+    'shell_snippets',
+
     'course_catalog',
     'scraper',
     'enrollment',
@@ -180,5 +182,5 @@ COMPRESS_PRECOMPILERS = (
 
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
-     'compressor.filters.cssmin.CSSMinFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
 ]
