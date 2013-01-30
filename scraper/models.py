@@ -17,6 +17,9 @@ class JobConfig(models.Model):
     # Deep scrape?
     deep = models.BooleanField(default=False)
 
+    # Wipe entities that were not encountered in this scrape?
+    delete_other_models = models.BooleanField(default=False)
+
     # Letters to scrape
     letters = models.CharField(max_length=40, default="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 
