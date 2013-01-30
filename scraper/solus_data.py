@@ -8,23 +8,6 @@ from course_catalog.models import existing_or_new as e_or_n
 from scraper.models import section_types, weekdays
 
 
-def update_constants():
-    """Updates the constant entries"""
-
-    print("Updating constant entries...")
-
-    for type_abbr in section_types:
-        type = e_or_n(cc.SectionType, abbreviation=type_abbr)
-        type.name = section_types[type_abbr]
-        type.save()
-
-    for day_abbr in weekdays:
-        day = e_or_n(cc.DayOfWeek, abbreviation=day_abbr)
-        day.name = weekdays[day_abbr]
-        day.save()
-
-    print ("Done!")
-
 def store_course(subject, course_all_info):
     """Stores a course object"""
             

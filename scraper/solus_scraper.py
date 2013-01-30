@@ -21,10 +21,8 @@ class SolusScraper(object):
 
     def scrape_all(self):
         """
-        Starts a full scrape of the SOLUS database.
+        Starts a full scrape of the SOLUS site, following the constuctor's configuration.
         """
-
-        update_constants()
 
         print ("Scrape job config:")
         for x in self.config._meta.fields:
