@@ -142,7 +142,7 @@ class SectionComponent(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class SectionType(ModelOnProbation):
+class SectionType(models.Model):
     name = models.CharField(max_length=100)
     abbreviation = models.CharField(max_length=10)
     order = models.IntegerField(default=0)
@@ -180,6 +180,8 @@ class Timeslot(ModelOnProbation):
 class DayOfWeek(models.Model):
     name = models.CharField(max_length=20)
     abbreviation = models.CharField(max_length=3)
+    
+    order = models.IntegerField(default=0)
     
     def __unicode__(self):
         return self.name
