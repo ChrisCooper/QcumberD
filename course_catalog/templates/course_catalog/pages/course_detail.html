@@ -55,6 +55,9 @@
             </div>
 
             <div class="section-component-list hide">
+
+                <a href="{{ textbooks.0.listing_url }}">Click here to view the listings, summary below</a>
+
                 <table class="table table-condensed table-hover">
                     <tr>
                         <th>Title</th>
@@ -64,10 +67,10 @@
                     </tr>
                     {% for textbook in textbooks %}
                         <tr>
-                            <td> {{ textbook.title }}</td>
-                            <td> {{ textbook.authors }}</td>
-                            <td> {%if textbook.required %}Yes{% else %}No{% endif %}</td>
-                            <td> {{ textbook.new_price }}</td>
+                            <td>{{ textbook.title }}</td>
+                            <td>{{ textbook.authors }}</td>
+                            <td>{%if textbook.required %}Yes{% else %}No{% endif %}</td>
+                            <td>{{ textbook.new_price }}</td>
                         </tr>
                     {% endfor %}                                
                 </table>

@@ -54,7 +54,7 @@ class TextbookScraper(object):
         print ("Parsing courses")
         for s, c, l in temp:
 
-            # Check if there is a course to attach the book toexisting_or_new
+            # Check if there is a course to attach the book to
             subject = None
             course = None
             try:
@@ -76,7 +76,7 @@ class TextbookScraper(object):
 
                 temp = book.find("table").find("table").find_all("td")[1]
 
-                textbook_attrs = {"course": course}
+                textbook_attrs = {"course": course, "listing_url": l}
 
                 # Title
                 title = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_BookTitle".format(i)}).string

@@ -37,6 +37,9 @@ class Textbook(ModelOnProbation):
     used_available = models.IntegerField(default=0)
     classified_info = models.CharField(max_length=128, default="")
 
+    #TODO: abstract into a relationship table
+    listing_url = models.CharField(max_length=256, default="");
+
     # Relationships
     course = models.ForeignKey("course_catalog.Course", related_name='textbooks')
 
