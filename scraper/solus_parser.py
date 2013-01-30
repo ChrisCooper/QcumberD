@@ -6,6 +6,9 @@ import re
 from datetime import datetime
 from bs4 import BeautifulSoup
 
+import course_catalog.models as cc
+from course_catalog.models import existing_or_new as e_or_n
+
 class SolusParser(object):
     """Parses Solus's crappy HTML"""
 
@@ -49,23 +52,26 @@ class SolusParser(object):
 
     def all_subjects(self):
         """
-        Returns a dict of subject data in the current letter
-        Format = [(abbreviation, title)]
+        Returns the list of subjects from the current letter
         """
-        ret = []
+        subjects = []
         for tags in self.soup.find_all("a", title="Show/Hide Courses for Subject"):
             m = re.search("^(\S+)\s+-\s+(.*)$", tags.string)
             if m:
-                abbr = m.group(1)
-                sbj = m.group(2)
-                ret.append((abbr, sbj))
+                subject_abbr = m.group(1)
+                subject_title = m.group(2)
+
+                # Store the subject information
+                subject = e_or_n(cc.Subject, title=subject_title, abbreviation=subject_abbr)
+                subjects.append(subject)
+
             else:
                 raise Exception ("Problem parsing subject title: '" + tags.string + "'")
-        return ret
+        return subjects
 
     def all_courses(self):
         """
-        Returns a dict of course data in the expanded subject(s)
+        Returns a list of course data in the expanded subject(s)
         Format = [(number, name)]
         """
         ret = []

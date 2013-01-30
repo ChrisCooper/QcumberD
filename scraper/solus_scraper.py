@@ -38,30 +38,28 @@ class SolusScraper(object):
             s.select_alphanum(letter)
 
             # Scrapes all the subjects
-            self._subject_scrape(s)   
+            self.scrape_alphanum(s)  
      
-    def _subject_scrape(self, s):
+    def scrape_alphanum(self, s):
         """
-        Scrapes subject information.
-        Session must be on the subject page.
+        Scrapes subject information from an alphanum page.
         """
         
-        for subject_abbr, subject_title in s.parser().all_subjects() \
-                            [self.config.subject_start_idx:self.config.subject_end_idx]:
-            
-            # Store the subject information
-            subject = e_or_n(cc.Subject, title=subject_title, abbreviation=subject_abbr)
+        conf = self.config
+        subjects = s.parser().all_subjects()[conf.subject_start_idx : conf.subject_end_idx]
+
+        for subject in subjects:
             
             print ("----Parsing subject: " + str(subject))
             
             # Show courses by clicking the dropdown
-            s.dropdown_subject(subject_abbr, subject_title)
+            s.dropdown_subject(subject.abbreviation, subject.title)
 
             # Scrape all the courses
             self._course_scrape(s, subject)
             
             # Close the course dropdown
-            s.dropdown_subject(subject_abbr, subject_title)
+            s.dropdown_subject(subject.abbreviation, subject.title)
 
 
     def _course_scrape(self, s, subject):
