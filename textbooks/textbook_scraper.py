@@ -61,6 +61,7 @@ class TextbookScraper(object):
                 subject = Subject.objects.get(abbreviation=s)
                 course = Course.objects.get(subject=subject, number=c)
             except ObjectDoesNotExist:
+                print ("No course '{0} {1}' in database".format(s, c))
                 continue
 
             print ("--Parsing books from " + str(course))

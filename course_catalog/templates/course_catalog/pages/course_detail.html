@@ -56,15 +56,12 @@
             <div>
                 <a href="#" class="dropdown-header clearfix">
                     <h5>
-                        {{ textbooks|length }} textbook{% if textbooks|length > 1 %}s{% endif %} listed on the campus bookstore
+                        {{ textbooks|length }} textbook{% if textbooks|length > 1 %}s{% endif %} listed for this course
                     </h5>
                 </a>
             </div>
 
             <div class="section-component-list hide">
-
-                <a href="{{ textbooks.0.listing_url }}">Click here to view the listings, summary below</a>
-
                 <table class="table table-condensed table-hover">
                     <tr>
                         <th>Title</th>
@@ -81,9 +78,12 @@
                         </tr>
                     {% endfor %}                                
                 </table>
+                <h6>
+                    See these textbooks on <a href="{{ textbooks.0.listing_url }}">The Campus Bookstore</a>
+                </h6>
             </div>
         {% else %}
-                No textbooks listed on the campus bookstore.
+                No textbooks listed for this course on <a href="http://www.campusbookstore.com/">The Campus Bookstore.</a>
         {% endif %}
         </div>
 
