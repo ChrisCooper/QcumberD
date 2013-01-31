@@ -20,7 +20,7 @@ class Migration(SchemaMigration):
         # Adding model 'Textbook'
         db.create_table('textbooks_textbook', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('last_encountered', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('last_encountered', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('title', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
             ('authors', self.gf('django.db.models.fields.CharField')(default='', max_length=256, null=True)),
             ('required', self.gf('django.db.models.fields.BooleanField')(default=False)),
@@ -32,9 +32,18 @@ class Migration(SchemaMigration):
             ('used_available', self.gf('django.db.models.fields.IntegerField')(default=0)),
             ('classified_info', self.gf('django.db.models.fields.CharField')(default='', max_length=128)),
             ('listing_url', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
-            ('course', self.gf('django.db.models.fields.related.ForeignKey')(related_name='textbooks', to=orm['course_catalog.Course'])),
+            ('course_rel', self.gf('django.db.models.fields.related.ForeignKey')(related_name='textbooks', to=orm['textbooks.TextbookRelation'])),
         ))
         db.send_create_signal('textbooks', ['Textbook'])
+
+        # Adding model 'TextbookRelation'
+        db.create_table('textbooks_textbookrelation', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('last_encountered', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('listing_url', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
+            ('course', self.gf('django.db.models.fields.related.OneToOneField')(related_name='textbook_data', unique=True, to=orm['course_catalog.Course'])),
+        ))
+        db.send_create_signal('textbooks', ['TextbookRelation'])
 
 
     def backwards(self, orm):
@@ -44,19 +53,22 @@ class Migration(SchemaMigration):
         # Deleting model 'Textbook'
         db.delete_table('textbooks_textbook')
 
+        # Deleting model 'TextbookRelation'
+        db.delete_table('textbooks_textbookrelation')
+
 
     models = {
         'course_catalog.career': {
             'Meta': {'object_name': 'Career'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'order': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         },
         'course_catalog.consent': {
             'Meta': {'object_name': 'Consent'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
         'course_catalog.course': {
@@ -68,7 +80,7 @@ class Migration(SchemaMigration):
             'enrollment_reqs': ('django.db.models.fields.TextField', [], {'default': "''"}),
             'grading_basis': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'courses'", 'null': 'True', 'to': "orm['course_catalog.GradingBasis']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'number': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             'subject': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'courses'", 'to': "orm['course_catalog.Subject']"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -77,14 +89,14 @@ class Migration(SchemaMigration):
         'course_catalog.gradingbasis': {
             'Meta': {'object_name': 'GradingBasis'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
         'course_catalog.subject': {
             'Meta': {'object_name': 'Subject'},
             'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'textbooks.jobconfig': {
@@ -98,11 +110,11 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Textbook'},
             'authors': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'null': 'True'}),
             'classified_info': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '128'}),
-            'course': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'textbooks'", 'to': "orm['course_catalog.Course']"}),
+            'course_rel': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'textbooks'", 'to': "orm['textbooks.TextbookRelation']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'isbn_10': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '24', 'null': 'True'}),
             'isbn_13': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '24', 'null': 'True'}),
-            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'listing_url': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
             'new_available': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'new_price': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '8'}),
@@ -110,6 +122,13 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
             'used_available': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'used_price': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '8'})
+        },
+        'textbooks.textbookrelation': {
+            'Meta': {'object_name': 'TextbookRelation'},
+            'course': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'textbook_data'", 'unique': 'True', 'to': "orm['course_catalog.Course']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'listing_url': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'})
         }
     }
 

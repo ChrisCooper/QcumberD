@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.db import models
 from django.views.decorators.cache import cache_page
+from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
 from course_catalog.models import Course, Subject, Term, Section, Career, Season
 import model_controls
@@ -36,14 +37,17 @@ def course_detail(request, subject_abbr=None, course_number=None):
     for section in course.sections.all().order_by('type__order'):
         sections[section.term].append(section)
 
-    textbooks = course.textbooks.all()
+    try:
+        textbook_data = course.textbook_data
+    except ObjectDoesNotExist as e:
+        textbook_data = None
 
     # Convert to a list of tuples for the template
     sections = sections.items()
     sections.sort(key=lambda t: t[0].order)
 
     return render(request, 'course_catalog/pages/course_detail.html',
-        {'course': course, 'all_sections': sections, 'textbooks': textbooks},
+        {'course': course, 'all_sections': sections, 'textbook_data': textbook_data},
         context_instance=RequestContext(request))
 
 

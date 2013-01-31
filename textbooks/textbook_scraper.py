@@ -6,7 +6,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from course_catalog.models import existing_or_new, Subject, Course
-from models import Textbook
+from models import Textbook, TextbookRelation
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -68,7 +68,12 @@ class TextbookScraper(object):
             r = requests.get(l)
             b = BeautifulSoup(r.text)
 
-            #looking at the page source, 49 books seems to be the limit (numbers padded the 2 digits)
+            # Create the course <-> textbook relation
+            ct_attrs = {"course": course, "listing_url": l}
+            ct_relation = existing_or_new(TextbookRelation, **ct_attrs)
+            ct_relation.save()
+
+            # Looking at the page source, 49 books seems to be the limit (numbers padded the 2 digits)
             for i in range (0, 99, 2):
 
                 book = b.find("div", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_ModeFull".format(i)})
@@ -77,7 +82,7 @@ class TextbookScraper(object):
 
                 temp = book.find("table").find("table").find_all("td")[1]
 
-                textbook_attrs = {"course": course, "listing_url": l}
+                textbook_attrs = {"course_rel": ct_relation}
 
                 # Title
                 title = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_BookTitle".format(i)}).string

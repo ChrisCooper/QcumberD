@@ -41,7 +41,7 @@ class Textbook(ModelOnProbation):
     listing_url = models.CharField(max_length=256, default="");
 
     # Relationships
-    course = models.ForeignKey("course_catalog.Course", related_name='textbooks')
+    course_rel = models.ForeignKey("TextbookRelation", related_name='textbooks')
 
     def isbn(self):
         return self.isbn_13 if self.isbn_13 else self.isbn_10
@@ -55,5 +55,22 @@ class Textbook(ModelOnProbation):
             return cls.objects.get(title=kwargs['title'],
                                     isbn_10=kwargs['isbn_10'],
                                     isbn_13=kwargs['isbn_13'])
+        except ObjectDoesNotExist:
+            return None
+
+class TextbookRelation(ModelOnProbation):
+    # Attributes
+    listing_url = models.CharField(max_length=256, default="", null=False);
+
+    # Relationships
+    course = models.OneToOneField("course_catalog.Course", related_name='textbook_data')
+
+    def __unicode__(self):
+        return u"Textbooks at {0}".format(self.listing_url)
+    
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(listing_url=kwargs['listing_url'])
         except ObjectDoesNotExist:
             return None
