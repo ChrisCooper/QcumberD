@@ -61,7 +61,7 @@ class SolusScraper(object):
             self._course_scrape(s, subject)
             
             # Close the course dropdown
-            s.dropdown_subject(subject_abbr, subject_title)
+            s.rollup_subject(subject_abbr, subject_title)
 
 
     def _course_scrape(self, s, subject):
