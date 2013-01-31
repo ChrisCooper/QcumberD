@@ -32,9 +32,16 @@ class Migration(SchemaMigration):
             ('used_available', self.gf('django.db.models.fields.IntegerField')(default=0)),
             ('classified_info', self.gf('django.db.models.fields.CharField')(default='', max_length=128)),
             ('listing_url', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
-            ('course_rel', self.gf('django.db.models.fields.related.ForeignKey')(related_name='textbooks', to=orm['textbooks.TextbookRelation'])),
         ))
         db.send_create_signal('textbooks', ['Textbook'])
+
+        # Adding M2M table for field course_rels on 'Textbook'
+        db.create_table('textbooks_textbook_course_rels', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('textbook', models.ForeignKey(orm['textbooks.textbook'], null=False)),
+            ('textbookrelation', models.ForeignKey(orm['textbooks.textbookrelation'], null=False))
+        ))
+        db.create_unique('textbooks_textbook_course_rels', ['textbook_id', 'textbookrelation_id'])
 
         # Adding model 'TextbookRelation'
         db.create_table('textbooks_textbookrelation', (
@@ -52,6 +59,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Textbook'
         db.delete_table('textbooks_textbook')
+
+        # Removing M2M table for field course_rels on 'Textbook'
+        db.delete_table('textbooks_textbook_course_rels')
 
         # Deleting model 'TextbookRelation'
         db.delete_table('textbooks_textbookrelation')
@@ -110,7 +120,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Textbook'},
             'authors': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'null': 'True'}),
             'classified_info': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '128'}),
-            'course_rel': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'textbooks'", 'to': "orm['textbooks.TextbookRelation']"}),
+            'course_rels': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'textbooks'", 'symmetrical': 'False', 'to': "orm['textbooks.TextbookRelation']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'isbn_10': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '24', 'null': 'True'}),
             'isbn_13': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '24', 'null': 'True'}),

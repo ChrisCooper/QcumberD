@@ -69,8 +69,7 @@ class TextbookScraper(object):
             b = BeautifulSoup(r.text)
 
             # Create the course <-> textbook relation
-            ct_attrs = {"course": course, "listing_url": l}
-            ct_relation = existing_or_new(TextbookRelation, **ct_attrs)
+            ct_relation = existing_or_new(TextbookRelation, course=course, listing_url=l)
             ct_relation.save()
 
             # Looking at the page source, 49 books seems to be the limit (numbers padded the 2 digits)
@@ -82,7 +81,7 @@ class TextbookScraper(object):
 
                 temp = book.find("table").find("table").find_all("td")[1]
 
-                textbook_attrs = {"course_rel": ct_relation}
+                textbook_attrs = {}
 
                 # Title
                 title = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_BookTitle".format(i)}).string
@@ -137,6 +136,7 @@ class TextbookScraper(object):
                 if textbook_attrs["isbn_10"] or textbook_attrs["isbn_13"]:
 
                     textbook = existing_or_new(Textbook, **textbook_attrs)
+                    textbook.course_rels.add(ct_relation)
                     textbook.save()
                     print "----Parsed book:"
                     print ("------" + str(textbook))

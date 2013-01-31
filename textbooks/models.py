@@ -41,7 +41,7 @@ class Textbook(ModelOnProbation):
     listing_url = models.CharField(max_length=256, default="");
 
     # Relationships
-    course_rel = models.ForeignKey("TextbookRelation", related_name='textbooks')
+    course_rels = models.ManyToManyField("TextbookRelation", related_name='textbooks')
 
     def isbn(self):
         return self.isbn_13 if self.isbn_13 else self.isbn_10
