@@ -17,7 +17,9 @@ class SolusScraper(object):
     def config_string(self):
         """Returns a string to display the current configuration"""
 
-        # config_string = ""
-        # for field in self.config._meta.fields:
-        #     config_string = config_string + "--{0}: {1}".format(str(field.name), str(field.value_from_object(self.config))
-        # return config_string
+        config_string = ''
+        for field in self.config._meta.fields:
+            config_string = config_string + '\n--{0}: {1}'.format(str(field.name), str(field.value_from_object(self.config)))
+        
+        return config_string
+
