@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 
 from parsers.alphanum_parser import AlphanumParser
+from parsers.subject_parser import SubjectParser
+from parsers.course_parser import CourseParser
 
 class SolusSession(object):
     """Represents a solus browsing session"""
@@ -24,6 +26,7 @@ class SolusSession(object):
         print "Navigating to course catalog..."
         self.go_to_course_catalog()
 
+    @property
     def soup(self):
         if not self._soup:
             self._soup = BeautifulSoup(self.latest_text, 'lxml')
@@ -77,8 +80,24 @@ class SolusSession(object):
 
     def subject_from_dropdown(self, subject_index):
         """Returns the subject with the specified index on the current alphanum's page, or none if the dropdown index does not exist"""
-        return AlphanumParser(self.soup()).subject_from_dropdown(subject_index)
+        return AlphanumParser(self.soup).subject_from_dropdown(subject_index)
        
     def toggle_subject_dropdown(self, subject):
         """Opens or closes the dropdown menu for a subject"""
         self._catalog_post(subject.click_action)
+
+
+    # ----------------------------- Courses ------------------------------------- #
+
+    def course_link_exists(self, course_index):
+        """Returns whether or not a course link with the specified index exists"""
+        return SubjectParser(self.soup).course_link_exists(course_index)
+       
+    def open_course(self, course_index):
+        """Opens a course page by following the course link with the supplied index"""
+        action = SubjectParser(self.soup).course_link_id(course_index)
+        self._catalog_post(action)
+
+    def current_course(self, subject):
+        """Returns the course built from the current course page"""
+        return CourseParser(self.soup).current_course(subject)

@@ -3,3 +3,6 @@ class SolusParser(object):
 
     def __init__(self, soup):
         self.soup = soup
+
+    def clean_HTML(self, string):
+        return string.replace('&nbsp;',' ').strip()
