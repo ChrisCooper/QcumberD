@@ -2,9 +2,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from decimal import Decimal
+from datetime import datetime
+
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
-from decimal import Decimal
+
 
 class ModelOnProbation(models.Model):
     """
@@ -17,6 +20,10 @@ class ModelOnProbation(models.Model):
 
     class Meta:
         abstract = True
+
+    def was_scraped(self):
+        """Resets the "last_encountered" field to the current time"""
+        self.last_encountered = datetime.now()
 
 class Subject(ModelOnProbation):
     #Attributes
@@ -283,7 +290,6 @@ def existing_or_new(model, **kwargs):
     existing = model.existing(**kwargs)
     if existing is None:
         existing = model(**kwargs)
-        existing.save()
     return existing
 
 

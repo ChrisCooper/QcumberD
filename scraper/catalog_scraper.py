@@ -1,4 +1,5 @@
 from solus_scraper import SolusScraper
+from alphanum_scraper import AlphanumScraper
 
 class CatalogScraper(SolusScraper):
     """Scrapes data for the entire SOLUS site."""
@@ -12,15 +13,8 @@ class CatalogScraper(SolusScraper):
         print(self.config_string())
         
         print("Beginning scrape job...")
-        
-        return
 
         for letter in self.config.letters:
 
-            print ("--Parsing letter: " + letter)
-            s.select_alphanum(letter)
-
-            # Scrapes all the subjects
-            self.scrape_alphanum(s)
-
-        self.solus.close_session()
+            print ("-- Scraping letter: " + letter)
+            AlphanumScraper(self).scrape_alphanum(letter)

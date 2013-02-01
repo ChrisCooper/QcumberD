@@ -1,7 +1,9 @@
 import requests
+from bs4 import BeautifulSoup
 
 from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 
+from parsers.alphanum_parser import AlphanumParser
 
 class SolusSession(object):
     """Represents a solus browsing session"""
@@ -13,7 +15,8 @@ class SolusSession(object):
         self.session = requests.session()
 
         self.latest_response = None
-        self.latest_text = ''
+        self.latest_text = None
+        self._soup = None
 
         print "Logging in..."    
         self.login(user, password)
@@ -21,8 +24,10 @@ class SolusSession(object):
         print "Navigating to course catalog..."
         self.go_to_course_catalog()
 
-    def close_session(self):
-        self.session.close()
+    def soup(self):
+        if not self._soup:
+            self._soup = BeautifulSoup(self.latest_text, 'lxml')
+        return self._soup
 
     def login(self, user=None, password=None):
         """Logs into the site"""
@@ -56,5 +61,24 @@ class SolusSession(object):
         self.latest_response = self.session.post(self.course_catalog_url, data=extras)
         self.latest_text = self.latest_response.text
 
+        # The old soup no longer represents the current page's content
+        self._soup = None
+
         if "Data Integrity Error" in self.latest_text:
             raise Exception("SOLUS reported a Data Integrity Error")
+
+    # ----------------------------- Alphanums ------------------------------------ #
+
+    def select_alphanum(self, alphanum):
+        """Navigates to a letter/number"""
+        self._catalog_post('DERIVED_SSS_BCC_SSR_ALPHANUM_' + alphanum.upper())
+
+    # ----------------------------- Subjects ------------------------------------- #
+
+    def subject_from_dropdown(self, subject_index):
+        """Returns the subject with the specified index on the current alphanum's page, or none if the dropdown index does not exist"""
+        return AlphanumParser(self.soup()).subject_from_dropdown(subject_index)
+       
+    def toggle_subject_dropdown(self, subject):
+        """Opens or closes the dropdown menu for a subject"""
+        self._catalog_post(subject.click_action)
