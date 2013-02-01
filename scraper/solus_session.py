@@ -1,10 +1,7 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 import requests
 
-from solus_parser import SolusParser
+from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
+
 
 class SolusSession(object):
     """Represents a solus browsing session"""
@@ -12,21 +9,29 @@ class SolusSession(object):
     login_url = "https://sso.queensu.ca/amserver/UI/Login"
     course_catalog_url = "https://saself.ps.queensu.ca/psc/saself/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_BROWSE_CATLG_P.GBL"
 
-    def __init__(self, user, password):
+    def __init__(self, user=None, password=None):
         self.session = requests.session()
 
         self.latest_response = None
         self.latest_text = ''
 
-        print "Logging in..."
+        print "Logging in..."    
         self.login(user, password)
-        print "Logged in"
+
+        print "Navigating to course catalog..."
+        self.go_to_course_catalog()
 
     def close_session(self):
         self.session.close()
 
-    def login(self, user, password):
+    def login(self, user=None, password=None):
         """Logs into the site"""
+
+        # Check for supplied credentials
+        if not user:
+            user = SCRAPER_USERNAME
+        if not password:
+            password = SCRAPER_PASSWORD
 
         payload = {
            'IDToken1': user,
@@ -39,53 +44,8 @@ class SolusSession(object):
         if len(response.text) < 200 or "Invalid Password!" in response.text:
             raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
 
-        # Go to the course catalog after logging in
+    def go_to_course_catalog(self):
         self._catalog_post("")
-
-    def select_alphanum(self, alphanum):
-        """Navigates to a letter/number"""
-        self._catalog_post('DERIVED_SSS_BCC_SSR_ALPHANUM_' + alphanum.upper())
-
-    def dropdown_subject(self, abbr, title):
-        """Opens the dropdown menu for a subject"""
-        action = self.parser().subject_dropdown(abbr, title)
-        self._catalog_post(action)
-
-    def select_course(self, number):
-        """Clicks on a course"""
-        action = self.parser().course_link(number)
-        self._catalog_post(action)
-
-    def view_section(self, class_num):
-        """Clicks on a course section"""
-        action = self.parser().section_link(class_num)
-        self._catalog_post(action)
-
-    def show_sections(self):
-        """Clicks on the 'View class sections' button on the course page"""
-        #action = self.parser().show_sections()
-        self._catalog_post('DERIVED_SAA_CRS_SSR_PB_GO')
-
-    def switch_terms(self, year, season):
-        """Shows the sections for a term of the class"""
-        term_key = self.parser().term_key(year, season)
-        self._catalog_post(action='DERIVED_SAA_CRS_SSR_PB_GO$92$', extras={'DERIVED_SAA_CRS_TERM_ALT': term_key})
-
-    def show_all_sections(self):
-        """Clicks the 'view all' button"""
-        self._catalog_post('CLASS_TBL_VW5$fviewall$0')
-
-    def return_from_section(self):
-        """Navigates back from section to course"""
-        self._catalog_post('CLASS_SRCH_WRK2_SSR_PB_CLOSE')
-
-    def return_from_course(self):
-        """Navigates back from course to subject"""
-        self._catalog_post('DERIVED_SAA_CRS_RETURN_PB')
-
-    def parser(self):
-        """Returns a SolusParser instance for the current page"""
-        return SolusParser(self.latest_text)
 
     def _catalog_post(self, action, extras={}):
         """Submits a post request to the site"""

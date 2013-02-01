@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from course_catalog.model_controls import clear_old_models
 
 from scraper.models import JobConfig
-from scraper.solus_scraper import SolusScraper
+from scraper.catalog_scraper import CatalogScraper
 
 
 def index(request):
@@ -27,7 +27,8 @@ def new_job(request, config_name):
     start_time = datetime.datetime.now()
 
     try:
-        SolusScraper(config).scrape_all()
+        s = CatalogScraper(config=config)
+        s.scrape_all()
     except Exception:
         print ("Error during scraping (time taken: " + str(datetime.datetime.now() - start_time) + ")")
         raise
@@ -35,4 +36,13 @@ def new_job(request, config_name):
     if config.delete_other_models:
         clear_old_models(start_time)
 
-    return HttpResponse("Finished scrape pass (time taken: " + str(datetime.datetime.now() - start_time) + ")")
+    # Make a pretty time taken string
+    seconds = (datetime.datetime.now() - start_time).seconds
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    time_taken = '{0} hours, {1} minutes, {2} seconds.'.format(hours, minutes, seconds)
+
+    # Don't want django model stuff to show up
+    del config._state
+
+    return render(request, 'scraper/scrape_result.html', {'time_taken' : time_taken, 'config': config.__dict__})
