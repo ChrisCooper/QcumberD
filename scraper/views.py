@@ -7,8 +7,6 @@ import datetime
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
-from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
-
 from course_catalog.model_controls import clear_old_models
 
 from scraper.models import JobConfig
@@ -29,7 +27,7 @@ def new_job(request, config_name):
     start_time = datetime.datetime.now()
 
     try:
-        SolusScraper(config, SCRAPER_USERNAME, SCRAPER_PASSWORD).scrape_all()
+        SolusScraper(config).scrape_all()
     except Exception:
         print ("Error during scraping (time taken: " + str(datetime.datetime.now() - start_time) + ")")
         raise

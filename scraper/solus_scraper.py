@@ -8,15 +8,15 @@ from course_catalog.models import existing_or_new as e_or_n
 from solus_session import SolusSession
 from solus_data import *
 
-
+from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 
 class SolusScraper(object):
     """Scrapes data off Solus"""
 
-    def __init__(self, config, user, password):
+    def __init__(self, config):
         self.config = config
-        self.user = user
-        self.password = password
+        self.user = SCRAPER_USERNAME
+        self.password = SCRAPER_PASSWORD
 
 
     def scrape_all(self):
