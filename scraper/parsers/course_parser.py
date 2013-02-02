@@ -146,6 +146,7 @@ class CourseParser(SolusParser):
         Recieves and attribute name and value, and adds it to the course,
         converting it to a model instance first if necessary
         """
+
         if attr in self.attribute_mappings:
             attribute_name = self.attribute_mappings[attr]
 
@@ -153,6 +154,7 @@ class CourseParser(SolusParser):
             if attr in self.attribute_class_mappings:
                 cls = self.attribute_class_mappings[attr]
                 value = e_or_n(cls, name=value)
+                value.save()
 
             # Add the attribute's value to the course
             setattr(course, attribute_name, value)
