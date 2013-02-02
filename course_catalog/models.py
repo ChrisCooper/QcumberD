@@ -149,21 +149,6 @@ class SectionComponent(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class SectionType(models.Model):
-    name = models.CharField(max_length=100)
-    abbreviation = models.CharField(max_length=10)
-    order = models.IntegerField(default=0)
-
-    def __unicode__(self):
-        return self.name
-
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(abbreviation=kwargs['abbreviation'])
-        except ObjectDoesNotExist:
-            return None
-
 class Timeslot(ModelOnProbation):
     """
     A slice of time during a particular weekday
@@ -181,22 +166,6 @@ class Timeslot(ModelOnProbation):
             return cls.objects.get(start_time=kwargs['start_time'],
                                    end_time=kwargs['end_time'],
                                    day_of_week=kwargs['day_of_week'])
-        except ObjectDoesNotExist:
-            return None
-
-class DayOfWeek(models.Model):
-    name = models.CharField(max_length=20)
-    abbreviation = models.CharField(max_length=3)
-    
-    order = models.IntegerField(default=0)
-    
-    def __unicode__(self):
-        return self.name
-
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(abbreviation=kwargs['abbreviation'])
         except ObjectDoesNotExist:
             return None
 
@@ -236,23 +205,6 @@ class Term(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class Career(ModelOnProbation):
-    """
-    A course classification, such as "Undergraduate"
-    """
-    name = models.CharField(max_length=50)
-    order = models.IntegerField(default=0)
-
-    def __unicode__(self):
-        return self.name
-
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(name=kwargs['name'])
-        except ObjectDoesNotExist:
-            return None
-
 class StringModel(ModelOnProbation):
     '''Serves as a base class for models which only contain one string called "name"'''
 
@@ -272,10 +224,6 @@ class StringModel(ModelOnProbation):
 class Instructor(StringModel):
     name = models.CharField(max_length=100)
 
-class GradingBasis(StringModel):
-    'E.g. "Graded"'
-    name = models.CharField(max_length=50)
-
 class Session(StringModel):
     name = models.CharField(max_length=50)
 
@@ -293,18 +241,69 @@ def existing_or_new(model, **kwargs):
     return existing
 
 
+# Fixtures ---------------------------------------------
 
+class Career(models.Model):
+    """
+    A course classification, such as "Undergraduate"
+    """
+    name = models.CharField(max_length=50)
+    order = models.IntegerField(default=0)
 
+    def __unicode__(self):
+        return self.name
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
 
+class DayOfWeek(models.Model):
+    name = models.CharField(max_length=20)
+    abbreviation = models.CharField(max_length=3)
+    
+    order = models.IntegerField(default=0)
+    
+    def __unicode__(self):
+        return self.name
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(abbreviation=kwargs['abbreviation'])
+        except ObjectDoesNotExist:
+            return None
 
+class SectionType(models.Model):
+    name = models.CharField(max_length=100)
+    abbreviation = models.CharField(max_length=10)
+    order = models.IntegerField(default=0)
 
+    def __unicode__(self):
+        return self.name
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(abbreviation=kwargs['abbreviation'])
+        except ObjectDoesNotExist:
+            return None
 
+class GradingBasis(models.Model):
+    'E.g. "Graded"'
+    name = models.CharField(max_length=50)
 
+    def __unicode__(self):
+        return self.name
 
-
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
 
 
 
