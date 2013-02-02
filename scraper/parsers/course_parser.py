@@ -106,7 +106,7 @@ class CourseParser(SolusParser):
 
         
     def add_description(self, info_box, course):
-        description = self.soup.find("span", { "class" : self.description_css_class})
+        description = info_box.find("span", { "class" : self.description_css_class})
         course.description = self.clean_HTML(description.get_text())
 
 
