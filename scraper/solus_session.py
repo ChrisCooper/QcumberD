@@ -101,3 +101,7 @@ class SolusSession(object):
     def current_course(self, subject):
         """Returns the course built from the current course page"""
         return CourseParser(self.soup).current_course(subject)
+
+    def return_from_course(self):
+        """Navigates back from course to subject"""
+        self._catalog_post('DERIVED_SAA_CRS_RETURN_PB')
