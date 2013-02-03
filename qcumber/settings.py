@@ -31,6 +31,8 @@ TIME_ZONE = 'America/Toronto'
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
+DOMAIN_NAME = "qcumber.ca"
+SITE_NAME = "qcumber.ca"
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -130,6 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
