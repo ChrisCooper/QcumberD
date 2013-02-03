@@ -24,7 +24,7 @@ class CourseParser(SolusParser):
         "Add Consent": "add_consent",
         "Drop Consent": "drop_consent",
         "Course Components": "components",
-        "Enrollment Requirement": "enrollment_requirement",
+        "Enrollment Requirement": "enrollment_reqs",
     }
 
     # What model class each attribute should be initialized as
@@ -148,12 +148,17 @@ class CourseParser(SolusParser):
         """
 
         if attr in self.attribute_mappings:
+
+            # Find the name of the attribute that this value will be assigned to in the model
             attribute_name = self.attribute_mappings[attr]
 
-            # Check if we need to make an actual model
+            # Check if we need to make an actual model. If not, it'll just be assigned as is (as a str, probably)
             if attr in self.attribute_class_mappings:
+
                 cls = self.attribute_class_mappings[attr]
                 value = e_or_n(cls, name=value)
+
+                # This model will have to be saved if it's new
                 value.save()
 
             # Add the attribute's value to the course
