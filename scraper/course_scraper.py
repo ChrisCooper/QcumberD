@@ -1,6 +1,6 @@
 import re, cgi
 
-    from solus_scraper import SolusScraper
+from solus_scraper import SolusScraper
 from section_scraper import SectionScraper
 
 class CourseScraper(SolusScraper):

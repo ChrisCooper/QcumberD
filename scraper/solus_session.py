@@ -6,6 +6,7 @@ from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 from parsers.alphanum_parser import AlphanumParser
 from parsers.subject_parser import SubjectParser
 from parsers.course_parser import CourseParser
+from parsers.section_parser import SectionParser
 
 class SolusSession(object):
     """Represents a solus browsing session"""
@@ -105,3 +106,22 @@ class SolusSession(object):
     def return_from_course(self):
         """Navigates back from course to subject"""
         self._catalog_post('DERIVED_SAA_CRS_RETURN_PB')
+
+    # -----------------------------Sections ------------------------------------- #
+
+    def sections_are_offered(self):
+        """Determines whether there is a 'View class sections' button on the page"""
+        return SectionParser(self.soup).sections_are_offered()
+
+    def show_sections(self):
+        """Clicks on the 'View class sections' button on the course page"""
+        self._catalog_post('DERIVED_SAA_CRS_SSR_PB_GO')
+
+    def terms_offered(self):
+        """Returns the terms during which the current course is offered"""
+        return SectionParser(self.soup).terms_offered()
+
+    def switch_to_term(self, term):
+        """Shows the sections for a given term"""
+        self._catalog_post(action='DERIVED_SAA_CRS_SSR_PB_GO$92$', extras={'DERIVED_SAA_CRS_TERM_ALT': term.dropdown_value})
+
