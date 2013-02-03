@@ -11,10 +11,12 @@ admin.autodiscover()
 urlpatterns = patterns('django.views.generic.simple',
 
     # Redirects from old URLs
-    url(r'^courses/(?P<subject_abbr>\w+)_(?P<course_number>\w+)/$',
-        "redirect_to", {"url": '/catalog/%(subject_abbr)s/%(course_number)s/', "permanent": True}),
-    url(r'^subjects/(?P<subject_abbr>\w+)/$',
-        'redirect_to', {"url": '/catalog/%(subject_abbr)s/', "permanent": True}),
+    url(r'^courses/(?P<subject_abbr>\w+)_(?P<course_number>\w+)/$', "redirect_to",
+        {"url": '/catalog/%(subject_abbr)s/%(course_number)s/', "permanent": True}),
+    url(r'^subjects/(?P<subject_abbr>\w+)/$', 'redirect_to',
+        {"url": '/catalog/%(subject_abbr)s/', "permanent": True}),
+    url(r'^catalog/$', 'redirect_to',
+        {"url": '/', "permanent": False}),
     
     # Uncomment the next line to enable the SOLUS scraper
     url(r'^scraper/', include('scraper.urls')),
