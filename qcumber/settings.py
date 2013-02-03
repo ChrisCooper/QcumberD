@@ -20,6 +20,9 @@ sys.modules['BeautifulSoup'] = bs4
 import django.template
 django.template.add_to_builtins('django.templatetags.future')
 
+# Choose which site entry to use
+SITE_ID = 1
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -29,10 +32,6 @@ TIME_ZONE = 'America/Toronto'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
-
-SITE_ID = 1
-DOMAIN_NAME = "qcumber.ca"
-SITE_NAME = "qcumber.ca"
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -111,6 +110,11 @@ MIDDLEWARE_CLASSES = (
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
+FIXTURE_DIRS = (
+        # Add the common fixtures
+        unixy_project_path("fixtures"),
+    )
+
 INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'qcumber.urls'
@@ -146,6 +150,8 @@ INSTALLED_APPS = (
     'course_catalog',
     'scraper',
     'enrollment',
+
+    'moved_pages',
 
 )
 
