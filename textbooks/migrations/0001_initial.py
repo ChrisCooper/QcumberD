@@ -39,18 +39,17 @@ class Migration(SchemaMigration):
         db.create_table('textbooks_textbook_course_rels', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('textbook', models.ForeignKey(orm['textbooks.textbook'], null=False)),
-            ('textbookrelation', models.ForeignKey(orm['textbooks.textbookrelation'], null=False))
+            ('courserelation', models.ForeignKey(orm['textbooks.courserelation'], null=False))
         ))
-        db.create_unique('textbooks_textbook_course_rels', ['textbook_id', 'textbookrelation_id'])
+        db.create_unique('textbooks_textbook_course_rels', ['textbook_id', 'courserelation_id'])
 
-        # Adding model 'TextbookRelation'
-        db.create_table('textbooks_textbookrelation', (
+        # Adding model 'CourseRelation'
+        db.create_table('textbooks_courserelation', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('last_encountered', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('listing_url', self.gf('django.db.models.fields.CharField')(default='', max_length=256)),
-            ('course', self.gf('django.db.models.fields.related.OneToOneField')(related_name='textbook_data', unique=True, to=orm['course_catalog.Course'])),
+            ('course', self.gf('django.db.models.fields.related.OneToOneField')(related_name='course_data', unique=True, to=orm['course_catalog.Course'])),
         ))
-        db.send_create_signal('textbooks', ['TextbookRelation'])
+        db.send_create_signal('textbooks', ['CourseRelation'])
 
 
     def backwards(self, orm):
@@ -63,8 +62,8 @@ class Migration(SchemaMigration):
         # Removing M2M table for field course_rels on 'Textbook'
         db.delete_table('textbooks_textbook_course_rels')
 
-        # Deleting model 'TextbookRelation'
-        db.delete_table('textbooks_textbookrelation')
+        # Deleting model 'CourseRelation'
+        db.delete_table('textbooks_courserelation')
 
 
     models = {
@@ -109,6 +108,12 @@ class Migration(SchemaMigration):
             'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
+        'textbooks.courserelation': {
+            'Meta': {'object_name': 'CourseRelation'},
+            'course': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'course_data'", 'unique': 'True', 'to': "orm['course_catalog.Course']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
+        },
         'textbooks.jobconfig': {
             'Meta': {'object_name': 'JobConfig'},
             'description': ('django.db.models.fields.TextField', [], {'default': "''"}),
@@ -120,7 +125,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Textbook'},
             'authors': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256', 'null': 'True'}),
             'classified_info': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '128'}),
-            'course_rels': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'textbooks'", 'symmetrical': 'False', 'to': "orm['textbooks.TextbookRelation']"}),
+            'course_rels': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'textbooks'", 'symmetrical': 'False', 'to': "orm['textbooks.CourseRelation']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'isbn_10': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '24', 'null': 'True'}),
             'isbn_13': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '24', 'null': 'True'}),
@@ -132,13 +137,6 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'}),
             'used_available': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'used_price': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '8'})
-        },
-        'textbooks.textbookrelation': {
-            'Meta': {'object_name': 'TextbookRelation'},
-            'course': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'textbook_data'", 'unique': 'True', 'to': "orm['course_catalog.Course']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'listing_url': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '256'})
         }
     }
 

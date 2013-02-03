@@ -6,7 +6,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from course_catalog.models import existing_or_new, Subject, Course
-from models import Textbook, TextbookRelation
+from models import Textbook, CourseRelation
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -69,19 +69,21 @@ class TextbookScraper(object):
             b = BeautifulSoup(r.text)
 
             # Create the course <-> textbook relation
-            ct_relation = existing_or_new(TextbookRelation, course=course, listing_url=l)
-            ct_relation.save()
+            course_relation = existing_or_new(CourseRelation, course=course)
+            course_relation.save()
 
             # Looking at the page source, 49 books seems to be the limit (numbers padded the 2 digits)
             for i in range (0, 99, 2):
 
-                book = b.find("div", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_ModeFull".format(i)})
+                book_id = "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_ModeFull".format(i)
+
+                book = b.find("div", {"id": book_id})
                 if not book:
                     break
 
                 temp = book.find("table").find("table").find_all("td")[1]
 
-                textbook_attrs = {}
+                textbook_attrs = {"listing_url": l + "#" + book_id}
 
                 # Title
                 title = temp.find("span", {"id": "ctl00_ContentBody_ctl00_CourseBooksRepeater_ctl{:02d}_test_BookTitle".format(i)}).string
@@ -136,7 +138,7 @@ class TextbookScraper(object):
                 if textbook_attrs["isbn_10"] or textbook_attrs["isbn_13"]:
 
                     textbook = existing_or_new(Textbook, **textbook_attrs)
-                    textbook.course_rels.add(ct_relation)
+                    textbook.course_rels.add(course_relation)
                     textbook.save()
                     print "----Parsed book:"
                     print ("------" + str(textbook))

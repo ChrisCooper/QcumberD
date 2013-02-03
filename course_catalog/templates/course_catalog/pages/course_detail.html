@@ -52,11 +52,11 @@
         </div>
 
         <div class="textbooks">
-        {% if textbook_data %}
+        {% if course_data %}
             <div>
                 <a href="#" class="dropdown-header clearfix">
                     <h5>
-                        {{ textbook_data.textbooks.all|length }} textbook{% if textbook_data.textbooks.all|length > 1 %}s{% endif %} listed for this course
+                        {{ course_data.textbooks.all|length }} textbook{% if course_data.textbooks.all|length > 1 %}s{% endif %} listed for this course
                     </h5>
                 </a>
             </div>
@@ -69,9 +69,9 @@
                         <th>Required</th>
                         <th>Price</th>
                     </tr>
-                    {% for textbook in textbook_data.textbooks.all %}
+                    {% for textbook in course_data.textbooks.all %}
                         <tr>
-                            <td>{{ textbook.title }}</td>
+                            <td><a href="{{ textbook.listing_url }}">{{ textbook.title }}</a></td>
                             <td>{{ textbook.authors }}</td>
                             <td>{%if textbook.required %}Yes{% else %}No{% endif %}</td>
                             <td>{{ textbook.new_price }}</td>
@@ -79,11 +79,11 @@
                     {% endfor %}                                
                 </table>
                 <h6>
-                    See these textbooks on <a href="{{ textbook_data.listing_url }}">The Campus Bookstore</a>
+                    Data provided by <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>
                 </h6>
             </div>
         {% else %}
-                No textbooks listed for this course on <a href="http://www.campusbookstore.com/">The Campus Bookstore.</a>
+                No textbooks listed for this course on <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>
         {% endif %}
         </div>
 

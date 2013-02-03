@@ -36,12 +36,10 @@ class Textbook(ModelOnProbation):
     used_price = models.CharField(max_length=8, default="")
     used_available = models.IntegerField(default=0)
     classified_info = models.CharField(max_length=128, default="")
-
-    #TODO: abstract into a relationship table
-    listing_url = models.CharField(max_length=256, default="");
+    listing_url = models.CharField(max_length=256, default="", null=False);
 
     # Relationships
-    course_rels = models.ManyToManyField("TextbookRelation", related_name='textbooks')
+    course_rels = models.ManyToManyField("CourseRelation", related_name='textbooks')
 
     def isbn(self):
         return self.isbn_13 if self.isbn_13 else self.isbn_10
@@ -58,19 +56,18 @@ class Textbook(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class TextbookRelation(ModelOnProbation):
-    # Attributes
-    listing_url = models.CharField(max_length=256, default="", null=False);
+class CourseRelation(ModelOnProbation):
+    # Attributes (nothing yet)
 
     # Relationships
-    course = models.OneToOneField("course_catalog.Course", related_name='textbook_data')
+    course = models.OneToOneField("course_catalog.Course", related_name='course_data', null=False)
 
     def __unicode__(self):
-        return u"Textbooks at {0}".format(self.listing_url)
+        return u"Data attached to {0}".format(self.course)
     
     @classmethod
     def existing(cls, **kwargs):
         try:
-            return cls.objects.get(listing_url=kwargs['listing_url'])
+            return cls.objects.get(course=kwargs['course'])
         except ObjectDoesNotExist:
             return None

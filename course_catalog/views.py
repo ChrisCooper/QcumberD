@@ -38,16 +38,16 @@ def course_detail(request, subject_abbr=None, course_number=None):
         sections[section.term].append(section)
 
     try:
-        textbook_data = course.textbook_data
+        course_data = course.course_data
     except ObjectDoesNotExist as e:
-        textbook_data = None
+        course_data = None
 
     # Convert to a list of tuples for the template
     sections = sections.items()
     sections.sort(key=lambda t: t[0].order)
 
     return render(request, 'course_catalog/pages/course_detail.html',
-        {'course': course, 'all_sections': sections, 'textbook_data': textbook_data},
+        {'course': course, 'all_sections': sections, 'course_data': course_data},
         context_instance=RequestContext(request))
 
 
