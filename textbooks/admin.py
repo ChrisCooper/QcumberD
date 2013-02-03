@@ -6,3 +6,5 @@ from django.contrib import admin
 from textbooks.models import *
 
 admin.site.register(JobConfig)
+admin.site.register(Textbook)
+admin.site.register(CourseRelation)

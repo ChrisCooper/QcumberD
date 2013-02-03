@@ -54,23 +54,29 @@ class TextbookScraper(object):
         print ("Parsing courses")
         for s, c, l in temp:
 
-            # Check if there is a course to attach the book to
-            subject = None
-            course = None
+            # Check if there are any courses to attach the book to
             try:
                 subject = Subject.objects.get(abbreviation=s)
-                course = Course.objects.get(subject=subject, number=c)
+                courses = Course.objects.filter(subject=subject, number__istartswith=c)
+                num_courses = courses.count()
             except ObjectDoesNotExist:
-                print ("No course '{0} {1}' in database".format(s, c))
+                num_courses = 0
+
+            if num_courses < 1:
+                print ("--No course '{0} {1}' in database".format(s, c))
                 continue
 
-            print ("--Parsing books from " + str(course))
+            # Find/Create the course <-> textbook relation(s)
+            course_relations = []
+            for course in courses:
+                temp = existing_or_new(CourseRelation, course=course)
+                temp.save()
+                course_relations.append(temp)
+
+            print ("--Parsing books from {0} course(s): {1}".format(num_courses, ", ".join([str(course) for course in courses])))
+
             r = requests.get(l)
             b = BeautifulSoup(r.text)
-
-            # Create the course <-> textbook relation
-            course_relation = existing_or_new(CourseRelation, course=course)
-            course_relation.save()
 
             # Looking at the page source, 49 books seems to be the limit (numbers padded the 2 digits)
             for i in range (0, 99, 2):
@@ -138,7 +144,7 @@ class TextbookScraper(object):
                 if textbook_attrs["isbn_10"] or textbook_attrs["isbn_13"]:
 
                     textbook = existing_or_new(Textbook, **textbook_attrs)
-                    textbook.course_rels.add(course_relation)
+                    for course_relation in course_relations:
+                        textbook.course_rels.add(course_relation)
                     textbook.save()
-                    print "----Parsed book:"
-                    print ("------" + str(textbook))
+                    print ("----Parsed book: " + str(textbook))
