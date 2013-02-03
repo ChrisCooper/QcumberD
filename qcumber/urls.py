@@ -3,12 +3,27 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf.urls import patterns, include, url
+from course_catalog.sitemap import *
+
+sitemaps = {
+    'flatpages': FlatpageSitemap,
+    'subjects': SubjectSitemap,
+    'courses': CourseSitemap
+}
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns('django.views.generic.simple',
+
+    # Redirects from old URLs
+    url(r'^courses/(?P<subject_abbr>\w+)_(?P<course_number>\w+)/$', "redirect_to",
+        {"url": '/catalog/%(subject_abbr)s/%(course_number)s/', "permanent": True}),
+    url(r'^subjects/(?P<subject_abbr>\w+)/$', 'redirect_to',
+        {"url": '/catalog/%(subject_abbr)s/', "permanent": True}),
+    url(r'^catalog/$', 'redirect_to',
+        {"url": '/', "permanent": False}),
     
     # Uncomment the next line to enable the SOLUS scraper
     url(r'^scraper/', include('scraper.urls')),
@@ -21,6 +36,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {"sitemaps": sitemaps}),
 
     url(r'^', include('course_catalog.urls')),
 )
