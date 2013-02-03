@@ -34,6 +34,15 @@ class SolusParser(object):
         """Returns the key of the term from the term select combobox"""
         return self.soup.find("option", text="%s %s" % (year, season))['value']
 
+    def show_sections(self):
+        """
+        Returns the POST request needed to show sections
+        (or None if there are no sections to show)
+        """
+        if self.soup.find("a", id="DERIVED_SAA_CRS_SSR_PB_GO"):
+            return "DERIVED_SAA_CRS_SSR_PB_GO"
+        return None
+
     #######
     # Get data for all object POSTs (subject, course, etc)
     #######
@@ -41,15 +50,15 @@ class SolusParser(object):
     def all_subjects(self):
         """
         Returns a dict of subject data in the current letter
-        Format = {abbreviation: title}
+        Format = [(abbreviation, title)]
         """
-        ret = {}
+        ret = []
         for tags in self.soup.find_all("a", title="Show/Hide Courses for Subject"):
             m = re.search("^(\S+)\s+-\s+(.*)$", tags.string)
             if m:
                 abbr = m.group(1)
                 sbj = m.group(2)
-                ret[abbr] = sbj
+                ret.append((abbr, sbj))
             else:
                 raise Exception ("Problem parsing subject title: '" + tags.string + "'")
         return ret
@@ -57,14 +66,14 @@ class SolusParser(object):
     def all_courses(self):
         """
         Returns a dict of course data in the expanded subject(s)
-        Format = {number: name}
+        Format = [(number, name)]
         """
-        ret = {}
+        ret = []
         for x in self.soup.find_all("a", { "class": "PSHYPERLINK"}):
             # Get a number, then the title
             if "CRSE_TITLE" in x['id']:
                 # There are somtimes tags inside the titles
-                ret[temp] = "".join([i for i in x.stripped_strings]).strip()
+                ret.append((temp, "".join([i for i in x.stripped_strings]).strip()))
             elif "CRSE_NBR" in x['id']:
                 temp = x.string.strip()
         return ret
@@ -72,28 +81,28 @@ class SolusParser(object):
     def all_terms(self):
         """
         Returns a dict containing term data in the current course
-        Format = {key: (year, season)}
+        Format = [(key, year, season)]
         """
-        ret = {}
+        ret = []
         term_sel = self.soup.find("select", id="DERIVED_SAA_CRS_TERM_ALT")
 
         # Check if class is scheduled        
         if term_sel:
             for x in term_sel.find_all("option"):
                 m = re.search('^([^\s]+) (.*)$', x.string)
-                ret[x['value']] = (m.group(1), m.group(2))
+                ret.append((x['value'], m.group(1), m.group(2)))
 
         return ret
         
     def all_sections(self):
         """
         Returns a dict containing data for sections in the current term
-        Format = {class number: (index, type)}
+        Format = [(class number, index, type)]
         """
-        ret = {}
+        ret = []
         for x in self.soup.find_all("a", {"class": "PSHYPERLINK", "title": "Class Details"}):
             m = re.search('(\S+)-(\S+)\s+\((\S+)\)', x.string)
-            ret[m.group(3)] = (m.group(1), m.group(2))
+            ret.append((m.group(3), m.group(1), m.group(2)))
         return ret
 
     #######
@@ -211,7 +220,7 @@ class SolusParser(object):
         }
 
         # Go through all availible sections
-        for class_num, section_data in self.all_sections().items():
+        for class_num, class_idx, class_type in self.all_sections():
 
             # Get the data table for the current course number
             data_table = self.soup.find("table", id="CLASS_MTGPAT$scroll$" + self.section_link(class_num).split("$")[-1])
@@ -266,8 +275,8 @@ class SolusParser(object):
                 
             # Add data to dict
             attrs[class_num] = {
-                'index': section_data[0],
-                'type': section_data[1],
+                'index': class_idx,
+                'type': class_type,
                 'classes' : classes,
             }
 

@@ -21,10 +21,8 @@ class SolusScraper(object):
 
     def scrape_all(self):
         """
-        Starts a full scrape of the SOLUS database.
+        Starts a full scrape of the SOLUS site, following the constuctor's configuration.
         """
-
-        update_constants()
 
         print ("Scrape job config:")
         for x in self.config._meta.fields:
@@ -48,7 +46,7 @@ class SolusScraper(object):
         Session must be on the subject page.
         """
         
-        for subject_abbr, subject_title in s.parser().all_subjects().items() \
+        for subject_abbr, subject_title in s.parser().all_subjects() \
                             [self.config.subject_start_idx:self.config.subject_end_idx]:
             
             # Store the subject information
@@ -72,7 +70,7 @@ class SolusScraper(object):
         Session must be on the subject page with dropdown extended.
         """
 
-        for course_code, course_name in s.parser().all_courses().items() \
+        for course_code, course_name in s.parser().all_courses() \
                             [self.config.course_start_idx:self.config.course_end_idx]:
 
             print ("------Parsing course: " + course_code + " - " + course_name)
@@ -98,18 +96,18 @@ class SolusScraper(object):
         # Show the course sections
         s.show_sections()
 
-        for term_key, term_data in s.parser().all_terms().items():
+        for term_key, term_year, term_season in s.parser().all_terms():
         
-            print ("--------Parsing term: " + term_data[0] + " " + term_data[1])
+            print ("--------Parsing term: " + term_year + " " + term_season)
 
             # Switch to the term
-            s.switch_terms(term_data[0], term_data[1])
+            s.switch_terms(term_year, term_season)
 
             # Save the season information
-            season = e_or_n(cc.Season, name=term_data[1])
+            season = e_or_n(cc.Season, name=term_season)
             
             # Save the term information
-            term = e_or_n(cc.Term, year=term_data[0], season=season)
+            term = e_or_n(cc.Term, year=term_year, season=season)
            
             # Scrape section data
             if self.config.deep:
@@ -175,12 +173,12 @@ class SolusScraper(object):
         # Click the 'View All' button 
         s.show_all_sections()
 
-        for class_num, section_data in s.parser().all_sections().items():
+        for class_num, class_idx, class_type in s.parser().all_sections():
 
             # Save the section information
-            section_type = e_or_n(cc.SectionType, abbreviation=section_data[1])
+            section_type = e_or_n(cc.SectionType, abbreviation=class_type)
             section = e_or_n(cc.Section,
-                        index_in_course=section_data[0],
+                        index_in_course=class_idx,
                         solus_id=class_num,
                         type=section_type,
                         course=course,

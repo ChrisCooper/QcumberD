@@ -2,9 +2,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from django.conf.urls import patterns, include, url
+from django.contrib import admin
+from textbooks.models import *
 
-urlpatterns = patterns('scraper.views',
-    url(r'^$', 'index'),
-    url(r'^new_job/(?P<config_name>.+)$', 'new_job'),
-)
+admin.site.register(JobConfig)
+admin.site.register(Textbook)
+admin.site.register(CourseRelation)
