@@ -147,6 +147,8 @@ INSTALLED_APPS = (
     'scraper',
     'enrollment',
 
+    'moved_pages',
+
 )
 
 # A sample logging configuration. The only tangible logging
