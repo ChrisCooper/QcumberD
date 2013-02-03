@@ -31,6 +31,8 @@ TIME_ZONE = 'America/Toronto'
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
+DOMAIN_NAME = "qcumber.ca"
+SITE_NAME = "qcumber.ca"
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.

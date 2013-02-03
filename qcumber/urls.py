@@ -3,10 +3,12 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf.urls import patterns, include, url
-from django.contrib.sitemaps import Sitemap
+from course_catalog.sitemap import *
 
 sitemaps = {
-    'pages':Sitemap()
+    'flatpages': FlatpageSitemap,
+    'subjects': SubjectSitemap,
+    'courses': CourseSitemap
 }
 
 # Uncomment the next two lines to enable the admin:
