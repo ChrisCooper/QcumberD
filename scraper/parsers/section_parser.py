@@ -223,6 +223,43 @@ class SectionParser(SolusParser):
 
     def add_section_page_attributes(self, section):
         """Adds the information available on the dedicated section page to the provided section"""
+
+        # Tables for Details, enrollment, availibility, description
+        info_tables = self.soup.find_all("table", {"class": "PSGROUPBOXWBO"})
+        for table in info_tables:
+            header = table.find("td", {"class": "PAGROUPBOXLABELLEVEL1"}).get_text()
+            
+            if header == "Class Availability":
+
+                labels = table.find_all("label", {"class" : "PSEDITBOXLABEL"})
+                values = table.find_all("span", {"class" : "PSEDITBOX_DISPONLY"})
+
+                # Make sure the size of each list matches
+                if len(labels) != len(values):
+                    raise Exception("Number of enrollment labels ({0}) doesn't match number of values ({1})".format(
+                            len(labels), len(values)
+                        )
+                    )
+
+                for label, value in zip(labels, values):
+
+                    # See which entry we are dealing with
+                    if label['for'] == 'SSR_CLS_DTL_WRK_ENRL_CAP':
+                        section.class_max = int(value.get_text())
+                    elif label['for'] == 'SSR_CLS_DTL_WRK_ENRL_TOT':
+                        section.class_curr = int(value.get_text())
+                    elif label['for'] == 'SSR_CLS_DTL_WRK_WAIT_CAP':
+                        section.wait_max = int(value.get_text())
+                    elif label['for'] == 'SSR_CLS_DTL_WRK_WAIT_TOT':
+                        section.wait_curr = int(value.get_text())
+                    elif label['for'] == 'SSR_CLS_DTL_WRK_AVAILABLE_SEATS':
+                        # Available seats
+                        pass
+                    else:
+                        raise Exception('Unexpected label in section page: "{0}"'.format(label['for']))
+                        
+                section.save()
+
         return 
 
 
