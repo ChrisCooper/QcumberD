@@ -238,6 +238,10 @@ def existing_or_new(model, **kwargs):
     existing = model.existing(**kwargs)
     if existing is None:
         existing = model(**kwargs)
+    else:
+        # We need to make sure the extra attributes are updated
+        for key, val in kwargs.iteriterms():
+            setattr(existing, key, val)
     return existing
 
 
