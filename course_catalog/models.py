@@ -97,6 +97,7 @@ class Section(ModelOnProbation):
     class_max = models.IntegerField(default=-1)
     wait_curr = models.IntegerField(default=-1)
     wait_max = models.IntegerField(default=-1)
+    date_enrollment_updated = models.DateTimeField(default=datetime.now)
     
     #Relationships
     course = models.ForeignKey("Course", related_name='sections')
@@ -118,6 +119,10 @@ class Section(ModelOnProbation):
                                    term=kwargs['term'])
         except ObjectDoesNotExist:
             return None
+
+    def enrollment_was_scraped(self):
+        """Resets the "date_enrollment_updated" field to the current time"""
+        self.date_enrollment_updated = datetime.now()
 
 class SectionComponent(ModelOnProbation):
     """

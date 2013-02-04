@@ -33,8 +33,9 @@ def new_job(request, config_name):
         print ("Error during scraping (time taken: " + str(datetime.datetime.now() - start_time) + ")")
         raise
 
+    deleted = None
     if config.delete_other_models:
-        clear_old_models(start_time)
+        deleted = clear_old_models(start_time)
 
     # Make a pretty time taken string
     seconds = (datetime.datetime.now() - start_time).seconds
@@ -45,4 +46,4 @@ def new_job(request, config_name):
     # Don't want django model stuff to show up
     del config._state
 
-    return render(request, 'scraper/scrape_result.html', {'time_taken' : time_taken, 'config': config.__dict__})
+    return render(request, 'scraper/scrape_result.html', {'time_taken' : time_taken, 'config': config.__dict__, 'deleted': deleted})

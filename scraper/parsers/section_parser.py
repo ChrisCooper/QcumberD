@@ -73,6 +73,7 @@ class SectionParser(SolusParser):
         # Build a section out of each section header and table
         for header_link, component_table in zip(section_header_links, section_component_tables):
             section = self.build_section(header_link, component_table, course, term)
+            section.was_scraped()
             section.save()
             sections.append(section)
 
@@ -122,6 +123,7 @@ class SectionParser(SolusParser):
             for timeslot in timeslots:
                 attrs['timeslot'] = timeslot
                 component = e_or_n(cc.SectionComponent, **attrs)
+                component.was_scraped()
                 component.save()
                 component.instructors =  instructors
                 component.save()
@@ -155,6 +157,7 @@ class SectionParser(SolusParser):
                 full_name = u"%s, %s" % (last_name, other_names)
 
                 instructor = e_or_n(cc.Instructor, name=full_name)
+                instructor.was_scraped()
                 instructor.save()
                 instructors.append(instructor)
 
@@ -248,6 +251,7 @@ class SectionParser(SolusParser):
                         section.class_max = int(value.get_text())
                     elif label['for'] == 'SSR_CLS_DTL_WRK_ENRL_TOT':
                         section.class_curr = int(value.get_text())
+                        section.enrollment_was_scraped()
                     elif label['for'] == 'SSR_CLS_DTL_WRK_WAIT_CAP':
                         section.wait_max = int(value.get_text())
                     elif label['for'] == 'SSR_CLS_DTL_WRK_WAIT_TOT':
