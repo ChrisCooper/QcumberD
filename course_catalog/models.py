@@ -240,7 +240,7 @@ def existing_or_new(model, **kwargs):
         existing = model(**kwargs)
     else:
         # We need to make sure the extra attributes are updated
-        for key, val in kwargs.iteriterms():
+        for key, val in kwargs.iteritems():
             setattr(existing, key, val)
     return existing
 

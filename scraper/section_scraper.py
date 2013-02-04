@@ -14,14 +14,31 @@ class SectionScraper(SolusScraper):
 
         terms = self.solus.terms_offered()
 
+        # Scrape the sections in each term
         for term in terms:
-             term.save()
-             self.solus.switch_to_term(term)
-        
-        #     view all sections
-        #     scrape sections
-        #         if deepscrape:
-        #             visit section page
 
+            term.was_scraped()
+            term.save()
 
-        return
+            # View the sections for this term
+            self.solus.switch_to_term(term)
+
+            self.scrape_sections_in_term(term, course)
+
+    def scrape_sections_in_term(self, term, course):
+
+        if self.solus.multiple_section_pages_available():
+            self.solus.view_all_sections()
+
+        sections = self.solus.current_sections(course, term)
+
+        for section in sections:
+
+            #Check if we should visit the section page
+            if self.config.deep:
+                self.solus.visit_section_page(section)
+                self.solus.scrape_section_page(section)
+                self.solus.return_from_section()
+
+            section.was_scraped()
+            section.save()

@@ -125,3 +125,26 @@ class SolusSession(object):
         """Shows the sections for a given term"""
         self._catalog_post(action='DERIVED_SAA_CRS_SSR_PB_GO$92$', extras={'DERIVED_SAA_CRS_TERM_ALT': term.dropdown_value})
 
+    def multiple_section_pages_available(self):
+        """Returns whether or not there is a "view all sections" button on the page"""
+        return SectionParser(self.soup).view_all_section_button_exists()
+
+    def view_all_sections(self):
+        """Presses the "view all sections" link on the course page"""
+        self._catalog_post('CLASS_TBL_VW5$fviewall$0')
+
+    def current_sections(self, course, term):
+        """Returns all sections visible on the current course page"""
+        return SectionParser(self.soup).current_sections(course, term)
+
+    def visit_section_page(self, section):
+        """Opens the dedicated page for the provided section"""
+        self._catalog_post(section.click_action)
+
+    def scrape_section_page(self, section):
+        """Adds the information available on the dedicated section page to the provided section"""
+        return SectionParser(self.soup).add_section_page_attributes(section)
+
+    def return_from_section(self):
+        """Navigates back from section to course"""
+        self._catalog_post('CLASS_SRCH_WRK2_SSR_PB_CLOSE')

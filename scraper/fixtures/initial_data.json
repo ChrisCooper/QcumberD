@@ -43,5 +43,20 @@
       "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 
       "name": "Subject scrape"
     }
+  }, 
+  {
+    "pk": 4, 
+    "model": "scraper.jobconfig", 
+    "fields": {
+      "subject_start_idx": 0, 
+      "subject_end_idx": -1, 
+      "course_start_idx": 7, 
+      "description": "Scrapes ANAT 101, a course with simple sections and a single term. (This is a fixture, so it cannot be modified)", 
+      "deep": true,
+      "delete_other_models": false,
+      "course_end_idx": 8, 
+      "letters": "A", 
+      "name": "ANAT 101: Simple sections"
+    }
   }
 ]
