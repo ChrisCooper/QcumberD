@@ -59,7 +59,6 @@
       "name": "ANAT 101: Simple sections"
     }
   },
-
   {
     "pk": 5, 
     "model": "scraper.jobconfig", 
@@ -119,5 +118,5 @@
       "letters": "NOPQRSTUVWXYZ0123456789", 
       "name": "Full shallow scrape"
     }
-  },
+  }
 ]
