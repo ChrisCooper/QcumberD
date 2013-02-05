@@ -55,6 +55,7 @@ class SolusSession(object):
 
     def go_to_course_catalog(self):
         self._catalog_post("")
+        self.select_alphanum("A")
 
     def _catalog_post(self, action, extras={}):
         """Submits a post request to the site"""

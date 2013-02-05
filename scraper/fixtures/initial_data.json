@@ -71,7 +71,7 @@
       "delete_other_models": false,
       "course_end_idx": -1, 
       "letters": "ABC", 
-      "name": "Full deep scrape"
+      "name": "ABC deep scrape"
     }
   },
   {
@@ -86,7 +86,7 @@
       "delete_other_models": false,
       "course_end_idx": -1, 
       "letters": "DEFGHIJK", 
-      "name": "Full shallow scrape"
+      "name": "DEFGHIJK deep scrape"
     }
   },
   {
@@ -101,7 +101,7 @@
       "delete_other_models": false,
       "course_end_idx": -1, 
       "letters": "LM", 
-      "name": "Full shallow scrape"
+      "name": "LM deep scrape"
     }
   },
   {
@@ -116,7 +116,7 @@
       "delete_other_models": false,
       "course_end_idx": -1, 
       "letters": "NOPQRSTUVWXYZ0123456789", 
-      "name": "Full shallow scrape"
+      "name": "NOPQRSTUVWXYZ0123456789 deep scrape"
     }
   }
 ]
