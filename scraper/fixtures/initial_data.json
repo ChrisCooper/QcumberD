@@ -58,5 +58,66 @@
       "letters": "A", 
       "name": "ANAT 101: Simple sections"
     }
-  }
+  },
+
+  {
+    "pk": 5, 
+    "model": "scraper.jobconfig", 
+    "fields": {
+      "subject_start_idx": 0, 
+      "subject_end_idx": -1, 
+      "course_start_idx": 0, 
+      "description": "ABC deep scrape (This is a fixture, so it cannot be modified)", 
+      "deep": true, 
+      "delete_other_models": false,
+      "course_end_idx": -1, 
+      "letters": "ABC", 
+      "name": "Full deep scrape"
+    }
+  },
+  {
+    "pk": 6, 
+    "model": "scraper.jobconfig", 
+    "fields": {
+      "subject_start_idx": 0, 
+      "subject_end_idx": -1, 
+      "course_start_idx": 0, 
+      "description": "DEFGHIJK deep scrape (This is a fixture, so it cannot be modified)", 
+      "deep": true, 
+      "delete_other_models": false,
+      "course_end_idx": -1, 
+      "letters": "DEFGHIJK", 
+      "name": "Full shallow scrape"
+    }
+  },
+  {
+    "pk": 7, 
+    "model": "scraper.jobconfig", 
+    "fields": {
+      "subject_start_idx": 0, 
+      "subject_end_idx": -1, 
+      "course_start_idx": 0, 
+      "description": "LM deep scrape (This is a fixture, so it cannot be modified)", 
+      "deep": true, 
+      "delete_other_models": false,
+      "course_end_idx": -1, 
+      "letters": "LM", 
+      "name": "Full shallow scrape"
+    }
+  },
+  {
+    "pk": 8, 
+    "model": "scraper.jobconfig", 
+    "fields": {
+      "subject_start_idx": 0, 
+      "subject_end_idx": -1, 
+      "course_start_idx": 0, 
+      "description": "NOPQRSTUVWXYZ0123456789 deep scrape (This is a fixture, so it cannot be modified)", 
+      "deep": true, 
+      "delete_other_models": false,
+      "course_end_idx": -1, 
+      "letters": "NOPQRSTUVWXYZ0123456789", 
+      "name": "Full shallow scrape"
+    }
+  },
 ]
