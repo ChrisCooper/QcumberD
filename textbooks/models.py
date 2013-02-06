@@ -5,7 +5,7 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 
-from course_catalog.models import ModelOnProbation
+from course_catalog.models import ModelOnProbation, CourseRelation
 
 class JobConfig(models.Model):
     """
@@ -39,7 +39,7 @@ class Textbook(ModelOnProbation):
     listing_url = models.CharField(max_length=256, default="", null=False);
 
     # Relationships
-    course_rels = models.ManyToManyField("CourseRelation", related_name='textbooks')
+    course_rels = models.ManyToManyField("course_catalog.CourseRelation", related_name='textbooks')
 
     def isbn(self):
         return self.isbn_13 if self.isbn_13 else self.isbn_10
@@ -53,21 +53,5 @@ class Textbook(ModelOnProbation):
             return cls.objects.get(title=kwargs['title'],
                                     isbn_10=kwargs['isbn_10'],
                                     isbn_13=kwargs['isbn_13'])
-        except ObjectDoesNotExist:
-            return None
-
-class CourseRelation(ModelOnProbation):
-    # Attributes (nothing yet)
-
-    # Relationships
-    course = models.OneToOneField("course_catalog.Course", related_name='course_data', null=False)
-
-    def __unicode__(self):
-        return u"Data attached to {0}".format(self.course)
-    
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(course=kwargs['course'])
         except ObjectDoesNotExist:
             return None

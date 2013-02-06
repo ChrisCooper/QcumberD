@@ -211,7 +211,7 @@ class Term(ModelOnProbation):
             return None
 
 class CourseRelation(ModelOnProbation):
-    """Hold extra information about a course"""
+    """Holds extra information about a course"""
 
     # Relationships
     course = models.OneToOneField("course_catalog.Course", related_name='course_data', null=False)
