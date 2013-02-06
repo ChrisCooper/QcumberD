@@ -52,7 +52,7 @@
         </div>
 
         <div class="textbooks">
-        {% if course_data %}
+        {% if course_data and course_data.textbooks%}
             <div>
                 <a href="#" class="dropdown-header clearfix">
                     <h5>
@@ -87,6 +87,37 @@
         {% endif %}
         </div>
 
+        <div class="exams">
+        {% if course_data and course_data.exams%}
+            <div>
+                <a href="#" class="dropdown-header clearfix">
+                    <h5>
+                        {{ course_data.exams.all|length }} exam{% if course_data.exams.all|length > 1 %}s{% endif %} listed for this course
+                    </h5>
+                </a>
+            </div>
+
+            <div class="section-component-list hide">
+                <table class="table table-condensed table-hover">
+                    <tr>
+                        <th>Year</th>
+                        <th>Link</th>
+                    </tr>
+                    {% for exam in course_data.exams.all %}
+                        <tr>
+                            <td>{{ exam.year }}</td>
+                            <td><a href="{{ exam.pdf_url }}">{{ exam.pdf_url }}</a></td>
+                        </tr>
+                    {% endfor %}                                
+                </table>
+                <h6>
+                    Data provided by <a href="http://library.queensu.ca/exambank/">ExamBank</a>
+                </h6>
+            </div>
+        {% else %}
+                No past exams listed for this course on <a href="http://library.queensu.ca/exambank/">ExamBank</a>
+        {% endif %}
+        </div>
     </div>
 
     <hr />
