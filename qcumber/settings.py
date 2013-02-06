@@ -150,9 +150,9 @@ INSTALLED_APPS = (
     'course_catalog',
     'scraper',
     'enrollment',
-
+    'exams',
     'moved_pages',
-
+    'textbooks',
 )
 
 # A sample logging configuration. The only tangible logging

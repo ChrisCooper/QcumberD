@@ -17,8 +17,7 @@ class SectionScraper(SolusScraper):
         # Scrape the sections in each term
         for term in terms:
 
-            term.was_scraped()
-            term.save()
+            term.save(was_scraped=True)
 
             # View the sections for this term
             self.solus.switch_to_term(term)
@@ -40,5 +39,4 @@ class SectionScraper(SolusScraper):
                 self.solus.scrape_section_page(section)
                 self.solus.return_from_section()
 
-            section.was_scraped()
-            section.save()
+            section.save(was_scraped=True)

@@ -25,6 +25,13 @@ class ModelOnProbation(models.Model):
         """Resets the "last_encountered" field to the current time"""
         self.last_encountered = datetime.now()
 
+    def save(self, *args, **kwargs):
+        if "was_scraped" in kwargs:
+            self.was_scraped()
+            del kwargs["was_scraped"]
+
+        super(ModelOnProbation, self).save(*args, **kwargs)
+
 class Subject(ModelOnProbation):
     #Attributes
     title = models.CharField(max_length=255)
@@ -210,6 +217,22 @@ class Term(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
+class CourseRelation(ModelOnProbation):
+    """Holds extra information about a course"""
+
+    # Relationships
+    course = models.OneToOneField("course_catalog.Course", related_name='course_data', null=False)
+
+    def __unicode__(self):
+        return u"Data attached to {0}".format(self.course)
+    
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(course=kwargs['course'])
+        except ObjectDoesNotExist:
+            return None
+
 class StringModel(ModelOnProbation):
     '''Serves as a base class for models which only contain one string called "name"'''
 
@@ -243,6 +266,7 @@ def existing_or_new(model, **kwargs):
     existing = model.existing(**kwargs)
     if existing is None:
         existing = model(**kwargs)
+        existing.save()
     else:
         # We need to make sure the extra attributes are updated
         for key, val in kwargs.iteritems():

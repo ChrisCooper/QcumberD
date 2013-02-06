@@ -7,35 +7,28 @@ import datetime
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
-from course_catalog.model_controls import clear_old_models
-
-from scraper.models import JobConfig
-from scraper.catalog_scraper import CatalogScraper
+from exams.models import JobConfig
+from exams.exam_scraper import ExamScraper
 
 
 def index(request):
     """Lists all the job configurations"""
     job_configs = JobConfig.objects.all()
 
-    return render(request, 'scraper/index.html', {'job_configs' : job_configs})
+    return render(request, 'exams/index.html', {'job_configs' : job_configs})
 
 def new_job(request, config_name):
-    """Starts a new scraping job"""
+    """Starts a new exam scraping job"""
 
     config = get_object_or_404(JobConfig, name=config_name)
 
     start_time = datetime.datetime.now()
 
     try:
-        s = CatalogScraper(config=config)
-        s.scrape_all()
+        s = ExamScraper(config=config).scrape()
     except Exception:
         print ("Error during scraping (time taken: " + str(datetime.datetime.now() - start_time) + ")")
         raise
-
-    deleted = None
-    if config.delete_other_models:
-        deleted = clear_old_models(start_time)
 
     # Make a pretty time taken string
     seconds = (datetime.datetime.now() - start_time).seconds
@@ -46,4 +39,4 @@ def new_job(request, config_name):
     # Don't want django model stuff to show up
     del config._state
 
-    return render(request, 'scraper/scrape_result.html', {'time_taken' : time_taken, 'config': config.__dict__, 'deleted': deleted})
+    return render(request, 'exams/scrape_result.html', {'time_taken' : time_taken, 'config': config.__dict__})
