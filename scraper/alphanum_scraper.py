@@ -26,7 +26,7 @@ class AlphanumScraper(SolusScraper):
             # Open the subject dropdown
             self.solus.toggle_subject_dropdown(subject)
 
-            print ("---- Scraping subject: " + str(subject))
+            print ("----Scraping subject: " + str(subject))
             
             # Scrape everything in the subject
             SubjectScraper(self).scrape_subject(subject)

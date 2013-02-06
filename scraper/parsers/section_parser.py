@@ -182,7 +182,7 @@ class SectionParser(SolusParser):
             all_days = all_days[:-2]
 
             weekday =  e_or_n(cc.DayOfWeek, abbreviation=day_abbr)
-            weekday.save(was_scraped=True)
+            weekday.save()
 
             timeslot_attributes = {'day_of_week' : weekday,
                                    'start_time' : start_time,
@@ -202,7 +202,7 @@ class SectionParser(SolusParser):
 
         # Make a section type for the supplied type
         section_type = e_or_n(cc.SectionType, abbreviation=m.group(2))
-        section_type.save(was_scraped=True)
+        section_type.save()
 
         attrs = {
             'solus_id': m.group(3),

@@ -16,5 +16,5 @@ class CatalogScraper(SolusScraper):
 
         for letter in self.config.letters:
 
-            print ("-- Scraping letter: " + letter)
+            print ("--Scraping letter: " + letter)
             AlphanumScraper(self).scrape_alphanum(letter)
