@@ -23,6 +23,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the exambank scraper
     url(r'^exams/', include('exams.urls')),
 
+    # Uncomment the next line to enable the textboook scraper
+    url(r'^textbooks/', include('textbooks.urls')),
+
     # Uncomment the next line to enable checking of enrollment
     url(r'^enrollment/', include('enrollment.urls')),
 

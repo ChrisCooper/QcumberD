@@ -44,11 +44,47 @@
         </h1>
 
         <div class="description">
-            {{ course.description|default:"No course description." }}
+            {{ course.description|default:"No course description on SOLUS." }}
         </div>
 
         <div class="prereqs">
-            {{ course.enrollment_reqs|default:"No enrollment requirements listed."|safe }}
+            {{ course.enrollment_reqs|default:"No enrollment requirements listed on SOLUS."|safe }}
+        </div>
+
+        <div class="textbooks">
+        {% if course_data %}
+            <div>
+                <a href="#" class="dropdown-header clearfix">
+                    <h5>
+                        {{ course_data.textbooks.all|length }} textbook{% if course_data.textbooks.all|length > 1 %}s{% endif %} listed for this course
+                    </h5>
+                </a>
+            </div>
+
+            <div class="section-component-list hide">
+                <table class="table table-condensed table-hover">
+                    <tr>
+                        <th>Title</th>
+                        <th>Authors</th>
+                        <th>Required</th>
+                        <th>Price</th>
+                    </tr>
+                    {% for textbook in course_data.textbooks.all %}
+                        <tr>
+                            <td><a href="{{ textbook.listing_url }}">{{ textbook.title }}</a></td>
+                            <td>{{ textbook.authors }}</td>
+                            <td>{%if textbook.required %}Yes{% else %}No{% endif %}</td>
+                            <td>{{ textbook.new_price }}</td>
+                        </tr>
+                    {% endfor %}                                
+                </table>
+                <h6>
+                    Data provided by <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>
+                </h6>
+            </div>
+        {% else %}
+                No textbooks listed for this course on <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>
+        {% endif %}
         </div>
 
     </div>
@@ -66,13 +102,13 @@
                 {% for term, sections in all_sections %}
                     <li class="well well-small">
             
-                    <header>
+                    <div>
                     <a href="#" class="dropdown-header clearfix">
                         <h3>
                             {{ term }}
                         </h3>
                     </a>
-                    </header>
+                    </div>
             
                     <ul class="">
                     {% for section in sections %}
