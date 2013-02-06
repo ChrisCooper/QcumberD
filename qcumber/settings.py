@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'course_catalog',
     'scraper',
     'enrollment',
+    'exams',
 
     'moved_pages',
 
