@@ -210,6 +210,22 @@ class Term(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
+class CourseRelation(ModelOnProbation):
+    """Hold extra information about a course"""
+
+    # Relationships
+    course = models.OneToOneField("course_catalog.Course", related_name='course_data', null=False)
+
+    def __unicode__(self):
+        return u"Data attached to {0}".format(self.course)
+    
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(course=kwargs['course'])
+        except ObjectDoesNotExist:
+            return None
+
 class StringModel(ModelOnProbation):
     '''Serves as a base class for models which only contain one string called "name"'''
 
@@ -243,6 +259,7 @@ def existing_or_new(model, **kwargs):
     existing = model.existing(**kwargs)
     if existing is None:
         existing = model(**kwargs)
+        existing.save()
     else:
         # We need to make sure the extra attributes are updated
         for key, val in kwargs.iteritems():
