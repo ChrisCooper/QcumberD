@@ -52,7 +52,7 @@
         </div>
 
         <div class="textbooks">
-        {% if course_data and course_data.textbooks%}
+        {% if course_data and course_data.textbooks and course_data.textbooks.all|length > 0%}
             <div>
                 <a href="#" class="dropdown-header clearfix">
                     <h5>
@@ -88,7 +88,7 @@
         </div>
 
         <div class="exams">
-        {% if course_data and course_data.exams%}
+        {% if course_data and course_data.exams and course_data.exams.all|length > 0%}
             <div>
                 <a href="#" class="dropdown-header clearfix">
                     <h5>

@@ -26,7 +26,7 @@ class ModelOnProbation(models.Model):
         self.last_encountered = datetime.now()
 
     def save(self, *args, **kwargs):
-        if kwargs["was_scraped"]:
+        if "was_scraped" in kwargs:
             self.was_scraped()
             del kwargs["was_scraped"]
 
