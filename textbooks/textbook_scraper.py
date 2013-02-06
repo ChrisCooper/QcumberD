@@ -70,7 +70,7 @@ class TextbookScraper(object):
             course_relations = []
             for course in courses:
                 temp = existing_or_new(CourseRelation, course=course)
-                temp.save()
+                temp.save(was_scraped=True)
                 course_relations.append(temp)
 
             print ("--Parsing books from {0} course(s): {1}".format(num_courses, ", ".join([str(course) for course in courses])))
@@ -146,5 +146,5 @@ class TextbookScraper(object):
                     textbook = existing_or_new(Textbook, **textbook_attrs)
                     for course_relation in course_relations:
                         textbook.course_rels.add(course_relation)
-                    textbook.save()
+                    textbook.save(was_scraped=True)
                     print ("----Parsed book: " + str(textbook))

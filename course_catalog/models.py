@@ -25,6 +25,13 @@ class ModelOnProbation(models.Model):
         """Resets the "last_encountered" field to the current time"""
         self.last_encountered = datetime.now()
 
+    def save(self, *args, **kwargs):
+        if kwargs["was_scraped"]:
+            self.was_scraped()
+            del kwargs["was_scraped"]
+
+        super(ModelOnProbation, self).save(*args, **kwargs)
+
 class Subject(ModelOnProbation):
     #Attributes
     title = models.CharField(max_length=255)

@@ -21,8 +21,7 @@ class AlphanumScraper(SolusScraper):
                 # We've reached the end of the subjects
                 break
 
-            subject.was_scraped()
-            subject.save()
+            subject.save(was_scraped=True)
 
             # Open the subject dropdown
             self.solus.toggle_subject_dropdown(subject)

@@ -70,7 +70,7 @@ class ExamScraper(object):
         course_relations = []
         for course in courses:
             temp = existing_or_new(CourseRelation, course=course)
-            temp.save()
+            temp.save(was_scraped=True)
             course_relations.append(temp)
 
         exam_attrs = {
@@ -80,7 +80,7 @@ class ExamScraper(object):
         exam = existing_or_new(Exam, **exam_attrs)
         for course_relation in course_relations:
             exam.course_rels.add(course_relation)
-        exam.save()
+        exam.save(was_scraped=True)
         print ("--Added exam pdf for {0} course(s): {1}".format(num_courses, ", ".join([str(course) for course in courses])))
 
     def _parse_url(self, year, url):

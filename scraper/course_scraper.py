@@ -12,8 +12,7 @@ class CourseScraper(SolusScraper):
 
         course.enrollment_reqs = self.link_requisites(course.enrollment_reqs)
 
-        course.was_scraped()
-        course.save()
+        course.save(was_scraped=True)
 
         # Scrape all sections
         SectionScraper(self).scrape_all_sections(course)

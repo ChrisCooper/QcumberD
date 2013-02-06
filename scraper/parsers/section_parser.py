@@ -34,7 +34,7 @@ class SectionParser(SolusParser):
             
             # Make a real season
             season = e_or_n(cc.Season, name=season)
-            season.save()
+            season.save(was_scraped=True)
 
             term = e_or_n(cc.Term, year=year, season=season)
 
@@ -73,8 +73,7 @@ class SectionParser(SolusParser):
         # Build a section out of each section header and table
         for header_link, component_table in zip(section_header_links, section_component_tables):
             section = self.build_section(header_link, component_table, course, term)
-            section.was_scraped()
-            section.save()
+            section.save(was_scraped=True)
             sections.append(section)
 
         return sections
@@ -123,10 +122,8 @@ class SectionParser(SolusParser):
             for timeslot in timeslots:
                 attrs['timeslot'] = timeslot
                 component = e_or_n(cc.SectionComponent, **attrs)
-                component.was_scraped()
-                component.save()
-                component.instructors =  instructors
-                component.save()
+                component.instructors = instructors
+                component.save(was_scraped=True)
 
         return section
 
@@ -157,8 +154,7 @@ class SectionParser(SolusParser):
                 full_name = u"%s, %s" % (last_name, other_names)
 
                 instructor = e_or_n(cc.Instructor, name=full_name)
-                instructor.was_scraped()
-                instructor.save()
+                instructor.save(was_scraped=True)
                 instructors.append(instructor)
 
         return instructors
@@ -186,14 +182,14 @@ class SectionParser(SolusParser):
             all_days = all_days[:-2]
 
             weekday =  e_or_n(cc.DayOfWeek, abbreviation=day_abbr)
-            weekday.save()
+            weekday.save(was_scraped=True)
 
             timeslot_attributes = {'day_of_week' : weekday,
                                    'start_time' : start_time,
                                    'end_time' : end_time}
 
             timeslot = e_or_n(cc.Timeslot, **timeslot_attributes)
-            timeslot.save()
+            timeslot.save(was_scraped=True)
 
             timeslots.append(timeslot)
 
@@ -206,7 +202,7 @@ class SectionParser(SolusParser):
 
         # Make a section type for the supplied type
         section_type = e_or_n(cc.SectionType, abbreviation=m.group(2))
-        section_type.save()
+        section_type.save(was_scraped=True)
 
         attrs = {
             'solus_id': m.group(3),
@@ -262,7 +258,7 @@ class SectionParser(SolusParser):
                     else:
                         raise Exception('Unexpected label in section page: "{0}"'.format(label['for']))
                         
-                section.save()
+                section.save(was_scraped=True)
 
         return 
 
