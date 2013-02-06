@@ -50,20 +50,20 @@ class ExamScraper(object):
 
         self.soup = BeautifulSoup(response.text)
 
-    def _store_data(self, match):
+    def _store_data(self, year, match):
         if not match:
             return
 
         # Check if there are any courses to attach the exam to
         try:
-            subject = Subject.objects.get(abbreviation=match.groups()[1].upper())
-            courses = Course.objects.filter(subject=subject, number__istartswith=match.groups()[2])
+            subject = Subject.objects.get(abbreviation=match.groups()[0].upper())
+            courses = Course.objects.filter(subject=subject, number__istartswith=match.groups()[1])
             num_courses = courses.count()
         except ObjectDoesNotExist:
             num_courses = 0
 
         if num_courses < 1:
-            print ("--No course '{0} {1}' in database".format(match.groups()[1], match.groups()[2]))
+            print ("--No course '{0} {1}' in database".format(match.groups()[0], match.groups()[1]))
             return
 
         # Find/Create the course <-> data relation(s)
@@ -73,7 +73,9 @@ class ExamScraper(object):
             temp.save()
             course_relations.append(temp)
 
-        exam_attrs = {"year": match.groups()[0], "pdf_url": match.string}
+        exam_attrs = {
+                    "year": year,
+                    "pdf_url": "http://library.queensu.ca" + match.string}
 
         exam = existing_or_new(Exam, **exam_attrs)
         for course_relation in course_relations:
@@ -81,11 +83,11 @@ class ExamScraper(object):
         exam.save()
         print ("--Added exam pdf for {0} course(s): {1}".format(num_courses, ", ".join([str(course) for course in courses])))
 
-    def _parse_url(self, url):
+    def _parse_url(self, year, url):
 
-        m = re.match("/exambank/(\d+)/(\D+)(\d+).*\.pdf", url)
+        m = re.match("/exambank/\d+/(\D+)(\d+).*\.pdf", url)
         if m:
-            self._store_data(m)
+            self._store_data(year, m)
 
     def scrape(self):
 
@@ -112,4 +114,4 @@ class ExamScraper(object):
                 if not url:
                     continue
 
-                self._parse_url(url)
+                self._parse_url(year, url)
