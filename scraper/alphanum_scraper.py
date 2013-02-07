@@ -21,13 +21,12 @@ class AlphanumScraper(SolusScraper):
                 # We've reached the end of the subjects
                 break
 
-            subject.was_scraped()
-            subject.save()
+            subject.save(was_scraped=True)
 
             # Open the subject dropdown
             self.solus.toggle_subject_dropdown(subject)
 
-            print ("---- Scraping subject: " + str(subject))
+            print ("----Scraping subject: " + str(subject))
             
             # Scrape everything in the subject
             SubjectScraper(self).scrape_subject(subject)

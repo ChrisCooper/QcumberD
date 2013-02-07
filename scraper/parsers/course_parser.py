@@ -48,7 +48,7 @@ class CourseParser(SolusParser):
 
         course = e_or_n(cc.Course, **attributes)
 
-        print ("------ Parsing course: {0} - {1}".format(course.number, course.title.encode('ascii','ignore')))
+        print ("------Parsing course: {0} - {1}".format(course.number, course.title.encode('ascii','ignore')))
 
         self.add_info_table_attributes(course)
 

@@ -59,8 +59,6 @@ class SolusSession(object):
 
     def _catalog_post(self, action, extras={}):
         """Submits a post request to the site"""
-        if not action:
-            return
 
         extras['ICAction'] = action
         self.latest_response = self.session.post(self.course_catalog_url, data=extras)

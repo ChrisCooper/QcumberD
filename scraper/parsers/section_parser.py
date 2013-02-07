@@ -34,7 +34,7 @@ class SectionParser(SolusParser):
             
             # Make a real season
             season = e_or_n(cc.Season, name=season)
-            season.save()
+            season.save(was_scraped=True)
 
             term = e_or_n(cc.Term, year=year, season=season)
 
@@ -73,8 +73,7 @@ class SectionParser(SolusParser):
         # Build a section out of each section header and table
         for header_link, component_table in zip(section_header_links, section_component_tables):
             section = self.build_section(header_link, component_table, course, term)
-            section.was_scraped()
-            section.save()
+            section.save(was_scraped=True)
             sections.append(section)
 
         return sections
@@ -123,10 +122,8 @@ class SectionParser(SolusParser):
             for timeslot in timeslots:
                 attrs['timeslot'] = timeslot
                 component = e_or_n(cc.SectionComponent, **attrs)
-                component.was_scraped()
-                component.save()
-                component.instructors =  instructors
-                component.save()
+                component.instructors = instructors
+                component.save(was_scraped=True)
 
         return section
 
@@ -157,8 +154,7 @@ class SectionParser(SolusParser):
                 full_name = u"%s, %s" % (last_name, other_names)
 
                 instructor = e_or_n(cc.Instructor, name=full_name)
-                instructor.was_scraped()
-                instructor.save()
+                instructor.save(was_scraped=True)
                 instructors.append(instructor)
 
         return instructors
@@ -193,7 +189,7 @@ class SectionParser(SolusParser):
                                    'end_time' : end_time}
 
             timeslot = e_or_n(cc.Timeslot, **timeslot_attributes)
-            timeslot.save()
+            timeslot.save(was_scraped=True)
 
             timeslots.append(timeslot)
 
@@ -262,7 +258,7 @@ class SectionParser(SolusParser):
                     else:
                         raise Exception('Unexpected label in section page: "{0}"'.format(label['for']))
                         
-                section.save()
+                section.save(was_scraped=True)
 
         return 
 
