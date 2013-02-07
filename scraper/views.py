@@ -6,19 +6,21 @@ import datetime
 
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
 
 from course_catalog.model_controls import clear_old_models
 
 from scraper.models import JobConfig
 from scraper.catalog_scraper import CatalogScraper
 
-
+@staff_member_required
 def index(request):
     """Lists all the job configurations"""
     job_configs = JobConfig.objects.all()
 
     return render(request, 'scraper/index.html', {'job_configs' : job_configs})
 
+@staff_member_required
 def new_job(request, config_name):
     """Starts a new scraping job"""
 

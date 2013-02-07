@@ -6,17 +6,19 @@ import datetime
 
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
 
 from exams.models import JobConfig
 from exams.exam_scraper import ExamScraper
 
-
+@staff_member_required
 def index(request):
     """Lists all the job configurations"""
     job_configs = JobConfig.objects.all()
 
     return render(request, 'exams/index.html', {'job_configs' : job_configs})
 
+@staff_member_required
 def new_job(request, config_name):
     """Starts a new exam scraping job"""
 
