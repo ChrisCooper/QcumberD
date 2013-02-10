@@ -1,0 +1,31 @@
+{% extends "course_catalog/pages/filtered_page.html" %}
+
+{% load shell_snippets %}
+
+{% block page_title %} Qcumber | Missing {{ missing }}: {{ abbr }} {{ num }}{% endblock %}
+
+{% block results_panel %}
+
+<article class="course">
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}">Home</a> <span class="divider">-</span></li>
+      <li class="active">Missing {{ missing }} {{ abbr }} {{ num }}</li>
+    </ul>
+
+    <hr />
+
+    <h2>
+        Missing {{ missing }}: {{ abbr }} {{ num }}
+    </h2>
+
+    <div class="section_list clearfix">
+
+        <div class="alert alert-info">
+            {{ abbr }} {{ num }} doesn't appear to exist. It might be an old course, or a typo in SOLUS's listing.
+        </div>
+
+    </div>
+
+</article>
+
+{% endblock %}
