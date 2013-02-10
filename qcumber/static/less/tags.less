@@ -4,8 +4,11 @@
 @winter_hue: 250;
 @summer_hue: hue(@linkColor);
 
-.tag(@hue, @saturation_scale:0.5, @value_scale:0.9) {
+.tag(@hue, @saturation_scale:0.5, @value_scale:0.9, @background_position...) {
+    position: relative;
     display: inline-block;
+    padding: 0 6px 0 20px;
+    height: 14px;
     line-height: 15px;
     font-size: 9px;
     vertical-align: middle;
@@ -18,34 +21,33 @@
         hsl(@hue, @saturation_scale * 100%, @value_scale * 60%),
         hsl(@hue, @saturation_scale * 95%, @value_scale * 67%)
     );
+    &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-image: url("@{iconSeasonSpritePath}");
+        background-repeat: no-repeat;
+        background-position: @background_position;
+        content: ' ';
+    }
 }
 
 .season-tag {
     &.season-Fall {
-        .tag(@fall_hue, 0.5, 0.89);
-        .icon { background-position: 1px 0px; }
+        .tag(@fall_hue, 0.5, 0.89, 1px, 0px);
     }
     &.season-Winter {
-        .tag(@winter_hue, 0.4, 0.93);
-        .icon { background-position: 1px -24px; }
+        .tag(@winter_hue, 0.4, 0.93, 1px, -24px);
     }
     &.season-Summer {
-        .tag(@summer_hue, 0.3, 0.86);
-        .icon { background-position: 1px -48px; }
+        .tag(@summer_hue, 0.3, 0.86, 1px, -48px);
     }
     &.season-None {
-        .tag(0, 0, 0.89);
-        .icon { background: none; }
+        .tag(0, 0, 0.89, -20px, 0px);
     }
     &.hide {
         .opacity(33%);
-    }
-    .icon {
-        display: block;
-        height: 14px;
-        padding: 0 6px 0 20px;
-        width: auto;
-        background-image: url("@{iconSeasonSpritePath}");
-        background-repeat: no-repeat;
     }
 }
