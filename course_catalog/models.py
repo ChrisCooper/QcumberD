@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import re
 from decimal import Decimal
 from datetime import datetime
 
@@ -98,18 +99,17 @@ class Course(ModelOnProbation):
             return None
 
     def text_requisites(self):
-        import re
-        #link_re = r'(?P<link><a href="/search/\?q=[A-Z]{3,4}\+\d{3}[AB]?">(?P<abbr>[A-Z]{3,4}) (?P<num>\d{3}[AB]?)</a>)'
-        link_re = r'<a href="/search/\?q=[A-Z]{3,4}\+\d{3}[AB]?">(?P<course>[A-Z]{3,4} \d{3}[AB]?)</a>'
-        text = re.sub(link_re, lambda m: m.groupdict()['course'], self.enrollment_reqs)
+        link_re = r'<a href="/search/\?q=[A-Z]{3,4}\+\d{3}[AB]?">'\
+                  r'(?P<course>[A-Z]{3,4} \d{3}[AB]?)</a>'
+        text = re.sub(link_re, lambda m: m.groupdict()['course'],
+                      self.enrollment_reqs)
         return text
 
-
     def link_requisites(self):
-        import re
         course_re = r'(?P<abbr>[A-Z]{3,4}) (?P<num>\d{3}[AB]?)'
-        return re.sub(course_re, lambda m: '<a href="/catalog/{abbr}/{num}">{abbr} {num}</a>'.format(**m.groupdict()), self.text_requisites())
-
+        return re.sub(course_re,
+            lambda m: '<a href="/catalog/{abbr}/{num}">{abbr} {num}</a>'.format(
+                **m.groupdict()), self.text_requisites())
 
     @models.permalink
     def get_absolute_url(self):
