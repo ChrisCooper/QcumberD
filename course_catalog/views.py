@@ -171,3 +171,37 @@ def robots(request):
 
 def experiments(request):
     return render(request, 'course_catalog/experiments.html', {})
+
+
+def count_course_requisites(request):
+    import time
+    t0 = time.time()
+
+    courses = valid = missing = 0
+    all_courses = Course.objects.all()
+
+    print('creating list of codes...')
+    all_codes = [(c.subject.abbreviation, c.number) for c in all_courses]
+
+    print('checking all requisites...')
+    for course in all_courses:
+        courses += 1
+        for abbr, num in course.entity_requisites():
+            if (abbr, num) in all_codes:
+                valid += 1
+            else:
+                missing += 1
+
+    tf = time.time()
+    total = valid + missing
+    print('done.\n')
+
+    print('scan time: {:.1f}s'.format(tf - t0))
+
+    print('courses scanned: {}'.format(courses))
+    print('total requisites: {}'.format(total))
+    print('valid requisites: {} ({:.1%})'.format(valid, valid/float(total)))
+    print('missing requisites: {} ({:.1%})'.format(missing, missing/(float(total))))
+
+    return HttpResponse('see terminal')
+

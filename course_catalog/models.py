@@ -111,6 +111,10 @@ class Course(ModelOnProbation):
             lambda m: '<a href="/catalog/{abbr}/{num}">{abbr} {num}</a>'.format(
                 **m.groupdict()), self.text_requisites())
 
+    def entity_requisites(self):
+        course_re = r'(?P<abbr>[A-Z]{3,4}) (?P<num>\d{3}[AB]?)'
+        return re.findall(course_re, self.text_requisites())
+
     @models.permalink
     def get_absolute_url(self):
         return ('course_catalog.views.course_detail', (), {
