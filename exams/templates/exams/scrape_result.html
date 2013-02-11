@@ -1,0 +1,30 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+{% extends "course_catalog/pages/base_generic.html" %}
+
+{% block body_content %}
+
+<div class="scrape-results">
+
+    <p><b>Finished exam scrape pass</b></p>
+
+    <p>Time taken: {{ time_taken }}
+
+    <table border="1">
+        <tr>
+            <th>Config attribute</th>
+            <th>Value</th>
+        </tr>
+
+        {% for config_attribute, config_value in config.items %}
+        <tr>
+            <td>{{ config_attribute }}</td>
+            <td>{{ config_value }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

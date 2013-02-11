@@ -19,16 +19,38 @@ TEMPLATE_DEBUG = DEBUG
 
 
 # Database config
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': unixy_project_path('dev_db.sqlite3'),   # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+
+# Set this to true to access the remote database. NOTE: you must set up an ssh tunnel from local 5433 to remote 5432
+REMOTE_SCRAPE = False
+
+DATABASES = {}
+
+if not REMOTE_SCRAPE:
+
+    # Edit this to make changes to your database setup
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': unixy_project_path('dev_db.sqlite3'),   # Or path to database file if using sqlite3.
+            'USER': '',                      # Not used with sqlite3.
+            'PASSWORD': '',                  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
     }
-}
+else:
+
+    # You can use this for convenience to access the remote database through an ssh tunnel
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'qcumber',   # Or path to database file if using sqlite3.
+            'USER': 'qcumber_user',                      # Not used with sqlite3.
+            'PASSWORD': 'mypassword',                  # Not used with sqlite3.
+            'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '5433',                      # Set to empty string for default. Not used with sqlite3.
+        }
+    }
 
 # Site scraping config
 SCRAPER_USERNAME = 'netid'
@@ -55,9 +77,9 @@ SECRET_KEY = 'laksjdlaksdjalksdjalksjdlkasjdlkajsd'
 # Cache Settings (don't worry about this unless you're testing caching)
 CACHES = {
     'default': {
-    	'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
 
-    	# Replace the DummyCache Backend with these lines to enable real caching in prod or cache-testing senarios
+        # Replace the DummyCache Backend with these lines to enable real caching in prod or cache-testing senarios
         #'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         #'LOCATION': 'unix:' + '/path/to/your/memcached.sock',
     }

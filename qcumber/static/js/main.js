@@ -2,11 +2,30 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+$('html').removeClass('no-js').addClass('js');
  
 // Enable Dropdown boxes
 $('.dropdown-header').click(function () {
     $(this).parent().next().slideToggle('medium');
     return false;
+});
+
+
+// Seasonal Course Filters
+
+$('.season-filter').click(function() {
+    var season = $(this).attr('name');
+    if ($(this).is(':checked')) {
+        $('.course_list .season-' + season).parents('tr').show();
+    } else {
+        $('.course_list .course').hide();
+        $('.season-filter').filter(function() {
+            return $(this).is(':checked');
+        }).map(function() {
+            var season = $(this).attr('name');
+            $('.course_list .season-' + season).parents('tr').show();
+        });
+    }
 });
 
 

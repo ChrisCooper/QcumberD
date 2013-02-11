@@ -1,7 +1,9 @@
 Qcumber
 =======
 
-Qcumber is a course catalog created for Queen's University. The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2012 Chris Cooper.
+Qcumber is a course catalog created for Queen's University. It lives at [Qcumber.ca](Qcumber.ca). Check out the [wiki](https://github.com/ChrisCooper/QcumberD/wiki) for extra information not in this readme.
+
+The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2013 Chris Cooper.
 
 
 Setup Guide
@@ -47,7 +49,7 @@ Pip is used to install extra Python modules that aren't included by default.
 A virtual environment is an isolated Python environment. It allows for per-program environment configuration.
 
 * Install Pip by running `apt-get install python-pip`
-* Once Pip is installed, run `apt-get install python-pip`
+* Once Pip is installed, run `pip install virtualenv`
 * The virtual environment will be configured later.
 
 ### LESS Compiler ###
@@ -127,17 +129,13 @@ Extra Notes
 How to Scrape Course Data
 -------------------------
 
-* Go to [http://localhost:8000/admin/scraper/jobconfig/](http://localhost:8000/admin/scraper/jobconfig/)
-* Click "Add job config".
-* Add a name and a description of your scrape job.
-* There are a few options on this page (the default shallow-scrapes everything):
-  * Deep: If this is set, the scraper will do a deep scrape (takes longer, pulls additional information)
-  * Letters: The subject letters to scrape
-  * Start/end indecies: Controls which subjects/courses to scrape. Implemented with Python list slices.
-* For a very minimal scrape (only 1 course per letter), set both the start indecies to 0 and both the end indecies to 0.
-* Click "Save".
 * Go to [http://localhost:8000/scraper/](http://localhost:8000/scraper/)
-* Click the name of the job you just created. The page status will show as "Waiting for localhost..." while the scraper works.
+* Click the name of one of the jobs. The page status will show as "Waiting for localhost..." while the scraper works.
 * As it scrapes, the progress of the scraper will be visible in your terminal and the retrieved data will become available to the application.
 * You can watch the subjects being added at [http://localhost:8000](http://localhost:8000)!
  Scraping time will vary based on the configuration, but a full shallow scrape takes anywhere from 5 to 7 hours, so be patient!
+
+You can also create your own configurations for debugging, by visiting the admin page and creating a `Job Config`, under `scraper`. Job configs have the following options:
+  * Deep: If this is set, the scraper will do a deep scrape (takes longer, but collects enrollment information)
+  * Letters: The subject letters to scrape
+  * Start/end indecies: Controls which subjects/courses to scrape. Implemented with Python list slices.

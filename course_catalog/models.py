@@ -2,21 +2,35 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from decimal import Decimal
+from datetime import datetime
+
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
-from decimal import Decimal
+
 
 class ModelOnProbation(models.Model):
     """
     An abstract model that includes a field representing the last time it was encountered during scraping.
     If this item is not encountered during a scraping pass, it should be deleted (since it no longer exists)
     """
-    last_encountered = models.DateTimeField(auto_now=True)
+    last_encountered = models.DateTimeField(auto_now_add=True)
     
     last_encountered_admin_field_entry = ('Scraping information', {'fields': ['last_encountered'], 'classes': ['collapse']})
 
     class Meta:
         abstract = True
+
+    def was_scraped(self):
+        """Resets the "last_encountered" field to the current time"""
+        self.last_encountered = datetime.now()
+
+    def save(self, *args, **kwargs):
+        if "was_scraped" in kwargs:
+            self.was_scraped()
+            del kwargs["was_scraped"]
+
+        super(ModelOnProbation, self).save(*args, **kwargs)
 
 class Subject(ModelOnProbation):
     #Attributes
@@ -90,6 +104,7 @@ class Section(ModelOnProbation):
     class_max = models.IntegerField(default=-1)
     wait_curr = models.IntegerField(default=-1)
     wait_max = models.IntegerField(default=-1)
+    date_enrollment_updated = models.DateTimeField(default=datetime.now)
     
     #Relationships
     course = models.ForeignKey("Course", related_name='sections')
@@ -111,6 +126,10 @@ class Section(ModelOnProbation):
                                    term=kwargs['term'])
         except ObjectDoesNotExist:
             return None
+
+    def enrollment_was_scraped(self):
+        """Resets the "date_enrollment_updated" field to the current time"""
+        self.date_enrollment_updated = datetime.now()
 
 class SectionComponent(ModelOnProbation):
     """
@@ -142,21 +161,6 @@ class SectionComponent(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class SectionType(ModelOnProbation):
-    name = models.CharField(max_length=100)
-    abbreviation = models.CharField(max_length=10)
-    order = models.IntegerField(default=0)
-
-    def __unicode__(self):
-        return self.name
-
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(abbreviation=kwargs['abbreviation'])
-        except ObjectDoesNotExist:
-            return None
-
 class Timeslot(ModelOnProbation):
     """
     A slice of time during a particular weekday
@@ -174,20 +178,6 @@ class Timeslot(ModelOnProbation):
             return cls.objects.get(start_time=kwargs['start_time'],
                                    end_time=kwargs['end_time'],
                                    day_of_week=kwargs['day_of_week'])
-        except ObjectDoesNotExist:
-            return None
-
-class DayOfWeek(models.Model):
-    name = models.CharField(max_length=20)
-    abbreviation = models.CharField(max_length=3)
-    
-    def __unicode__(self):
-        return self.name
-
-    @classmethod
-    def existing(cls, **kwargs):
-        try:
-            return cls.objects.get(abbreviation=kwargs['abbreviation'])
         except ObjectDoesNotExist:
             return None
 
@@ -227,20 +217,19 @@ class Term(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
-class Career(ModelOnProbation):
-    """
-    A course classification, such as "Undergraduate"
-    """
-    name = models.CharField(max_length=50)
-    order = models.IntegerField(default=0)
+class CourseRelation(ModelOnProbation):
+    """Holds extra information about a course"""
+
+    # Relationships
+    course = models.OneToOneField("course_catalog.Course", related_name='course_data', null=False)
 
     def __unicode__(self):
-        return self.name
-
+        return u"Data attached to {0}".format(self.course)
+    
     @classmethod
     def existing(cls, **kwargs):
         try:
-            return cls.objects.get(name=kwargs['name'])
+            return cls.objects.get(course=kwargs['course'])
         except ObjectDoesNotExist:
             return None
 
@@ -263,10 +252,6 @@ class StringModel(ModelOnProbation):
 class Instructor(StringModel):
     name = models.CharField(max_length=100)
 
-class GradingBasis(StringModel):
-    'E.g. "Graded"'
-    name = models.CharField(max_length=50)
-
 class Session(StringModel):
     name = models.CharField(max_length=50)
 
@@ -282,27 +267,76 @@ def existing_or_new(model, **kwargs):
     if existing is None:
         existing = model(**kwargs)
         existing.save()
+    else:
+        # We need to make sure the extra attributes are updated
+        for key, val in kwargs.iteritems():
+            setattr(existing, key, val)
     return existing
 
 
+# Fixtures ---------------------------------------------
 
+class Career(models.Model):
+    """
+    A course classification, such as "Undergraduate"
+    """
+    name = models.CharField(max_length=50)
+    order = models.IntegerField(default=0)
 
+    def __unicode__(self):
+        return self.name
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
 
+class DayOfWeek(models.Model):
+    name = models.CharField(max_length=20)
+    abbreviation = models.CharField(max_length=3)
+    
+    order = models.IntegerField(default=0)
+    
+    def __unicode__(self):
+        return self.name
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(abbreviation=kwargs['abbreviation'])
+        except ObjectDoesNotExist:
+            return None
 
-def existing_or_new(model, **kwargs):
+class SectionType(models.Model):
+    name = models.CharField(max_length=100)
+    abbreviation = models.CharField(max_length=10)
+    order = models.IntegerField(default=0)
 
-    #get the object with the specified attributes
-    existing = model.existing(**kwargs)
-    if existing is None:
-        existing = model(**kwargs)
-        existing.save()
-    return existing
+    def __unicode__(self):
+        return self.name
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(abbreviation=kwargs['abbreviation'])
+        except ObjectDoesNotExist:
+            return None
 
+class GradingBasis(models.Model):
+    'E.g. "Graded"'
+    name = models.CharField(max_length=50)
 
+    def __unicode__(self):
+        return self.name
 
+    @classmethod
+    def existing(cls, **kwargs):
+        try:
+            return cls.objects.get(name=kwargs['name'])
+        except ObjectDoesNotExist:
+            return None
 
 
 

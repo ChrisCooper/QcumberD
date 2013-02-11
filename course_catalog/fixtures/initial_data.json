@@ -1,0 +1,343 @@
+[
+  {
+    "pk": 1, 
+    "model": "course_catalog.dayofweek", 
+    "fields": {
+      "abbreviation": "Fr", 
+      "name": "Friday",
+      "order": 4
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "course_catalog.dayofweek", 
+    "fields": {
+      "abbreviation": "Mo", 
+      "name": "Monday",
+      "order": 0
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "course_catalog.dayofweek", 
+    "fields": {
+      "abbreviation": "Tu", 
+      "name": "Tuesday",
+      "order": 1
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "course_catalog.dayofweek", 
+    "fields": {
+      "abbreviation": "We", 
+      "name": "Wednesday",
+      "order": 2
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "course_catalog.dayofweek", 
+    "fields": {
+      "abbreviation": "Su", 
+      "name": "Sunday",
+      "order": 6
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "course_catalog.dayofweek", 
+    "fields": {
+      "abbreviation": "Th", 
+      "name": "Thursday",
+      "order": 3
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "course_catalog.dayofweek", 
+    "fields": {
+      "abbreviation": "Sa", 
+      "name": "Saturday",
+      "order": 5
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "STD", 
+      "name": "Studio", 
+      "order": 10
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "CLN", 
+      "name": "Clinical", 
+      "order": 9
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "COR", 
+      "name": "Correspondence", 
+      "order": 19
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "PRA", 
+      "name": "Practicum", 
+      "order": 18
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "REA", 
+      "name": "Reading", 
+      "order": 17
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "LTU", 
+      "name": "Lecture / Tutorial", 
+      "order": 1
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "LDI", 
+      "name": "Lecture / Discussion", 
+      "order": 3
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "EXM", 
+      "name": "Exam", 
+      "order": 16
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "TUT", 
+      "name": "Tutorial", 
+      "order": 8
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "LAB", 
+      "name": "Laboratory", 
+      "order": 8
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "PRJ", 
+      "name": "Project", 
+      "order": 15
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "BLN", 
+      "name": "Blended", 
+      "order": 7
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "THE", 
+      "name": "Thesis Research", 
+      "order": 14
+    }
+  }, 
+  {
+    "pk": 14, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "LSM", 
+      "name": "Lecture / Seminar", 
+      "order": 0
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "RSC", 
+      "name": "Research", 
+      "order": 13
+    }
+  }, 
+  {
+    "pk": 16, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "IND", 
+      "name": "Individual Study", 
+      "order": 12
+    }
+  }, 
+  {
+    "pk": 17, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "LLB", 
+      "name": "Lecture / Laboratory", 
+      "order": 2
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "SEM", 
+      "name": "Seminar", 
+      "order": 5
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "LEC", 
+      "name": "Lecture", 
+      "order": 0
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "FLD", 
+      "name": "Field Studies", 
+      "order": 11
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "DIS", 
+      "name": "Discussion", 
+      "order": 6
+    }
+  },
+  {
+    "pk": 1, 
+    "model": "course_catalog.career", 
+    "fields": {
+      "name": "Undergraduate", 
+      "order": 0
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "course_catalog.career", 
+    "fields": {
+      "name": "Graduate", 
+      "order": 3
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "course_catalog.career", 
+    "fields": {
+      "name": "Distance Studies", 
+      "order": 2
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "course_catalog.career", 
+    "fields": {
+      "name": "Non-Credit", 
+      "order": 4
+    }
+  },
+  {
+    "pk": 1, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Graded"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Pass/Fail"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Non-Graded Component"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Graded Lecture / Laboratory Required"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Honours/Pass/Fail"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Graded Lecture / Discussion Required"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Audit"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "No Transcript Print"
+    }
+  }
+
+]

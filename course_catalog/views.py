@@ -7,10 +7,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.db import models
 from django.views.decorators.cache import cache_page
+from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
-from course_catalog.models import Course, Subject, Term, Section, Career
+from course_catalog.models import Course, Subject, Term, Section, Career, Season
+
 import model_controls
 
 
@@ -44,12 +46,17 @@ def course_detail(request, subject_abbr=None, course_number=None):
     for section in course.sections.all().order_by('type__order'):
         sections[section.term].append(section)
 
+    try:
+        course_data = course.course_data
+    except ObjectDoesNotExist as e:
+        course_data = None
+
     # Convert to a list of tuples for the template
     sections = sections.items()
     sections.sort(key=lambda t: t[0].order)
 
     return render(request, 'course_catalog/pages/course_detail.html',
-        {'course': course, 'all_sections': sections},
+        {'course': course, 'all_sections': sections, 'course_data': course_data},
         context_instance=RequestContext(request))
 
 
@@ -57,7 +64,7 @@ def course_detail(request, subject_abbr=None, course_number=None):
 def subject_detail(request, subject_abbr):
     subject = get_object_or_404(Subject, abbreviation__iexact=subject_abbr)
 
-    # Since there are very few careers, we can just get them all and filter later
+    # Since there are very few careers, we just get them all and filter later
     courses_by_career = []
     careers = Career.objects.all().order_by('order')
 
@@ -66,8 +73,13 @@ def subject_detail(request, subject_abbr):
         if c.count() != 0:
             courses_by_career.append((career, c))
 
+    # Get seasons for the filter panel
+    seasons = Season.objects.all().order_by('order')
+    [setattr(s, 'checked', True) for s in seasons]
+
     return render(request, 'course_catalog/pages/subject_detail.html',
-        {'subject': subject, 'courses_by_career': courses_by_career})
+        {'subject': subject, 'courses_by_career': courses_by_career,
+        'seasons': seasons})
 
 
 @cache_page(60 * 30)

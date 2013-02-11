@@ -18,11 +18,10 @@ admin.site.register(Subject, SubjectAdmin)
 
 class CourseAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['title', 'subject', 'number', 'description']}),
+        (None, {'fields': ['title', 'subject', 'number', 'career', 'grading_basis', 'description', 'units', 'enrollment_reqs', 'add_consent', 'drop_consent']})
     ]
     search_fields = ['title', 'description']
 admin.site.register(Course, CourseAdmin)
-
 
 
 class SectionComponentInline(admin.StackedInline):

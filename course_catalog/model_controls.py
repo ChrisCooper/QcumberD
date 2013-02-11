@@ -3,7 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import re
-from course_catalog.models import Subject, Course
+from course_catalog.models import *
 
 #returns a list containing lists of subjects
 #the length of each list of subjects should be as close to equal as possible
@@ -141,3 +141,25 @@ def double_word_search_result(words):
 
 def full_search_result(words):
     return []
+
+
+
+def clear_old_models(cutoff_datetime, models=None):
+    '''
+    Deletes instances of the given models that were not encountered since the given datetime.
+    Returns a mapping of model names to number of items deleted.
+    '''
+
+    if models == None:
+        models = [Subject, Course, Section, SectionComponent, Instructor]
+
+    deleted = {}
+
+    for model in models:
+        old_models = model.objects.all().filter(last_encountered__lt=cutoff_datetime)
+        print("Deleting %d instances of %s" % (old_models.count(), model.__name__))
+        deleted[model.__name__] = old_models.count()
+        old_models.delete()
+
+    return deleted
+        

@@ -6,35 +6,46 @@ import datetime
 
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
 
-from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
+from course_catalog.model_controls import clear_old_models
 
 from scraper.models import JobConfig
-from scraper.solus_data import update_constants
-from scraper.solus_scraper import SolusScraper
+from scraper.catalog_scraper import CatalogScraper
 
-
+@staff_member_required
 def index(request):
     """Lists all the job configurations"""
     job_configs = JobConfig.objects.all()
 
     return render(request, 'scraper/index.html', {'job_configs' : job_configs})
 
+@staff_member_required
 def new_job(request, config_name):
     """Starts a new scraping job"""
+
     config = get_object_or_404(JobConfig, name=config_name)
 
-    t = datetime.datetime.now()
+    start_time = datetime.datetime.now()
 
     try:
-        SolusScraper(config, SCRAPER_USERNAME, SCRAPER_PASSWORD).scrape_all()
-        return HttpResponse("Finished scrape pass (time taken: " + str(datetime.datetime.now() - t) + ")")
+        s = CatalogScraper(config=config)
+        s.scrape_all()
     except Exception:
-        print ("Error during scraping (time taken: " + str(datetime.datetime.now() - t) + ")")
+        print ("Error during scraping (time taken: " + str(datetime.datetime.now() - start_time) + ")")
         raise
 
-def constants(request):
+    deleted = None
+    if config.delete_other_models:
+        deleted = clear_old_models(start_time)
 
-    update_constants()
+    # Make a pretty time taken string
+    seconds = (datetime.datetime.now() - start_time).seconds
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    time_taken = '{0} hours, {1} minutes, {2} seconds.'.format(hours, minutes, seconds)
 
-    return HttpResponse('Constants updated')
+    # Don't want django model stuff to show up
+    del config._state
+
+    return render(request, 'scraper/scrape_result.html', {'time_taken' : time_taken, 'config': config.__dict__, 'deleted': deleted})

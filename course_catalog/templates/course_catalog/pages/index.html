@@ -1,0 +1,107 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+{% extends "course_catalog/pages/single_page.html" %}
+
+{% block page_title %} Qcumber | The Simple (Unofficial) Course Catalog For Queen's Students {% endblock %}
+
+
+{% block main_panel %}
+
+<div class="hide">
+    <p>Qcumber was started by a Queen's student to make finding courses easier.</p>
+    <p>It has listings for all courses offered at Queen's, including COMM, BIOL, CISC, ECON, PSYC, and ANAT.</p>
+    <p>In the days, weeks, and months to come, it will will be updated to include building your timetable, sharing them with friends, rating courses, and much more!</p>
+    <p>We believe it will help to fill the severe lack of course-finding tools at Queen's University, specifically by providing a more modern way to browse courses and sections.</p>
+    <p>P.S. Qcumber is open-source! You can check it out on GitHub at https://github.com/ChrisCooper/QcumberD.</p>
+</div>
+
+{% include "course_catalog/components/hero_search.html" %}
+ 
+<div class="row">
+    <div class="span6">
+
+        {% if subject_buckets %}
+
+			{% if subject_buckets|length > 1 %}
+
+					<ul class="nav nav-tabs">
+						{% for bucket in subject_buckets %}
+							<li {%ifequal bucket.0.0 "A"%}class="active"{%endifequal%}>
+								<a href="#{{bucket.0}}" data-toggle="tab">
+									<b>{{bucket.0}}</b>
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+
+					<div class="tab-content">
+						{% for bucket in subject_buckets %}
+
+							<div style= "min-height:{{min_height}}px" class="tab-pane {%ifequal bucket.0.0 "A"%}active{%endifequal%}" id="{{bucket.0}}">
+								<table class="table table-striped table-hover table-condensed">
+								
+									{% for subject in bucket.1 %}
+									
+										<tr>
+											<td width="100px" class="abbreviation">{{ subject.abbreviation }} </td>
+											<td class="subject_title">
+												<a href="{{ subject.get_absolute_url }}">{{ subject.title }}</a>
+											</td>
+										</tr>
+										
+									{% endfor %}
+							
+								</table>
+							</div>
+
+						{% endfor %}
+					</div>
+
+			{% else %}
+
+				<table class="table table-striped table-hover table-condensed">
+				
+					{% for subject in subject_buckets.0.1 %}
+					
+						<tr>
+							<td width="100px" class="abbreviation">{{ subject.abbreviation }} </td>
+							<td class="subject_title">
+								<a href="{{ subject.get_absolute_url }}">{{ subject.title }}</a>
+							</td>
+						</tr>
+						
+					{% endfor %}
+			
+				</table>
+
+			{% endif %}
+
+
+        {% else %}
+            <p>No subjects are available.</p>
+        {% endif %}
+
+    </div>
+
+    <div class="span5">
+        <div class="alert alert-info">
+            <p>
+                This site is not associated with Queen's University.
+                Though we try our best, we can't guarantee that the information on this site is accurate.
+                Please let us know at <a href="mailto:feedback@qcumber.ca">feedback@qcumber.ca</a> if you see something that's wrong.
+                Our information is usually updated weekly, or more frequently during regristration periods.
+            </p>
+            <p>
+                <em>Make sure you also confirm your course information on SOLUS! We are not the definitive source. :) </em>
+            </p>
+            <p>
+            Our terms of service are <a href="/tos"> available here </a>.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
