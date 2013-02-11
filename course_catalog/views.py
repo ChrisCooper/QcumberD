@@ -178,6 +178,7 @@ def count_course_requisites(request):
     t0 = time.time()
 
     courses = valid = missing = 0
+    missing_courses = defaultdict(list)
     all_courses = Course.objects.all()
 
     print('creating list of codes...')
@@ -191,6 +192,7 @@ def count_course_requisites(request):
                 valid += 1
             else:
                 missing += 1
+                missing_courses[(abbr, num)].append(course.concise_unicode())
 
     tf = time.time()
     total = valid + missing
@@ -201,7 +203,11 @@ def count_course_requisites(request):
     print('courses scanned: {}'.format(courses))
     print('total requisites: {}'.format(total))
     print('valid requisites: {} ({:.1%})'.format(valid, valid/float(total)))
-    print('missing requisites: {} ({:.1%})'.format(missing, missing/(float(total))))
+    print('missing requisites: {} ({:.1%})'.format(
+        missing, missing/(float(total))))
+    print('unique missing requisites: {} ({:.1%})'.format(
+        len(missing_courses), len(missing_courses)/float(total)))
 
-    return HttpResponse('see terminal')
+    return HttpResponse('see terminal<br/><pre>missing:\n{}</pre>'.format(
+        '\n'.join('{0[0]} {0[1]} ({1})'.format(c, len(l)) for c, l in missing_courses.items())))
 
