@@ -15,6 +15,9 @@ import model_controls
 
 
 def enforce_subject_upper(view):
+    """A decorator for redirecting views to an uppercase subject URL in case
+    the one provided contained lowercase characters.
+    """
     cannonical_view = 'course_catalog.views.{}'.format(view.__name__)
     @wraps(view)
     def wrapped(request, *args, **kwargs):
