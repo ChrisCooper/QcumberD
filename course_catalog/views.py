@@ -50,9 +50,7 @@ def course_detail(request, subject_abbr, course_number):
         course = Course.objects.get(subject__abbreviation=subject_abbr,
                                     number=course_number)
     except ObjectDoesNotExist:
-        return render(request, 'course_catalog/pages/not_found.html',
-            {'missing': 'course', 'abbr': subject_abbr, 'num': course_number},
-            context_instance=RequestContext(request), status=404)
+        return detail_not_found(request, subject_abbr, course_number)
     
     sections = defaultdict(list)
     for section in course.sections.all().order_by('type__order'):
@@ -78,9 +76,7 @@ def subject_detail(request, subject_abbr):
     try:
         subject = Subject.objects.get(abbreviation=subject_abbr)
     except ObjectDoesNotExist:
-        return render(request, 'course_catalog/pages/not_found.html',
-            {'missing': 'subject', 'abbr': subject_abbr},
-            context_instance=RequestContext(request), status=404)
+        return detail_not_found(request, subject_abbr)
 
     # Since there are very few careers, we just get them all and filter later
     courses_by_career = []
@@ -98,6 +94,21 @@ def subject_detail(request, subject_abbr):
     return render(request, 'course_catalog/pages/subject_detail.html',
         {'subject': subject, 'courses_by_career': courses_by_career,
         'seasons': seasons})
+
+
+def detail_not_found(request, subject_abbr, course_number=None):
+    """A special 404 for pages which are probably discovered because someone
+    put a bad course code in the requirements on Solus.
+    """
+    context = {'abbr': subject_abbr}
+
+    if course_number is None:
+        context.update({'missing': 'subject'})
+    else:
+        context.update({'missing': 'course', 'num': course_number})
+
+    return render(request, 'course_catalog/pages/not_found.html', context,
+        context_instance=RequestContext(request), status=404)
 
 
 @cache_page(60 * 30)
