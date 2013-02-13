@@ -36,6 +36,13 @@ class CourseParser(SolusParser):
         "Drop Consent": cc.Consent,
     }
 
+    # Requisite->Course is many->one, as opposed to the other attribute mappings
+    # which are Course->attribute many->one.
+    # It's many->one, not many->many. Take my word for it.
+    many_attribute_class_mappings = {
+        "Enrollment Requirement": cc.Requisite,
+    }
+
     def current_course(self, subject):
         """Returns the course built from the current page"""
 
@@ -160,6 +167,9 @@ class CourseParser(SolusParser):
 
                 # This model will have to be saved if it's new
                 value.save()
+
+            if attr in self.many_attribute_class_mappings:
+                
 
             # Add the attribute's value to the course
             setattr(course, attribute_name, value)

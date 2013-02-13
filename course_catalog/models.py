@@ -63,7 +63,7 @@ class Course(ModelOnProbation):
     description = models.TextField()
     number = models.CharField(max_length=10)
     units = models.FloatField(default=-1.)
-    enrollment_reqs = models.TextField(default="")
+    requisite_text = models.TextField(default="")
 
     #Relationships
     subject = models.ForeignKey(Subject, related_name='courses')
@@ -116,6 +116,21 @@ class Course(ModelOnProbation):
         return ('course_catalog.views.course_detail', (), {
             'subject_abbr': self.subject.abbreviation,
             'course_number' : self.number})
+
+
+class Requisite(ModelOnProbation):
+    """Enrollment requisites come from a free-form text field on solus. That
+    field is parsed to find the actual course. Some of them exist. Instances of
+    this model describe where in the text string those courses occur, and
+    provide helper methods to work with them.
+    """
+    subject_abbr = models.CharField(max_length=10)
+    course_number = models.CharField(max_length=10)
+    left_index = models.IntegerField()
+    right_index = models.IntegerField()
+    exists = models.BooleanField(default=False)
+
+    requisites = models.ForeignKey("Course", related_name='requisites')
 
 
 class Section(ModelOnProbation):
