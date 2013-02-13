@@ -40,7 +40,7 @@ class CourseParser(SolusParser):
     # which are Course->attribute many->one.
     # It's many->one, not many->many. Take my word for it.
     many_attribute_mappings = {
-        "Enrollment Requirement": self.add_requisites,
+        "Enrollment Requirement": lambda *a, **k: CourseParser.add_requisites(*a, **k),
     }
 
     def current_course(self, subject):
@@ -169,7 +169,7 @@ class CourseParser(SolusParser):
                 value.save()
 
             if attr in self.many_attribute_mappings:
-                self.many_attribute_mappings[attr](value)
+                self.many_attribute_mappings[attr](self, value, course)
                 # in this case, we're adding this class to the things; nothing
                 # to add to the Course object directly.
                 return
@@ -180,19 +180,21 @@ class CourseParser(SolusParser):
         else:
             raise Exception('Encountered unexpected course attribute with label: "{0}"'.format(label))
 
-    def add_requisites(self, enrollment_reqs):
+    def add_requisites(self, enrollment_reqs, course):
         course_re = r'(?P<abbr>[A-Z]{3,4}) (?P<num>\d{3}[AB]?)'
         itermatches = re.finditer(course_re, enrollment_reqs)
 
         for match in itermatches:
             abbr, num = match.groups()
-            r = cc.Requisite(
-                subject_abbr=abbr,
-                course_number=num,
-                left_index=match.start(),
-                right_index=match.end(),
-                for_course=self)
-            r.save()
+            properties = {
+                'subject_abbr': abbr,
+                'course_number': num,
+                'left_index': match.start(),
+                'right_index': match.end(),
+                'for_course': course
+            }
+            e_or_n(cc.Requisite, **properties)
+            print 'debug -- requisite initialized and saved'
 
     def add_course_components(self, course_components, course):
 

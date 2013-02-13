@@ -130,15 +130,12 @@ class Requisite(ModelOnProbation):
     right_index = models.IntegerField()
     #exists = models.BooleanField(default=False)
 
-    for_course = models.ForeignKey("Course", related_name='requisites')
+    for_course = models.ForeignKey("Course", related_name='requisites',
+                                   null=True)
 
-    def __init__(self, subject_abbr, course_number, left_index, right_index,
-                 for_course):
-        self.subject_abbr = subject_abbr
-        self.course_number = course_number
-        self.left_index = left_index
-        self.right_index = right_index
-        self.for_course = for_course
+    def __unicode__(self):
+        return u'{coursename}: {self.subject_abbr} {self.course_number}'.format(
+            coursename=self.for_course.concise_unicode(), self=self)
 
 
 class Section(ModelOnProbation):
