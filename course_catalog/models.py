@@ -63,7 +63,7 @@ class Course(ModelOnProbation):
     description = models.TextField()
     number = models.CharField(max_length=10)
     units = models.FloatField(default=-1.)
-    requisite_text = models.TextField(default="")
+    enrollment_reqs = models.TextField(default="")
 
     #Relationships
     subject = models.ForeignKey(Subject, related_name='courses')
@@ -128,9 +128,17 @@ class Requisite(ModelOnProbation):
     course_number = models.CharField(max_length=10)
     left_index = models.IntegerField()
     right_index = models.IntegerField()
-    exists = models.BooleanField(default=False)
+    #exists = models.BooleanField(default=False)
 
-    requisites = models.ForeignKey("Course", related_name='requisites')
+    for_course = models.ForeignKey("Course", related_name='requisites')
+
+    def __init__(self, subject_abbr, course_number, left_index, right_index,
+                 for_course):
+        self.subject_abbr = subject_abbr
+        self.course_number = course_number
+        self.left_index = left_index
+        self.right_index = right_index
+        self.for_course = for_course
 
 
 class Section(ModelOnProbation):
