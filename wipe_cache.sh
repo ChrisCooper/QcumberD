@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+kill $(cat $HOME/memcached.pid)
 rm $HOME/memcached.sock
 rm $HOME/memcached.pid
-memcached -d -m 64 -s $HOME/memcached.sock -P $HOME/memcached.pid 
+memcached -d -m 40 -s $HOME/memcached.sock -P $HOME/memcached.pid 
