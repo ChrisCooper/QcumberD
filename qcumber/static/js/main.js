@@ -52,7 +52,9 @@ $('.check-enrollment').on('click', function (e) {
 });
 
 
-// Track search events
+// --------------- Google Analytics ---------------
+
+// Track searches
 $('.search-form').on('submit', function(e) {
     var form = $(this).parents().hasClass('hero-unit') ? 'index' :
         $(this).parents().hasClass('nav') ? 'search bar' : '???';
