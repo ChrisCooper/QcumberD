@@ -41,7 +41,7 @@
 									{% for subject in bucket.1 %}
 									
 										<tr>
-											<td width="100px" class="abbreviation">{{ subject.abbreviation }} </td>
+											<td class="abbreviation">{{ subject.abbreviation }} </td>
 											<td class="subject_title">
 												<a href="{{ subject.get_absolute_url }}">{{ subject.title }}</a>
 											</td>
@@ -62,7 +62,7 @@
 					{% for subject in subject_buckets.0.1 %}
 					
 						<tr>
-							<td width="100px" class="abbreviation">{{ subject.abbreviation }} </td>
+							<td class="abbreviation">{{ subject.abbreviation }} </td>
 							<td class="subject_title">
 								<a href="{{ subject.get_absolute_url }}">{{ subject.title }}</a>
 							</td>
