@@ -5,4 +5,6 @@
 
 from django.db import models
 
-# Create your models here.
+
+# User Profile
+# Custom attributes associated with users

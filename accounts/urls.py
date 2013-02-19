@@ -6,10 +6,4 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import logout
 
 urlpatterns = patterns('',
-	url(r'^logout/', logout, name='logout',),
 )
-
-urlpatterns += patterns('accounts.views',
-	url(r'^login/', 'login', name='login'),
-)
-

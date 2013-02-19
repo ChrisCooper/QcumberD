@@ -6,12 +6,3 @@ from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-
-
-@cache_page(60 * 30)
-def login(request):
-	next_url = reverse('dashboard')
-	if 'next' in request.GET:
-		next_url = request.GET['next']
-
-	return render(request, 'accounts/pages/login.html', {'next_url': next_url})

@@ -29,13 +29,13 @@
                           <li><a href="{% url 'dashboard' %}">View Dashboard</a></li>
                           <li><a href="#">Verify Queen's Email</a></li>
                           <li class="divider"></li>
-                          <li><a href="{% url 'logout' %}?next={{ request.path }}">Log out</a></li>
+                          <li><a href="{% url 'auth_logout' %}?next={{ request.path }}">Log out</a></li>
                         </ul>
 
                     </span>
                 </li>
             {% else %}
-                <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+                <li><a href="{% url 'auth_login' %}?next={{ request.path }}">Login</a></li>
             {% endif %}
 
             <li><a href="{% url 'home' %}">Home</a></li>

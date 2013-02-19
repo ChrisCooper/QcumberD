@@ -17,10 +17,11 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     
-    # Social-auth support
-    url(r'', include('social_auth.urls')),
+    # Social-auth and Registration support
+    url(r'^social/', include('social_auth.urls')),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 
-    url(r'^accounts/', include('accounts.urls')),
+    url(r'^user/', include('accounts.urls')),
 
     # Uncomment the next line to enable the SOLUS scraper
     url(r'^scraper/', include('scraper.urls')),

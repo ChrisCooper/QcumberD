@@ -149,10 +149,12 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+
     'south',
     #'debug_toolbar',
     'compressor',
     'social_auth',
+    'registration',
 
 
     'shell_snippets',
@@ -195,7 +197,7 @@ LOGGING = {
     }
 }
 
-# Django-compressor
+# -------- Django-compressor --------
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
@@ -206,7 +208,7 @@ COMPRESS_CSS_FILTERS = [
 ]
 
 
-# Social-auth Settings
+#  ------- Social-auth Settings --------
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
@@ -227,4 +229,7 @@ SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
 
 SOCIAL_AUTH_EXPIRATION = 'expires'
+
+# -------- Registration Settings --------
+ACCOUNT_ACTIVATION_DAYS = 3
 
