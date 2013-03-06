@@ -1,0 +1,11 @@
+[
+  {
+    "pk": 1, 
+    "model": "textbooks.jobconfig", 
+    "fields": {
+      "description": "Scrapes all textbooks. (This is a fixture, so it cannot be modified)", 
+      "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 
+      "name": "Full scrape"
+    }
+  }
+]

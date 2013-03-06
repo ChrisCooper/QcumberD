@@ -60,9 +60,7 @@
                                             <span class="underlineable">{{ course.title }}</span>
                                             {% for season in course.seasons_offered %}
                                                 <span class="season-tag season-{{ season }}">
-                                                    <span class="icon">
-                                                        {{ season }}
-                                                    </span>
+                                                    {{ season }}
                                                 </span>
                                             {% empty %}
                                                 <span class="season-Unscheduled"></span>

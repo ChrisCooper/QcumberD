@@ -250,5 +250,94 @@
       "name": "Discussion", 
       "order": 6
     }
+  },
+  {
+    "pk": 1, 
+    "model": "course_catalog.career", 
+    "fields": {
+      "name": "Undergraduate", 
+      "order": 0
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "course_catalog.career", 
+    "fields": {
+      "name": "Graduate", 
+      "order": 3
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "course_catalog.career", 
+    "fields": {
+      "name": "Distance Studies", 
+      "order": 2
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "course_catalog.career", 
+    "fields": {
+      "name": "Non-Credit", 
+      "order": 4
+    }
+  },
+  {
+    "pk": 1, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Graded"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Pass/Fail"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Non-Graded Component"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Graded Lecture / Laboratory Required"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Honours/Pass/Fail"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Graded Lecture / Discussion Required"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "Audit"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "course_catalog.gradingbasis", 
+    "fields": {
+      "name": "No Transcript Print"
+    }
   }
+
 ]
