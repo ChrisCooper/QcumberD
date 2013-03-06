@@ -148,6 +148,25 @@ class SolusSession(object):
         """Returns all sections visible on the current course page"""
         return SectionParser(self.soup).current_sections(course, term)
 
+    def visit_section_page(self, section):
+        """Opens the dedicated page for the provided section"""
+        if self.recovery_state < 0:
+            self.recovery_stack[4] = section
+
+        self._catalog_post(section.click_action)
+    
+    def scrape_section_page(self, section):
+        """Adds the information available on the dedicated section page to the provided section"""
+        return SectionParser(self.soup).add_section_page_attributes(section)
+
+    def return_from_section(self):
+        """Navigates back from section to course"""
+        self.recovery_stack[4] = None
+        self._catalog_post('CLASS_SRCH_WRK2_SSR_PB_CLOSE')
+
+
+    # -----------------------------General Purpose------------------------------------- #
+
     def _catalog_post(self, action, extras={}):
         """Submits a post request to the site"""
         extras['ICAction'] = action
@@ -157,16 +176,16 @@ class SolusSession(object):
         # The old soup no longer represents the current page's content
         self._soup = None
 
-        import random
+        #import random
         # Improve this, could easily give false positives
         if "Data Integrity Error" in self.latest_text:
             self._recover(action, extras)
             #raise Exception("SOLUS reported a Data Integrity Error")
 
         # TESTING - Fake a DIE using random number generator
-        elif action != "" and random.random() < 0.1:
-            self._catalog_post("")
-            self._recover(action, extras)
+        #elif action != "" and random.random() < 0.1:
+        #    self._catalog_post("")
+        #    self._recover(action, extras)
 
     def _recover(self, action, extras={}):
         """Attempts to recover the scraper state after encountering an error"""
@@ -214,26 +233,3 @@ class SolusSession(object):
         print ("-----------------------------------")
 
         self._catalog_post(action, extras)
-    
-    def visit_section_page(self, section):
-        """Opens the dedicated page for the provided section"""
-        if self.recovery_state < 0:
-            self.recovery_stack[4] = section
-
-        self._catalog_post(section.click_action)
-    
-#    def view_section(self, class_num):
-#        """Clicks on a course section"""
-#        if self.recovery_state < 0:
-#            self.recovery_stack[4] = class_num
-#
-#        action = self.parser().section_link(class_num)
-#
-    def scrape_section_page(self, section):
-        """Adds the information available on the dedicated section page to the provided section"""
-        return SectionParser(self.soup).add_section_page_attributes(section)
-
-    def return_from_section(self):
-        """Navigates back from section to course"""
-        self.recovery_stack[4] = None
-        self._catalog_post('CLASS_SRCH_WRK2_SSR_PB_CLOSE')

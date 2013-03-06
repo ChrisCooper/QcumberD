@@ -17,6 +17,8 @@ class SectionScraper(SolusScraper):
         # Scrape the sections in each term
         for term in terms:
 
+            print ("--------Scraping Term: {0}".format(term))
+
             term.save(was_scraped=True)
 
             # View the sections for this term
@@ -29,12 +31,14 @@ class SectionScraper(SolusScraper):
         if self.solus.multiple_section_pages_available():
             self.solus.view_all_sections()
 
+        print ("----------Scraping all Sections")
         sections = self.solus.current_sections(course, term)
 
         for section in sections:
-
+            
             #Check if we should visit the section page
             if self.config.deep:
+                print ("------------Scraping Section (deep): {0}".format(section))
                 self.solus.visit_section_page(section)
                 self.solus.scrape_section_page(section)
                 self.solus.return_from_section()
