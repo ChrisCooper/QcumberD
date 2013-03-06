@@ -6,6 +6,8 @@ class SubjectScraper(SolusScraper):
     def scrape_subject(self, subject):
         """Scrapes data for an entire subject once its dropdown is open on the alphanum page"""
 
+        print ("----Scraping subject: " + str(subject))
+        
         course_index = self.config.course_start_idx
 
         # Loop through all subject dropdowns by incrementing the link name index

@@ -7,8 +7,10 @@ class CourseScraper(SolusScraper):
 
     def scrape_current_course(self, subject):
         """Scrapes data for an entire course once its page is open"""
-
+        
         course = self.solus.current_course(subject)
+        
+        print ("------Scraping course: {0} - {1}".format(course.number, course.title.encode('ascii','ignore')))
 
         course.enrollment_reqs = self.link_requisites(course.enrollment_reqs)
 

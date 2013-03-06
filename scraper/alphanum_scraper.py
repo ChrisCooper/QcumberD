@@ -5,6 +5,8 @@ class AlphanumScraper(SolusScraper):
 
     def scrape_alphanum(self, letter):
         """Scrapes data for an entire alphanum in the course catalog"""
+ 
+        print ("--Scraping letter: " + letter)
 
         # Go to the page for this letter
         self.solus.select_alphanum(letter)
@@ -24,15 +26,13 @@ class AlphanumScraper(SolusScraper):
             subject.save(was_scraped=True)
 
             # Open the subject dropdown
-            self.solus.toggle_subject_dropdown(subject)
-
-            print ("----Scraping subject: " + str(subject))
+            self.solus.dropdown_subject(subject)
             
             # Scrape everything in the subject
             SubjectScraper(self).scrape_subject(subject)
 
             # Close the subject dropdown
-            self.solus.toggle_subject_dropdown(subject)
+            self.solus.rollup_subject(subject)
 
             # Advance to the next subject link
             subject_index += 1
