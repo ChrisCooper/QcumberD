@@ -18,6 +18,7 @@ from qcumber.config import unixy_project_path
 # Turn debug on in dev settings for useful error pages
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+SHOW_DEBUG_TOOLBAR = False
 
 
 # Database config
