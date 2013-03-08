@@ -75,7 +75,7 @@ class ExamScraper(object):
 
         exam_attrs = {
                     "year": year,
-                    "pdf_url": "http://library.queensu.ca" + match.string}
+                    "pdf_url": "http://library.queensu.ca.proxy.queensu.ca{0}".format(match.string)}
 
         exam = existing_or_new(Exam, **exam_attrs)
         for course_relation in course_relations:
