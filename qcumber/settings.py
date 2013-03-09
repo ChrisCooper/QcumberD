@@ -114,9 +114,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+if SHOW_DEBUG_TOOLBAR:
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 FIXTURE_DIRS = (
         # Add the common fixtures
@@ -151,7 +152,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     'south',
-    #'debug_toolbar',
+    'debug_toolbar',
     'compressor',
     'social_auth',
     'registration',

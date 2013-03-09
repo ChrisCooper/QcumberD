@@ -1,7 +1,3 @@
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-
 {% extends "course_catalog/pages/single_page.html" %} {% block page_title %} Qcumber
 | Frequently Asked Questions {% endblock %} {% block main_panel %}
 <div class="expo">
@@ -10,118 +6,87 @@
     <h3>
         The questions you've asked, and those that you didn't.</h3>
     <ul class="faqs">
-        <li>
+
+
+        <li class="faq-entry">
             <h4>
                 Will Qcumber replace SOLUS one day?
             </h4>
             <p>
-                Is that a trick question?</br> SOLUS serves a lot of purposes that Qcumber makes
-                no effort to address.</br> (P.S. You should always confirm course information with
-                SOLUS. Qcumber is the unofficial course catalogue. SOLUS is the official one.)
+                SOLUS serves a lot of purposes that Qcumber makes no effort to address. (P.S. You should always confirm course information with SOLUS. Qcumber is the unofficial course catalogue. SOLUS is the official one.)
             </p>
         </li>
-        <li>
-            <h4>
-                What's your favourite feature of SOLUS?
-            </h4>
-            <p>
-                The way you can't open tabs. Scratch that. It's how some sections only show up in
-                search results, and some sections only show up in the course catalog. Mmm.
-            </p>
-        </li>
-        <li>
+
+        <li class="faq-entry">
             <h4>
                 I have a question about a course/subject/concentration.
             </h4>
             <p>
-                Qcumber doesn't attempt to offer guidance on what courses you should take. You should
-                contact the department for that kind of information.
+                Psh, that’s not a question! Well, Qcumber doesn't yet attempt to offer guidance on what courses you should take. You should contact the department for that kind of information. We're hoping to put up a page with useful faculty links at some point.
             </p>
         </li>
-        <li>
+
+        <li class="faq-entry">
             <h4>
-                I have a link to a course webpage, syllabus, or registration tip for you to post.
+                What new features can we look forward to?                
             </h4>
-            <p>
-                Always appreciated! We're working on including those on the site, so you can send
-                them here, or save them until we release that feature.
-            </p>
+            <ul>
+                <li>personalized shortlists for subjects/courses of interest</li>
+                <li>course ratings</li>
+                <li>easy-to-view, printable timetables</li>
+                <li>a tool to help you find that elusive final course</li>
+            </ul>
         </li>
-        <li>
-            <h4>
-                How do you feel about sea cucumbers?
-            </h4>
-            <p>
-                Posers.
-            </p>
-        </li>
-        <li>
-            <h4>
-                What new features can we look forward to?
-            </h4>
-            <p>
-                <ul>
-                    <li>personalized shortlists for subjects/courses of interest</li>
-                    <li>a tool to help you find that elusive final course</li>
-                    <li>access to textbook information</li>
-                    <li>course ratings</li>
-                    <li>easy-to-view, printable timetable</li>
-                </ul>
-            </p>
-        </li>
-        <li>
-            <h4>
-                How does Qcumber work?
-            </h4>
-            <p>
-                Fairies.
-            </p>
-        </li>
-        <li>
-            <h4>
-                No really.
-            </h4>
-            <p>
-                Ok fine. Information is obtained via an awesome tool called Selenium Remote Control,
-                and then put in a database. I then serve it to you using Django for your easy-browsing
-                pleasure! Aren't you glad you asked?
-            </p>
-        </li>
-        <li>
+
+        <li class="faq-entry">
             <h4>
                 Can you let me know when new features come out?
             </h4>
             <p>
-                Sure! Like us on facebook, or follow us on twitter.
+                Sure! Like us on <a href="https://www.facebook.com/QcumberQueens">Facebook</a>, or follow us on <a href="https://twitter.com/QcumberQueens">Twitter</a>.
             </p>
         </li>
-        <li>
+
+        <li class="faq-entry">
+            <h4>
+                How does Qcumber work?
+            </h4>
+            <p>
+                Fairies. There’s one named Django, and one named Bootstrap. You can see the open fairy source code at <a href="https://github.com/ChrisCooper/QcumberD/">https://github.com/ChrisCooper/QcumberD/</a>! :)
+            </p>
+        </li>
+
+        <li class="faq-entry">
             <h4>
                 Are you making money off this?
             </h4>
             <p>
-                No. Actually, I'm paying for hosting and domain registration costs myself, because
-                I'm not a fan of ads. Let me know if you want to buy me lunch! :)
+                No. Actually, I'm paying for hosting and domain registration costs myself. Let me know if you want to buy me or the team a coffee! :)
             </p>
         </li>
-        <li>
+
+        <li class="faq-entry">
             <h4>
                 How can I help?
             </h4>
             <p>
-                Feedback, suggestions, and favourite recipes welcome HERE. If you're a developer,
-                email HERE.
+                Feedback, suggestions, and favourite recipes are welcome at <a href="feedback@qcumber.ca">feedback@qcumber.ca</a>!
+            </p>
+            <p>
+                If you’re an interested developer, we'd also love to talk. ;)
             </p>
         </li>
-        <li>
+
+        <li class="faq-entry">
             <h4>
-                What's your favourite way to eat cucumber?
+                What’s your favourite way to eat cucumber?
             </h4>
             <p>
-                On the cob. Maybe with salt and pepper.
+                On the cob. Maybe with salt and pepper. 
             </p>
         </li>
-        <li>
+
+        <li class="faq-entry">
             <h4>
                 Does Qcumber mean anything?
             </h4>
@@ -129,11 +94,32 @@
                 Quasi-Cylindrical Underappreciated Mostly-Beloved Edible Refreshment.
             </p>
         </li>
-    </ul>
+
+        <li class="faq-entry">
+            <h4>
+                How do you feel about sea cucumbers?
+            </h4>
+            <p>
+                Posers.
+            </p>
+        </li>
+
+        <li class="faq-entry">
+            <h4>
+                I have more questions.
+            </h4>
+            <p>
+                Please feel free to send them to <a href="feedback@qcumber.ca">feedback@qcumber.ca</a>! :)
+            </p>
+        </li>
+
+
+
     <div class="fb-big">
         <div class="fb-like-box" data-href="https://www.facebook.com/QcumberQueens" data-width="292"
             data-height="300" data-show-faces="true" data-stream="false" data-header="true">
         </div>
     </div>
+
 </div>
 {% endblock %}

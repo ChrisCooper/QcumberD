@@ -1,2 +1,5 @@
-python manage.py synchdb
+git pull origin master
+python manage.py syncdb
 python manage.py collectstatic
+./wipe_cache.sh
+../apache/bin/restart
