@@ -158,8 +158,6 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'compressor',
     'social_auth',
-    'registration',
-
 
     'shell_snippets',
 
