@@ -3,14 +3,18 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf.urls import patterns, include, url
+from django.views.generic.base import RedirectView
 
-urlpatterns = patterns('django.views.generic.simple',
+urlpatterns = patterns('',
 
-    url(r'^courses/(?P<subject_abbr>\w+)_(?P<course_number>\w+)/$', "redirect_to",
-        {"url": '/catalog/%(subject_abbr)s/%(course_number)s/', "permanent": True}),
-    url(r'^subjects/(?P<subject_abbr>\w+)/$', 'redirect_to',
-        {"url": '/catalog/%(subject_abbr)s/', "permanent": True}),
-    url(r'^catalog/$', 'redirect_to',
-        {"url": '/', "permanent": False}),
+    url(r'^courses/(?P<subject_abbr>\w+)_(?P<course_number>\w+)/$',
+		RedirectView.as_view(url='/catalog/{subject_abbr}/{course_number}/')
+	),
+    url(r'^subjects/(?P<subject_abbr>\w+)/$',
+        RedirectView.as_view(url='/catalog/{subject_abbr}/'),
+    ),
+    url(r'^catalog/$',
+        RedirectView.as_view(url='/', permanent=False),
+    ),
 
 )

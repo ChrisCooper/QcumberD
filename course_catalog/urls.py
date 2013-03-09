@@ -3,25 +3,25 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf.urls import patterns, include, url
-from django.views.generic.simple import direct_to_template
+from django.views.generic.base import TemplateView
 
 urlpatterns = patterns('course_catalog.views',
-    url(r'^$', 'index', name="home"),
+     url(r'^$', 'index', name="home"),
 
-    url(r'^catalog/(?P<subject_abbr>\w+)/(?P<course_number>\w+)/$', 'course_detail'),
-    url(r'^catalog/(?P<subject_abbr>\w+)/$', 'subject_detail'),
+     url(r'^catalog/(?P<subject_abbr>\w+)/(?P<course_number>\w+)/$', 'course_detail'),
+     url(r'^catalog/(?P<subject_abbr>\w+)/$', 'subject_detail'),
 
     url(r'^search/$', 'search'),
 )
 
-urlpatterns += patterns('django.views.generic.simple',
+urlpatterns += patterns('',
 
     # Static templates
-    url(r'^about/$', 'direct_to_template', {'template': 'course_catalog/text/about.html'}, name="about"),
-    url(r'^contact/$',  'direct_to_template', {'template': 'course_catalog/text/contact.html'}, name="contact"),
-    url(r'^tos$', 'direct_to_template', {'template': 'course_catalog/text/tos.html'}, name="tos"),
-    url(r'^faqs$', 'direct_to_template', {'template': 'course_catalog/text/faqs.html'}, name="faqs"),
+    url(r'^about/$', TemplateView.as_view(template_name='course_catalog/text/about.html'), name="about"),
+    url(r'^contact/$',  TemplateView.as_view(template_name='course_catalog/text/contact.html'), name="contact"),
+    url(r'^tos$', TemplateView.as_view(template_name='course_catalog/text/tos.html'), name="tos"),
+    url(r'^faqs$', TemplateView.as_view(template_name='course_catalog/text/faqs.html'), name="faqs"),
 
-    url(r'^robots.txt$', 'direct_to_template', {'template': 'course_catalog/text/faqs.html'}),
+    url(r'^robots.txt$', TemplateView.as_view(template_name='course_catalog/text/faqs.html')),
     url(r'^crossdomain.xml$', lambda r: HttpResponse('')),
 )
