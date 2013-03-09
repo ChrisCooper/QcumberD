@@ -250,6 +250,15 @@
       "name": "Discussion", 
       "order": 6
     }
+  }, 
+  {
+    "pk": 22, 
+    "model": "course_catalog.sectiontype", 
+    "fields": {
+      "abbreviation": "ONL", 
+      "name": "Online", 
+      "order": 8
+    }
   },
   {
     "pk": 1, 

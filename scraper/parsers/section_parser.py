@@ -200,7 +200,10 @@ class SectionParser(SolusParser):
         """Builds a section from the information in the header link, as well as the supplied course and term"""
         m = re.search('(\S+)-(\S+)\s+\((\S+)\)', header_link.get_text())
 
-        # Make a section type for the supplied type
+        # Make a section type for the supplied type, first checking if there is one
+        if cc.SectionType.objects.filter(abbreviation=m.group(2)).count() == 0:
+            print('WARNING: No section type for abbreviation: "{0}"'.format(m.group(2)))
+
         section_type = e_or_n(cc.SectionType, abbreviation=m.group(2))
         section_type.save()
 

@@ -126,6 +126,9 @@ FIXTURE_DIRS = (
 
 INTERNAL_IPS = ('127.0.0.1',)
 
+ALLOWED_HOSTS = ['qcumber.ca']
+
+
 ROOT_URLCONF = 'qcumber.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
