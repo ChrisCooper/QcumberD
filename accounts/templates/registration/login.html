@@ -14,22 +14,7 @@
 
     <p>To get access to the full set of Qcumber features!</p>
 
-
-    <div class="social-login">
-
-        <h3>
-            Do you have an account on one of these sites? Just click the logo to log in with it here:
-        </h3>
-
-        <a href="{% url 'socialauth_begin' 'facebook' %}?next={{ next_url }}">Login with Facebook</a>
-        <a href="{% url 'socialauth_begin' 'google-oauth2' %}?next={{ next_url }}">Login with Google</a>
-        <a href="{% url 'socialauth_begin' 'twitter' %}?next={{ next_url }}">Login with Twitter</a>
-
-        <p>
-            (We'll never post anything without your permission.)
-        </p>
-
-    </div>
+    {% include "accounts/components/social-login.html" %}
 
     <div class="traditional-login">
 
@@ -37,7 +22,7 @@
             You can also log in with a traditional email and password if you like:
         </h3>
 
-        <form action="{% url 'auth_login' %}" method="post">{% csrf_token %}
+        <form action="{% url 'login' %}" method="post">{% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />
         </form>
@@ -45,7 +30,7 @@
     </div>
 
     <h3>
-        Don't have an account? You can <a href="{% url 'registration_register' %}">create one here</a>.
+        Don't have an account? You can <a href="{% url 'signup' %}">create one here</a>.
     </h3>
 
     <p>
