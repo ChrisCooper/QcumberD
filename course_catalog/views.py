@@ -47,7 +47,9 @@ def course_detail(request, subject_abbr=None, course_number=None):
     sections.sort(key=lambda t: t[0].order)
 
     return render(request, 'course_catalog/pages/course_detail.html',
-        {'course': course, 'all_sections': sections, 'course_data': course_data},
+        {'course': course, 'all_sections': sections,
+        'textbooks': course_data.textbooks,
+        'exams': course_data.exams},
         context_instance=RequestContext(request))
 
 
