@@ -46,7 +46,7 @@ def course_detail(request, subject_abbr=None, course_number=None):
     exams = None
     if course_data:
         textbooks = course_data.textbooks
-        exams = course_data.exams
+        exams = course_data.exams.order_by('-year')
 
     # Convert to a list of tuples for the template
     sections = sections.items()

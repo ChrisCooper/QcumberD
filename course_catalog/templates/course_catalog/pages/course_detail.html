@@ -103,7 +103,7 @@
                         <th>Year</th>
                         <th>Link</th>
                     </tr>
-                    {% for exam in exams.all %}
+                    {% for exam in exams %}
                         <tr>
                             <td>{{ exam.year }}</td>
                             <td><a href="{{ exam.pdf_url }}">{{ exam.pdf_url }}</a></td>
