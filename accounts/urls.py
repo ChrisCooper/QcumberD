@@ -8,8 +8,8 @@ from django.contrib.auth.views import login, logout
 
 urlpatterns = patterns('',
 
-	(r'^signup/$',  TemplateView.as_view(template_name='registration/signup.html')),
+	url(r'^signup/$',  TemplateView.as_view(template_name='registration/signup.html'), name='signup'),
 
-	(r'^login/$',  login),
-	(r'^logout/$', logout),
+	url(r'^login/$',  login, name='login'),
+	url(r'^logout/$', logout, name='logout'),
 )
