@@ -49,12 +49,12 @@
         </div>
 
         <div class="textbooks extra-course-info">
-            {% if course_data and course_data.textbooks and course_data.textbooks.all|length > 0 %}
+            {% if textbooks and textbooks.all|length > 0 %}
                 <div>
                     <a href="#" class="dropdown-header clearfix">
                         <div class="extra-info">
                             <h3 class="extra-info-title">Textbooks:</h3>
-                            {{ course_data.textbooks.all|length }} listed for this course (click here to see {{ course_data.textbooks.all|length|pluralize:"it,them" }})
+                            {{ textbooks.all|length }} listed for this course (click here to see {{ textbooks.all|length|pluralize:"it,them" }})
                         </div>
                     </a>
                 </div>
@@ -67,7 +67,7 @@
                             <th>Required</th>
                             <th>Price</th>
                         </tr>
-                        {% for textbook in course_data.textbooks.all %}
+                        {% for textbook in textbooks.all %}
                             <tr>
                                 <td><a href="{{ textbook.listing_url }}">{{ textbook.title }}</a></td>
                                 <td>{{ textbook.authors }}</td>
@@ -87,12 +87,12 @@
         </div>
 
         <div class="exams extra-course-info">
-        {% if course_data and course_data.exams and course_data.exams.all|length > 0 %}
+        {% if exams and exams.all|length > 0 %}
             <div>
                 <a href="#" class="dropdown-header clearfix">
                     <div class="extra-info">
                         <h3 class="extra-info-title">Past Exams:</h3>
-                        {{ course_data.exams.all|length }} listed for this course (click here to see {{ course_data.exams.all|length|pluralize:"it,them" }})
+                        {{ exams.all|length }} listed for this course (click here to see {{ exams.all|length|pluralize:"it,them" }})
                     </div>
                 </a>
             </div>
@@ -103,7 +103,7 @@
                         <th>Year</th>
                         <th>Link</th>
                     </tr>
-                    {% for exam in course_data.exams.all %}
+                    {% for exam in exams.all %}
                         <tr>
                             <td>{{ exam.year }}</td>
                             <td><a href="{{ exam.pdf_url }}">{{ exam.pdf_url }}</a></td>
