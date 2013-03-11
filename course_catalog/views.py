@@ -54,7 +54,7 @@ def course_detail(request, subject_abbr=None, course_number=None):
 
     return render(request, 'course_catalog/pages/course_detail.html',
         {'course': course, 'all_sections': sections,
-        'textbooks': textbooks ?,
+        'textbooks': textbooks,
         'exams': exams},
         context_instance=RequestContext(request))
 
