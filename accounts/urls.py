@@ -3,7 +3,13 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf.urls import patterns, include, url
-from django.contrib.auth.views import logout
+from django.views.generic.base import TemplateView
+from django.contrib.auth.views import login, logout
 
 urlpatterns = patterns('',
+
+	(r'^signup/$',  TemplateView.as_view(template_name='registration/signup.html')),
+
+	(r'^login/$',  login),
+	(r'^logout/$', logout),
 )
