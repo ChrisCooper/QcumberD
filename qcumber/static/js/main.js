@@ -65,11 +65,14 @@ $('.search-form').on('submit', function(e) {
 });
 
 // Outbound Link Tracking
-$(function() {
-    $("a").on('click',function(e){
+var link_track_event = function(event_name) {
+    return function(e){
         var url = $(this).attr("href");
         if (e.currentTarget.host != window.location.host) {
-            _gat._getTrackerByName()._trackEvent("Outbound Links", e.currentTarget.host.replace(':80',''), url, 0);
+
+            try { 
+                _gaq.push(['_trackEvent', "outbound link", event_name, url]);
+            } catch(err){}
 
             // Checks for control, command, or middle click
             if (e.metaKey || e.ctrlKey || e.which == 2) {
@@ -81,5 +84,12 @@ $(function() {
                 setTimeout('document.location = "' + url + '"', 100);
             }
         }
-    });
+    }
+};
+
+$(function() {
+    $(".exams a").on('click', link_track_event("exambank link"));
+});
+$(function() {
+    $(".textbooks a").on('click', link_track_event("textbook link"));
 });
