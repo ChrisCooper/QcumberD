@@ -13,10 +13,8 @@
 							{% endif %} />
 						<label class="season-tag season-{{ season }} show"
 							for="{{ season }}">
-							<span class="icon">
-								{{ season }}
-							</span>
-						</a>
+							{{ season }}
+						</label>
 					</li>
 				{% endfor %}
 				<li>
@@ -26,7 +24,7 @@
 					<label class="season-Unscheduled show"
 						for="Unscheduled">
 						Show Unscheduled
-					</a>
+					</label>
 				</li>
 			</ul>
 			<input class="js-hidden" type="submit" value="Filter" />

@@ -55,8 +55,6 @@ class CourseParser(SolusParser):
 
         course = e_or_n(cc.Course, **attributes)
 
-        print ("------Parsing course: {0} - {1}".format(course.number, course.title.encode('ascii','ignore')))
-
         self.add_info_table_attributes(course)
 
         return course
@@ -87,7 +85,7 @@ class CourseParser(SolusParser):
 
 
         # Get each of the boxes within the info table
-        info_boxes = self.soup.find_all("table", {"class": self.info_box_css_class})
+        info_boxes = info_table.find_all("table", {"class": self.info_box_css_class})
 
         for info_box in info_boxes:
             self.add_info_box_attributes(info_box, course)

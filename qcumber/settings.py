@@ -106,9 +106,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+if SHOW_DEBUG_TOOLBAR:
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 FIXTURE_DIRS = (
         # Add the common fixtures
@@ -116,6 +117,9 @@ FIXTURE_DIRS = (
     )
 
 INTERNAL_IPS = ('127.0.0.1',)
+
+ALLOWED_HOSTS = ['qcumber.ca']
+
 
 ROOT_URLCONF = 'qcumber.urls'
 
@@ -141,8 +145,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+    
     'south',
-    #'debug_toolbar',
+    'debug_toolbar',
     'compressor',
 
     'shell_snippets',

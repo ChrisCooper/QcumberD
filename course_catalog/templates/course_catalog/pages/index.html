@@ -1,7 +1,3 @@
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-
 {% extends "course_catalog/pages/single_page.html" %}
 
 {% block page_title %} Qcumber | The Simple (Unofficial) Course Catalog For Queen's Students {% endblock %}
@@ -45,7 +41,7 @@
 									{% for subject in bucket.1 %}
 									
 										<tr>
-											<td width="100px" class="abbreviation">{{ subject.abbreviation }} </td>
+											<td class="abbreviation">{{ subject.abbreviation }} </td>
 											<td class="subject_title">
 												<a href="{{ subject.get_absolute_url }}">{{ subject.title }}</a>
 											</td>
@@ -66,7 +62,7 @@
 					{% for subject in subject_buckets.0.1 %}
 					
 						<tr>
-							<td width="100px" class="abbreviation">{{ subject.abbreviation }} </td>
+							<td class="abbreviation">{{ subject.abbreviation }} </td>
 							<td class="subject_title">
 								<a href="{{ subject.get_absolute_url }}">{{ subject.title }}</a>
 							</td>
@@ -91,7 +87,7 @@
                 This site is not associated with Queen's University.
                 Though we try our best, we can't guarantee that the information on this site is accurate.
                 Please let us know at <a href="mailto:feedback@qcumber.ca">feedback@qcumber.ca</a> if you see something that's wrong.
-                Our information is usually updated weekly, or more frequently during regristration periods.
+                Our information is usually updated weekly, or more frequently during registration periods.
             </p>
             <p>
                 <em>Make sure you also confirm your course information on SOLUS! We are not the definitive source. :) </em>

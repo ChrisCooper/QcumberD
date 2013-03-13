@@ -1,7 +1,7 @@
 Qcumber
 =======
 
-Qcumber is a course catalog created for Queen's University. It lives at [Qcumber.ca](Qcumber.ca). Check out the [wiki](https://github.com/ChrisCooper/QcumberD/wiki) for extra information not in this readme.
+Qcumber is a course catalog created for Queen's University. It is live at http://qcumber.ca, and the main repository is at [ChrisCooper/QcumberD](https://github.com/ChrisCooper/QcumberD) on Github. Check out the [wiki](https://github.com/ChrisCooper/QcumberD/wiki) for extra information not in this readme.
 
 The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2013 Chris Cooper.
 
@@ -29,7 +29,7 @@ This project has been tested with Python version 2.7. You can try other 2.x vers
 * This installs Python 2.7 as well as the headers needed for compiling python modules.
 * Some modules that will be installed need to be compiled with GCC.
 * Install GCC by running `apt-get install gcc`
-* Install extra libraries needed for compiling modules: `apt-get install libxml2-dev libslt1-dev`
+* Install extra libraries needed for compiling modules: `apt-get install libxml2-dev libxslt1-dev`
 
 I (Phil) could not get Qcumber to run under Python 3 after spending a whole couple seconds of trying. I have not tested on any version of Python other than 2.7.
 

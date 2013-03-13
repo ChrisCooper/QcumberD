@@ -52,7 +52,9 @@ $('.check-enrollment').on('click', function (e) {
 });
 
 
-// Track search events
+// --------------- Google Analytics ---------------
+
+// Track searches
 $('.search-form').on('submit', function(e) {
     var form = $(this).parents().hasClass('hero-unit') ? 'index' :
         $(this).parents().hasClass('nav') ? 'search bar' : '???';
@@ -60,4 +62,34 @@ $('.search-form').on('submit', function(e) {
     
     _gaq.push(['_trackEvent', 'search', form, search_query]);
     //return false; // for debugging, stops form from submitting.
+});
+
+// Outbound Link Tracking
+var link_track_event = function(event_name) {
+    return function(e){
+        var url = $(this).attr("href");
+        if (e.currentTarget.host != window.location.host) {
+
+            try { 
+                _gaq.push(['_trackEvent', "outbound link", event_name, url]);
+            } catch(err){}
+
+            // Checks for control, command, or middle click
+            if (e.metaKey || e.ctrlKey || e.which == 2) {
+                var newtab = true;
+            }
+            
+            if (!newtab ) {
+                e.preventDefault();
+                setTimeout('document.location = "' + url + '"', 100);
+            }
+        }
+    }
+};
+
+$(function() {
+    $(".exams a").on('click', link_track_event("exambank link"));
+});
+$(function() {
+    $(".textbooks a").on('click', link_track_event("textbook link"));
 });
