@@ -63,3 +63,23 @@ $('.search-form').on('submit', function(e) {
     _gaq.push(['_trackEvent', 'search', form, search_query]);
     //return false; // for debugging, stops form from submitting.
 });
+
+// Outbound Link Tracking
+$(function() {
+    $("a").on('click',function(e){
+        var url = $(this).attr("href");
+        if (e.currentTarget.host != window.location.host) {
+            _gat._getTrackerByName()._trackEvent("Outbound Links", e.currentTarget.host.replace(':80',''), url, 0);
+
+            // Checks for control, command, or middle click
+            if (e.metaKey || e.ctrlKey || e.which == 2) {
+                var newtab = true;
+            }
+            
+            if (!newtab ) {
+                e.preventDefault();
+                setTimeout('document.location = "' + url + '"', 100);
+            }
+        }
+    });
+});
