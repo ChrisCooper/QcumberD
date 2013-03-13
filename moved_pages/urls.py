@@ -8,10 +8,10 @@ from django.views.generic.base import RedirectView
 urlpatterns = patterns('',
 
     url(r'^courses/(?P<subject_abbr>\w+)_(?P<course_number>\w+)/$',
-		RedirectView.as_view(url='/catalog/{subject_abbr}/{course_number}/')
-	),
+        RedirectView.as_view(url='/catalog/%(subject_abbr)s/%(course_number)s/')
+    ),
     url(r'^subjects/(?P<subject_abbr>\w+)/$',
-        RedirectView.as_view(url='/catalog/{subject_abbr}/'),
+        RedirectView.as_view(url='/catalog/%(subject_abbr)s/'),
     ),
     url(r'^catalog/$',
         RedirectView.as_view(url='/', permanent=False),
