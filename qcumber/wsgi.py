@@ -1,5 +1,5 @@
 """
-WSGI config for mentoring project.
+WSGI config for Qcumber.
 
 This module contains the WSGI application used by Django's development server
 and any production WSGI deployments. It should expose a module-level variable
