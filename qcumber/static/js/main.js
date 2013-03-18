@@ -92,3 +92,4 @@ $(function() {
 });
 $(function() {
     $(".textbooks a").on('click', link_track_event("textbook link"));
+});
