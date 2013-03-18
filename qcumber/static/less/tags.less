@@ -1,9 +1,4 @@
 
-// Hues must be 0-360
-@fall_hue: 23;
-@winter_hue: 250;
-@summer_hue: hue(@linkColor);
-
 .tag(@hue, @saturation_scale:0.5, @value_scale:0.9, @background_position...) {
     position: relative;
     display: inline-block;
@@ -31,23 +26,5 @@
         background-repeat: no-repeat;
         background-position: @background_position;
         content: ' ';
-    }
-}
-
-.season-tag {
-    &.season-Fall {
-        .tag(@fall_hue, 0.5, 0.89, 1px, 0px);
-    }
-    &.season-Winter {
-        .tag(@winter_hue, 0.4, 0.93, 1px, -24px);
-    }
-    &.season-Summer {
-        .tag(@summer_hue, 0.3, 0.86, 1px, -48px);
-    }
-    &.season-None {
-        .tag(0, 0, 0.89, -20px, 0px);
-    }
-    &.hide {
-        .opacity(33%);
     }
 }
