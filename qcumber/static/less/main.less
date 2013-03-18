@@ -198,29 +198,6 @@ ul {
         }
     }
 
-    
-    .season-tag {
-        .opacity(60);
-
-         &.season-Fall {
-        
-            .tag(@fall_hue, 0.5, 0.89, 1px, 0px);
-        }
-        &.season-Winter {
-            .tag(@winter_hue, 0.4, 0.93, 1px, -24px);
-        }
-        &.season-Summer {
-            .tag(@summer_hue, 0.3, 0.86, 1px, -48px);
-        }
-        &.season-None {
-            .tag(0, 0, 0.89, -20px, 0px);
-        }
-        &.hide {
-            .opacity(33%);
-        }
-
-    }
-
     a:hover > .season-tag {
       .opacity(100);
       text-decoration: none;
@@ -234,6 +211,31 @@ ul {
     .underlineable {
         margin-right: 9px;
     }
+}
+
+.season-tag {
+    .opacity(60);
+
+    &.season-Fall {
+        .tag(@fall_hue, 0.5, 0.89);
+        .tag-icon(1px, 0px);
+    }
+    &.season-Winter {
+        .tag(@winter_hue, 0.4, 0.93);
+        .tag-icon(1px, -24px);
+    }
+    &.season-Summer {
+        .tag(@summer_hue, 0.3, 0.86);
+        .tag-icon(1px, -48px);
+    }
+    &.season-None {
+        .tag(0, 0, 0.89);
+        .tag-icon(-20px, 0px);
+    }
+    &.hide {
+        .opacity(33%);
+    }
+
 }
 
 .course-filter {
@@ -342,4 +344,36 @@ ul {
 
 .footer {
     
+}
+
+.social-login,
+.traditional-login {
+    margin: 2em 0 3em;
+    .box-sizing(border-box);
+    width: -webkit-calc(50% - 1em);
+    float: left;
+}
+
+
+.social-login {
+
+    margin-right: 1em;
+
+    .facebook-button {
+        .tag(@facebook_colour);
+        .tag-icon(1px, -68px);
+    }
+    .google-button {
+        .tag(@google_colour);
+        .tag-icon(1px, -88px);
+    }
+    .twitter-button {
+        .tag(@twitter_colour);
+        .tag-icon(1px, -108px);
+    }
+
+    .button {
+        display: inline-block;
+        margin: 1em;
+    }
 }

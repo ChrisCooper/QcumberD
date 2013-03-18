@@ -1,5 +1,5 @@
 
-.tag(@hue, @saturation_scale:0.5, @value_scale:0.9, @background_position...) {
+.tag(@hue:100, @saturation_scale:0.5, @value_scale:0.9) {
     position: relative;
     display: inline-block;
     padding: 0 6px 0 20px;
@@ -16,6 +16,9 @@
         hsl(@hue, @saturation_scale * 100%, @value_scale * 60%),
         hsl(@hue, @saturation_scale * 95%, @value_scale * 67%)
     );
+}
+
+.tag-icon(@background_position...) {
     &:before {
         position: absolute;
         top: 0;

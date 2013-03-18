@@ -1,13 +1,20 @@
-<div class="social-login">
+<div class="inner-well well-small social-login">
 	<h3>
 	    Do you have an account on one of these sites? Just click the logo to log in with it here:
 	</h3>
 
-	<a href="{% url 'socialauth_begin' 'facebook' %}?next={{ next_url }}">Login with Facebook</a>
-	<a href="{% url 'socialauth_begin' 'google-oauth2' %}?next={{ next_url }}">Login with Google</a>
-	<a href="{% url 'socialauth_begin' 'twitter' %}?next={{ next_url }}">Login with Twitter</a>
+    <ul>
+        <li>
+        	<a class="button facebook-button" href="{% url 'socialauth_begin' 'facebook' %}?next={{ next_url }}">Login with Facebook</a>
+        </li>
+        <li>
+        	<a class="button google-button" href="{% url 'socialauth_begin' 'google-oauth2' %}?next={{ next_url }}">Login with Google</a>
+        </li>
+        	<a class="button twitter-button" href="{% url 'socialauth_begin' 'twitter' %}?next={{ next_url }}">Login with Twitter</a>
+        </li>
+    </ul>
 
 	<p>
-	    (We'll never post anything without your permission.)
+	    <em>(We'll never post anything without your permission.)</em>
 	</p>
 </div>

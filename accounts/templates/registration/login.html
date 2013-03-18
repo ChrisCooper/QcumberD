@@ -16,7 +16,7 @@
 
     {% include "accounts/components/social-login.html" %}
 
-    <div class="traditional-login">
+    <div class="inner-well well-small traditional-login">
 
         <h3>
             You can also log in with a traditional email and password if you like:
@@ -29,11 +29,13 @@
 
     </div>
 
-    <h3>
-        Don't have an account? You can <a href="{% url 'signup' %}">create one here</a>.
-    </h3>
+    <div class="create-account-login">
+        <h3>
+            Don't have an account? You can <a href="{% url 'signup' %}">create one here</a>.
+        </h3>
+    </div>
 
-    <p>
+    <p class="clearfix">
         If you'd like help or information, please drop us a line at <a href="mailto:team@qcumber.ca">team@qcumber.ca</a>! :)
     </p>
 
