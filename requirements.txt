@@ -1,8 +1,8 @@
-Django==1.5
+Django>=1.5
 South==0.7.6
 beautifulsoup4==4.1.3
 lxml==3.0.2
 django-social-auth==0.7.22
 requests==1.1.0
-django-compressor==1.2
-django-debug-toolbar==0.9
+django-compressor>=1.2
+django-debug-toolbar>=0.9
