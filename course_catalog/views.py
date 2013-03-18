@@ -51,12 +51,20 @@ def course_detail(request, subject_abbr=None, course_number=None):
     except ObjectDoesNotExist as e:
         course_data = None
 
+    textbooks = None
+    exams = None
+    if course_data:
+        textbooks = course_data.textbooks
+        exams = course_data.exams.order_by('-year')
+
     # Convert to a list of tuples for the template
     sections = sections.items()
     sections.sort(key=lambda t: t[0].order)
 
     return render(request, 'course_catalog/pages/course_detail.html',
-        {'course': course, 'all_sections': sections, 'course_data': course_data},
+        {'course': course, 'all_sections': sections,
+        'textbooks': textbooks,
+        'exams': exams},
         context_instance=RequestContext(request))
 
 

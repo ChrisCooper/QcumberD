@@ -48,49 +48,52 @@
             {{ course.enrollment_reqs|default:"No enrollment requirements listed on SOLUS."|safe }}
         </div>
 
-        <div class="textbooks">
-        {% if course_data and course_data.textbooks and course_data.textbooks.all|length > 0%}
-            <div>
-                <a href="#" class="dropdown-header clearfix">
-                    <h5>
-                        {{ course_data.textbooks.all|length }} textbook{% if course_data.textbooks.all|length > 1 %}s{% endif %} listed for this course
-                    </h5>
-                </a>
-            </div>
+        <div class="textbooks extra-course-info">
+            {% if textbooks and textbooks.all|length > 0 %}
+                <div>
+                    <a href="#" class="dropdown-header clearfix">
+                        <div class="extra-info">
+                            <h3 class="extra-info-title">Textbooks:</h3>
+                            {{ textbooks.all|length }} listed for this course (click here to see {{ textbooks.all|length|pluralize:"it,them" }})
+                        </div>
+                    </a>
+                </div>
 
-            <div class="section-component-list hide">
-                <table class="table table-condensed table-hover">
-                    <tr>
-                        <th>Title</th>
-                        <th>Authors</th>
-                        <th>Required</th>
-                        <th>Price</th>
-                    </tr>
-                    {% for textbook in course_data.textbooks.all %}
+                <div class="section-component-list hide">
+                    <table class="table table-condensed table-hover">
                         <tr>
-                            <td><a href="{{ textbook.listing_url }}">{{ textbook.title }}</a></td>
-                            <td>{{ textbook.authors }}</td>
-                            <td>{%if textbook.required %}Yes{% else %}No{% endif %}</td>
-                            <td>{{ textbook.new_price }}</td>
+                            <th>Title</th>
+                            <th>Authors</th>
+                            <th>Required</th>
+                            <th>Price</th>
                         </tr>
-                    {% endfor %}                                
-                </table>
-                <h6>
-                    Data also accessible at <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>. Is something missing? Please let us know at <a href="mailto:feedback@qcumber.ca">feedback@qcumber.ca</a>. :)
-                </h6>
-            </div>
-        {% else %}
-                No textbooks found for this course on <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>.
-        {% endif %}
+                        {% for textbook in textbooks.all %}
+                            <tr>
+                                <td><a href="{{ textbook.listing_url }}">{{ textbook.title }}</a></td>
+                                <td>{{ textbook.authors }}</td>
+                                <td>{%if textbook.required %}Yes{% else %}No{% endif %}</td>
+                                <td>{{ textbook.new_price }}</td>
+                            </tr>
+                        {% endfor %}                                
+                    </table>
+                    <div class="extra-info-footer">
+                        Data also accessible at <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>. Is something missing? Please let us know at <a href="mailto:feedback@qcumber.ca">feedback@qcumber.ca</a>. :)
+                    </div>
+                </div>
+            {% else %}
+                <h3 class="extra-info-title">Textbooks:</h3>
+                We didn't find any for this course at <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>.
+            {% endif %}
         </div>
 
-        <div class="exams">
-        {% if course_data and course_data.exams and course_data.exams.all|length > 0%}
+        <div class="exams extra-course-info">
+        {% if exams and exams.all|length > 0 %}
             <div>
                 <a href="#" class="dropdown-header clearfix">
-                    <h5>
-                        {{ course_data.exams.all|length }} exam{% if course_data.exams.all|length > 1 %}s{% endif %} listed for this course
-                    </h5>
+                    <div class="extra-info">
+                        <h3 class="extra-info-title">Past Exams:</h3>
+                        {{ exams.all|length }} listed for this course (click here to see {{ exams.all|length|pluralize:"it,them" }})
+                    </div>
                 </a>
             </div>
 
@@ -100,19 +103,20 @@
                         <th>Year</th>
                         <th>Link</th>
                     </tr>
-                    {% for exam in course_data.exams.all %}
+                    {% for exam in exams %}
                         <tr>
                             <td>{{ exam.year }}</td>
                             <td><a href="{{ exam.pdf_url }}">{{ exam.pdf_url }}</a></td>
                         </tr>
                     {% endfor %}                                
                 </table>
-                <h6>
+                <div class="extra-info-footer">
                     Data also accessible at <a href="http://library.queensu.ca/exambank/">ExamBank</a>. Is something missing? Please let us know at <a href="mailto:feedback@qcumber.ca">feedback@qcumber.ca</a>. :)
-                </h6>
+                </div>
             </div>
         {% else %}
-                No past exams found for this course on <a href="http://library.queensu.ca/exambank/">ExamBank</a>.
+            <h3 class="extra-info-title">Past Exams:</h3>
+            We didn't find any for this course on <a href="http://library.queensu.ca/exambank/">ExamBank</a>.
         {% endif %}
         </div>
     </div>

@@ -5,4 +5,4 @@ lxml==3.0.2
 django-social-auth==0.7.22
 requests==1.1.0
 django-compressor==1.2
-django-debug-toolbar
+django-debug-toolbar==0.9
