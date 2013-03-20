@@ -1,10 +1,18 @@
 Qcumber
 =======
 
-Qcumber is a course catalog created for Queen's University. It is live at http://qcumber.ca, and the main repository is at [ChrisCooper/QcumberD](https://github.com/ChrisCooper/QcumberD) on Github. Check out the [wiki](https://github.com/ChrisCooper/QcumberD/wiki) for extra information not in this readme.
+Qcumber is a course catalog created for Queen's University students. It is live at http://qcumber.ca, and the main repository is at [ChrisCooper/QcumberD](https://github.com/ChrisCooper/QcumberD) on Github. Check out the [wiki](https://github.com/ChrisCooper/QcumberD/wiki) for extra information not in this readme, or the [about page](http://qcumber.ca/about/) for more information on the project's origins and goals.
 
-The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other non-code assets are &copy; 2013 Chris Cooper.
+The original source code is available under the terms of the Mozilla Public License, v. 2.0, available at http://mozilla.org/MPL/2.0/. Images and other original non-code assets are &copy; 2013 Chris Cooper.
 
+Development overview
+===========
+
+Qcumber, for the most part, is composed of [web scrapers](http://en.wikipedia.org/wiki/Web_scraping) which pull data into the database, and simple Django apps that display that data on the website. For example, the exam scraper visits [ExamBank](http://library.queensu.ca/exambank/) and pulls all the exam links into simple database entries, and the corresponding Django app (basically just a directory in the project) contains definitions that help make sense of the database entries (known as models), as well as a few related things. The logic for the website itself is actually very simple. Really, all it does is display that data (though we are adding functionality as we speak).
+
+All general configuration is under the `qcumber` directory, including `settings.py`, the root URL configuration file, javascript + images + CSS ([LESS](http://lesscss.org/), actually), and files for storing private information like keys, file paths, and passwords (which are not committed to the respository).
+
+To get your own copy of Qcumber to develop or improve, first follow the setup directions below, then run the scrapers for the data you wish to see (i.e. currently: courses, exams, and/or textbooks).
 
 Setup Guide
 ===========
@@ -136,6 +144,7 @@ How to Scrape Course Data
  Scraping time will vary based on the configuration, but a full shallow scrape takes anywhere from 5 to 7 hours, so be patient!
 
 You can also create your own configurations for debugging, by visiting the admin page and creating a `Job Config`, under `scraper`. Job configs have the following options:
+
   * Deep: If this is set, the scraper will do a deep scrape (takes longer, but collects enrollment information)
   * Letters: The subject letters to scrape
   * Start/end indecies: Controls which subjects/courses to scrape. Implemented with Python list slices.
