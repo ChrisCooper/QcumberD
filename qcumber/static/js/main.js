@@ -84,7 +84,7 @@ var link_track_event = function(event_name) {
                 setTimeout('document.location = "' + url + '"', 100);
             }
         }
-    }
+    };
 };
 
 $(function() {
@@ -92,3 +92,4 @@ $(function() {
 });
 $(function() {
     $(".textbooks a").on('click', link_track_event("textbook link"));
+});
