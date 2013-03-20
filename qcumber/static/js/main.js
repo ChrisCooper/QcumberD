@@ -66,13 +66,13 @@ $('.search-form').on('submit', function(e) {
 
 // Outbound Link Tracking
 var link_track_event = function(event_name) {
-    return function(e){
+    return function(e) {
         var url = $(this).attr("href");
         if (e.currentTarget.host != window.location.host) {
 
             try { 
                 _gaq.push(['_trackEvent', "outbound link", event_name, url]);
-            } catch(err){}
+            } catch(err) {}
 
             // Checks for control, command, or middle click
             if (e.metaKey || e.ctrlKey || e.which == 2) {
