@@ -14,26 +14,30 @@
 
     <p>To get access to the full set of Qcumber features!</p>
 
-    {% include "accounts/components/social-login.html" %}
+    <div class="row clearfix">
 
-    <div class="inner-well well-small traditional-login">
+        <div class="span4 well">
 
-        <h3>
-            You can also log in with a traditional email and password if you like:
-        </h3>
+            <h3>
+                You can also log in with a traditional email and password if you like:
+            </h3>
 
-        <form action="{% url 'login' %}" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit" />
-        </form>
+            {% include "accounts/components/traditional-login.html" %}
+            
+            <h3>
+                Don't have an account? You can <a href="#signupModal" data-toggle="modal">create one here</a>
+            </h3>
+
+        </div>
+
+        <div class="span5 well social-login vertical-fill">
+
+            {% include "accounts/components/social-login.html" %}
+
+        </div>
 
     </div>
 
-    <div class="create-account-login">
-        <h3>
-            Don't have an account? You can <a href="{% url 'signup' %}">create one here</a>.
-        </h3>
-    </div>
 
     <p class="clearfix">
         If you'd like help or information, please drop us a line at <a href="mailto:team@qcumber.ca">team@qcumber.ca</a>! :)
@@ -44,5 +48,35 @@
     </div>
 
 </div>
+
+
+
+
+
+
+
+<div id="signupModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="signupModalLabel">Create an account</h3>
+  </div>
+
+  
+  <div class="modal-body">
+    {% include "accounts/components/social-login.html" %}
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Create account</button>
+  </div>
+
+</div>
+
+
+
+
+
 
 {% endblock %}

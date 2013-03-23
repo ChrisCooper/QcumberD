@@ -1,18 +1,20 @@
-<div class="traditional-login">
+{% if form.errors %}
+	<div class="alert alert-error">
+	  	<p class="error">Sorry, that's not a valid username or password</p>
+	</div>
+{% endif %}
 
-	{% if form.errors %}
-	    <p class="error">Sorry, that's not a valid username or password</p>
-	{% endif %}
+<form action="" method="post">
+  	{% csrf_token %}
 
-	<form action="" method="post">
-	  	{% csrf_token %}
-	    <label for="username">Username:</label>
-	    <input type="text" name="username" value="" id="username">
-	    <label for="password">Password:</label>
-	    <input type="password" name="password" value="" id="password">
+    <input type="text" name="email" value="" id="email" placeholder="Email">
+ 
+    <input type="password" name="password" value="" id="password" placeholder="Password">
 
-	    <input type="submit" value="login" />
-	    <input type="hidden" name="next" value="{{ next|escape }}" />
-	</form>
-	
-</div>
+    <div>
+    	<input type="submit" value="login" class="btn btn-primary"/>
+	</div>
+
+    <input type="hidden" name="next" value="{{ next|escape }}" />
+
+</form>

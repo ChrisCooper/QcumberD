@@ -1,21 +1,19 @@
-<div class="inner-well well-small social-login">
-	<h3>
-	    Do you have an account on one of these sites? Just click the logo to log in with it here:
-	</h3>
+<h3>
+    Do you have an account on one of these sites? Just click the logo to log in with it here:
+</h3>
 
-    <ul>
-        <li>
-            <a class="zocial facebook" href="{% url 'socialauth_begin' 'facebook' %}?next={{ next_url }}">Facebook</a>
-        </li>
-        <li>
-            <a class="zocial google" href="{% url 'socialauth_begin' 'google-oauth2' %}?next={{ next_url }}">Google</a>
-        </li>
-        <li>
-            <a class="zocial twitter" href="{% url 'socialauth_begin' 'twitter' %}?next={{ next_url }}">Twitter</a>
-        </li>
-    </ul>
+<ul>
+    <li>
+        <a class="zocial facebook" href="{% url 'socialauth_begin' 'facebook' %}?next={{ next_url }}">Facebook</a>
+    </li>
+    <li>
+        <a class="zocial google" href="{% url 'socialauth_begin' 'google-oauth2' %}?next={{ next_url }}">Google</a>
+    </li>
+    <li>
+        <a class="zocial twitter" href="{% url 'socialauth_begin' 'twitter' %}?next={{ next_url }}">Twitter</a>
+    </li>
+</ul>
 
-	<p>
-	    <em>(We'll never post anything without your permission.)</em>
-	</p>
-</div>
+<p>
+    <em>(We'll never post anything without your permission.)</em>
+</p>

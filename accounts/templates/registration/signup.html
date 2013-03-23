@@ -16,34 +16,28 @@
         You can also provide another email for most features, and verify a Queen's email at a later time.
     </p>
 
+    <div class="row clearfix">
 
-    <div class="accordion" id="signupAccordion">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#signupAccordion" href="#collapseOne">
-                    Social Login
-                </a>
-            </div>
-            <div id="collapseOne" class="accordion-body collapse in">
-                <div class="accordion-inner">
-                    {% include "accounts/components/social-login.html" %}
-                </div>
-            </div>
+        <div class="span4 well">
+
+            <h3>
+                You can also log in with a traditional email and password if you like:
+            </h3>
+
+            {% include "accounts/components/traditional-login.html" %}
+            
+            <h3>
+                Don't have an account? You can <a href="{% url 'signup' %}">create one here</a>.
+            </h3>
+
         </div>
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#signupAccordion" href="#collapseTwo">
-                    Traditional Login
-                </a>
-            </div>
-            <div id="collapseTwo" class="accordion-body collapse">
-                <div class="accordion-inner">
-                    <div class="traditional-login">
-                        Username, password, etc.
-                    </div>
-                </div>
-            </div>
+
+        <div class="span5 well social-login vertical-fill">
+
+            {% include "accounts/components/social-login.html" %}
+
         </div>
+
     </div>
 
     <p>
