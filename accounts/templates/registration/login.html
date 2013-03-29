@@ -19,13 +19,13 @@
         <div class="span4 well">
 
             <h3>
-                You can also log in with a traditional email and password if you like:
+                You can log in with a traditional email and password if you like:
             </h3>
 
             {% include "accounts/components/traditional-login.html" %}
             
             <h3>
-                Don't have an account? You can <a href="#signupModal" data-toggle="modal">create one here</a>
+                Don't have an account? You can <a href="{% url 'signup' %}">create one here</a>
             </h3>
 
         </div>
@@ -48,35 +48,5 @@
     </div>
 
 </div>
-
-
-
-
-
-
-
-<div id="signupModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
-
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="signupModalLabel">Create an account</h3>
-  </div>
-
-  
-  <div class="modal-body">
-    {% include "accounts/components/social-login.html" %}
-  </div>
-
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary">Create account</button>
-  </div>
-
-</div>
-
-
-
-
-
 
 {% endblock %}

@@ -6,9 +6,11 @@ from django.conf.urls import patterns, include, url
 from django.views.generic.base import TemplateView
 from django.contrib.auth.views import login, logout
 
+from views import signup
+
 urlpatterns = patterns('',
 
-	url(r'^signup/$',  TemplateView.as_view(template_name='registration/signup.html'), name='signup'),
+	url(r'^signup/$',  signup, name='signup'),
 
 	url(r'^login/$',  login, name='login'),
 	url(r'^logout/$', logout, name='logout'),

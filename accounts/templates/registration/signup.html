@@ -21,15 +21,28 @@
         <div class="span4 well">
 
             <h3>
-                You can also log in with a traditional email and password if you like:
+                You can create an account with a traditional email and password if you like:
             </h3>
 
-            {% include "accounts/components/traditional-login.html" %}
+            <form action="" method="post">{% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-error">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                {% for field in form %}
+                <p>
+                    {% if field.errors %}
+                        <ul class="alert alert-error">{{ field.errors }}</ul>
+                    {% endif %}
+                    
+                    {{ field.label_tag }}
+                    {{ field }}
+                </p>
+                {% endfor %}
+                <p><input type="submit" value="Create Account" class='btn btn-primary'/></p>
+            </form>
             
-            <h3>
-                Don't have an account? You can <a href="{% url 'signup' %}">create one here</a>.
-            </h3>
-
         </div>
 
         <div class="span5 well social-login vertical-fill">
