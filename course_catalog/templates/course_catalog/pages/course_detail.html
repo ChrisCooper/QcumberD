@@ -1,10 +1,10 @@
-{% extends "course_catalog/pages/filtered_page.html" %}
+{% extends "course_catalog/pages/single_page.html" %}
 
 {% load shell_snippets %}
 
 {% block page_title %} Qcumber | {{ course.subject.abbreviation }} {{ course.number }} - {{ course.title }} {% endblock %}
 
-{% block results_panel %}
+{% block main_panel %}
 
 
 <article class="course">
