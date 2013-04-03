@@ -24,6 +24,13 @@ class CourseAdmin(admin.ModelAdmin):
 admin.site.register(Course, CourseAdmin)
 
 
+class RequisiteAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['left_index', 'right_index', 'subject_abbr', 'course_number', 'for_course']})
+    ]
+admin.site.register(Requisite, RequisiteAdmin)
+
+
 class SectionComponentInline(admin.StackedInline):
     model = SectionComponent    
     fieldsets = [

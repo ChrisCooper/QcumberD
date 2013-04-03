@@ -36,6 +36,13 @@ class CourseParser(SolusParser):
         "Drop Consent": cc.Consent,
     }
 
+    # Requisite->Course is many->one, as opposed to the other attribute mappings
+    # which are Course->attribute many->one.
+    # It's many->one, not many->many. Take my word for it.
+    many_attribute_mappings = {
+        "Enrollment Requirement": lambda *a, **k: CourseParser.add_requisites(*a, **k),
+    }
+
     def current_course(self, subject):
         """Returns the course built from the current page"""
 
@@ -159,12 +166,33 @@ class CourseParser(SolusParser):
                 # This model will have to be saved if it's new
                 value.save()
 
+            if attr in self.many_attribute_mappings:
+                self.many_attribute_mappings[attr](self, value, course)
+                # in this case, we're adding this class to the things; nothing
+                # to add to the Course object directly.
+                return
+
             # Add the attribute's value to the course
             setattr(course, attribute_name, value)
 
         else:
             raise Exception('Encountered unexpected course attribute with label: "{0}"'.format(label))
 
+    def add_requisites(self, enrollment_reqs, course):
+        course_re = r'(?P<abbr>[A-Z]{3,4}) (?P<num>\d{3}[AB]?)'
+        itermatches = re.finditer(course_re, enrollment_reqs)
+
+        for match in itermatches:
+            abbr, num = match.groups()
+            properties = {
+                'subject_abbr': abbr,
+                'course_number': num,
+                'left_index': match.start(),
+                'right_index': match.end(),
+                'for_course': course
+            }
+            e_or_n(cc.Requisite, **properties)
+            print 'debug -- requisite initialized and saved'
 
     def add_course_components(self, course_components, course):
 
