@@ -5,12 +5,12 @@
 from functools import wraps
 from collections import defaultdict
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.db import models
 from django.views.decorators.cache import cache_page
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
-from course_catalog.models import Course, Subject, Term, Section, Career, Season
+from course_catalog.models import Course, Subject, Section, Career, Season
 import model_controls
 
 
@@ -19,6 +19,7 @@ def enforce_subject_upper(view):
     the one provided contained lowercase characters.
     """
     cannonical_view = 'course_catalog.views.{}'.format(view.__name__)
+
     @wraps(view)
     def wrapped(request, *args, **kwargs):
         if not kwargs['subject_abbr'].isupper():
@@ -35,12 +36,12 @@ def index(request):
 
     buckets = model_controls.subject_buckets(subject_list, max_buckets)
 
-    if buckets == None:
+    if buckets is None:
         return render(request, 'course_catalog/pages/index.html')
-    
+
     return render(request, 'course_catalog/pages/index.html',
-        {'subject_buckets':buckets,
-         'min_height': 50 + 29 * max([len(x[1]) for x in buckets])})
+                  {'subject_buckets': buckets,
+                  'min_height': 50 + 29 * max([len(x[1]) for x in buckets])})
 
 
 @enforce_subject_upper
@@ -58,7 +59,7 @@ def course_detail(request, subject_abbr, course_number):
 
     try:
         course_data = course.course_data
-    except ObjectDoesNotExist as e:
+    except ObjectDoesNotExist:
         course_data = None
 
     textbooks = None
@@ -72,10 +73,9 @@ def course_detail(request, subject_abbr, course_number):
     sections.sort(key=lambda t: t[0].order)
 
     return render(request, 'course_catalog/pages/course_detail.html',
-        {'course': course, 'all_sections': sections,
-        'textbooks': textbooks,
-        'exams': exams},
-        context_instance=RequestContext(request))
+                  {'course': course, 'all_sections': sections,
+                  'textbooks': textbooks, 'exams': exams},
+                  context_instance=RequestContext(request))
 
 
 @enforce_subject_upper
@@ -100,8 +100,8 @@ def subject_detail(request, subject_abbr):
     [setattr(s, 'checked', True) for s in seasons]
 
     return render(request, 'course_catalog/pages/subject_detail.html',
-        {'subject': subject, 'courses_by_career': courses_by_career,
-        'seasons': seasons})
+                  {'subject': subject, 'courses_by_career': courses_by_career,
+                  'seasons': seasons})
 
 
 def detail_not_found(request, subject_abbr, course_number=None):
@@ -116,7 +116,7 @@ def detail_not_found(request, subject_abbr, course_number=None):
         context.update({'missing': 'course', 'num': course_number})
 
     return render(request, 'course_catalog/pages/not_found.html', context,
-        context_instance=RequestContext(request), status=404)
+                  context_instance=RequestContext(request), status=404)
 
 
 @cache_page(60 * 30)
@@ -137,7 +137,7 @@ def search(request):
             item.template_name = "course_catalog/components/section_search_result.html"
 
     return render(request, 'course_catalog/pages/search_results.html',
-        {'results': results, 'query': query})
+                  {'results': results, 'query': query})
 
 
 # TODO: All these requests should be fixed up, since they just return simple
@@ -147,13 +147,16 @@ def search(request):
 def about(request):
     return render(request, 'course_catalog/text/about.html')
 
+
 @cache_page(60 * 30)
 def contact(request):
     return render(request, 'course_catalog/text/contact.html')
 
+
 @cache_page(60 * 30)
 def tos(request):
     return render(request, 'course_catalog/text/tos.html', {})
+
 
 @cache_page(60 * 30)
 def faqs(request):
@@ -162,13 +165,15 @@ def faqs(request):
 
 # Application support
 
-@cache_page(60 * 60 * 24 *100)
+@cache_page(60 * 60 * 24 * 100)
 def facebook_channel(request):
     return render(request, 'course_catalog/text/channel.html', {})
 
-@cache_page(60 * 60 * 24 *100)
+
+@cache_page(60 * 60 * 24 * 100)
 def flash_permissions(request):
     return HttpResponse('')
+
 
 @cache_page(60 * 30)
 def robots(request):
