@@ -2,6 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+
+import re
 from decimal import Decimal
 from datetime import datetime
 
@@ -102,6 +104,26 @@ class Course(ModelOnProbation):
         return ('course_catalog.views.course_detail', (), {
             'subject_abbr': self.subject.abbreviation,
             'course_number' : self.number})
+
+
+class Requisite(ModelOnProbation):
+    """Enrollment requisites come from a free-form text field on solus. That
+    field is parsed to find the actual course. Some of them exist. Instances of
+    this model describe where in the text string those courses occur, and
+    provide helper methods to work with them.
+    """
+    subject_abbr = models.CharField(max_length=10)
+    course_number = models.CharField(max_length=10)
+    left_index = models.IntegerField()
+    right_index = models.IntegerField()
+    #exists = models.BooleanField(default=False)
+
+    for_course = models.ForeignKey("Course", related_name='requisites',
+                                   null=True)
+
+    def __unicode__(self):
+        return u'{coursename}: {self.subject_abbr} {self.course_number}'.format(
+            coursename=self.for_course.concise_unicode(), self=self)
 
 
 class Section(ModelOnProbation):
