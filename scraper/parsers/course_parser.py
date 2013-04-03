@@ -162,9 +162,8 @@ class CourseParser(SolusParser):
                 value.save()
 
             if attr in self.many_attribute_mappings:
+                # ie., requisities
                 self.many_attribute_mappings[attr](self, value, course)
-                # no need to save, since we're adding this class to things
-                return
 
             # Add the attribute's value to the course
             setattr(course, attribute_name, value)
