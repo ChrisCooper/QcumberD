@@ -36,6 +36,12 @@ class CourseParser(SolusParser):
         "Drop Consent": cc.Consent,
     }
 
+    # Many-to-one mappings
+    many_attribute_mappings = {
+        "Enrollment Requirement": (lambda *args, **kw:
+                                   CourseParser.add_requisites(*args, **kw))
+    }
+
     def current_course(self, subject):
         """Returns the course built from the current page"""
 
@@ -159,12 +165,32 @@ class CourseParser(SolusParser):
                 # This model will have to be saved if it's new
                 value.save()
 
+            if attr in self.many_attribute_mappings:
+                self.many_attribute_mappings[attr](self, value, course)
+                # no need to save, since we're adding this class to things
+                return
+
             # Add the attribute's value to the course
             setattr(course, attribute_name, value)
 
         else:
             raise Exception('Encountered unexpected course attribute with label: "{0}"'.format(label))
 
+    def add_requisites(self, enrollment_reqs, course):
+        course_re - r'(?P<abbr>[A-Z]{3,4}) (?P<num>\d{3}[AB]?)'
+        itermatches = re.finditer(course_re, enrollment_reqs)
+
+        for match in itermatches:
+            abbr, num = match.groups()
+            properties = {
+                'subject_abbr': abbr,
+                'course_number': num,
+                'left_index': match.start(),
+                'right_index': match.end(),
+                'for_course': course,
+            }
+            e_or_n(cc.Requisite, **properties)
+            print 'debug -- requisite initialized and saved'
 
     def add_course_components(self, course_components, course):
 

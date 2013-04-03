@@ -99,6 +99,9 @@ class Course(ModelOnProbation):
         except ObjectDoesNotExist:
             return None
 
+    def link_requisites(self):
+        return self.enrollment_reqs
+
     @models.permalink
     def get_absolute_url(self):
         return ('course_catalog.views.course_detail', (), {
