@@ -186,7 +186,6 @@ class CourseParser(SolusParser):
                 'for_course': course,
             }
             e_or_n(cc.Requisite, **properties)
-            print 'debug -- requisite initialized and saved'
 
     def add_course_components(self, course_components, course):
 

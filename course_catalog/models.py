@@ -128,6 +128,13 @@ class Requisite(ModelOnProbation):
         return u'{coursename}: {self.subject_abbr} {self.course_number}'.format(
             coursename=self.for_course.concise_unicode(), self=self)
 
+    @classmethod
+    def existing(cls, **properties):
+        try:
+            return cls.objects.get(**properties)
+        except ObjectDoesNotExist:
+            return None
+
 
 class Section(ModelOnProbation):
     #Attributes
