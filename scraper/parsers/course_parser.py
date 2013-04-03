@@ -5,6 +5,7 @@ from course_catalog.models import existing_or_new as e_or_n
 
 from solus_parser import SolusParser
 
+
 class CourseParser(SolusParser):
 
     title_css_class = 'PALEVEL0SECONDARY'
@@ -46,11 +47,11 @@ class CourseParser(SolusParser):
         """Returns the course built from the current page"""
 
         # Gather the title and description to create a new course
-        title, number  = self.get_title()
+        title, number = self.get_title()
 
-        attributes = {'title' : title,
-                      'number' : number,
-                      'subject' : subject}
+        attributes = {'title': title,
+                      'number': number,
+                      'subject': subject}
 
         course = e_or_n(cc.Course, **attributes)
 
@@ -60,7 +61,7 @@ class CourseParser(SolusParser):
 
     def get_title(self):
 
-        raw_title = self.soup.find("span", { "class" : self.title_css_class})
+        raw_title = self.soup.find("span", {"class": self.title_css_class})
 
         if not raw_title:
             raise Exception("Could not find the course title to parse")
@@ -68,12 +69,11 @@ class CourseParser(SolusParser):
         raw_title = self.clean_HTML(raw_title.get_text())
 
         m = re.search('^([\S]+)\s+([\S]+)\s+-\s+(.*)$', raw_title)
-            
-        subject_abbreviation = m.group(1)
+
         number = m.group(2)
         title = m.group(3)
 
-        return title, number 
+        return title, number
 
     def add_info_table_attributes(self, course):
         """Parses the course attributes out of the page and adds them to the supplied course model"""
@@ -81,7 +81,6 @@ class CourseParser(SolusParser):
         # Get the main blue course table containing info boxes such as
         # "Course Detail", "Enrollment Information", and "Description"
         info_table = self.soup.find("table", {"class": self.info_table_css_class})
-
 
         # Get each of the boxes within the info table
         info_boxes = info_table.find_all("table", {"class": self.info_box_css_class})
@@ -92,7 +91,7 @@ class CourseParser(SolusParser):
     def add_info_box_attributes(self, info_box, course):
         """Parses a single box from the info table, and adds the relevant attributes to the course"""
 
-        box_title = info_box.find("td", { "class" : self.info_box_header_css_class})
+        box_title = info_box.find("td", {"class": self.info_box_header_css_class})
 
         if not box_title:
             raise Exception('Encountered unexpected info_box with no title')
@@ -108,23 +107,20 @@ class CourseParser(SolusParser):
         else:
             raise Exception('Encountered unexpected info_box with title: "{0}"'.format(box_title))
 
-        
     def add_description(self, info_box, course):
-        description = info_box.find("span", { "class" : self.description_css_class})
+        description = info_box.find("span", {"class": self.description_css_class})
         course.description = self.clean_HTML(description.get_text())
-
 
     def add_info_box_content(self, info_box, course):
         """Adds the contents of an info box to the specified course"""
 
         # Fetch labels and values for "Add/Drop Consent", "Career", and "Grading Basis"
-        labels = info_box.find_all("label", {"class":"PSDROPDOWNLABEL"})
-        values = info_box.find_all("span", {"class":"PSDROPDOWNLIST_DISPONLY"})
+        labels = info_box.find_all("label", {"class": "PSDROPDOWNLABEL"})
+        values = info_box.find_all("span", {"class": "PSDROPDOWNLIST_DISPONLY"})
 
         # Add labels and values for "Typically Offered", "Enrollment Requirement", "Units", and "Course Components"
-        labels += info_box.find_all("label", {"class":"PSEDITBOXLABEL"})
-        values += info_box.find_all("span", {"class":"PSEDITBOX_DISPONLY"})
-
+        labels += info_box.find_all("label", {"class": "PSEDITBOXLABEL"})
+        values += info_box.find_all("span", {"class": "PSEDITBOX_DISPONLY"})
 
         # Extract the "course components" items by checking their parents for a particular table...
         course_components = filter(lambda v: (v.find_parent("table", {'id': 'ACE_width', 'class': 'PABACKGROUNDINVISIBLE'}) is not None), values)
@@ -174,10 +170,10 @@ class CourseParser(SolusParser):
             setattr(course, attribute_name, value)
 
         else:
-            raise Exception('Encountered unexpected course attribute with label: "{0}"'.format(label))
+            raise Exception('Encountered unexpected course attribute with label: "{0}"'.format(attr))
 
     def add_requisites(self, enrollment_reqs, course):
-        course_re - r'(?P<abbr>[A-Z]{3,4}) (?P<num>\d{3}[AB]?)'
+        course_re = r'(?P<abbr>[A-Z]{3,4}) (?P<num>\d{3}[AB]?)'
         itermatches = re.finditer(course_re, enrollment_reqs)
 
         for match in itermatches:
@@ -203,4 +199,3 @@ class CourseParser(SolusParser):
             components[key] = inner_val
 
         course.components = components
-
