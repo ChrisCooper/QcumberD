@@ -99,22 +99,26 @@ class Course(ModelOnProbation):
             return None
 
     def link_requisites(self):
-        print 'req linking'
+        """Insert links into the requisites text.
+
+        Note that this method assumes that self.requisites.all() returns reqs
+        in the same order that they appear in the text!
+        """
         text = self.enrollment_reqs
         reqs = self.requisites.all()
-        print 'reqs:', reqs
         offset = 0
         for req in reqs:
-            print 'inserting req {}'.format(req)
             left = text[:req.left_index + offset]
             right = text[req.right_index + offset:]
             course = req.req_exists()
-            extra = 'title="{}"'.format(course.title) if course else 'title="This course cannot be found on Solus" class="missing"'
+            if course:
+                extra = 'title="{}"'.format(course.title)
+            else:
+                extra = 'title="This course cannot be found on Solus" class="missing"'
             link = '<a href="/catalog/{abbr}/{num}" {extra}>{abbr} {num}</a>'\
                 .format(abbr=req.subject_abbr, num=req.course_number, extra=extra)
             offset += len(link) - (req.right_index - req.left_index)
             text = left + link + right
-        print 'finally: ', text
         return text
 
     @models.permalink
