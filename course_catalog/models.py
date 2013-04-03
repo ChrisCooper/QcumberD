@@ -4,7 +4,6 @@
 
 
 import re
-from decimal import Decimal
 from datetime import datetime
 
 from django.db import models
@@ -18,9 +17,10 @@ class ModelOnProbation(models.Model):
     deleted (since it no longer exists).
     """
     last_encountered = models.DateTimeField(auto_now_add=True)
-    
+
     last_encountered_admin_field_entry = ('Scraping information',
-        {'fields': ['last_encountered'], 'classes': ['collapse']})
+                                          {'fields': ['last_encountered'],
+                                          'classes': ['collapse']})
 
     class Meta:
         abstract = True
@@ -41,7 +41,7 @@ class Subject(ModelOnProbation):
     #Attributes
     title = models.CharField(max_length=255)
     abbreviation = models.CharField(max_length=10)
-    
+
     def __unicode__(self):
         return u"{self.abbreviation} - {self.title}".format(self=self)
 
@@ -102,8 +102,8 @@ class Course(ModelOnProbation):
     @models.permalink
     def get_absolute_url(self):
         return ('course_catalog.views.course_detail', (), {
-            'subject_abbr': self.subject.abbreviation,
-            'course_number' : self.number})
+                'subject_abbr': self.subject.abbreviation,
+                'course_number': self.number})
 
 
 class Requisite(ModelOnProbation):
@@ -137,20 +137,20 @@ class Section(ModelOnProbation):
     wait_curr = models.IntegerField(default=-1)
     wait_max = models.IntegerField(default=-1)
     date_enrollment_updated = models.DateTimeField(default=datetime.now)
-    
+
     #Relationships
     course = models.ForeignKey("Course", related_name='sections')
     type = models.ForeignKey("SectionType")
     term = models.ForeignKey("Term")
-    
+
     # From a deep scrape
     session = models.ForeignKey("Session", related_name='sections', null=True)
 
     def __unicode__(self):
         return u"{t} {s.type.name} ({s.index_in_course}) for {c} ({s.solus_id})"\
             .format(s=self, t=self.term.__unicode__(),
-            c=self.course.concise_unicode())
-    
+                    c=self.course.concise_unicode())
+
     @classmethod
     def existing(cls, **kwargs):
         try:
@@ -207,7 +207,7 @@ class Timeslot(ModelOnProbation):
     start_time = models.TimeField()
     end_time = models.TimeField()
     day_of_week = models.ForeignKey("DayOfWeek")
-    
+
     def __unicode__(self):
         return u"{day}, {start} - {end}".format(
             day=self.day_of_week.abbreviation,
@@ -253,7 +253,7 @@ class Term(ModelOnProbation):
 
     def __unicode__(self):
         return u"{self.season.name} - {self.year}".format(self=self)
-    
+
     @classmethod
     def existing(cls, **kwargs):
         try:
@@ -271,7 +271,7 @@ class CourseRelation(ModelOnProbation):
 
     def __unicode__(self):
         return u"Data attached to {self.course}".format(self=self)
-    
+
     @classmethod
     def existing(cls, **kwargs):
         try:
@@ -347,9 +347,9 @@ class Career(models.Model):
 class DayOfWeek(models.Model):
     name = models.CharField(max_length=20)
     abbreviation = models.CharField(max_length=3)
-    
+
     order = models.IntegerField(default=0)
-    
+
     def __unicode__(self):
         return self.name
 
@@ -390,5 +390,3 @@ class GradingBasis(models.Model):
             return cls.objects.get(name=kwargs['name'])
         except ObjectDoesNotExist:
             return None
-
-

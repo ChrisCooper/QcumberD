@@ -6,14 +6,12 @@ from django.contrib import admin
 from course_catalog.models import *
 
 
-
 class SubjectAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,  {'fields': ['title', 'abbreviation']}),
     ]
     search_fields = ['abbreviation', 'title']
 admin.site.register(Subject, SubjectAdmin)
-
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -32,13 +30,14 @@ admin.site.register(Requisite, RequisiteAdmin)
 
 
 class SectionComponentInline(admin.StackedInline):
-    model = SectionComponent    
+    model = SectionComponent
     fieldsets = [
         ('General',     {'fields': ['section', 'instructors', 'room', 'timeslot']}),
         ('Date Span',   {'fields': ['start_date', 'end_date']}),
     ]
     fk_name = 'section'
     extra = 3
+
 
 class SectionAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -50,7 +49,6 @@ class SectionAdmin(admin.ModelAdmin):
 admin.site.register(Section, SectionAdmin)
 
 
-
 class InstructorAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['name']}),
@@ -59,12 +57,12 @@ class InstructorAdmin(admin.ModelAdmin):
 admin.site.register(Instructor, InstructorAdmin)
 
 
-
 class SectionTypeAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['name', 'abbreviation', 'order']}),
     ]
 admin.site.register(SectionType, SectionTypeAdmin)
+
 
 class TimeslotAdmin(admin.ModelAdmin):
     fieldsets = [
