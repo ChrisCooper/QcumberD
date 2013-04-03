@@ -2,15 +2,30 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from functools import wraps
 from collections import defaultdict
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db import models
 from django.views.decorators.cache import cache_page
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
 from course_catalog.models import Course, Subject, Term, Section, Career, Season
 import model_controls
+
+
+def enforce_subject_upper(view):
+    """A decorator for redirecting views to an uppercase subject URL in case
+    the one provided contained lowercase characters.
+    """
+    cannonical_view = 'course_catalog.views.{}'.format(view.__name__)
+    @wraps(view)
+    def wrapped(request, *args, **kwargs):
+        if not kwargs['subject_abbr'].isupper():
+            kwargs['subject_abbr'] = kwargs['subject_abbr'].upper()
+            return redirect(cannonical_view, permanent=True, *args, **kwargs)
+        return view(request, *args, **kwargs)
+    return wrapped
 
 
 @cache_page(60 * 30)
@@ -28,10 +43,14 @@ def index(request):
          'min_height': 50 + 29 * max([len(x[1]) for x in buckets])})
 
 
+@enforce_subject_upper
 @cache_page(60 * 30)
-def course_detail(request, subject_abbr=None, course_number=None):
-    course = get_object_or_404(Course,
-        subject__abbreviation__iexact=subject_abbr, number=course_number)
+def course_detail(request, subject_abbr, course_number):
+    try:
+        course = Course.objects.get(subject__abbreviation=subject_abbr,
+                                    number=course_number)
+    except ObjectDoesNotExist:
+        return detail_not_found(request, subject_abbr, course_number)
 
     sections = defaultdict(list)
     for section in course.sections.all().order_by('type__order'):
@@ -59,9 +78,13 @@ def course_detail(request, subject_abbr=None, course_number=None):
         context_instance=RequestContext(request))
 
 
+@enforce_subject_upper
 @cache_page(60 * 30)
 def subject_detail(request, subject_abbr):
-    subject = get_object_or_404(Subject, abbreviation__iexact=subject_abbr)
+    try:
+        subject = Subject.objects.get(abbreviation=subject_abbr)
+    except ObjectDoesNotExist:
+        return detail_not_found(request, subject_abbr)
 
     # Since there are very few careers, we just get them all and filter later
     courses_by_career = []
@@ -79,6 +102,21 @@ def subject_detail(request, subject_abbr):
     return render(request, 'course_catalog/pages/subject_detail.html',
         {'subject': subject, 'courses_by_career': courses_by_career,
         'seasons': seasons})
+
+
+def detail_not_found(request, subject_abbr, course_number=None):
+    """A special 404 for pages which are probably discovered because someone
+    put a bad course code in the requirements on Solus.
+    """
+    context = {'abbr': subject_abbr}
+
+    if course_number is None:
+        context.update({'missing': 'subject'})
+    else:
+        context.update({'missing': 'course', 'num': course_number})
+
+    return render(request, 'course_catalog/pages/not_found.html', context,
+        context_instance=RequestContext(request), status=404)
 
 
 @cache_page(60 * 30)
