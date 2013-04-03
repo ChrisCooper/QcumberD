@@ -3,7 +3,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-import re
 from datetime import datetime
 
 from django.db import models
@@ -100,7 +99,23 @@ class Course(ModelOnProbation):
             return None
 
     def link_requisites(self):
-        return self.enrollment_reqs
+        print 'req linking'
+        text = self.enrollment_reqs
+        reqs = self.requisites.all()
+        print 'reqs:', reqs
+        offset = 0
+        for req in reqs:
+            print 'inserting req {}'.format(req)
+            left = text[:req.left_index + offset]
+            right = text[req.right_index + offset:]
+            course = req.req_exists()
+            extra = 'title="{}"'.format(course.title) if course else 'class="missing"'
+            link = '<a href="/catalog/{abbr}/{num}" {extra}>{abbr} {num}</a>'\
+                .format(abbr=req.subject_abbr, num=req.course_number, extra=extra)
+            offset += len(link) - (req.right_index - req.left_index)
+            text = left + link + right
+        print 'finally: ', text
+        return text
 
     @models.permalink
     def get_absolute_url(self):
@@ -132,6 +147,15 @@ class Requisite(ModelOnProbation):
     def existing(cls, **properties):
         try:
             return cls.objects.get(**properties)
+        except ObjectDoesNotExist:
+            return None
+
+    def req_exists(self):
+        try:
+            return Course.objects.get(
+                subject__abbreviation__iexact=self.subject_abbr,
+                number=self.course_number
+            )
         except ObjectDoesNotExist:
             return None
 

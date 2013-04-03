@@ -172,7 +172,7 @@ class CourseParser(SolusParser):
             raise Exception('Encountered unexpected course attribute with label: "{0}"'.format(attr))
 
     def add_requisites(self, enrollment_reqs, course):
-        course_re = r'(?P<abbr>[A-Z]{3,4}) (?P<num>\d{3}[AB]?)'
+        course_re = r'(?P<abbr>[A-Z]{3,4})\s*(?P<num>\d{3}[AB]?)'
         itermatches = re.finditer(course_re, enrollment_reqs)
 
         for match in itermatches:
@@ -184,7 +184,8 @@ class CourseParser(SolusParser):
                 'right_index': match.end(),
                 'for_course': course,
             }
-            e_or_n(cc.Requisite, **properties)
+            req = e_or_n(cc.Requisite, **properties)
+            req.save()
 
     def add_course_components(self, course_components, course):
 
