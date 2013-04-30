@@ -96,7 +96,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages", 
+
+    'django.core.context_processors.request',
+
+    'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
+
+
 )
+
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -145,16 +153,18 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    
+
     'south',
     'debug_toolbar',
     'compressor',
+    'social_auth',
 
     'shell_snippets',
 
     'course_catalog',
     'scraper',
     'enrollment',
+    'accounts',
     'exams',
     'moved_pages',
     'textbooks',
@@ -189,7 +199,7 @@ LOGGING = {
     }
 }
 
-# Django-compressor
+# -------- Django-compressor --------
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
@@ -198,3 +208,30 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
+
+
+#  ------- Social-auth Settings --------
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL          = '/accounts/login/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/dashboard/'
+LOGIN_ERROR_URL    = '/accounts/login-error/'
+LOGOUT_URL          = '/accounts/logout/'
+
+SOCIAL_AUTH_BACKEND_ERROR_URL = '/accounts/social-login-error/'
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+
+SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+
+SOCIAL_AUTH_EXPIRATION = 'expires'
+
+# -------- Registration Settings --------
+ACCOUNT_ACTIVATION_DAYS = 3
+

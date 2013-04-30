@@ -8,4 +8,5 @@ python-memcached==1.48
 requests==1.0.3
 virtualenv==1.8.2
 wsgiref==0.1.2
+django-social-auth==0.7.22
 django-compressor==1.2

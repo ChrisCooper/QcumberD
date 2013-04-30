@@ -1,0 +1,52 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+{% extends "course_catalog/pages/single_page.html" %}
+
+{% block page_title %} Qcumber | Login {% endblock %}
+
+{% block main_panel %}
+
+
+<div class="expo">
+    <h1>Log in to Qcumber</h1> 
+
+    <p>To get access to the full set of Qcumber features!</p>
+
+    <div class="row clearfix">
+
+        <div class="span4 well">
+
+            <h3>
+                You can log in with a traditional email and password if you like:
+            </h3>
+
+            {% include "accounts/components/traditional-login.html" %}
+            
+            <h3>
+                Don't have an account? You can <a href="{% url 'signup' %}">create one here</a>
+            </h3>
+
+        </div>
+
+        <div class="span5 well social-login vertical-fill">
+
+            {% include "accounts/components/social-login.html" %}
+
+        </div>
+
+    </div>
+
+
+    <p class="clearfix">
+        If you'd like help or information, please drop us a line at <a href="mailto:team@qcumber.ca">team@qcumber.ca</a>! :)
+    </p>
+
+    <div class="fb-big">
+        <div class="fb-like-box" data-href="https://www.facebook.com/QcumberQueens" data-width="292" data-height="300" data-show-faces="true" data-stream="false" data-header="true"></div>
+    </div>
+
+</div>
+
+{% endblock %}

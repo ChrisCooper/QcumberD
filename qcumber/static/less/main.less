@@ -37,16 +37,13 @@ $light_grey_text: #CCC;*/
 
 //Header
 .navbar {
-	ul {
-		height: @navbarHeight;
-	}
 
+    .username {
+        color: darken(@navbarLinkColor, 20%);
+    }
 
     .brand img {
-        height: 50px;
-	    width: 159px;
-        padding-right: 5px;
-        padding-left: 20px; 
+        max-height: @navbarHeight - 5px;
     }
 
 	@nav_search_height: 20px;
@@ -201,10 +198,6 @@ ul {
         }
     }
 
-    
-    .season-tag {
-        .opacity(60);
-    }
     a:hover > .season-tag {
       .opacity(100);
       text-decoration: none;
@@ -218,6 +211,31 @@ ul {
     .underlineable {
         margin-right: 9px;
     }
+}
+
+.season-tag {
+    .opacity(60);
+
+    &.season-Fall {
+        .tag(@fall_hue, 0.5, 0.89);
+        .tag-icon(1px, 0px);
+    }
+    &.season-Winter {
+        .tag(@winter_hue, 0.4, 0.93);
+        .tag-icon(1px, -24px);
+    }
+    &.season-Summer {
+        .tag(@summer_hue, 0.3, 0.86);
+        .tag-icon(1px, -48px);
+    }
+    &.season-None {
+        .tag(0, 0, 0.89);
+        .tag-icon(-20px, 0px);
+    }
+    &.hide {
+        .opacity(33%);
+    }
+
 }
 
 .course-filter {
@@ -326,4 +344,16 @@ ul {
 
 .footer {
     
+}
+
+.social-login {
+    .zocial {
+        margin-bottom: 5px;
+        text-decoration: none;
+    }
+}
+
+
+.vertical-fill {
+    height: 100%;   
 }

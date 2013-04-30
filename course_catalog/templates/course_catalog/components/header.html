@@ -13,6 +13,26 @@
         {% endif %}
 
         <ul class="nav pull-right">
+
+            {% if user.is_authenticated %}
+                <li>
+                    <span class="navbar-text">
+                        Logged in as 
+
+                        <a href="#" class="dropdown-toggle username" data-toggle="dropdown">{{ user.username }} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url 'dashboard' %}">View Dashboard</a></li>
+                          <li><a href="#">Verify Queen's Email</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{% url 'logout' %}?next={{ request.path }}">Log out</a></li>
+                        </ul>
+
+                    </span>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+            {% endif %}
+
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'faqs' %}">FAQs</a></li>

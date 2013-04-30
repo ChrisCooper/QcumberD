@@ -9,7 +9,10 @@ from django.db import models
 from django.views.decorators.cache import cache_page
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+
 from course_catalog.models import Course, Subject, Term, Section, Career, Season
+
 import model_controls
 
 
@@ -26,6 +29,12 @@ def index(request):
     return render(request, 'course_catalog/pages/index.html',
         {'subject_buckets':buckets,
          'min_height': 50 + 29 * max([len(x[1]) for x in buckets])})
+
+
+
+@login_required
+def dashboard(request):
+    return render(request, 'dashboard/dashboard.html')
 
 
 @cache_page(60 * 30)
