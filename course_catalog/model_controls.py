@@ -151,7 +151,7 @@ def clear_old_models(cutoff_datetime, models=None):
     '''
 
     if models == None:
-        models = [Subject, Course, Section, SectionComponent, Instructor]
+        models = [Subject, Section, SectionComponent]
 
     deleted = {}
 
