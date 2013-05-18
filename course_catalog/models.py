@@ -38,7 +38,7 @@ class ModelOnProbation(models.Model):
 class Subject(ModelOnProbation):
     #Attributes
     title = models.CharField(max_length=255)
-    abbreviation = models.CharField(max_length=10)
+    abbreviation = models.CharField(max_length=10, db_index=True)
     
     def __unicode__(self):
         return u"{self.abbreviation} - {self.title}".format(self=self)
@@ -60,7 +60,7 @@ class Course(ModelOnProbation):
     #Attributes
     title = models.CharField(max_length=255)
     description = models.TextField()
-    number = models.CharField(max_length=10)
+    number = models.CharField(max_length=10, db_index=True)
     units = models.FloatField(default=-1.)
     enrollment_reqs = models.TextField(default="")
 

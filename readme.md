@@ -148,3 +148,16 @@ You can also create your own configurations for debugging, by visiting the admin
   * Deep: If this is set, the scraper will do a deep scrape (takes longer, but collects enrollment information)
   * Letters: The subject letters to scrape
   * Start/end indecies: Controls which subjects/courses to scrape. Implemented with Python list slices.
+  * 
+
+libssl Errors
+-------------
+* On Mac OS, if you are seeing an error like:
+
+>     ImportError: dlopen(/Users/Me/QcumberD/venv/lib/python2.7/site-packages/psycopg2/_psycopg.so, 2): Library not loaded: @loader_path/../lib/libssl.dylib
+>     Referenced from: /usr/lib/libpq.5.dylib
+>     Reason: Incompatible library version: libpq.5.dylib requires version 1.0.0 or later, but libssl.0.9.8.dylib provides version 0.9.8
+
+ then you may need to look at [this Stack Overflow answer](http://stackoverflow.com/a/11723752) for the simple solution.
+
+

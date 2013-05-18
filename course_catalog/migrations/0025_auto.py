@@ -8,25 +8,19 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding index on 'Course', fields ['subject']
-        db.create_index(u'course_catalog_course', ['subject_id'])
+        # Adding index on 'Course', fields ['number']
+        db.create_index(u'course_catalog_course', ['number'])
 
-        # Adding index on 'Section', fields ['course']
-        db.create_index(u'course_catalog_section', ['course_id'])
-
-        # Adding index on 'SectionComponent', fields ['section']
-        db.create_index(u'course_catalog_sectioncomponent', ['section_id'])
+        # Adding index on 'Subject', fields ['abbreviation']
+        db.create_index(u'course_catalog_subject', ['abbreviation'])
 
 
     def backwards(self, orm):
-        # Removing index on 'SectionComponent', fields ['section']
-        db.delete_index(u'course_catalog_sectioncomponent', ['section_id'])
+        # Removing index on 'Subject', fields ['abbreviation']
+        db.delete_index(u'course_catalog_subject', ['abbreviation'])
 
-        # Removing index on 'Section', fields ['course']
-        db.delete_index(u'course_catalog_section', ['course_id'])
-
-        # Removing index on 'Course', fields ['subject']
-        db.delete_index(u'course_catalog_course', ['subject_id'])
+        # Removing index on 'Course', fields ['number']
+        db.delete_index(u'course_catalog_course', ['number'])
 
 
     models = {
@@ -52,7 +46,7 @@ class Migration(SchemaMigration):
             'grading_basis': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'courses'", 'null': 'True', 'to': u"orm['course_catalog.GradingBasis']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'number': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'number': ('django.db.models.fields.CharField', [], {'max_length': '10', 'db_index': 'True'}),
             'subject': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'courses'", 'to': u"orm['course_catalog.Subject']"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'units': ('django.db.models.fields.FloatField', [], {'default': '-1.0'})
@@ -130,7 +124,7 @@ class Migration(SchemaMigration):
         },
         u'course_catalog.subject': {
             'Meta': {'object_name': 'Subject'},
-            'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '10', 'db_index': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_encountered': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
