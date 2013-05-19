@@ -2,9 +2,6 @@
 // Typography
 // --------------------------------------------------
 
-//Droid serif and sans
-@import url('http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,700');
-
 
 // Body text
 // -------------------------
@@ -70,9 +67,9 @@ h1, h2, h3, h4, h5, h6 {
     color: @grayLight;
   }
 }
-h1 { font-size: 26px; line-height: 30px; }
-h2 { font-size: 20px; line-height: 24px; }
-h3 { font-size: 18px; line-height: 22px; }
+h1 { font-size: 36px; line-height: 40px; }
+h2 { font-size: 30px; line-height: 40px; }
+h3 { font-size: 24px; line-height: 40px; }
 h4 { font-size: 18px; line-height: 20px; }
 h5 { font-size: 14px; line-height: 20px; }
 h6 { font-size: 12px; line-height: 20px; }
@@ -81,10 +78,6 @@ h1 small { font-size: 24px; }
 h2 small { font-size: 18px; }
 h3 small { font-size: 14px; }
 h4 small { font-size: 14px; }
-
-.sidenote {
-    font-size: 13px;
-}
 
 
 // Page header
@@ -155,7 +148,7 @@ dd {
 
 // Horizontal rules
 hr {
-  margin: 0 0 0 0;
+  margin: @baseLineHeight 0;
   border: 0;
   border-top: 1px solid @hrBorder;
   border-bottom: 1px solid @white;

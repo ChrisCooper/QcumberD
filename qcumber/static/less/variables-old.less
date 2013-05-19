@@ -1,12 +1,10 @@
+//
 // Variables
 // --------------------------------------------------
 
 
 // Global values
 // --------------------------------------------------
-
-@QcumberColor: #00750F; //Cucumber's skin color
-@QcumberFillColor: #a6d069; //Interior of cucumber
 
 
 // Grays
@@ -16,8 +14,7 @@
 @grayDark:              #333;
 @gray:                  #555;
 @grayLight:             #999;
-@grayLightAdded:        #bbb;
-@grayLighter:			#eee;
+@grayLighter:           #eee;
 @white:                 #fff;
 
 
@@ -41,33 +38,31 @@
 
 // Links
 // -------------------------
-@linkColor:	#369941;
+@linkColor:             #08c;
 @linkColorHover:        darken(@linkColor, 15%);
 
 
 // Typography
 // -------------------------
-@sansFontFamily:        'Droid Sans', sans-serif;
-@serifFontFamily:       'Droid Serif', serif;
+@sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
+@serifFontFamily:       Georgia, "Times New Roman", Times, serif;
 @monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
 
 @baseFontSize:          14px;
 @baseFontFamily:        @sansFontFamily;
-@baseLineHeight:	    20px;
+@baseLineHeight:        20px;
 @altFontFamily:         @serifFontFamily;
 
 @headingsFontFamily:    inherit; // empty to use BS default, @baseFontFamily
 @headingsFontWeight:    bold;    // instead of browser default, bold
 @headingsColor:         inherit; // empty to use BS default, @textColor
 
-
 // Tables
 // -------------------------
 @tableBackground:                   transparent; // overall background-color
 @tableBackgroundAccent:             #f9f9f9; // for striping
-@tableBackgroundHover:	#f5f5f5;
+@tableBackgroundHover:              #f5f5f5; // for hover
 @tableBorder:                       #ddd; // table and cell border
-
 
 // Buttons
 // -------------------------
@@ -110,12 +105,11 @@
 @dropdownDividerBottom:         @white;
 
 @dropdownLinkColor:             @grayDark;
-
 @dropdownLinkColorHover:        @white;
-@dropdownLinkBackgroundHover:   @dropdownLinkBackgroundActive;
-
 @dropdownLinkColorActive:       @dropdownLinkColor;
+
 @dropdownLinkBackgroundActive:  @linkColor;
+@dropdownLinkBackgroundHover:   @dropdownLinkBackgroundActive;
 
 
 
@@ -138,7 +132,7 @@
 // -------------------------
 @iconSpritePath:          "../img/glyphicons-halflings.png";
 @iconWhiteSpritePath:     "../img/glyphicons-halflings-white.png";
-@iconSeasonSpritePath:    "../img/seasons.png";
+
 
 // Input placeholder text color
 // -------------------------
@@ -157,30 +151,30 @@
 
 // Wells
 // -------------------------
-@wellBackground:	#f5f5f5;
+@wellBackground:                  #f5f5f5;
 
 
 // Navbar
 // -------------------------
 @navbarCollapseWidth:             979px;
 
-@navbarHeight:	60px;
-@navbarBackground:	darken(@navbarBackgroundHighlight, 5%);
-@navbarBackgroundHighlight:	#329a3f;
+@navbarHeight:                    40px;
+@navbarBackgroundHighlight:       #ffffff;
+@navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
 @navbarBorder:                    darken(@navbarBackground, 12%);
 
-@navbarText:	@white;
-@navbarLinkColor:	@white;
-@navbarLinkColorHover:	darken(@navbarLinkColor, 20%);
-@navbarLinkColorActive:	darker(@navbarLinkColor, 10%);
+@navbarText:                      #777;
+@navbarLinkColor:                 #777;
+@navbarLinkColorHover:            @grayDark;
+@navbarLinkColorActive:           @gray;
 @navbarLinkBackgroundHover:       transparent;
-@navbarLinkBackgroundActive:	lighten(@navbarBackground, 5%);
+@navbarLinkBackgroundActive:      darken(@navbarBackground, 5%);
 
-@navbarBrandColor:	@white;
+@navbarBrandColor:                @navbarLinkColor;
 
 // Inverted navbar
-@navbarInverseBackground:	lighten(@navbarBackground, 25%);
-@navbarInverseBackgroundHighlight:	lighten(@navbarInverseBackground, 25%);
+@navbarInverseBackground:                #111111;
+@navbarInverseBackgroundHighlight:       #222222;
 @navbarInverseBorder:                    #252525;
 
 @navbarInverseText:                      @grayLight;
@@ -256,7 +250,7 @@
 // Default 940px grid
 // -------------------------
 @gridColumns:             12;
-@gridColumnWidth:         70px;
+@gridColumnWidth:         60px;
 @gridGutterWidth:         20px;
 @gridRowWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
 
