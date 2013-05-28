@@ -19,10 +19,12 @@
 
     {% if debug %}
         <link type="text/less" rel="stylesheet" href="{{ STATIC_URL }}less/bootstrap.less"  charset="utf-8">
+        <link type="text/less" rel="stylesheet" href="{{ STATIC_URL }}less/responsive.less"  charset="utf-8">
         <script src="{{ STATIC_URL }}js/less.min.js"></script>
     {% else %}
       {% compress css %}
         <link type="text/less" rel="stylesheet" href="{{ STATIC_URL }}less/bootstrap.less"  charset="utf-8">
+        <link type="text/less" rel="stylesheet" href="{{ STATIC_URL }}less/responsive.less"  charset="utf-8">
       {% endcompress %}
     {% endif %}
 
