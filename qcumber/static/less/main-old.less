@@ -1,0 +1,338 @@
+/* Color Scheme 
+$strong_green: #00C618;
+$dark_pale_green: #259433;
+$dark_green: #008110;
+$light_green: #39E24D;
+$light_pale_green: #66E275;
+
+/* Backgrounds 
+$main_background: #F0F0F0;
+$term_background: #C5C5C5;
+@section_background: #DDD;
+@section_component_background_hover: #D0D0D0;
+@section_component_background: #EAEAEA;*/
+
+
+/* Content (not so strong) 
+//$content_light_pale_green: #A8E3AF;
+
+/* Text 
+$light_grey_text: #CCC;*/
+
+@panel_background: #f7f7f7;
+
+@info_background: #e7f3e7;
+
+// Table backgrounds
+@section_background: #E0E0E0;
+@section_background_hover: #E9E9E9;
+@section_component_background_hover: #D0D0D0;
+@section_component_background: #EAEAEA;
+
+
+.js .js-hidden {
+    position: absolute;
+    left: -999999em;
+}
+
+//Header
+.navbar {
+	ul {
+		height: @navbarHeight;
+	}
+
+
+    .brand img {
+        height: 50px;
+	    width: 159px;
+        padding-right: 5px;
+        padding-left: 20px; 
+    }
+
+	@nav_search_height: 20px;
+	@nav_search_rounding: 7px;
+	form {
+		margin: 0px 0px;
+		#id_nav_q {
+			//background-color: @grayLighter;
+			#gradient > .vertical(#ddd, #fff);
+			margin: 0px 0px 7px 13px;
+			height: @nav_search_height;
+			width: 200px;
+			.border-top-left-radius(@nav_search_rounding);
+			.border-bottom-left-radius(@nav_search_rounding);
+			.border-top-right-radius(0px);
+			.border-bottom-right-radius(0px);
+			padding-left: @nav_search_rounding;
+		}
+
+		.btn {
+			padding: 6px 10px;
+			margin-bottom: 22px;
+			.border-top-right-radius(@nav_search_rounding);
+			.border-bottom-right-radius(@nav_search_rounding);
+			.border-top-left-radius(0px);
+			.border-bottom-left-radius(0px);
+		}
+	}
+}
+
+ul {
+    list-style-type: none;
+    margin-left: 0px;
+}
+
+.inner-well .table {
+    background-color: lighten(@section_background, 5%);
+     
+    tr:hover td,
+    tr:hover th {
+        background-color: lighten(@section_background, 15%);
+    }
+}
+
+.description {
+    margin-bottom: 16px;
+}
+
+.section-component-list {
+    .timeslot { width: 30%;}
+
+    .instructor { width: 20%;}
+
+    .room { width: 15%;}
+
+    .date-range {
+        text-align: right;
+        width: 27%;
+    }
+}
+
+.panel {
+    background-color: @panel_background;
+    padding: 8px;
+}
+
+.hero-unit {
+	@hero_padding: 15px;
+	padding-top: @hero_padding;
+	padding-bottom: @hero_padding;
+
+	.brand {
+		height: 100px;
+	}
+
+	@search_rounding: 13px;
+	form {
+		margin: 20px 0px;
+		#id_q {
+			height: 29px;
+			width: 200px;
+			.border-top-left-radius(@search_rounding);
+			.border-bottom-left-radius(@search_rounding);
+			.border-top-right-radius(0px);
+			.border-bottom-right-radius(0px);
+			padding-left: @search_rounding;
+		}
+
+		.btn {
+			margin-bottom: 9px;
+			.border-top-right-radius(@search_rounding);
+			.border-bottom-right-radius(@search_rounding);
+			.border-top-left-radius(0px);
+			.border-bottom-left-radius(0px);
+		}
+	}
+}
+
+.call-to-action {
+    
+}
+
+.course_list {
+
+
+
+    .course {
+        padding: 3px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+
+        background-color: @section_background_hover;
+        &:hover {
+            background-color: @section_background;
+            color: @linkColorHover;
+        }
+
+        .border-radius(5px);
+
+    }
+
+    .useless {
+            a {
+                color: @grayLightAdded;
+                &:hover {
+                    color: @linkColorHover;
+                }
+            }
+        }
+
+    .course-table {
+        width: 100%;
+        height: 100%;
+
+        .abbreviation {
+            
+            /*color: #000;
+            &:hover {
+                color: @linkColorHover;
+            }*/
+            
+
+            width: 80px;
+            padding-right: 3px;
+        }
+
+        .course_title {
+        }
+
+        .units {
+            text-align: right;
+        }
+    }
+
+    
+    .season-tag {
+        .opacity(60);
+    }
+    a:hover > .season-tag {
+      .opacity(100);
+      text-decoration: none;
+    }
+    a.ununderlineable:hover {
+        text-decoration: none;
+        .underlineable {
+            text-decoration: underline;
+        }
+    }
+    .underlineable {
+        margin-right: 9px;
+    }
+}
+
+.course-filter {
+    .hidden-checkbox {
+        position: absolute;
+        left: -999em;
+    }
+
+    input[type="checkbox"] {
+        & + label {
+            .opacity(33);
+            &:hover {
+                cursor: pointer;
+                .opacity(52);
+            }
+        }
+        &:checked + label {
+            .opacity(100);
+            &:hover {
+                .opacity(81);
+            }
+        }
+    }
+    .season-Unscheduled {
+        display: inline;
+        font-size: 9px;
+        text-transform: uppercase;
+    }
+    input#Unscheduled {
+        vertical-align: text-bottom;
+    }
+}
+
+.course {
+
+    .course-info {
+        margin: 10px 90px;
+        padding: 25px;
+        background-color: @section_background;
+        .border-radius(5px);
+
+        .classification {
+            padding-top: 7px;
+            font-size: 120%;
+            color: @grayLight;
+        }
+
+        .prereqs {
+            //font-style:italic;
+            color: #666;
+        }
+
+        .extra-course-info {
+            color: #666;
+            padding-top: 10px;
+            
+            .extra-info-title {
+                font-weight: bold;
+                display: inline;
+            }
+
+            .extra-info-footer {
+                padding-top: 5px;
+                font-weight: bold;
+                font-size: 90%;
+            }
+
+        }
+    }
+
+    .section-list .enrollment {
+        padding-left: 10px;
+        border-bottom: 3px;
+
+        font-style: normal;
+    }
+}
+
+.faqs {
+    
+    .faq-entry {
+        margin-top: 35px;
+
+        li {
+            margin-left: 30px;
+            list-style-type:circle;
+        }
+    }
+}
+
+.expo {
+    h3 {
+        color: #777;
+    }
+
+    margin: 50px;
+    padding: 30px;
+
+    background-color: @section_background;
+    .border-radius(10px);
+}
+
+.fb-big {
+    margin-top: 30px;
+}
+
+.twitter-follow {
+    margin-top: 30px;
+}
+
+.twitter-feed {
+    background-color: @heroUnitBackground;
+    padding: 3px 10px;
+}
+
+.footer {
+    
+}
