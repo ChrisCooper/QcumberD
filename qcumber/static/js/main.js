@@ -64,7 +64,7 @@ $('.search-form').on('submit', function(e) {
     //return false; // for debugging, stops form from submitting.
 });
 
-// Outbound Link Tracking
+// Outbound Link Tracking Function
 var link_track_event = function(event_name) {
     return function(e) {
         var url = $(this).attr("href");
@@ -87,9 +87,16 @@ var link_track_event = function(event_name) {
     };
 };
 
+//Add link tacking
 $(function() {
     $(".exams a").on('click', link_track_event("exambank link"));
 });
 $(function() {
     $(".textbooks a").on('click', link_track_event("textbook link"));
+});
+$(function() {
+    $(".resources .services a").on('click', link_track_event("service link"));
+});
+$(function() {
+    $(".resources .departments a").on('click', link_track_event("departments link"));
 });
