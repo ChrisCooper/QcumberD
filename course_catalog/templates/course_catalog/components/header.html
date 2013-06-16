@@ -1,6 +1,6 @@
 <div class="navbar navbar-static-top">
     <div class="navbar-inner">
-        <div class="container">
+        <div class="container-fluid">
 
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <span class="icon-bar"></span>
@@ -8,11 +8,17 @@
                 <span class="icon-bar"></span>
             </button>
   
-            <a href="{% url 'home' %}" class="brand">Qcumber</a>
+            <a class="brand" href="{% url 'home' %}" alt="Qcumber logo"></a>
   
             <div class="nav-collapse collapse">
   
-                <ul class="nav">
+                <form class="navbar-form pull-right" action="/search/" method="get">
+                    <input class="span2" type="search" maxlength="100" placeholder="e.g. MATH 124" name="q" id="id_nav_q" />
+                    <button type="submit" class="btn">Go!</button>
+                </form>
+
+
+                <ul class="nav pull-right">
                     {% if debug %}
                     <li><a href="{% url 'admin:index' %}">Admin</a></li>
                     <li><a href="{% url 'scraper.views.index' %}">Scraper</a></li>
@@ -24,10 +30,7 @@
                     <li><a href="{% url 'contact' %}">Contact</a></li>
                 </ul>
     
-                <form class="navbar-form pull-right" action="/search/" method="get">
-                    <input class="span2" type="search" maxlength="100" placeholder="e.g. MATH 124" name="q" id="id_nav_q" />
-                    <button type="submit" class="btn">Go!</button>
-                </form>
+                
   
             </div><!--/.nav-collapse -->
         </div>
