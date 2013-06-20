@@ -5,11 +5,73 @@
 {% block main_panel %}
 <div class="expo">
     <h1>
-        Frequently Asked Questions</h1>
+        Frequently Asked Questions
+    </h1>
     <h3>
-        The questions you've asked, and those that you didn't.</h3>
+        The questions you've asked, and those that you didn't.
+    </h3>
     <ul class="faqs">
 
+
+        <li class="faq-entry">
+            <h4>
+                What is Qcumber?
+            </h4>
+            <p>
+                Qcumber is the easy-to-use, unofficial course catalogue for Queen’s University undergraduate and graduate students. It was created by students to allow open and convenient access to course and textbook information, as well as past exams, links to departments, and other helpful resources. It is a work in progress with a big vision, so keep an eye out for course ratings, automatic timetables, or other fun and useful features in the future. You can check out our <a href="{% url 'about' %}">about</a> page for more information on that.
+            </p>
+        </li>
+
+
+        <li class="faq-entry">
+            <h4>
+                Why is Qcumber "unofficial"?
+            </h4>
+            <p>
+                Qcumber is made by a fourth-year computing student, and is not in any way officially affiliated with Queen’s University. That may or may not change in the future, but for now, we've got to keep that label to avoid misleading anyone!
+            </p>
+        </li>
+
+
+        <li class="faq-entry">
+            <h4>
+                How accurate is Qcumber's information?
+            </h4>
+            <p>
+                We've spent a lot of time making sure Qcumber's info reflects exactly what's shown in SOLUS' catalog. Qcumber is updated regularly and, to the best of our knowledge, achieves that goal upon updates, but you should still confirm your timetable just to be sure. To keep things transparent, the last time information for a particular course on Qcumber was updated is shown below its description (e.g. "Data collected 1 hour, 40 minutes ago."). You can definitely help us by pointing out inconsistencies!
+            </p>
+        </li>
+
+
+
+        <li class="faq-entry">
+            <h4>
+                SOLUS is confusing/difficult/frustrating to use. How do I confirm my courses with SOLUS?
+            </h4>
+            <p>
+                We understand. Really, we do. The easiest way we've found to use choose and register courses on SOLUS (in conjunction with Qcumber, of course) is as follows:
+            </p>
+
+            <ul>
+                <li>1) Find courses on Qcumber. Take note of the four-digit section code of each section you want to take.</li>
+                <li>2) Click "plan" on SOLUS and search the four-digit section code on the left-hand bar.</li>
+                <li>3) Make sure the course and timeslot information matches that on Qcumber.</li>
+                <li>4) Click "add to shopping cart"</li>
+                <li>5) Once you’ve completed this for all of your courses, click "verify my courses" to check for exclusions and timetable conflicts.</li>
+                <li>6) Log-in once your time-ticket begins (you'll get an email about it) and click "enroll". Pray SOLUS does not crash. If you have any difficulty with course selection, timetabling, prerequisites, conflicts or anything of that nature, remember there are LOTS of people at Queen’s who can help you. Check out our <a href="{% url 'resources' %}">resources page</a> for more information. Course selection can be a stressful time for many students, and there is a lot of support out there to make sure you are comfortable with the decisions you've made.</li>
+            </ul>
+        </li>
+
+        <li class="faq-entry">
+            <h4>
+                How does Qcumber work?
+            </h4>
+            <p>
+                Fairies. There’s one named Django, and one named Bootstrap. You can see the open fairy source code at <a href="https://github.com/ChrisCooper/QcumberD/">https://github.com/ChrisCooper/QcumberD/</a>! :)
+
+                What we really mean is that it takes information that is on SOLUS and puts it in an easy-to-understand format.
+            </p>
+        </li>
 
         <li class="faq-entry">
             <h4>
@@ -25,7 +87,7 @@
                 I have a question about a course/subject/concentration.
             </h4>
             <p>
-                Psh, that’s not a question! Well, Qcumber doesn't yet attempt to offer guidance on what courses you should take. You should contact the department for that kind of information. We're hoping to put up a page with useful faculty links at some point.
+                Psh, that’s not a question! Well, Qcumber doesn't yet attempt to offer guidance on what courses you should take. You should contact the department for that kind of information, or one of the other wonderful resources you can find <a href="{% url 'resources' %}">here</a>.
             </p>
         </li>
 
@@ -40,6 +102,7 @@
                 <li>a tool to help you find that elusive final course</li>
             </ul>
         </li>
+
 
         <li class="faq-entry">
             <h4>
