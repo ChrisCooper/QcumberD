@@ -69,7 +69,7 @@
                         </tr>
                         {% for textbook in textbooks.all %}
                             <tr>
-                                <td><a href="{{ textbook.listing_url }}">{{ textbook.title }}</a></td>
+                                <td><a href="{{ textbook.listing_url }}" target="_blank">{{ textbook.title }}</a></td>
                                 <td>{{ textbook.authors }}</td>
                                 <td>{%if textbook.required %}Yes{% else %}No{% endif %}</td>
                                 <td>{{ textbook.new_price }}</td>
@@ -77,12 +77,12 @@
                         {% endfor %}                                
                     </table>
                     <div class="extra-info-footer">
-                        Data also accessible at <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>. Is something missing? Please let us know at <a href="mailto:feedback@qcumber.ca">feedback@qcumber.ca</a>. :)
+                        Data also accessible at <a href="http://www.campusbookstore.com/" target="_blank">The Campus Bookstore</a>. Is something missing? Please let us know at <a href="mailto:feedback@qcumber.ca">feedback@qcumber.ca</a>. :)
                     </div>
                 </div>
             {% else %}
                 <h3 class="extra-info-title">Textbooks:</h3>
-                We didn't find any for this course at <a href="http://www.campusbookstore.com/">The Campus Bookstore</a>.
+                We didn't find any for this course at <a href="http://www.campusbookstore.com/" target="_blank">The Campus Bookstore</a>.
             {% endif %}
         </div>
 
@@ -106,17 +106,17 @@
                     {% for exam in exams %}
                         <tr>
                             <td>{{ exam.year }}</td>
-                            <td><a href="{{ exam.pdf_url }}">{{ exam.pdf_url }}</a></td>
+                            <td><a href="{{ exam.pdf_url }}" target="_blank">{{ exam.pdf_url }}</a></td>
                         </tr>
                     {% endfor %}                                
                 </table>
                 <div class="extra-info-footer">
-                    Data also accessible at <a href="http://library.queensu.ca/exambank/">ExamBank</a>. Is something missing? Please let us know at <a href="mailto:feedback@qcumber.ca">feedback@qcumber.ca</a>. :)
+                    Data also accessible at <a href="http://library.queensu.ca/exambank/" target="_blank">ExamBank</a>. Is something missing? Please let us know at <a href="mailto:feedback@qcumber.ca">feedback@qcumber.ca</a>. :)
                 </div>
             </div>
         {% else %}
             <h3 class="extra-info-title">Past Exams:</h3>
-            We didn't find any for this course on <a href="http://library.queensu.ca/exambank/">ExamBank</a>.
+            We didn't find any for this course on <a href="http://library.queensu.ca/exambank/" target="_blank">ExamBank</a>.
         {% endif %}
         </div>
     </div>
