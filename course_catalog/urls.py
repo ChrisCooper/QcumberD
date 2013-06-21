@@ -2,14 +2,15 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from django.conf.urls import patterns, include, url
+from django.http import HttpResponse
+from django.conf.urls import patterns, url
 from django.views.generic.base import TemplateView
 
 urlpatterns = patterns('course_catalog.views',
-     url(r'^$', 'index', name="home"),
+    url(r'^$', 'index', name="home"),
 
-     url(r'^catalog/(?P<subject_abbr>\w+)/(?P<course_number>\w+)/$', 'course_detail'),
-     url(r'^catalog/(?P<subject_abbr>\w+)/$', 'subject_detail'),
+    url(r'^catalog/(?P<subject_abbr>\w+)/(?P<course_number>\w+)/$', 'course_detail'),
+    url(r'^catalog/(?P<subject_abbr>\w+)/$', 'subject_detail'),
 
     url(r'^search/$', 'search'),
 )
