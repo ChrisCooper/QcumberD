@@ -1,5 +1,5 @@
 from solus_scraper import SolusScraper
-#from section_component_scraper import SectionComponentScraper
+
 
 class SectionScraper(SolusScraper):
 
@@ -35,7 +35,7 @@ class SectionScraper(SolusScraper):
         sections = self.solus.current_sections(course, term)
 
         for section in sections:
-            
+
             #Check if we should visit the section page
             if self.config.deep:
                 print ("------------Scraping Section (deep): {0}".format(section))

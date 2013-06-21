@@ -32,7 +32,13 @@ class SectionParser(SolusParser):
             year = m.group(1)
             season = m.group(2)
             
-            # Make a real season
+            # Check if this term is old enough to be skipped
+            now = datetime.now()
+            if int(year) < datetime.now().year or (int(year) == now.year and season == "Winter"):
+                print ("--------Omitting outdated term: {season} - {year}".format(season=season, year=year))
+                continue
+
+            # Otherwise, make a real season and term
             season = e_or_n(cc.Season, name=season)
             season.save(was_scraped=True)
 
