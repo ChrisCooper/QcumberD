@@ -105,7 +105,7 @@ class Course(ModelOnProbation):
         in the same order that they appear in the text!
         """
         text = self.enrollment_reqs
-        reqs = self.requisites.all()
+        reqs = self.requisites.all().order_by('left_index')
         offset = 0
         for req in reqs:
             left = text[:req.left_index + offset]
