@@ -112,10 +112,10 @@ class Course(ModelOnProbation):
             right = text[req.right_index + offset:]
             course = req.req_exists()
             if course:
-                extra = 'title="{}"'.format(course.title)
+                extra = u'title="{}"'.format(course.title)
             else:
-                extra = 'title="This course cannot be found on Solus" class="missing"'
-            link = '<a href="/catalog/{abbr}/{num}" {extra}>{abbr} {num}</a>'\
+                extra = u'title="This course cannot be found on Solus" class="missing"'
+            link = u'<a href="/catalog/{abbr}/{num}" {extra}>{abbr} {num}</a>'\
                 .format(abbr=req.subject_abbr, num=req.course_number, extra=extra)
             offset += len(link) - (req.right_index - req.left_index)
             text = left + link + right
