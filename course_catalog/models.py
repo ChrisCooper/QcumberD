@@ -105,7 +105,7 @@ class Course(ModelOnProbation):
         in the same order that they appear in the text!
         """
         text = self.enrollment_reqs
-        reqs = self.requisites.all()
+        reqs = self.requisites.all().order_by('left_index')
         offset = 0
         for req in reqs:
             left = text[:req.left_index + offset]
@@ -115,8 +115,8 @@ class Course(ModelOnProbation):
                 extra = 'title="{}"'.format(course.title)
             else:
                 extra = 'title="This course cannot be found on Solus" class="missing"'
-            link = '<a href="/catalog/{abbr}/{num}" {extra}>{abbr} {num}</a>'\
-                .format(abbr=req.subject_abbr, num=req.course_number, extra=extra)
+            link = '<a href="{url}" {extra}>{abbr} {num}</a>'\
+                .format(url=course.get_absolute_url(), abbr=req.subject_abbr, num=req.course_number, extra=extra)
             offset += len(link) - (req.right_index - req.left_index)
             text = left + link + right
         return text
@@ -155,13 +155,8 @@ class Requisite(ModelOnProbation):
             return None
 
     def req_exists(self):
-        try:
-            return Course.objects.get(
-                subject__abbreviation__iexact=self.subject_abbr,
-                number=self.course_number
-            )
-        except ObjectDoesNotExist:
-            return None
+        c = Course.objects.filter(subject__abbreviation__iexact=self.subject_abbr, number__istartswith=self.course_number).order_by('number')
+        return c[0] if len(c) > 0 else None
 
 
 class Section(ModelOnProbation):
