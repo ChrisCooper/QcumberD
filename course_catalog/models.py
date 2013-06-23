@@ -115,8 +115,10 @@ class Course(ModelOnProbation):
                 extra = u'title="{}"'.format(course.title)
             else:
                 extra = 'title="This course cannot be found on Solus" class="missing"'
+            url = course.get_absolute_url() if course else "/{subj}/{num}"\
+                .format(subj=req.subject_abbr, num=req.course_number)
             link = '<a href="{url}" {extra}>{abbr} {num}</a>'\
-                .format(url=course.get_absolute_url(), abbr=req.subject_abbr, num=req.course_number, extra=extra)
+                .format(url=, abbr=req.subject_abbr, num=req.course_number, extra=extra)
             offset += len(link) - (req.right_index - req.left_index)
             text = left + link + right
         return text
