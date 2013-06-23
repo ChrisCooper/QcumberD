@@ -114,9 +114,9 @@ class Course(ModelOnProbation):
             if course:
                 extra = u'title="{}"'.format(course.title)
             else:
-                extra = u'title="This course cannot be found on Solus" class="missing"'
-            link = u'<a href="/catalog/{abbr}/{num}" {extra}>{abbr} {num}</a>'\
-                .format(abbr=req.subject_abbr, num=req.course_number, extra=extra)
+                extra = 'title="This course cannot be found on Solus" class="missing"'
+            link = '<a href="{url}" {extra}>{abbr} {num}</a>'\
+                .format(url=course.get_absolute_url(), abbr=req.subject_abbr, num=req.course_number, extra=extra)
             offset += len(link) - (req.right_index - req.left_index)
             text = left + link + right
         return text
@@ -155,13 +155,8 @@ class Requisite(ModelOnProbation):
             return None
 
     def req_exists(self):
-        try:
-            return Course.objects.get(
-                subject__abbreviation__iexact=self.subject_abbr,
-                number=self.course_number
-            )
-        except ObjectDoesNotExist:
-            return None
+        c = Course.objects.filter(subject__abbreviation__iexact=self.subject_abbr, number__istartswith=self.course_number).order_by('number')
+        return c[0] if len(c) > 0 else None
 
 
 class Section(ModelOnProbation):
