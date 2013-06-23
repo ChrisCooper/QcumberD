@@ -112,9 +112,9 @@ class Course(ModelOnProbation):
             right = text[req.right_index + offset:]
             course = req.req_exists()
             if course:
-                extra = u'title="{}"'.format(course.title)
+                extra = u'title="{}" class="requisite"'.format(course.title)
             else:
-                extra = u'title="This course cannot be found on Solus" class="missing"'
+                extra = u'title="This course cannot be found on Solus" class="missing requisite"'
             url = course.get_absolute_url() if course else u"/catalog/{subj}/{num}"\
                 .format(subj=req.subject_abbr, num=req.course_number)
             link = u'<a href="{url}" {extra}>{abbr} {num}</a>'.format(url=url, abbr=req.subject_abbr, num=req.course_number, extra=extra)
