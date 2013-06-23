@@ -100,3 +100,6 @@ $(function() {
 $(function() {
     $(".resources .departments a").on('click', link_track_event("departments link"));
 });
+$(function() {
+    $(".prereqs a").on('click', link_track_event("departments link"));
+});
