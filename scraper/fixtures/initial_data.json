@@ -8,7 +8,7 @@
       "course_start_idx": 0, 
       "description": "Scrapes all subjects, courses, and sections, as well as enrollment data. (This is a fixture, so it cannot be modified)", 
       "deep": true, 
-      "delete_other_models": true,
+      "delete_other_models": false,
       "course_end_idx": -1, 
       "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 
       "name": "Full deep scrape"
@@ -23,7 +23,7 @@
       "course_start_idx": 0, 
       "description": "Scrapes all subjects, courses, and sections, but does not collect enrollment data. This scrape is much faster than the deep scrape. (This is a fixture, so it cannot be modified)", 
       "deep": false, 
-      "delete_other_models": true,
+      "delete_other_models": false,
       "course_end_idx": -1, 
       "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 
       "name": "Full shallow scrape"
