@@ -23,6 +23,7 @@ urlpatterns += patterns('',
     url(r'^tos$', TemplateView.as_view(template_name='course_catalog/text/tos.html'), name="tos"),
     url(r'^faqs$', TemplateView.as_view(template_name='course_catalog/text/faqs.html'), name="faqs"),
     url(r'^resources$', TemplateView.as_view(template_name='course_catalog/text/resources.html'), name="resources"),
+    url(r'^message$', TemplateView.as_view(template_name='course_catalog/text/message.html'), name="message"),
 
     url(r'^robots.txt$', TemplateView.as_view(template_name='course_catalog/text/faqs.html')),
     url(r'^crossdomain.xml$', lambda r: HttpResponse('')),
