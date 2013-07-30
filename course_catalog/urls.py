@@ -9,7 +9,7 @@ from django.views.generic.base import TemplateView
 urlpatterns = patterns('course_catalog.views',
     url(r'^$', 'index', name="home"),
 
-    url(r'^catalog/(?P<subject_abbr>\w+)/(?P<course_number>\w+)/prereqs$', 'course_prereqs'),
+    url(r'^catalog/(?P<subject_abbr>\w+)/(?P<course_number>\w+)/prereqs/$', 'course_prereqs'),
     url(r'^catalog/(?P<subject_abbr>\w+)/(?P<course_number>\w+)/$', 'course_detail'),
     url(r'^catalog/(?P<subject_abbr>\w+)/$', 'subject_detail'),
 

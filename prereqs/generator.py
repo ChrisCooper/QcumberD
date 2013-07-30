@@ -108,11 +108,12 @@ def to_dot(nodes):
     """
 
     # Prefix
-    outstr = '''digraph G {
+    outstr = '''digraph "Prerequisite Chart" {
     node [
         shape=ellipse,
         style=filled,
-        color=lightgreen
+        fontname="'Droid Sans', sans-serif",
+        fontcolor=white
     ]'''
 
     # Add the nodes
@@ -123,12 +124,14 @@ def to_dot(nodes):
         print node['label'], node['label'] == 'AND', node['label'] == 'OR',
         if (node['label'] == 'OR') or (node['label'] == 'AND'):
             color = 'white'
+            fontcolor = 'black'
         else:
-            color = 'lightgreen'
+            color = 'forestgreen'
+            fontcolor = 'white'
 
         print color
 
-        outstr += '"%s" [ label="%s", color="%s" ]\n' % (nodename, node['label'], color)
+        outstr += '"%s" [ label="%s", color="%s", fontcolor="%s" ]\n' % (nodename, node['label'], color, fontcolor)
 
     # Add the links
     for nodename in nodes:

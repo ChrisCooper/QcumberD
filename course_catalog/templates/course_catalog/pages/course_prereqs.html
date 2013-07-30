@@ -12,14 +12,19 @@
       <li class="active">Prerequisite Chart</li>
     </ul>
 
-    <script type="text/vnd.graphviz" id="graph">
+    <script type="text/vnd.graphviz" id="graphsrc">
         {{ dotfile }}
     </script>
     <div id="graphcontainer"></div>
+
+    <div class="alert alert-info">
+        This graph was generated automatically and has not been checked for accuracy.  Be sure to check the textual version of the prerequisites.
+    </div>
+
     <script src="{{ STATIC_URL }}js/viz.js"></script>
     <script>
         (function() {
-            var src = document.getElementById('graph').innerHTML;
+            var src = document.getElementById('graphsrc').innerHTML;
             var generated = Viz(src, 'svg');
             document.getElementById('graphcontainer').innerHTML = generated;
         })();
