@@ -1,0 +1,25 @@
+{% extends "course_catalog/pages/single_page.html" %}
+
+{% load shell_snippets %}
+
+{% block page_title %} Qcumber | {{ course.subject.abbreviation }} {{ course.number }} - {{ course.title }} {% endblock %}
+
+{% block main_panel %}
+
+<script type="text/vnd.graphviz" id="graph">
+{{ dotfile }}
+</script>
+<div id="graphcontainer"></div>
+<script src="/static/js/viz.js"></script>
+<script>
+(function() {
+    var src = document.getElementById('graph').innerHTML;
+    var generated = Viz(src, 'svg');
+    document.getElementById('graphcontainer').innerHTML = generated;
+})();
+</script>
+
+{% endblock %}
+
+
+

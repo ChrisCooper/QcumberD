@@ -1,3 +1,6 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #####################
 # IMPORT STATEMENTS #
@@ -389,7 +392,7 @@ def parse(string):
     return outdict
 
 
-@timeout(1)
+# @timeout(1)
 def parse_raw(string):
     """
     Parse the string passed in for prerequisites.
