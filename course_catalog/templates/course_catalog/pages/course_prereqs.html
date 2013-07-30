@@ -1,25 +1,27 @@
-{% extends "course_catalog/pages/single_page.html" %}
+{% extends "course_catalog/pages/base_qcumber.html" %}
 
 {% load shell_snippets %}
 
 {% block page_title %} Qcumber | {{ course.subject.abbreviation }} {{ course.number }} - {{ course.title }} {% endblock %}
 
-{% block main_panel %}
+{% block main_container %}
+    <ul class="breadcrumb">
+      <li><a href="{% url 'home' %}">Home</a> <span class="divider">-</span></li>
+      <li><a href="{{ course.subject.get_absolute_url }}">{{ course.subject.title }}</a> <span class="divider">-</span></li>
+      <li><a href="{{ course.get_absolute_url }}">{{ course.subject.abbreviation }} {{ course.number }}</a> <span class="divider">-</span></li>
+      <li class="active">Prerequisite Chart</li>
+    </ul>
 
-<script type="text/vnd.graphviz" id="graph">
-{{ dotfile }}
-</script>
-<div id="graphcontainer"></div>
-<script src="/static/js/viz.js"></script>
-<script>
-(function() {
-    var src = document.getElementById('graph').innerHTML;
-    var generated = Viz(src, 'svg');
-    document.getElementById('graphcontainer').innerHTML = generated;
-})();
-</script>
-
+    <script type="text/vnd.graphviz" id="graph">
+        {{ dotfile }}
+    </script>
+    <div id="graphcontainer"></div>
+    <script src="{{ STATIC_URL }}js/viz.js"></script>
+    <script>
+        (function() {
+            var src = document.getElementById('graph').innerHTML;
+            var generated = Viz(src, 'svg');
+            document.getElementById('graphcontainer').innerHTML = generated;
+        })();
+    </script>
 {% endblock %}
-
-
-
