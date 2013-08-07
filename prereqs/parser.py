@@ -13,47 +13,11 @@ import ply.yacc as yacc
 
 ### USED FOR UTILS ###
 import re
-from functools import wraps
-import errno
-import os
-import signal
 
 
 ##################
 # ENTERING UTILS #
 ##################
-
-
-### BEGIN TIMEOUT CODE ###
-class TimeoutError(Exception):
-    pass
-
-
-def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
-    """
-    This adds a decorator `@timeout()` which allows you to
-    set timeouts on the execution of a script.
-    This is used to kill yacc if it decides to hang.
-
-    This code will not work on non-UNIX systems
-    """
-    def decorator(func):
-        def _handle_timeout(signum, frame):
-            raise TimeoutError(error_message)
-
-        def wrapper(*args, **kwargs):
-            signal.signal(signal.SIGALRM, _handle_timeout)
-            signal.alarm(seconds)
-            try:
-                result = func(*args, **kwargs)
-            finally:
-                signal.alarm(0)
-            return result
-
-        return wraps(func)(wrapper)
-
-    return decorator
-### END TIMEOUT CODE ###
 
 
 def re_insensitive(string):
@@ -160,7 +124,7 @@ def p_reqsetlist_add(t):
     if len(t[2]['courses']['items']) is 0:
         t[0] = t[1]
     else:
-        t[0] = t[1] + [ t[2] ]
+        t[0] = t[1] + [t[2]]
 
 
 ###
@@ -392,7 +356,6 @@ def parse(string):
     return outdict
 
 
-# @timeout(1)
 def parse_raw(string):
     """
     Parse the string passed in for prerequisites.

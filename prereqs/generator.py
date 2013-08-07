@@ -121,15 +121,12 @@ def to_dot(nodes):
         # Generate Nodes
         node = nodes[nodename]
 
-        print node['label'], node['label'] == 'AND', node['label'] == 'OR',
         if (node['label'] == 'OR') or (node['label'] == 'AND'):
             color = 'white'
             fontcolor = 'black'
         else:
             color = 'forestgreen'
             fontcolor = 'white'
-
-        print color
 
         outstr += '"%s" [ label="%s", color="%s", fontcolor="%s" ]\n' % (nodename, node['label'], color, fontcolor)
 
