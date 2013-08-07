@@ -44,6 +44,7 @@ def parse_all_courses():
 
     courses = Course.objects.all()
     for course in courses:
+        print '-- Parsing Course %s' % str(course)
         parse_course(course)
 
 
