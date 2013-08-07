@@ -10,6 +10,11 @@
 import json
 import hashlib
 
+try:
+    from django.core.urlresolvers import reverse
+except:
+    # Try to load reverse in if running in django
+    pass
 
 ######################
 # EXPORTED FUNCTIONS #
@@ -116,8 +121,9 @@ def to_dot(nodes):
         shape=ellipse,
         style=filled,
         fontname="'Droid Sans', sans-serif",
+        color=forestgreen,
         fontcolor=white
-    ]'''
+    ]\n'''
 
     # Add the nodes
     for nodename in nodes:
@@ -125,13 +131,17 @@ def to_dot(nodes):
         node = nodes[nodename]
 
         if (node['label'] == 'OR') or (node['label'] == 'AND'):
-            color = 'white'
-            fontcolor = 'black'
+            outstr += '"%s" [ label="%s", title="%s", color="white", fontcolor="black" ]\n' % (nodename, node['label'], node['label'])
         else:
-            color = 'forestgreen'
-            fontcolor = 'white'
+            url = ''
 
-        outstr += '"%s" [ label="%s", color="%s", fontcolor="%s" ]\n' % (nodename, node['label'], color, fontcolor)
+            try: # Try to get the URL for the course
+                subject, number = nodename.split(' ')
+                url = reverse('course_catalog.views.course_detail', kwargs={'subject_abbr': subject, 'course_number': number})
+            except:
+                pass
+
+            outstr += '"%s" [ URL="%s" ]\n' % (nodename, url)
 
     # Add the links
     for nodename in nodes:
