@@ -66,7 +66,7 @@ t_RECOMMEND = re_insensitive('recommend')
 t_PREREQUISITE = re_insensitive('prerequisite')
 t_COREQUISITE = re_insensitive('corequisite')
 t_EQUIVALENCY = re_insensitive('equivalen')
-t_EXCLUSION = re_insensitive('exclu')
+t_EXCLUSION = re_insensitive('excl')
 
 t_OR = re_insensitive('or')
 
