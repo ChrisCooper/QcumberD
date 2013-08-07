@@ -81,8 +81,12 @@ def prereqs(subject, coursenum):
                                     number=coursenum)
         return json.loads(course.parsed_reqs)
     except ObjectDoesNotExist:
-        # There is no such subject
+        # Try to fetch the 'A' version of the course
+        if coursenum[-1] != 'A':
+            return prereqs(subject, coursenum + 'A')
+
+        # There is no such course
         return
     except ValueError:
-        # The subject doesn't have valid json requirements
+        # The course doesn't have valid json requirements
         return
