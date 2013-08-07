@@ -10,3 +10,4 @@ virtualenv==1.8.2
 wsgiref==0.1.2
 django-compressor==1.2
 django-debug-toolbar==0.9.4
+ply==3.4
