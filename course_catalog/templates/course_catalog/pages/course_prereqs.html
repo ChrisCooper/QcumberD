@@ -1,6 +1,7 @@
 {% extends "course_catalog/pages/base_qcumber.html" %}
 
 {% load shell_snippets %}
+{% load compress %}
 
 {% block page_title %} Qcumber | {{ course.subject.abbreviation }} {{ course.number }} - {{ course.title }} {% endblock %}
 
@@ -75,7 +76,9 @@
     <!-- Graph Generation -->
     <script>{{ graphdef }}</script>
 
-    <script src="{{ STATIC_URL }}js/d3.v3.min.js"></script>
-    <script src="{{ STATIC_URL }}js/dagre.min.js"></script>
-    <script src="{{ STATIC_URL }}js/prgraph.js"></script>
+    {% compress js %}
+        <script src="{{ STATIC_URL }}js/d3.v3.min.js"></script>
+        <script src="{{ STATIC_URL }}js/dagre.min.js"></script>
+        <script src="{{ STATIC_URL }}js/prgraph.js"></script>
+    {% endcompress %}
 {% endblock %}
