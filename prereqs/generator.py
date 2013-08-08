@@ -109,6 +109,57 @@ def generate_node(source, kind, nodes, prereqs, name=None):
     return name
 
 
+def to_json(nodes, primary_node=''):
+    """
+    Transforms a set of nodes into json format
+    Returns a tuple of jsonifiable dictionaries
+    """
+
+    transitions = []
+    state_keys = {}
+
+    for nodename in nodes:
+        node = nodes[nodename]
+
+        ###
+        # Add State
+        state_keys[nodename] = {'label': node['label']}
+
+        # Categorize by type (intermediate/class)
+        if (node['label'] == 'OR') or (node['label'] == 'AND'):
+            state_keys[nodename]['type'] = 'intermediate'
+        else:
+            state_keys[nodename]['type'] = 'course'
+
+            # Try to get the URL for the course
+            # TODO: Currently Unused
+            url = ''
+            try:
+                subject, number = nodename.split(' ')
+                url = reverse('course_catalog.views.course_detail', kwargs={'subject_abbr': subject, 'course_number': number})
+            except:
+                pass
+
+            state_keys[nodename]['url'] = url
+
+        # Mark the primary node
+        if nodename == primary_node:
+            state_keys[nodename]['type'] += ' primary'
+
+        ###
+        # Add Transitions
+        for link_type in ['prerequisite', 'recommend', 'corequisite']:
+            if link_type in node:
+                for connection in node[link_type]:
+                    transitions.append({
+                        'source': connection,
+                        'target': nodename,
+                        'type': link_type
+                    })
+
+    return transitions, state_keys
+
+
 def to_dot(nodes):
     """
     Transforms a set of nodes into dotfile format

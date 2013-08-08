@@ -66,8 +66,10 @@ def generate_prereq_graph(subject, number):
     nodes = {}
     generator.generate_course(coursename, nodes, prereqs)
 
-    # Return the dotfile form of the set of nodes
-    return generator.to_dot(nodes)
+    # Return the json form of the set of nodes
+    transitions, stateKeys = generator.to_json(nodes, coursename)
+
+    return 'var transitions = %s; var stateKeys = %s;' % (json.dumps(transitions), json.dumps(stateKeys))
 
 
 def prereqs(subject, coursenum):

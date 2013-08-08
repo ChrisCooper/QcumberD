@@ -89,10 +89,10 @@ def course_prereqs(request, subject_abbr, course_number):
     except ObjectDoesNotExist:
         return detail_not_found(request, subject_abbr, course_number)
 
-    dotfile = generate_prereq_graph(subject_abbr, course_number)
+    graphdef = generate_prereq_graph(subject_abbr, course_number)
 
     return render(request, 'course_catalog/pages/course_prereqs.html',
-                  {'course': course, 'dotfile': SafeString(dotfile)})
+                  {'course': course, 'graphdef': SafeString(graphdef)})
 
 
 @enforce_subject_upper
