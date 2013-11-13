@@ -80,23 +80,20 @@ class SolusSession(object):
         response = self.session.post(response.url, data=payload)
         self.latest_text = response.text
         
-        print ("========================SHOULD SEE CONTINUE PAGE========================")
-        print (response.url)
-        print (response.text)
-        self.do_continue_page()
+        if "SAML2/Redirect/SSO" in response.url:
+            self.do_continue_page()
+        
         # Should now be authenticated and on the my.queensu.ca page, submit a request for the URL in the 'SOLUS' button
+        #response = self.session.get("https://saself.ps.queensu.ca/psc/saself/EMPLOYEE/HRMS/s/WEBLIB_QU_SSO.FUNCLIB_01.FieldFormula.IScript_SSO?tab=SA_LEARNER_SERVICES.SSS_BROWSE_CATLG_P.GBL")
         response = self.session.get("https://saself.ps.queensu.ca/psc/saself/EMPLOYEE/HRMS/s/WEBLIB_QU_SSO.FUNCLIB_01.FieldFormula.IScript_SSO?tab=SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL")
-        #response = self.session.get(self.course_catalog_url)
+        self.latest_text = response.text
 
         # The request should bring up another continue page
-        print ("========================SHOULD SEE CONTINUE PAGE========================")
-        print (response.url)
-        print (response.text)
-        self.do_continue_page()
+        if "SAML2/Redirect/SSO" in response.url:
+            self.do_continue_page()
 
         # Testing, stop here
         assert False
-        
 
         #if len(response.text) < 200 or "Invalid Password!" in response.text:
         #    raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
@@ -107,8 +104,8 @@ class SolusSession(object):
         The SSO system returns a specific page only if JS is disabled
         It has you click a Continue button which submits a form with some hidden value
         """
-        # Current URL should be https://login.queensu.ca/idp/profile/SAML2/Redirect/SSO
-        # TODO: check this
+        # Invalidate curernt soup
+        self._soup = None
         
         #Grab the RelayState, SAMLResponse, and POST url
         url = self.soup.find("form").get("action")
@@ -117,9 +114,9 @@ class SolusSession(object):
             payload[x.get("name")] = x.get("value")
 
         response = self.session.post(url, data=payload)
+        self.latest_text = response.text
 
         # Debug
-        print ("========================AFTER CONTINUE PAGE========================")
         print (response.url)
         print (response.text)
 
