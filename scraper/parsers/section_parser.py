@@ -34,7 +34,7 @@ class SectionParser(SolusParser):
             
             # Check if this term is old enough to be skipped
             now = datetime.now()
-            if int(year) < datetime.now().year or (int(year) == now.year and season == "Winter"):
+            if int(year) < now.year or (int(year) == now.year and season == "Winter"):
                 print ("--------Omitting outdated term: {season} - {year}".format(season=season, year=year))
                 continue
 
@@ -70,9 +70,7 @@ class SectionParser(SolusParser):
         # Make sure the size of each list matches
         if len(section_header_links) != len(section_component_tables):
             raise Exception("Number of section headers ({0}) doesn't match number of section_component_tables ({1})".format(
-                    len(section_header_links), len(section_component_tables)
-                )
-            )
+                    len(section_header_links), len(section_component_tables)))
 
         sections = []
 
@@ -235,7 +233,12 @@ class SectionParser(SolusParser):
         # Tables for Details, enrollment, availibility, description
         info_tables = self.soup.find_all("table", {"class": "PSGROUPBOXWBO"})
         for table in info_tables:
-            header = table.find("td", {"class": "PAGROUPBOXLABELLEVEL1"}).get_text()
+            temp_td = table.find("td", {"class": "PAGROUPBOXLABELLEVEL1"})
+            if not temp_td:
+                # The CEAB Units Box has the class `PSGROUPBOXLABEL` instead
+                continue
+
+            header = temp_td.get_text()
             
             if header == "Class Availability":
 
@@ -245,9 +248,7 @@ class SectionParser(SolusParser):
                 # Make sure the size of each list matches
                 if len(labels) != len(values):
                     raise Exception("Number of enrollment labels ({0}) doesn't match number of values ({1})".format(
-                            len(labels), len(values)
-                        )
-                    )
+                            len(labels), len(values)))
 
                 for label, value in zip(labels, values):
 
