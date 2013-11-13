@@ -29,7 +29,8 @@ class SSLAdapter(HTTPAdapter):
 class SolusSession(object):
     """Represents a solus browsing session"""
 
-    login_url = "https://sso.queensu.ca/amserver/UI/Login"
+    login_url = "https://my.queensu.ca"
+    continue_url = "SAML2/Redirect/SSO" 
     course_catalog_url = "https://saself.ps.queensu.ca/psc/saself/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_BROWSE_CATLG_P.GBL"
 
     #State of recovery ( < 0 is not recovering, otherwise the current recovery level)
@@ -52,6 +53,10 @@ class SolusSession(object):
         print "Navigating to course catalog..."
         self.go_to_course_catalog()
 
+        # Should now be on the course catalog page. If not, something went wrong
+        if self.latest_response.url != self.course_catalog_url:
+            raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
+
     @property
     def soup(self):
         if not self._soup:
@@ -68,7 +73,7 @@ class SolusSession(object):
             password = SCRAPER_PASSWORD
 
         # Load the access page to set all the cookies and get redirected
-        response = self.session.get("http://my.queensu.ca")
+        response = self.session.get(self.login_url)
 
         # Login procedure is differnt when JS is disabled
         payload = {
@@ -78,33 +83,33 @@ class SolusSession(object):
            }
 
         response = self.session.post(response.url, data=payload)
-        self.latest_text = response.text
-        
-        if "SAML2/Redirect/SSO" in response.url:
-            self.do_continue_page()
+       
+        # Check for the continue page
+        if self.continue_url in response.url:
+            self.latest_text = response.text
+            response = self.do_continue_page()
         
         # Should now be authenticated and on the my.queensu.ca page, submit a request for the URL in the 'SOLUS' button
-        #response = self.session.get("https://saself.ps.queensu.ca/psc/saself/EMPLOYEE/HRMS/s/WEBLIB_QU_SSO.FUNCLIB_01.FieldFormula.IScript_SSO?tab=SA_LEARNER_SERVICES.SSS_BROWSE_CATLG_P.GBL")
-        response = self.session.get("https://saself.ps.queensu.ca/psc/saself/EMPLOYEE/HRMS/s/WEBLIB_QU_SSO.FUNCLIB_01.FieldFormula.IScript_SSO?tab=SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL")
         self.latest_text = response.text
+        self._soup = None
 
-        # The request should bring up another continue page
-        if "SAML2/Redirect/SSO" in response.url:
-            self.do_continue_page()
+        url = self.soup.find("a", text="SOLUS").get("href")
+        response = self.session.get(url)
 
-        # Testing, stop here
-        assert False
+        # The request could bring up another continue page
+        if self.continue_url in response.url:
+            self.latest_text = response.text
+            response = self.do_continue_page()
 
-        #if len(response.text) < 200 or "Invalid Password!" in response.text:
-        #    raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
+        # Should be logged in and on the student center page
 
 
     def do_continue_page(self):
         """
         The SSO system returns a specific page only if JS is disabled
-        It has you click a Continue button which submits a form with some hidden value
+        It has you click a Continue button which submits a form with some hidden values
         """
-        # Invalidate curernt soup
+        # Invalidate current soup
         self._soup = None
         
         #Grab the RelayState, SAMLResponse, and POST url
@@ -113,12 +118,7 @@ class SolusSession(object):
         for x in self.soup.find_all("input", type="hidden"):
             payload[x.get("name")] = x.get("value")
 
-        response = self.session.post(url, data=payload)
-        self.latest_text = response.text
-
-        # Debug
-        print (response.url)
-        print (response.text)
+        return self.session.post(url, data=payload)
 
 
     def go_to_course_catalog(self):
