@@ -67,16 +67,62 @@ class SolusSession(object):
         if not password:
             password = SCRAPER_PASSWORD
 
+        # Load the access page to set all the cookies and get redirected
+        response = self.session.get("http://my.queensu.ca")
+
+        # Login procedure is differnt when JS is disabled
         payload = {
-           'IDToken1': user,
-           'IDToken2': password,
-           'IDButton': 'Submit',
+           'j_username': user,
+           'j_password': password,
+           'IDButton': '%C2%A0Log+In%C2%A0',
            }
 
-        response = self.session.post(self.login_url, data=payload)
+        response = self.session.post(response.url, data=payload)
+        self.latest_text = response.text
+        
+        print ("========================SHOULD SEE CONTINUE PAGE========================")
+        print (response.url)
+        print (response.text)
+        self.do_continue_page()
+        # Should now be authenticated and on the my.queensu.ca page, submit a request for the URL in the 'SOLUS' button
+        response = self.session.get("https://saself.ps.queensu.ca/psc/saself/EMPLOYEE/HRMS/s/WEBLIB_QU_SSO.FUNCLIB_01.FieldFormula.IScript_SSO?tab=SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL")
+        #response = self.session.get(self.course_catalog_url)
 
-        if len(response.text) < 200 or "Invalid Password!" in response.text:
-            raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
+        # The request should bring up another continue page
+        print ("========================SHOULD SEE CONTINUE PAGE========================")
+        print (response.url)
+        print (response.text)
+        self.do_continue_page()
+
+        # Testing, stop here
+        assert False
+        
+
+        #if len(response.text) < 200 or "Invalid Password!" in response.text:
+        #    raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
+
+
+    def do_continue_page(self):
+        """
+        The SSO system returns a specific page only if JS is disabled
+        It has you click a Continue button which submits a form with some hidden value
+        """
+        # Current URL should be https://login.queensu.ca/idp/profile/SAML2/Redirect/SSO
+        # TODO: check this
+        
+        #Grab the RelayState, SAMLResponse, and POST url
+        url = self.soup.find("form").get("action")
+        payload = {}
+        for x in self.soup.find_all("input", type="hidden"):
+            payload[x.get("name")] = x.get("value")
+
+        response = self.session.post(url, data=payload)
+
+        # Debug
+        print ("========================AFTER CONTINUE PAGE========================")
+        print (response.url)
+        print (response.text)
+
 
     def go_to_course_catalog(self):
         self._catalog_post("")
