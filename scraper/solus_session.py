@@ -55,7 +55,7 @@ class SolusSession(object):
 
         # Should now be on the course catalog page. If not, something went wrong
         if self.latest_response.url != self.course_catalog_url:
-            raise Exception("Could not log in to SOLUS. The login credentials provided in private_config.py may have been incorrect.")
+            raise Exception("Authenticated, but couldn't access the SOLUS course catalog.")
 
     @property
     def soup(self):
@@ -73,35 +73,35 @@ class SolusSession(object):
             password = SCRAPER_PASSWORD
 
         # Load the access page to set all the cookies and get redirected
-        response = self.session.get(self.login_url)
+        self._get(self.login_url)
 
         # Login procedure is differnt when JS is disabled
         payload = {
            'j_username': user,
            'j_password': password,
            'IDButton': '%C2%A0Log+In%C2%A0',
-           }
-
-        response = self.session.post(response.url, data=payload)
+        }
+        self._post(self.latest_response.url, data=payload)
        
         # Check for the continue page
-        if self.continue_url in response.url:
-            self.latest_text = response.text
-            response = self.do_continue_page()
+        if self.continue_url in self.latest_response.url:
+            self.do_continue_page()
         
         # Should now be authenticated and on the my.queensu.ca page, submit a request for the URL in the 'SOLUS' button
-        self.latest_text = response.text
-        self._soup = None
+        link = self.soup.find("a", text="SOLUS")
+        if not link:
+            # Not on the right page
+            raise Exception("Could not authenticate with the Queen's SSO system. The login credentials provided in private_config.py may have been incorrect.")
 
-        url = self.soup.find("a", text="SOLUS").get("href")
-        response = self.session.get(url)
+        print ("Sucessfully authenticated.")
+        # Have to actually use this link to access SOLUS initially otherwise it asks for login again
+        self._get(link.get("href"))
 
-        # The request could bring up another continue page
-        if self.continue_url in response.url:
-            self.latest_text = response.text
-            response = self.do_continue_page()
+        # The request could (seems 50/50 from browser tests) bring up another continue page
+        if self.continue_url in self.latest_response.url:
+            self.do_continue_page()
 
-        # Should be logged in and on the student center page
+        # Should now be logged in and on the student center page
 
 
     def do_continue_page(self):
@@ -109,16 +109,19 @@ class SolusSession(object):
         The SSO system returns a specific page only if JS is disabled
         It has you click a Continue button which submits a form with some hidden values
         """
-        # Invalidate current soup
-        self._soup = None
         
         #Grab the RelayState, SAMLResponse, and POST url
-        url = self.soup.find("form").get("action")
+        form = self.soup.find("form")
+        if not form:
+            # No form, nothing to be done
+            return
+        url = form.get("action")
+
         payload = {}
-        for x in self.soup.find_all("input", type="hidden"):
+        for x in form.find_all("input", type="hidden"):
             payload[x.get("name")] = x.get("value")
 
-        return self.session.post(url, data=payload)
+        self._post(url, data=payload)
 
 
     def go_to_course_catalog(self):
@@ -230,17 +233,27 @@ class SolusSession(object):
 
     # -----------------------------General Purpose------------------------------------- #
 
-    def _catalog_post(self, action, extras={}):
-        """Submits a post request to the site"""
-        extras['ICAction'] = action
-        self.latest_response = self.session.post(self.course_catalog_url, data=extras)
+    def _get(self, url, **kwargs):
+        self.latest_response = self.session.get(url, **kwargs)
+        self._update_attrs()
+    
+    def _post(self, url, **kwargs):
+        self.latest_response = self.session.post(url, **kwargs)
+        self._update_attrs()
+
+    def _update_attrs(self):
         self.latest_text = self.latest_response.text
         
         # The old soup no longer represents the current page's content
         self._soup = None
 
+    def _catalog_post(self, action, extras={}):
+        """Submits a post request to the site"""
+        extras['ICAction'] = action
+        self._post(self.course_catalog_url, data=extras)
+
         #import random
-        # Improve this, could easily give false positives
+        # TODO: Improve this, could easily give false positives
         if "Data Integrity Error" in self.latest_text:
             self._recover(action, extras)
             #raise Exception("SOLUS reported a Data Integrity Error")
