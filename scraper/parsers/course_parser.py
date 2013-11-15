@@ -104,6 +104,10 @@ class CourseParser(SolusParser):
         elif box_title in ["Course Detail", "Enrollment Information"]:
             self.add_info_box_content(info_box, course)
 
+        elif box_title == "CEAB Units":
+            # Maybe do something with these in the future?
+            pass
+
         else:
             raise Exception('Encountered unexpected info_box with title: "{0}"'.format(box_title))
 
