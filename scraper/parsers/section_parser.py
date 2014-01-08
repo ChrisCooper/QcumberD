@@ -34,7 +34,7 @@ class SectionParser(SolusParser):
             
             # Check if this term is old enough to be skipped
             now = datetime.now()
-            if int(year) < now.year or (int(year) == now.year and season == "Winter"):
+            if int(year) < now.year or (int(year) == now.year and now.month > 6 and season == "Winter"):
                 print ("--------Omitting outdated term: {season} - {year}".format(season=season, year=year))
                 continue
 
