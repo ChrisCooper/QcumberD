@@ -357,6 +357,7 @@ def existing_or_new(model, **kwargs):
         # We need to make sure the extra attributes are updated
         for key, val in kwargs.iteritems():
             setattr(existing, key, val)
+        existing.save()
     return existing
 
 
