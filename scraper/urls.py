@@ -7,5 +7,4 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('scraper.views',
     url(r'^$', 'index'),
     url(r'^new_job/(?P<config_name>.+)$', 'new_job'),
-    url(r'^load_json_dump$', 'load_json_dump'),
 )
