@@ -82,7 +82,7 @@ def json_to_subject(file_contents):
     existing_or_new(Subject, **{
         'title': raw['title'],
         'abbreviation': raw['abbreviation']
-    })
+    }).was_scraped()
 
 def json_to_course(file_contents):
     temp = json.loads(file_contents)
@@ -103,6 +103,8 @@ def json_to_course(file_contents):
     for key in course_map:
         if course_map[key] in raw:
             course_dict[key] = raw[course_map[key]]
+    
+    
 
     # Subject
     course_dict['subject'] = existing_or_new(Subject, **{
@@ -126,7 +128,7 @@ def json_to_course(file_contents):
         course_dict['drop_consent'] = existing_or_new(Consent, **{
             'name': raw['drop_consent']})
 
-    existing_or_new(Course, **course_dict)
+    existing_or_new(Course, **course_dict).was_scraped()
 
 def json_to_section(file_contents):
     raw = json.loads(file_contents)
