@@ -79,10 +79,10 @@ class Command(BaseCommand):
 
 def json_to_subject(file_contents):
     raw = json.loads(file_contents)
-    existing_or_new(Subject, **{
+    existing_or_new_with_time(Subject, **{
         'title': raw['title'],
         'abbreviation': raw['abbreviation']
-    }).was_scraped()
+    })
 
 def json_to_course(file_contents):
     temp = json.loads(file_contents)
@@ -103,32 +103,30 @@ def json_to_course(file_contents):
     for key in course_map:
         if course_map[key] in raw:
             course_dict[key] = raw[course_map[key]]
-    
-    
 
     # Subject
-    course_dict['subject'] = existing_or_new(Subject, **{
+    course_dict['subject'] = existing_or_new_with_time(Subject, **{
         'abbreviation': raw['subject']})
 
     # Career
     if 'career' in raw:
-        course_dict['career'] = existing_or_new(Career, **{
+        course_dict['career'] = existing_or_new_with_time(Career, **{
             'name': raw['career']})
 
     # Grading
     if 'grading_basis' in raw:
-        course_dict['grading_basis'] = existing_or_new(GradingBasis, **{
+        course_dict['grading_basis'] = existing_or_new_with_time(GradingBasis, **{
             'name': raw['grading_basis']})
 
     # Consent
     if 'add_consent' in raw:
-        consent = existing_or_new(Consent, **{'name': raw['add_consent']})
+        consent = existing_or_new_with_time(Consent, **{'name': raw['add_consent']})
 
     if 'drop_consent' in raw:
-        course_dict['drop_consent'] = existing_or_new(Consent, **{
+        course_dict['drop_consent'] = existing_or_new_with_time(Consent, **{
             'name': raw['drop_consent']})
 
-    existing_or_new(Course, **course_dict).was_scraped()
+    existing_or_new_with_time(Course, **course_dict)
 
 def json_to_section(file_contents):
     raw = json.loads(file_contents)
@@ -141,26 +139,26 @@ def json_to_section(file_contents):
 
     # Course
         #Subject
-    subject = existing_or_new(Subject, **{'abbreviation': basic['subject']})
-    section_dict['course'] = existing_or_new(Course, **{
+    subject = existing_or_new_with_time(Subject, **{'abbreviation': basic['subject']})
+    section_dict['course'] = existing_or_new_with_time(Course, **{
         'subject': subject,
         'number': basic['course']
     })
 
     # SectionType
-    section_dict['type'] = existing_or_new(SectionType, **{
+    section_dict['type'] = existing_or_new_with_time(SectionType, **{
         'abbreviation':basic['type']})
 
 
     # Term
         # Season
-    season = existing_or_new(Season, **{'name':basic['season']})
-    section_dict['term'] = existing_or_new(Term, **{
+    season = existing_or_new_with_time(Season, **{'name':basic['season']})
+    section_dict['term'] = existing_or_new_with_time(Term, **{
         'season': season,
         'year': basic['year']
     })
 
-    section = existing_or_new(Section, **section_dict)
+    section = existing_or_new_with_time(Section, **section_dict)
 
     # SectionComponent
     for raw_class in raw['classes']:
@@ -177,18 +175,19 @@ def json_to_section(file_contents):
             or raw_class['day_of_week'] is None:
             sec_comp_dict['timeslot'] = None
         else:
-            sec_comp_dict['timeslot'] = existing_or_new(Timeslot, **{
+            sec_comp_dict['timeslot'] = existing_or_new_with_time(Timeslot, **{
                 'start_time': datetime.datetime.strptime(raw_class['start_time'], "%Y-%m-%dT%H:%M:%S"),
                 'end_time': datetime.datetime.strptime(raw_class['end_time'], "%Y-%m-%dT%H:%M:%S"),
-                'day_of_week': existing_or_new(DayOfWeek, **{'abbreviation': iso_day_to_abrev[raw_class['day_of_week']]})
+                'day_of_week': existing_or_new_with_time(DayOfWeek, **{
+                    'abbreviation': iso_day_to_abrev[raw_class['day_of_week']]})
             })
 
-        section_component = existing_or_new(SectionComponent, **sec_comp_dict)
+        section_component = existing_or_new_with_time(SectionComponent, **sec_comp_dict)
 
         # can't add instructors at object creation time
         instructors = []
         for prof in raw_class['instructors']:
-            instructors.append(existing_or_new(Instructor, **{
+            instructors.append(existing_or_new_with_time(Instructor, **{
                 'name': prof}))
         setattr(section_component, 'instructors', instructors)
         section_component.save()
@@ -202,3 +201,8 @@ iso_day_to_abrev = {
     6: 'Sa',
     7: 'Su'
 }
+
+def existing_or_new_with_time(model, **kwargs):
+    kwargs['last_encountered'] = datetime.datetime.now()
+    existing = existing_or_new(model, **kwargs)
+    return existing
