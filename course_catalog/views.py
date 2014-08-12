@@ -10,7 +10,9 @@ from django.db import models
 from django.views.decorators.cache import cache_page
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
+from django.utils.safestring import SafeString
 from course_catalog.models import Course, Subject, Section, Career, Season
+from prereqs.interface import generate_prereq_graph
 import model_controls
 
 
@@ -80,6 +82,21 @@ def course_detail(request, subject_abbr, course_number):
 
 @enforce_subject_upper
 @cache_page(60 * 30)
+def course_prereqs(request, subject_abbr, course_number):
+    try:
+        course = Course.objects.get(subject__abbreviation=subject_abbr,
+                                    number=course_number)
+    except ObjectDoesNotExist:
+        return detail_not_found(request, subject_abbr, course_number)
+
+    graphdef = generate_prereq_graph(subject_abbr, course_number)
+
+    return render(request, 'course_catalog/pages/course_prereqs.html',
+                  {'course': course, 'graphdef': SafeString(graphdef)})
+
+
+@enforce_subject_upper
+@cache_page(60 * 30)
 def subject_detail(request, subject_abbr):
     try:
         subject = Subject.objects.get(abbreviation=subject_abbr)
@@ -102,6 +119,7 @@ def subject_detail(request, subject_abbr):
     return render(request, 'course_catalog/pages/subject_detail.html',
                   {'subject': subject, 'courses_by_career': courses_by_career,
                   'seasons': seasons})
+
 
 
 def detail_not_found(request, subject_abbr, course_number=None):

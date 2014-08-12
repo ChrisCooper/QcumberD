@@ -5,3 +5,4 @@ lxml==3.1beta1
 requests==1.1.0
 django-compressor==1.2
 django-debug-toolbar==0.9.4
+ply==3.4

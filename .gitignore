@@ -73,3 +73,7 @@ dev_db.sqlite3
 venv
 virtualenv_activate.py
 static_collected
+
+# ply generated files
+parser.out
+parsetab.py

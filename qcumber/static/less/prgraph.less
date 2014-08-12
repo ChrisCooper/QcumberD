@@ -1,0 +1,57 @@
+/* General Node Styles */
+.node rect {
+    stroke-width: 1.5px;
+    stroke: #333;
+    fill: #fff;
+}
+
+.node text {
+    font: 300 14px 'Droid Sans', sans-serif;
+}
+
+.node:hover {
+    cursor: pointer;
+    opacity: 0.4;
+}
+
+/* General Edge Styles */
+path.edge {
+    fill: none;
+    stroke: #333;
+    stroke-width: 1.5px;
+}
+
+.edge:hover {
+    cursor: pointer;
+    opacity: 0.4;
+}
+
+/* Style specific edge types */
+path.edge.corequisite {
+    stroke-dasharray: 5,2;
+}
+
+path.edge.recommend {
+    stroke-dasharray: 1,5;
+}
+
+/* Style specific node types */
+.node.intermediate rect {
+    stroke-width: 0px;
+}
+
+.node.primary rect {
+    fill: #bce089;
+    stroke: #2c8737;
+}
+
+/* Graph Container Styles */
+.graph-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.graph-legend {
+    text-align: center;
+}

@@ -158,6 +158,7 @@ INSTALLED_APPS = (
     'exams',
     'moved_pages',
     'textbooks',
+    'prereqs',
 )
 
 # A sample logging configuration. The only tangible logging

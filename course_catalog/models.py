@@ -64,6 +64,7 @@ class Course(ModelOnProbation):
     number = models.CharField(max_length=10, db_index=True)
     units = models.FloatField(default=-1.)
     enrollment_reqs = models.TextField(default="")
+    parsed_reqs = models.TextField(default="")
 
     #Relationships
     subject = models.ForeignKey(Subject, related_name='courses')
