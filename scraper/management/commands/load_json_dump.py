@@ -11,7 +11,7 @@ class Command(BaseCommand):
     help = 'loads data from qcumber-data'
 
     def handle(self, *args, **options):
-        print "starting data load"
+        print("starting data load")
         start_time = datetime.datetime.now()
 
         log = []
@@ -26,7 +26,7 @@ class Command(BaseCommand):
                 for file_name in subjects_file_list:
                     c += 1
                     if c % 50 == 0:
-                        print str(c) + "/" + str(len(subjects_file_list))
+                        print(str(c) + "/" + str(len(subjects_file_list)))
                     if file_name.endswith('.json'):
                         with open('./qcumber-data/subjects/'+file_name, 'r') as f:
                             json_to_subject(f.read())
@@ -42,7 +42,7 @@ class Command(BaseCommand):
                 for file_name in course_file_list:
                     c += 1
                     if c % 50 == 0:
-                        print str(c) + "/" + str(len(course_file_list))
+                        print(str(c) + "/" + str(len(course_file_list)))
                     if file_name.endswith('.json'):
                         with open('./qcumber-data/courses/'+file_name, 'r') as f:
                             json_to_course(f.read())
@@ -58,7 +58,7 @@ class Command(BaseCommand):
                 for file_name in sections_file_list:
                     c += 1
                     if c % 50 == 0:
-                        print str(c) + "/" + str(len(sections_file_list))
+                        print(str(c) + "/" + str(len(sections_file_list)))
                     if file_name.endswith('.json'):
                         with open('./qcumber-data/sections/'+file_name, 'r') as f:
                             json_to_section(f.read())
@@ -75,7 +75,7 @@ class Command(BaseCommand):
         hours, remainder = divmod(seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
         time_taken = '{0} hours, {1} minutes, {2} seconds.'.format(hours, minutes, seconds)
-        print "finished data load, took %s" % time_taken
+        print("finished data load, took %s" % time_taken)
 
 def json_to_subject(file_contents):
     raw = json.loads(file_contents)

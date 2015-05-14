@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 
 from course_catalog.models import existing_or_new, Subject, Course, CourseRelation
-from models import Exam
+from exams.models import Exam
 from django.core.exceptions import ObjectDoesNotExist
 
 class ExamScraper(object):
@@ -22,9 +22,9 @@ class ExamScraper(object):
         self.session = requests.session()
         self.config = config
 
-        print "Logging in..."    
+        print("Logging in...")
         self.login(user, password)
-        print "Logged in"
+        print("Logged in")
 
     def login(self, user=None, password=None):
         """Logs into the proxy"""
@@ -63,7 +63,7 @@ class ExamScraper(object):
             num_courses = 0
 
         if num_courses < 1:
-            print ("--No course '{0} {1}' in database".format(match.groups()[0], match.groups()[1]))
+            print("--No course '{0} {1}' in database".format(match.groups()[0], match.groups()[1]))
             return
 
         # Find/Create the course <-> data relation(s)

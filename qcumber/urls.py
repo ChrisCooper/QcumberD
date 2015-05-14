@@ -38,7 +38,4 @@ urlpatterns = patterns('',
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {"sitemaps": sitemaps}),
 
     url(r'^', include('course_catalog.urls')),
-
-    # Redirects from old URLs
-    url(r'^', include('moved_pages.urls')),
 )

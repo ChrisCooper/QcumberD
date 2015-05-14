@@ -6,7 +6,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from course_catalog.models import existing_or_new, Subject, Course
-from models import Textbook, CourseRelation
+from textbooks.models import Textbook, CourseRelation
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -33,9 +33,9 @@ class TextbookScraper(object):
 
     def scrape(self):
 
-        print "Starting textbook scrape"
+        print("Starting textbook scrape")
 
-        print "Getting a list of courses"
+        print("Getting a list of courses")
         r = requests.get("http://www.campusbookstore.com/Textbooks/Booklists/")
 
         b = BeautifulSoup(r.text)

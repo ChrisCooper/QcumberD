@@ -47,10 +47,10 @@ class SolusSession(object):
         self.latest_text = None
         self._soup = None
 
-        print "Logging in..."    
+        print"Logging in...") 
         self.login(user, password)
 
-        print "Navigating to course catalog..."
+        print("Navigating to course catalog...")
         self.go_to_course_catalog()
 
         # Should now be on the course catalog page. If not, something went wrong

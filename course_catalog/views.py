@@ -11,7 +11,7 @@ from django.views.decorators.cache import cache_page
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
 from course_catalog.models import Course, Subject, Section, Career, Season
-import model_controls
+import course_catalog.model_controls
 
 
 def enforce_subject_upper(view):
