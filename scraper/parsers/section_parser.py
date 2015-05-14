@@ -4,7 +4,7 @@ from datetime import datetime
 import course_catalog.models as cc
 from course_catalog.models import existing_or_new as e_or_n
 
-from solus_parser import SolusParser
+from scraper.parsers.solus_parser import SolusParser
 
 class SectionParser(SolusParser):
 

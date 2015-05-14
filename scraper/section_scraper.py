@@ -1,4 +1,4 @@
-from solus_scraper import SolusScraper
+from scraper.solus_scraper import SolusScraper
 
 
 class SectionScraper(SolusScraper):

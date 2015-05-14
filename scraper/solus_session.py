@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 from qcumber.config.private_config import SCRAPER_USERNAME, SCRAPER_PASSWORD
 
-from parsers.alphanum_parser import AlphanumParser
-from parsers.subject_parser import SubjectParser
-from parsers.course_parser import CourseParser
-from parsers.section_parser import SectionParser
+from scraper.parsers.alphanum_parser import AlphanumParser
+from scraper.parsers.subject_parser import SubjectParser
+from scraper.parsers.course_parser import CourseParser
+from scraper.parsers.section_parser import SectionParser
 
 class SSLAdapter(HTTPAdapter):
     '''An HTTPS Transport Adapter that uses an arbitrary SSL version.
@@ -47,7 +47,7 @@ class SolusSession(object):
         self.latest_text = None
         self._soup = None
 
-        print"Logging in...") 
+        print("Logging in...") 
         self.login(user, password)
 
         print("Navigating to course catalog...")
@@ -168,7 +168,7 @@ class SolusSession(object):
         if self.recovery_state < 0:
             self.recovery_stack[2] = course_index
         
-	action = SubjectParser(self.soup).course_link_id(course_index)
+        action = SubjectParser(self.soup).course_link_id(course_index)
         self._catalog_post(action)
 
     def current_course(self, subject):

@@ -1,5 +1,5 @@
-from solus_scraper import SolusScraper
-from section_scraper import SectionScraper
+from scraper.solus_scraper import SolusScraper
+from scraper.section_scraper import SectionScraper
 
 
 class CourseScraper(SolusScraper):

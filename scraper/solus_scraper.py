@@ -1,4 +1,4 @@
-from solus_session import SolusSession
+from scraper.solus_session import SolusSession
 
 class SolusScraper(object):
     """Superclass for scraping data from a SolusSession"""

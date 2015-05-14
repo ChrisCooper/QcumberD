@@ -1,5 +1,5 @@
-from solus_scraper import SolusScraper
-from alphanum_scraper import AlphanumScraper
+from scraper.solus_scraper import SolusScraper
+from scraper.alphanum_scraper import AlphanumScraper
 
 class CatalogScraper(SolusScraper):
     """Scrapes data for the entire SOLUS site."""

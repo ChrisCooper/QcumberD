@@ -1,5 +1,5 @@
-from solus_scraper import SolusScraper
-from subject_scraper import SubjectScraper
+from scraper.solus_scraper import SolusScraper
+from scraper.subject_scraper import SubjectScraper
 
 class AlphanumScraper(SolusScraper):
 
