@@ -17,18 +17,12 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    # Uncomment the next line to enable the SOLUS scraper
-    url(r'^scraper/', include('scraper.urls')),
-
     # Uncomment the next line to enable the exambank scraper
     url(r'^exams/', include('exams.urls')),
 
     # Uncomment the next line to enable the textboook scraper
     url(r'^textbooks/', include('textbooks.urls')),
-
-    # Uncomment the next line to enable checking of enrollment
-    url(r'^enrollment/', include('enrollment.urls')),
-
+                       
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

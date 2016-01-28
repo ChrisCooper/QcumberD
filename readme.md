@@ -17,48 +17,17 @@ To get your own copy of Qcumber to develop or improve, first follow the setup di
 Setup Guide
 ===========
 
-* This guide has been verified for Ubuntu 11.10 and 12.10.
-* Setting up on mac OSX should be quite similar. It will be verified soon.
-* <del>Microsoft Windows offers great pains.</del>It works on Windows, but installation there is left as an exercise for the reader.
+* This guide has been verified for Ubuntu 15.10.
 
 
 1. Installing the Prerequisites
 -------------------------------
 
-* Make sure you have all the needed permissions to install.
-* For most users, this means prepending each install command with `sudo`
-* Ex: `sudo apt-get install ...`
-
 ### Python and Libraries ###
 
-This project has been tested with Python version 2.7. You can try other 2.x versions, but no promises.
-
-* Run `apt-get install python2.7 python2.7-dev`
-* This installs Python 2.7 as well as the headers needed for compiling python modules.
-* Some modules that will be installed need to be compiled with GCC.
+This project has been tested with Python version 3.5.
 * Install GCC by running `apt-get install gcc`
 * Install extra libraries needed for compiling modules: `apt-get install libxml2-dev libxslt1-dev`
-
-I (Phil) could not get Qcumber to run under Python 3 after spending a whole couple seconds of trying. I have not tested on any version of Python other than 2.7.
-
-The [django project installation documentation](https://docs.djangoproject.com/en/1.4/intro/install/) would be a good starting point for other operating systems.
-
-
-### Git and a Github account ###
-
-* Go to [https://github.com/](https://github.com/) and follow the instructions to register an account.
-* Run `apt-get install git` to install Git.
-* Follow the guide at [https://help.github.com/articles/set-up-git](https://help.github.com/articles/set-up-git) to set up Git.
-
-
-### Pip and a Virtual Environment ###
-
-Pip is used to install extra Python modules that aren't included by default.
-A virtual environment is an isolated Python environment. It allows for per-program environment configuration.
-
-* Install Pip by running `apt-get install python-pip`
-* Once Pip is installed, run `pip install virtualenv`
-* The virtual environment will be configured later.
 
 ### LESS Compiler ###
 
@@ -66,36 +35,6 @@ LESS is an extension of CSS that adds support for dynamic behaviours like variab
 
 * Install Node.js (including the Node Package Manager, `npm`) [using a package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) or from [http://nodejs.org/](http://nodejs.org/)
 * Install the LESS compiler via the Node Package Manger: `npm install -g less`
-* You can now compile LESS files like this: `lessc styles.less > styles.css` (this is automatically done in this project).
-
-
-2. Fork the Repository
-----------------------
-
-* Click the "Fork" button at the top-right of [https://github.com/ChrisCooper/QcumberD](https://github.com/ChrisCooper/QcumberD)
-* You now have your own copy of QcumberD that you can safely mess around with!
-
-
-3. Clone it to your computer
-----------------------------
-
-* Copy the `git@github.com:[yourusername]/QcumberD.git` link on the page.
-* Open up a terminal window.
-* Navigate to the folder in which you want to store your local copy of Qcumber. For me that would mean `cd ~/Code`
-* Clone the repository. `git clone [repository]`, where `[repository]` is the `git@github...` url you copied earlier. 
-* You should now have a `QcumberD` folder.
-
-
-4. Create and Activate a Virtual Environment
---------------------------------------------
-
-* Navigate into the `QcumberD` folder: `cd QcumberD`.
-* Create a new virtual environment: `virtualenv --distribute venv`
-* Activate the new environment: `source venv/bin/activate`
-
-* NOTE: you will need to activate the virtual environment every time you want to run the local project. You can use the same preceeding `source` command.
-
-* To deactivate the virtual environment: `deactivate`
 
 
 5. Install Required Packages
@@ -111,7 +50,6 @@ Make sure you have activated your virtual environment (see above) before running
 -----------------------
 
 * Clone the sample config file `cp qcumber/config/example_private_config.py qcumber/config/private_config.py`
-* Change the configuration options in qcumber/config/private_config.py to suit your environment. If you are not performing caching, scraping, or sending emails, nothing needs to change in this file for development.
 
 
 7. Initialize the Database
@@ -119,9 +57,7 @@ Make sure you have activated your virtual environment (see above) before running
 
 Make sure your virtualenv is activated!
 
-* `python manage.py syncdb`
-* Create the administrative account and follow the prompts.
-* Migrate the `south` databases: `python manage.py migrate`.
+* `python manage.py migrate`
 
 8. Run Time!
 ------------

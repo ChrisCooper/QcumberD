@@ -12,9 +12,6 @@ try:
 except ImportError as e:
     raise ImportError(MISSING_MODULE_MESSAGE)
 
-# Fix BeautifulSoup 3 vs. 4 naming incompatibilities
-import sys, bs4
-sys.modules['BeautifulSoup'] = bs4
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -41,7 +38,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -70,9 +66,6 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-
-if SHOW_DEBUG_TOOLBAR:
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 FIXTURE_DIRS = (
         # Add the common fixtures
@@ -105,13 +98,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    
-    'debug_toolbar',
-    'compressor',
 
     'course_catalog',
-    'scraper',
-    'enrollment',
     'exams',
     'textbooks',
 )
