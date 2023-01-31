@@ -1,3 +1,7 @@
+Qcumber served its purpose well for a number of years but was eventually retired after serving 1.5 million pageviews from a population of 28,000 students. You can read about its life here: [](https://github.com/ChrisCooper/coopernetics/blob/master/_posts/2015-03-26-qcumber-queens-course-catalogue-retrospective.md)
+
+![A course listing on Qcumber](https://github.com/ChrisCooper/coopernetics/blob/master/static/images/posts/qcumber/course-page.png)
+
 Qcumber
 =======
 
